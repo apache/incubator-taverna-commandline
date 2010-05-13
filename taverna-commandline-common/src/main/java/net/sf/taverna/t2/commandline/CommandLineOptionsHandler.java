@@ -12,17 +12,30 @@ import org.apache.commons.cli.ParseException;
 public class CommandLineOptionsHandler {
 
 	private Options options;
-	private CommandLine commandLine;		
+	private CommandLine commandLine;			
 
-	public String[] getArgs() {
-		return commandLine.getArgs();
-	}
-
-	public CommandLineOptionsHandler(String [] args) {
+	public CommandLineOptionsHandler(String [] args) throws InvalidOptionException{
 		this.options = intitialiseOptions();
 		this.commandLine = processArgs(args);	
-		checkForHelp();
-		
+		checkForInvalid();
+		checkForHelp();		
+	}
+	
+	protected void checkForInvalid() throws InvalidOptionException {
+		if (hasOption("inmemory") && hasOption("embedded")) throw new InvalidOptionException("The options -embedded, -clientserver and -inmemory cannot be used together");
+		if (hasOption("inmemory") && hasOption("clientserver")) throw new InvalidOptionException("The options -embedded, -clientserver and -inmemory cannot be used together");
+		if (hasOption("embedded") && hasOption("clientserver")) throw new InvalidOptionException("The options -embedded, -clientserver and -inmemory cannot be used together");
+	}
+	
+	public String getWorkflow() throws InvalidOptionException {
+		if (getArgs().length!=1) {
+			throw new InvalidOptionException("You must specify a workflow");
+		}
+		return getArgs()[0];
+	}
+	
+	public String[] getArgs() {
+		return commandLine.getArgs();
 	}
 	
 	private void checkForHelp() {
@@ -53,8 +66,6 @@ public class CommandLineOptionsHandler {
 	public boolean hasOption(String option) {
 		return commandLine.hasOption(option);
 	}
-		
-		
 
 	private CommandLine processArgs(String[] args) {
 		CommandLineParser parser = new GnuParser();
@@ -91,9 +102,20 @@ public class CommandLineOptionsHandler {
 				.hasArgs(2).withValueSeparator('=').withDescription(
 						"load the named input from file or URL")
 				.create("input");
+		
+		Option dbProperties = OptionBuilder.withArgName("filename").hasArg().withDescription(
+				"loads a properties file to configure the database").create("dbproperties");
+		
+		Option port = OptionBuilder.withArgName("portnumber").hasArg().withDescription(
+		"the port that the database is running on. If set requested to start its own internal server, this is the start port that will be used.").create("port");
+		
+		
 
+		Option embedded = new Option("embedded","connects to an embedded Derby database. This can prevent mulitple invocations");
+		Option clientserver = new Option("clientserver","connects as a client to a derby server instance.");
 		Option inMemOption = new Option("inmemory","runs the workflow with data stored in-memory rather than in a database. This can give performance inprovements, at the cost of overall memory usage");
-
+		Option startDB = new Option("startdb","automatically starts an internal Derby database server.");
+		
 		Options options = new Options();
 		options.addOption(helpOption);
 		options.addOption(inputOption);
@@ -101,6 +123,11 @@ public class CommandLineOptionsHandler {
 		options.addOption(outputOption);
 		options.addOption(outputdocOption);		
 		options.addOption(inMemOption);
+		options.addOption(embedded);
+		options.addOption(clientserver);
+		options.addOption(dbProperties);
+		options.addOption(port);
+		options.addOption(startDB);
 		
 		return options;
 		

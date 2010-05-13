@@ -66,7 +66,7 @@ public class CommandLineLauncher implements Launchable {
 		DatabaseConfigurationHandler dbHandler = new DatabaseConfigurationHandler(options);	
 		dbHandler.configureDatabase();
 		
-		URL workflowURL = readWorkflowURL(options);
+		URL workflowURL = readWorkflowURL(options.getWorkflow());
 
 		InputStream stream = workflowURL.openStream();
 
@@ -230,9 +230,9 @@ public class CommandLineLauncher implements Launchable {
 		return inputs;
 	}
 
-	private URL readWorkflowURL(CommandLineOptionsHandler options) throws Exception {
+	private URL readWorkflowURL(String workflowOption) throws Exception {
 		URL url = new URL("file:");		
-		URL workflowURL = new URL(url, options.getArgs()[0]);
+		URL workflowURL = new URL(url, workflowOption);
 		return workflowURL;
 	}		
 

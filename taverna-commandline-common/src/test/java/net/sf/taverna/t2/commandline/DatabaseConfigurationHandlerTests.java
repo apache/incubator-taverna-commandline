@@ -5,8 +5,6 @@ import net.sf.taverna.t2.workbench.reference.config.DataManagementConfiguration;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 
 public class DatabaseConfigurationHandlerTests {
 
@@ -15,6 +13,7 @@ public class DatabaseConfigurationHandlerTests {
 		CommandLineOptionsHandler opts = new CommandLineOptionsHandler(new String[]{});
 		DatabaseConfigurationHandler handler = new DatabaseConfigurationHandler(opts);
 		handler.configureDatabase();
-		assertEquals("org.apache.derby.jdbc.ClientDriver", DataManagementConfiguration.getInstance().getDriverClassName());		
+		assertEquals("org.apache.derby.jdbc.ClientDriver", DataManagementConfiguration.getInstance().getDriverClassName());
+		assertEquals(false, DataManagementConfiguration.getInstance().getStartInternalDerbyServer());
 	}
 }

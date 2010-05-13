@@ -1,10 +1,10 @@
 package net.sf.taverna.t2.commandline;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Enumeration;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 import net.sf.taverna.t2.workbench.reference.config.DataManagementConfiguration;
 import net.sf.taverna.t2.workbench.reference.config.DataManagementHelper;
@@ -31,21 +31,56 @@ public class DatabaseConfigurationHandler {
 		DataManagementHelper.setupDataSource();
 	}
 
-	public void useOptions() {
+	public void useOptions() throws IOException {
+		
+		if (options.hasOption("port")) {			
+			dbConfig.setPort(options.getOptionValue("port"));		
+		}
+		
+		if (options.hasOption("startdb")) {
+			dbConfig.setStartInternalDerbyServer(true);
+		}
+		
 		if (options.hasOption("inmemory")) {
 			System.out.println("Running in memory");
-			dbConfig.setInMemory(true);
-			dbConfig.setStartInternalDerbyServer(false);
+			dbConfig.setInMemory(true);		
+		}
+		
+		if (options.hasOption("embedded")) {
+			dbConfig.setInMemory(false);
+			dbConfig.setDriverClassName("org.apache.derby.jdbc.EmbeddedDriver");
+		}
+		
+		if (options.hasOption("clientserver")) {
+			dbConfig.setInMemory(false);
+			dbConfig.setDriverClassName("org.apache.derby.jdbc.ClientDriver");
+			dbConfig.setJDBCUri("jdbc:derby://localhost:" + dbConfig.getPort() + "/t2-database;create=true;upgrade=true");			
+		}		
+		
+		if (options.hasOption("dbproperties")) {
+			readConfigirationFromFile(options.getOptionValue("dbproperties"));
 		}
 	}
 
 	protected void overrideDefaults() throws IOException {
+		
+		InputStream inStr = DatabaseConfigurationHandler.class.getClassLoader().getResourceAsStream("database-defaults.properties");
+		importConfigurationFromStream(inStr);
+	}
+
+	private void importConfigurationFromStream(InputStream inStr)
+			throws IOException {
 		Properties p = new Properties();
-		InputStream inStr = DatabaseConfigurationHandler.class.getClassLoader().getResourceAsStream("database-defaults.properties");				
 		p.load(inStr);		
 		for (Object key : p.keySet()) {
 			dbConfig.setProperty((String)key, p.getProperty((String)key).trim());
 		}
+	}
+	
+	protected void readConfigirationFromFile(String filename) throws IOException {
+		FileInputStream fileInputStream = new FileInputStream(filename);
+		importConfigurationFromStream(fileInputStream);
+		fileInputStream.close();
 	}
 
 }
