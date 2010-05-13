@@ -1,5 +1,11 @@
 package net.sf.taverna.t2.commandline;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.Properties;
+import java.util.ResourceBundle;
+
 import net.sf.taverna.t2.workbench.reference.config.DataManagementConfiguration;
 import net.sf.taverna.t2.workbench.reference.config.DataManagementHelper;
 
@@ -9,21 +15,22 @@ public class DatabaseConfigurationHandler {
 	private static DataManagementConfiguration dbConfig;
 
 	public DatabaseConfigurationHandler(CommandLineOptionsHandler options) {
-		this.options = options;		
-		dbConfig  = DataManagementConfiguration.getInstance();
+		this.options = options;
+		dbConfig = DataManagementConfiguration.getInstance();
 		dbConfig.disableAutoSave();
 	}
-	
-	public void configureDatabase() {
+
+	public void configureDatabase() throws IOException {
 		overrideDefaults();
 		useOptions();
 		if (dbConfig.getStartInternalDerbyServer()) {
-        	DataManagementHelper.startDerbyNetworkServer();
-        	System.out.println("Started Derby Server on Port: "+dbConfig.getCurrentPort());
-        }
-		DataManagementHelper.setupDataSource();		
+			DataManagementHelper.startDerbyNetworkServer();
+			System.out.println("Started Derby Server on Port: "
+					+ dbConfig.getCurrentPort());
+		}
+		DataManagementHelper.setupDataSource();
 	}
-	
+
 	public void useOptions() {
 		if (options.hasOption("inmemory")) {
 			System.out.println("Running in memory");
@@ -31,12 +38,14 @@ public class DatabaseConfigurationHandler {
 			dbConfig.setStartInternalDerbyServer(false);
 		}
 	}
-	
-	private void overrideDefaults() {
-		//FIXME: change this to read from a file. 
-		//FIXME: It must also set a default for each value - don't rely on the Taverna defaults as they could have been changed in the workbench.
-		dbConfig.setInMemory(false);
-		dbConfig.setStartInternalDerbyServer(true);
-		dbConfig.setDriverClassName("org.apache.derby.jdbc.ClientDriver");
+
+	protected void overrideDefaults() throws IOException {
+		Properties p = new Properties();
+		InputStream inStr = DatabaseConfigurationHandler.class.getClassLoader().getResourceAsStream("database-defaults.properties");				
+		p.load(inStr);		
+		for (Object key : p.keySet()) {
+			dbConfig.setProperty((String)key, p.getProperty((String)key).trim());
+		}
 	}
- }
+
+}
