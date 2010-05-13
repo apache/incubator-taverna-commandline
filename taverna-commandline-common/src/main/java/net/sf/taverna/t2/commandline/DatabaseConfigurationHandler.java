@@ -11,10 +11,10 @@ import net.sf.taverna.t2.workbench.reference.config.DataManagementHelper;
 
 public class DatabaseConfigurationHandler {
 
-	private final CommandLineOptionsHandler options;
+	private final CommandLineOptions options;
 	private static DataManagementConfiguration dbConfig;
 
-	public DatabaseConfigurationHandler(CommandLineOptionsHandler options) {
+	public DatabaseConfigurationHandler(CommandLineOptions options) {
 		this.options = options;
 		dbConfig = DataManagementConfiguration.getInstance();
 		dbConfig.disableAutoSave();
@@ -41,14 +41,17 @@ public class DatabaseConfigurationHandler {
 			dbConfig.setStartInternalDerbyServer(true);
 		}
 		
-		if (options.hasOption("inmemory")) {
-			System.out.println("Running in memory");
+		if (options.hasOption("inmemory")) {			
 			dbConfig.setInMemory(true);		
 		}
 		
 		if (options.hasOption("embedded")) {
 			dbConfig.setInMemory(false);
 			dbConfig.setDriverClassName("org.apache.derby.jdbc.EmbeddedDriver");
+		}
+		
+		if (options.hasOption("provenance")) {
+			dbConfig.setProvenanceEnabled(true);
 		}
 		
 		if (options.hasOption("clientserver")) {

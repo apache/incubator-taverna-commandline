@@ -15,10 +15,10 @@ import net.sf.taverna.raven.launcher.Launchable;
 import net.sf.taverna.t2.facade.WorkflowInstanceFacade;
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
+import net.sf.taverna.t2.provenance.reporter.ProvenanceReporter;
 import net.sf.taverna.t2.reference.ReferenceService;
 import net.sf.taverna.t2.reference.T2Reference;
 import net.sf.taverna.t2.workbench.reference.config.DataManagementConfiguration;
-import net.sf.taverna.t2.workbench.reference.config.DataManagementHelper;
 import net.sf.taverna.t2.workflowmodel.Dataflow;
 import net.sf.taverna.t2.workflowmodel.DataflowOutputPort;
 import net.sf.taverna.t2.workflowmodel.DataflowValidationReport;
@@ -26,6 +26,10 @@ import net.sf.taverna.t2.workflowmodel.Edits;
 import net.sf.taverna.t2.workflowmodel.EditsRegistry;
 import net.sf.taverna.t2.workflowmodel.serialization.xml.XMLDeserializer;
 import net.sf.taverna.t2.workflowmodel.serialization.xml.XMLDeserializerRegistry;
+
+import net.sf.taverna.t2.provenance.ProvenanceConnectorFactory;
+import net.sf.taverna.t2.provenance.ProvenanceConnectorFactoryRegistry;
+import net.sf.taverna.t2.provenance.connector.ProvenanceConnector;
 
 import org.apache.commons.io.IOUtils;
 import org.embl.ebi.escience.baclava.DataThing;
@@ -61,7 +65,7 @@ public class CommandLineLauncher implements Launchable {
 
 	public int launch(String[] args) throws Exception {		
 		
-		CommandLineOptionsHandler options = new CommandLineOptionsHandler(args);
+		CommandLineOptions options = new CommandLineOptions(args);
 		
 		DatabaseConfigurationHandler dbHandler = new DatabaseConfigurationHandler(options);	
 		dbHandler.configureDatabase();
@@ -72,12 +76,9 @@ public class CommandLineLauncher implements Launchable {
 
 		Dataflow dataflow = openDataflowFromStream(stream);
 		DataflowValidationReport report = validateDataflow(dataflow);		
-
-		ReferenceService referenceService = createReferenceServiceBean();
 		
+		InvocationContext context = createInvocationContext();
 		
-		InvocationContext context = new CommandLineInvocationContext(
-				referenceService, null);
 		WorkflowInstanceFacade facade = compileFacade(dataflow, context);
 		Map<String,WorkflowDataToken> inputs = registerInputs(options,context);
 		File outputDir = determineOutputDir(options,dataflow.getLocalName());
@@ -104,7 +105,35 @@ public class CommandLineLauncher implements Launchable {
 		return 0;
 	}	
 
-	private File determineOutputDir(CommandLineOptionsHandler options, String dataflowName) {
+	private InvocationContext createInvocationContext() {
+		ReferenceService referenceService = createReferenceServiceBean();
+		ProvenanceConnector connector = null;
+		DataManagementConfiguration dbConfig = DataManagementConfiguration.getInstance();
+		if (dbConfig.isProvenanceEnabled()) {
+			String connectorType = dbConfig.getConnectorType();
+
+			for (ProvenanceConnectorFactory factory : ProvenanceConnectorFactoryRegistry
+					.getInstance().getInstances()) {
+				if (connectorType.equalsIgnoreCase(factory
+						.getConnectorType())) {
+					connector = factory
+							.getProvenanceConnector();
+				}
+				
+			}
+			if (connector!=null) {
+				connector.init();
+			}
+			else {
+				error("Unable to initialise the provenance - the ProvenanceConnector cannot be found.");
+			}
+		}
+		InvocationContext context = new CommandLineInvocationContext(
+				referenceService, connector);
+		return context;
+	}
+
+	private File determineOutputDir(CommandLineOptions options, String dataflowName) {
 		File result = null;
 		if (options.hasOption("output")) {
 			result = new File(options.getOptionValue("output"));
@@ -182,7 +211,7 @@ public class CommandLineLauncher implements Launchable {
 		System.exit(-1);		
 	}
 
-	protected Map<String, WorkflowDataToken> registerInputs(CommandLineOptionsHandler options,
+	protected Map<String, WorkflowDataToken> registerInputs(CommandLineOptions options,
 			InvocationContext context) throws Exception {
 		Map<String,WorkflowDataToken> inputs = new HashMap<String, WorkflowDataToken>();
 		URL url = new URL("file:");

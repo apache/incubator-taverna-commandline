@@ -9,12 +9,12 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-public class CommandLineOptionsHandler {
+public class CommandLineOptions {
 
 	private Options options;
 	private CommandLine commandLine;			
 
-	public CommandLineOptionsHandler(String [] args) throws InvalidOptionException{
+	public CommandLineOptions(String [] args) throws InvalidOptionException{
 		this.options = intitialiseOptions();
 		this.commandLine = processArgs(args);	
 		checkForInvalid();
@@ -115,6 +115,7 @@ public class CommandLineOptionsHandler {
 		Option clientserver = new Option("clientserver","connects as a client to a derby server instance.");
 		Option inMemOption = new Option("inmemory","runs the workflow with data stored in-memory rather than in a database. This can give performance inprovements, at the cost of overall memory usage");
 		Option startDB = new Option("startdb","automatically starts an internal Derby database server.");
+		Option provenance = new Option("provenance","generates provenance information and stores it in the database.");
 		
 		Options options = new Options();
 		options.addOption(helpOption);
@@ -128,6 +129,7 @@ public class CommandLineOptionsHandler {
 		options.addOption(dbProperties);
 		options.addOption(port);
 		options.addOption(startDB);
+		options.addOption(provenance);
 		
 		return options;
 		

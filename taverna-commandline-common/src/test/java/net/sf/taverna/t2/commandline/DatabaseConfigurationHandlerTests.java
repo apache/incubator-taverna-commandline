@@ -10,7 +10,7 @@ public class DatabaseConfigurationHandlerTests {
 
 	@Test
 	public void testDefaults() throws Exception {
-		CommandLineOptionsHandler opts = new CommandLineOptionsHandler(new String[]{});
+		CommandLineOptions opts = new CommandLineOptions(new String[]{});
 		DatabaseConfigurationHandler handler = new DatabaseConfigurationHandler(opts);
 		handler.configureDatabase();
 		assertEquals("org.apache.derby.jdbc.ClientDriver", DataManagementConfiguration.getInstance().getDriverClassName());
