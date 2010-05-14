@@ -1,5 +1,8 @@
 package net.sf.taverna.t2.commandline;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
@@ -8,9 +11,12 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 
 public class CommandLineOptions {
 
+	private static final Logger logger = Logger.getLogger(CommandLineOptions.class);
 	private Options options;
 	private CommandLine commandLine;			
 
@@ -22,12 +28,15 @@ public class CommandLineOptions {
 	}
 	
 	protected void checkForInvalid() throws InvalidOptionException {
+		if (hasOption("provenance") && !(hasOption("embedded") || hasOption("clientserver") || hasOption("dbproperties"))) throw new InvalidOptionException("You should be running with a database to use provenance");
+		if (hasOption("provenance") && hasOption("inmemory")) throw new InvalidOptionException("You should be running with a database to use provenance");
+		
+		if (getArgs().length!=1 && !hasOption("help")) throw new InvalidOptionException("You must specify a workflow");
 		if (hasOption("inmemory") && hasOption("embedded")) throw new InvalidOptionException("The options -embedded, -clientserver and -inmemory cannot be used together");
 		if (hasOption("inmemory") && hasOption("clientserver")) throw new InvalidOptionException("The options -embedded, -clientserver and -inmemory cannot be used together");
 		if (hasOption("embedded") && hasOption("clientserver")) throw new InvalidOptionException("The options -embedded, -clientserver and -inmemory cannot be used together");
 	}
-	
-	
+		
 	
 	public String getWorkflow() throws InvalidOptionException {
 		if (getArgs().length!=1) {
@@ -41,28 +50,32 @@ public class CommandLineOptions {
 	}
 	
 	private void checkForHelp() {
-		if (hasOption("help")) {
-			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp("executeworkflow <workflow> [..]\n"
-					+ "Execute workflow and save outputs. "
-					+ "Inputs can be specified by multiple "
-					+ "-input options, or loaded from an "
-					+ "XML input document as saved from "
-					+ "Taverna. By default, a new directory "
-					+ "is created named workflow.xml_output "
-					+ "unless the -output or -outputdoc"
-					+ "options are given. All files to be read "
-					+ "can be either a local file or an URL.", options);
-			System.exit(0);
+		if (askedForHelp()) {
+			InputStream helpStream = CommandLineOptions.class.getClassLoader().getResourceAsStream("help.txt");
+			HelpFormatter formatter = new HelpFormatter();			
+			try {
+				formatter.printHelp(IOUtils.toString(helpStream), options);
+			} catch (IOException e) {
+				logger.error("Error reading the help document",e);	
+				System.exit(-1);
+			}						
 		}		
 	}
 	
-	public String getOptionValue(String opt) {
+	private String getOptionValue(String opt) {
 		return commandLine.getOptionValue(opt);
 	}
 
-	public String[] getOptionValues(String arg0) {
+	private String [] getOptionValues(String arg0) {
 		return commandLine.getOptionValues(arg0);
+	}
+	
+	/**
+	 * 
+	 * @return a path to a properties file that contains database configuration settings
+	 */
+	public String getDatabaseProperties() {
+		return getOptionValue("dbproperties");
 	}
 	
 	/**
@@ -70,15 +83,49 @@ public class CommandLineOptions {
 	 * @return boolean
 	 */
 	public boolean saveResultsToDirectory() {
-		return (options.hasOption("output") || !options.hasOption("outputdoc"));
+		return (options.hasOption("outputdir") || !options.hasOption("outputdoc"));
 	}
 	
-	public String outputDocument() {
+	/**
+	 * 
+	 * @return the path to the output document
+	 */
+	public String getOutputDocument() {
 		return getOptionValue("outputdoc");
 	}
 	
-	public String inputDocument() {
+	/**
+	 * 
+	 * @return the directory to write the results to
+	 */
+	public String getOutputDirectory() {
+		return getOptionValue("outputdir");
+	}	
+	
+	/**
+	 * 
+	 * @return the port that the database should run on
+	 */
+	public String getDatabasePort() {
+		return getOptionValue("port");
+	}
+	
+	/**
+	 * 
+	 * @return the path to the input document
+	 */
+	public String getInputDocument() {
 		return getOptionValue("inputdoc");
+	}
+	
+	/**
+	 * Returns an array that alternates between a portname and path to a file containing the input values.
+	 * Therefore the array will always contain an even number of elements
+	 * 
+	 * @return an array of portname and path to files containing individual inputs.
+	 */
+	public String [] getInputs() {
+		return getOptionValues("input");
 	}
 
 	public boolean hasOption(String option) {
@@ -108,7 +155,7 @@ public class CommandLineOptions {
 				.withDescription(
 						"save outputs as files in directory, default "
 								+ "is to make a new directory workflowName_output")
-				.create("output");
+				.create("outputdir");
 		Option outputdocOption = OptionBuilder.withArgName("document").hasArg()
 				.withDescription("save outputs to a new XML document").create(
 						"outputdoc");		
@@ -151,5 +198,9 @@ public class CommandLineOptions {
 		
 		return options;
 		
+	}
+
+	public boolean askedForHelp() {
+		return hasOption("help");
 	}
 }

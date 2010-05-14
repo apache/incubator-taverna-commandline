@@ -1,0 +1,8 @@
+executeworkflow [options] <workflow>
+
+Execute workflow and save outputs. Inputs can be specified by multiple -input options, 
+or loaded from an XML input document. By default, results are saved as individual files
+to a directory named after the workflow name. If this directory already exists then a new directory
+is created appended with _x where x increments. A specific directory for the results can be specified
+using -outputdir. Outputs may also be stored to an XML file using -outputdoc, which unless 
+-outputdir is specified will prevent the storing of individual results into a directory.

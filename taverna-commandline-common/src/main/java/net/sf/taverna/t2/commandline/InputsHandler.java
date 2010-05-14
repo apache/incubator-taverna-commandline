@@ -27,7 +27,7 @@ public class InputsHandler {
 		}
 		
 		if (options.hasOption("input")) {
-			String[] inputParams = options.getOptionValues("input");
+			String[] inputParams = options.getInputs();
 			for (int i = 0; i < inputParams.length; i = i + 2) {
 				String inputName = inputParams[i];
 				try {
@@ -48,8 +48,8 @@ public class InputsHandler {
 			}
 		}
 		
-		if (options.inputDocument()!=null) {
-			String inputDocPath = options.getOptionValue("inputdoc");
+		if (options.getInputDocument()!=null) {
+			String inputDocPath = options.getInputDocument();
 			URL inputDocURL = new URL(url, inputDocPath);
 			SAXBuilder builder = new SAXBuilder();
 			Document inputDoc = builder.build(inputDocURL.openStream());

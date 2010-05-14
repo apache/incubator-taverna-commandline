@@ -34,7 +34,7 @@ public class DatabaseConfigurationHandler {
 	public void useOptions() throws IOException {
 		
 		if (options.hasOption("port")) {			
-			dbConfig.setPort(options.getOptionValue("port"));		
+			dbConfig.setPort(options.getDatabasePort());		
 		}
 		
 		if (options.hasOption("startdb")) {
@@ -61,7 +61,7 @@ public class DatabaseConfigurationHandler {
 		}		
 		
 		if (options.hasOption("dbproperties")) {
-			readConfigirationFromFile(options.getOptionValue("dbproperties"));
+			readConfigirationFromFile(options.getDatabaseProperties());
 		}
 	}
 

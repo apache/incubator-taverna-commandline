@@ -66,6 +66,9 @@ public class CommandLineLauncher implements Launchable {
 	public int launch(String[] args) throws Exception {		
 		
 		CommandLineOptions options = new CommandLineOptions(args);
+		if (options.askedForHelp()) {
+			System.exit(0);
+		}
 		
 		DatabaseConfigurationHandler dbHandler = new DatabaseConfigurationHandler(options);	
 		dbHandler.configureDatabase();
@@ -129,12 +132,12 @@ public class CommandLineLauncher implements Launchable {
 	private File determineOutputDir(CommandLineOptions options, String dataflowName) {
 		File result = null;
 		if (options.saveResultsToDirectory()) {
-			result = new File(options.getOptionValue("output"));
+			result = new File(options.getOutputDirectory());
 			if (result.exists()) {
-				error("The specified output directory '"+options.getOptionValue("output")+"' already exists");
+				error("The specified output directory '" + options.getOutputDirectory() +"' already exists");
 			}
 		}
-		else if (options.outputDocument()!=null) {
+		else if (options.getOutputDocument()!=null) {
 			result = new File(dataflowName+"_output");
 			int x=1;
 			while (result.exists()) {
@@ -166,8 +169,8 @@ public class CommandLineLauncher implements Launchable {
 		if (options.saveResultsToDirectory()) {
 			outputDir = determineOutputDir(options,dataflow.getLocalName());
 		}
-		if (options.outputDocument()!=null) {
-			baclavaDoc = new File(options.outputDocument());
+		if (options.getOutputDocument()!=null) {
+			baclavaDoc = new File(options.getOutputDocument());
 		}
 		
 		Map<String,Integer> outputPortNamesAndDepth = new HashMap<String, Integer>();

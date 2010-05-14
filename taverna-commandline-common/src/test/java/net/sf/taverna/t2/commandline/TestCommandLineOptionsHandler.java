@@ -19,6 +19,30 @@ public class TestCommandLineOptionsHandler {
 	}
 	
 	@Test
+	public void noWorkflowNameButHelp() throws Exception {
+		//should not throw an error
+		new CommandLineOptions(new String[]{"-help"});
+	}
+	
+	@Test(expected=InvalidOptionException.class)
+	public void provenanceButNoDatabase() throws Exception {
+		new CommandLineOptions(new String[]{"-provenance","myworkflow.t2flow"});
+	}
+	
+	@Test(expected=InvalidOptionException.class)
+	public void provenanceButNoDatabase2() throws Exception {
+		new CommandLineOptions(new String[]{"-provenance","-inmemory","myworkflow.t2flow"});
+	}
+	
+	@Test
+	public void provenanceDatabase() throws Exception {
+		//should be no errors
+		new CommandLineOptions(new String[]{"-provenance","-embedded","myworkflow.t2flow"});
+		new CommandLineOptions(new String[]{"-provenance","-clientserver","myworkflow.t2flow"});
+		new CommandLineOptions(new String[]{"-provenance","-dbproperties","dbproperties.properties","myworkflow.t2flow"});
+	}
+	
+	@Test
 	public void testInMemory() throws Exception {
 		CommandLineOptions handler = new CommandLineOptions(new String[]{"-inmemory","myworkflow.t2flow"});
 		assertTrue(handler.hasOption("inmemory"));
