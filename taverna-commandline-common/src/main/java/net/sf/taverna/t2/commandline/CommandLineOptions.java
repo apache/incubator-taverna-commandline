@@ -62,6 +62,18 @@ public class CommandLineOptions {
 	public String[] getOptionValues(String arg0) {
 		return commandLine.getOptionValues(arg0);
 	}
+	
+	/**
+	 * Save the results to a directory if -output has been explicitly defined, and/or if -outputdoc hasn't been defined
+	 * @return boolean
+	 */
+	public boolean saveResultsToDirectory() {
+		return (options.hasOption("output") || !options.hasOption("outputdoc"));
+	}
+	
+	public String outputDocument() {
+		return getOptionValue("outputdoc");
+	}
 
 	public boolean hasOption(String option) {
 		return commandLine.hasOption(option);

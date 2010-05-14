@@ -80,23 +80,16 @@ public class CommandLineLauncher implements Launchable {
 		InvocationContext context = createInvocationContext();
 		
 		WorkflowInstanceFacade facade = compileFacade(dataflow, context);
-		Map<String,WorkflowDataToken> inputs = registerInputs(options,context);
-		File outputDir = determineOutputDir(options,dataflow.getLocalName());
-		outputDir.mkdir();
+		Map<String,WorkflowDataToken> inputs = registerInputs(options,context);					
 		
-		CommandLineResultListener resultListener = addResultListener(facade, context,dataflow,outputDir);
+		CommandLineResultListener resultListener = addResultListener(facade, context,dataflow,options);
 
 		facade.fire();
 		for (String inputName : inputs.keySet()) {
 				System.out.println("Pushing input: "+inputName);
 				WorkflowDataToken token = inputs.get(inputName);
 				facade.pushData(token, inputName);
-		}						
-		
-		if (options.hasOption("outputdoc")) {
-			
-			saveOutputDoc(options.getOptionValue("outputdoc"),resultListener.getOutputMap(),context);
-		}		
+		}										
 		
 		while(!resultListener.isComplete()) {
 			Thread.sleep(100);			
@@ -141,14 +134,14 @@ public class CommandLineLauncher implements Launchable {
 				error("The specified output directory '"+options.getOptionValue("output")+"' already exists");
 			}
 		}
-		else {
+		else if (!options.hasOption("outputdoc")) {
 			result = new File(dataflowName+"_output");
 			int x=1;
 			while (result.exists()) {
 				result=new File(dataflowName+"_output_"+x);
 				x++;
 			}
-		}
+		}		
 		return result;
 	}
 
@@ -266,15 +259,26 @@ public class CommandLineLauncher implements Launchable {
 	}		
 
 	private CommandLineResultListener addResultListener(WorkflowInstanceFacade facade,
-			InvocationContext context,Dataflow dataflow,File outputDir) {
+			InvocationContext context,Dataflow dataflow,CommandLineOptions options) {
+		File outputDir = null;
+		File baclavaDoc = null;
+		
+		if (options.saveResultsToDirectory()) {
+			outputDir = determineOutputDir(options,dataflow.getLocalName());
+		}
+		if (options.outputDocument()!=null) {
+			baclavaDoc = new File(options.outputDocument());
+		}
+		
 		Map<String,Integer> outputPortNamesAndDepth = new HashMap<String, Integer>();
 		for (DataflowOutputPort port : dataflow.getOutputPorts()) {
 			outputPortNamesAndDepth.put(port.getName(), port.getDepth());
 		}
-		
-		CommandLineResultListener listener = new CommandLineResultListener(outputPortNamesAndDepth,outputDir);
+		SaveResultsHandler resultsHandler = new SaveResultsHandler(outputPortNamesAndDepth, outputDir, baclavaDoc);
+		CommandLineResultListener listener = new CommandLineResultListener(outputPortNamesAndDepth.size(),resultsHandler);
 		facade.addResultListener(listener);
 		return listener;
+		
 	}
 
 	protected ReferenceService createReferenceServiceBean() {
