@@ -6,7 +6,7 @@
 		<groupId>net.sf.taverna</groupId>
 		<version>0.1.2009-02-12</version>
 	</parent>
-	<groupId>net.sf.taverna.t2</groupId>
+	<groupId>net.sf.taverna.t2.taverna-commandline</groupId>
 	<artifactId>taverna-commandline</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>	
@@ -17,6 +17,7 @@
 		<t2.infrastructure.version>2.1-SNAPSHOT</t2.infrastructure.version>
 		<t2.core.provenanceconnector.version>1.1-SNAPSHOT</t2.core.provenanceconnector.version>
 		<taverna.version>1.7.2.0</taverna.version>
+		<t2.ui-components.version>1.1-SNAPSHOT</t2.ui-components.version>
 	</properties>
 
 	<name>taverna-commandline</name>
