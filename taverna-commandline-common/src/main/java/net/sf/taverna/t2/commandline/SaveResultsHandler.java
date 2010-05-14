@@ -57,9 +57,9 @@ public class SaveResultsHandler {
 		}
 	}
 	
-	public void saveOutputDocument(Map<String,WorkflowDataToken> allResults) {
+	public void saveOutputDocument(Map<String,WorkflowDataToken> allResults) throws Exception {
 		if (outputDocumentFile!=null) {
-			
+			new BaclavaDocumentHandler().storeDocument(allResults, outputDocumentFile);
 		}
 	}
 
@@ -124,7 +124,6 @@ public class SaveResultsHandler {
 			saveIndividualDataFile(id, dataFile, token.getContext());
 			c++;
 		}
-
 	}
 
 	protected void saveIndividualDataFile(T2Reference reference, File dataFile,
@@ -138,8 +137,9 @@ public class SaveResultsHandler {
 
 		Object data = null;
 		if (reference.containsErrors()) {
-			data = describeErrorDocument(context.getReferenceService()
-					.getErrorDocumentService().getError(reference));
+			ErrorDocument errorDoc = context.getReferenceService()
+			.getErrorDocumentService().getError(reference);
+			data = ErrorDocumentHandler.buildErrorDocumentString(errorDoc, context);			
 		} else {
 			// FIXME: this really should be done using a stream rather
 			// than an instance of the object in memory
@@ -168,9 +168,5 @@ public class SaveResultsHandler {
 					+ dataFile.getAbsolutePath(), e);
 		}
 	}
-
-	private Object describeErrorDocument(ErrorDocument error) {
-		// FIXME: obviously need to do more than this!
-		return error.getMessage();
-	}
+	
 }

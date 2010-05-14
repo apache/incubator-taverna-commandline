@@ -3,10 +3,14 @@ package net.sf.taverna.t2.commandline;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import net.sf.taverna.t2.facade.ResultListener;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
 
 public class CommandLineResultListener implements ResultListener {
+	
+	private static final Logger logger = Logger.getLogger(CommandLineResultListener.class);
 	
 	private Map<String, WorkflowDataToken> outputMap = new HashMap<String, WorkflowDataToken>();	
 	private Map<String,WorkflowDataToken> finalTokens = new HashMap<String, WorkflowDataToken>();	
@@ -30,7 +34,11 @@ public class CommandLineResultListener implements ResultListener {
 		if (token.isFinal()) {
 			finalTokens.put(portName, token);		
 			if (isComplete() && saveOutputDocument) {
-				saveResultsHandler.saveOutputDocument(finalTokens);
+				try {
+					saveResultsHandler.saveOutputDocument(finalTokens);
+				} catch (Exception e) {
+					logger.error("An error occurred saving the final results to -outputdoc",e);
+				}
 			}
 		}
 	}
