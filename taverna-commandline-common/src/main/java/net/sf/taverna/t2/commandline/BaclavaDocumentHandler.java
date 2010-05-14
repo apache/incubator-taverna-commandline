@@ -32,6 +32,8 @@ public class BaclavaDocumentHandler {
 	
 	private static final Logger logger = Logger
 			.getLogger(BaclavaDocumentHandler.class);
+	
+	
 
 	public void storeDocument(Map<String, WorkflowDataToken> finalResults,
 			File outputFile) throws Exception {

@@ -80,7 +80,7 @@ public class CommandLineLauncher implements Launchable {
 		InvocationContext context = createInvocationContext();
 		
 		WorkflowInstanceFacade facade = compileFacade(dataflow, context);
-		Map<String,WorkflowDataToken> inputs = registerInputs(options,context);					
+		Map<String,WorkflowDataToken> inputs = new InputsHandler().registerInputs(options, context);				
 		
 		CommandLineResultListener resultListener = addResultListener(facade, context,dataflow,options);
 
@@ -128,13 +128,13 @@ public class CommandLineLauncher implements Launchable {
 
 	private File determineOutputDir(CommandLineOptions options, String dataflowName) {
 		File result = null;
-		if (options.hasOption("output")) {
+		if (options.saveResultsToDirectory()) {
 			result = new File(options.getOptionValue("output"));
 			if (result.exists()) {
 				error("The specified output directory '"+options.getOptionValue("output")+"' already exists");
 			}
 		}
-		else if (!options.hasOption("outputdoc")) {
+		else if (options.outputDocument()!=null) {
 			result = new File(dataflowName+"_output");
 			int x=1;
 			while (result.exists()) {
@@ -143,114 +143,14 @@ public class CommandLineLauncher implements Launchable {
 			}
 		}		
 		return result;
-	}
-
-	private void saveOutputDoc(String filename,Map<String, WorkflowDataToken> outputMap,
-			InvocationContext context) throws IOException {
-		Map<String, Object> objectMap = new HashMap<String, Object>();
-		for (String outputName : outputMap.keySet()) {			
-			WorkflowDataToken token = outputMap.get(outputName);
-			Object value = context.getReferenceService().renderIdentifier(token.getData(),
-					Object.class, context);
-			objectMap.put(outputName, value);
-   		}
-		Map<String, DataThing> dataThings = bakeDataThingMap(objectMap);
-		
-		// Build the string containing the XML document from the result map
-		Document doc = getDataDocument(dataThings);
-	    XMLOutputter xo = new XMLOutputter(Format.getPrettyFormat());
-	    File file = new File(filename);
-	    String xmlString = xo.outputString(doc);
-	    PrintWriter out = new PrintWriter(new FileWriter(file));
-	    out.print(xmlString);
-	    out.flush();
-	    out.close();
-	}
-	
-	/**
-	 * Returns a map of port names to DataThings from a map of port names to a 
-	 * list of (lists of ...) result objects.
-	 */
-	protected Map<String, DataThing> bakeDataThingMap(Map<String, Object> resultMap) {
-		
-		Map<String, DataThing> dataThingMap = new HashMap<String, DataThing>();
-		for (Iterator<String> i = resultMap.keySet().iterator(); i.hasNext();) {
-			String portName = (String) i.next();
-			dataThingMap.put(portName, DataThingFactory.bake(resultMap.get(portName)));
-		}
-		return dataThingMap;
-	}
-	
-	/**
-	 * Returns a org.jdom.Document from a map of port named to DataThingS containing
-	 * the port's results.
-	 */
-	public static Document getDataDocument(Map<String, DataThing> dataThings) {
-		Element rootElement = new Element("dataThingMap", namespace);
-		Document theDocument = new Document(rootElement);
-		for (Iterator<String> i = dataThings.keySet().iterator(); i.hasNext();) {
-			String key = (String) i.next();
-			DataThing value = (DataThing) dataThings.get(key);
-			Element dataThingElement = new Element("dataThing", namespace);
-			dataThingElement.setAttribute("key", key);
-			dataThingElement.addContent(value.getElement());
-			rootElement.addContent(dataThingElement);
-		}
-		return theDocument;
-	}
+	}	
 
 	protected void error(String msg) {		
 		System.err.println(msg);
 		System.exit(-1);		
 	}
 
-	protected Map<String, WorkflowDataToken> registerInputs(CommandLineOptions options,
-			InvocationContext context) throws Exception {
-		Map<String,WorkflowDataToken> inputs = new HashMap<String, WorkflowDataToken>();
-		URL url = new URL("file:");
-		
-		if (options.hasOption("input") && options.hasOption("inputdoc")) {
-			error("You can't provide both -input and -inputdoc arguments");
-		}
-		
-		if (options.hasOption("input")) {
-			String[] inputParams = options.getOptionValues("input");
-			for (int i = 0; i < inputParams.length; i = i + 2) {
-				String inputName = inputParams[i];
-				try {
-					
-					URL inputURL = new URL(url, inputParams[i + 1]);
-					
-					Object inputValue=IOUtils.toString(inputURL.openStream());
-					System.out.println("Input for "+inputName+" is '"+inputValue.toString()+"'");
-					T2Reference entityId=context.getReferenceService().register(inputValue, 0, true, context);
-					WorkflowDataToken token = new WorkflowDataToken("",new int[]{}, entityId, context);
-					inputs.put(inputName, token);
-					
-				} catch (IndexOutOfBoundsException e) {
-					error("Missing input filename for input "+ inputName);					
-				} catch (IOException e) {
-					error("Could not read input " + inputName + ": " + e.getMessage());				
-				}
-			}
-		}
-		
-		if (options.hasOption("inputdoc")) {
-			String inputDocPath = options.getOptionValue("inputdoc");
-			URL inputDocURL = new URL(url, inputDocPath);
-			SAXBuilder builder = new SAXBuilder();
-			Document inputDoc = builder.build(inputDocURL.openStream());
-			Map<String,DataThing> things = DataThingXMLFactory.parseDataDocument(inputDoc);
-			for (String inputName : things.keySet()) {
-				DataThing thing = things.get(inputName);
-				T2Reference entityId=context.getReferenceService().register(thing.getDataObject(), 0, true, context);
-				WorkflowDataToken token = new WorkflowDataToken("",new int[]{}, entityId, context);
-				inputs.put(inputName, token);
-			}
-		}
-		
-		return inputs;
-	}
+	
 
 	private URL readWorkflowURL(String workflowOption) throws Exception {
 		URL url = new URL("file:");		

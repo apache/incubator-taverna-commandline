@@ -27,6 +27,8 @@ public class CommandLineOptions {
 		if (hasOption("embedded") && hasOption("clientserver")) throw new InvalidOptionException("The options -embedded, -clientserver and -inmemory cannot be used together");
 	}
 	
+	
+	
 	public String getWorkflow() throws InvalidOptionException {
 		if (getArgs().length!=1) {
 			throw new InvalidOptionException("You must specify a workflow");
@@ -73,6 +75,10 @@ public class CommandLineOptions {
 	
 	public String outputDocument() {
 		return getOptionValue("outputdoc");
+	}
+	
+	public String inputDocument() {
+		return getOptionValue("inputdoc");
 	}
 
 	public boolean hasOption(String option) {
