@@ -275,7 +275,7 @@ public class CommandLineLauncher implements Launchable {
 			outputPortNamesAndDepth.put(port.getName(), port.getDepth());
 		}
 		SaveResultsHandler resultsHandler = new SaveResultsHandler(outputPortNamesAndDepth, outputDir, baclavaDoc);
-		CommandLineResultListener listener = new CommandLineResultListener(outputPortNamesAndDepth.size(),resultsHandler);
+		CommandLineResultListener listener = new CommandLineResultListener(outputPortNamesAndDepth.size(),resultsHandler,outputDir!=null,baclavaDoc!=null);
 		facade.addResultListener(listener);
 		return listener;
 		
