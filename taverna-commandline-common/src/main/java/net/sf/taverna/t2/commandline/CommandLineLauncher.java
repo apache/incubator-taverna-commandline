@@ -151,13 +151,13 @@ public class CommandLineLauncher implements Launchable {
 
 	private File determineOutputDir(CommandLineOptions options, String dataflowName) {
 		File result = null;
-		if (options.saveResultsToDirectory()) {
+		if (options.getOutputDirectory()!=null) {
 			result = new File(options.getOutputDirectory());
 			if (result.exists()) {
 				error("The specified output directory '" + options.getOutputDirectory() +"' already exists");
 			}
 		}
-		else if (options.getOutputDocument()!=null) {
+		else if (options.getOutputDocument()==null) {
 			result = new File(dataflowName+"_output");
 			int x=1;
 			while (result.exists()) {
@@ -165,6 +165,9 @@ public class CommandLineLauncher implements Launchable {
 				x++;
 			}
 		}		
+		if (result!=null) {
+			System.out.println("Outputs will be saved to the directory: "+result.getAbsolutePath());
+		}
 		return result;
 	}	
 
