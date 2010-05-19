@@ -1,6 +1,7 @@
 package net.sf.taverna.t2.commandline;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,12 +14,13 @@ import org.apache.commons.io.IOUtils;
 import org.embl.ebi.escience.baclava.DataThing;
 import org.embl.ebi.escience.baclava.factory.DataThingXMLFactory;
 import org.jdom.Document;
+import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
 public class InputsHandler {
 
 	protected Map<String, WorkflowDataToken> registerInputs(CommandLineOptions options,
-			InvocationContext context) throws Exception {
+			InvocationContext context) throws InvalidOptionException, JDOMException, IOException  {
 		Map<String,WorkflowDataToken> inputs = new HashMap<String, WorkflowDataToken>();
 		URL url = new URL("file:");
 		
