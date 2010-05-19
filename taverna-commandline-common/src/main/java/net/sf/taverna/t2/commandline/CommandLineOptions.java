@@ -51,6 +51,7 @@ public class CommandLineOptions {
 	protected void checkForInvalid() throws InvalidOptionException {
 		if (hasOption("provenance") && !(hasOption("embedded") || hasOption("clientserver") || hasOption("dbproperties"))) throw new InvalidOptionException("You should be running with a database to use provenance");
 		if (hasOption("provenance") && hasOption("inmemory")) throw new InvalidOptionException("You should be running with a database to use provenance");
+		if (hasOption("input") && hasOption("inputdoc")) throw new InvalidOptionException("You can't provide both -input and -inputdoc arguments");
 		
 		if (getArgs().length!=1 && !(hasOption("help") || hasOption("startdb"))) throw new InvalidOptionException("You must specify a workflow");
 		if (hasOption("inmemory") && hasOption("embedded")) throw new InvalidOptionException("The options -embedded, -clientserver and -inmemory cannot be used together");
@@ -168,7 +169,16 @@ public class CommandLineOptions {
 	 * @return an array of portname and path to files containing individual inputs.
 	 */
 	public String [] getInputs() {
-		return getOptionValues("input");
+		if (hasInputs()) {
+			return getOptionValues("input");
+		}
+		else {
+			return new String[]{};
+		}
+	}
+	
+	public boolean hasInputs() {
+		return hasOption("input");
 	}
 
 	public boolean hasOption(String option) {
@@ -207,7 +217,7 @@ public class CommandLineOptions {
 						"inputdoc");
 
 		Option inputOption = OptionBuilder.withArgName("name filename")
-				.hasArgs(2).withValueSeparator('=').withDescription(
+				.hasArgs(2).withValueSeparator(' ').withDescription(
 						"load the named input from file or URL")
 				.create("input");
 		

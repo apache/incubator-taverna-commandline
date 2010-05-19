@@ -2,6 +2,7 @@ package net.sf.taverna.t2.commandline;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
@@ -27,6 +28,40 @@ public class TestCommandLineOptionsHandler {
 		assertNull(options.getWorkflow());
 		options = new CommandLineOptions(new String[]{"myworkflow.t2flow"});
 		assertEquals("myworkflow.t2flow", options.getWorkflow());
+	}
+	
+	@Test(expected=InvalidOptionException.class)
+	public void cannotProvideInputsAndInputDoc() throws Exception {
+		new CommandLineOptions(new String[]{"-input","fred","fred.txt","-inputdoc","myworkflow.t2flow"});
+	}
+	
+	@Test
+	public void getInputs() throws Exception {
+		CommandLineOptions options = new CommandLineOptions(new String[]{"-input","fred","fred.txt","myworkflow.t2flow"});
+		assertEquals(2, options.getInputs().length);
+		assertEquals("fred",options.getInputs()[0]);
+		assertEquals("fred.txt",options.getInputs()[1]);
+		
+		options = new CommandLineOptions(new String[]{"-input","fred","fred.txt","-input","fred2","fred2.txt","myworkflow.t2flow"});
+		assertEquals(4, options.getInputs().length);
+		assertEquals("fred",options.getInputs()[0]);
+		assertEquals("fred.txt",options.getInputs()[1]);
+		assertEquals("fred2",options.getInputs()[2]);
+		assertEquals("fred2.txt",options.getInputs()[3]);
+		
+		options = new CommandLineOptions(new String[]{"myworkflow.t2flow"});
+		assertNotNull(options.getInputs());
+		assertEquals(0, options.getInputs().length);		
+				
+	}
+	
+	@Test
+	public void hasInputs() throws Exception {
+		CommandLineOptions options = new CommandLineOptions(new String[]{"-input","fred","fred.txt","myworkflow.t2flow"});
+		assertTrue(options.hasInputs());
+		
+		options = new CommandLineOptions(new String[]{"myworkflow.t2flow"});
+		assertFalse(options.hasInputs());
 	}
 	
 	@Test

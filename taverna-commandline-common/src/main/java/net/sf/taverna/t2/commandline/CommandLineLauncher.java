@@ -82,7 +82,7 @@ public class CommandLineLauncher implements Launchable {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) {
-		new CommandLineLauncher().launch(args);
+		new CommandLineLauncher().launch(args);		
 	}
 
 	public int launch(String[] args) {
@@ -126,9 +126,10 @@ public class CommandLineLauncher implements Launchable {
 
 				InvocationContext context = createInvocationContext();
 
-				WorkflowInstanceFacade facade = compileFacade(dataflow, context);
-				Map<String, WorkflowDataToken> inputs = new InputsHandler()
-						.registerInputs(options, context);
+				WorkflowInstanceFacade facade = compileFacade(dataflow, context);				
+				InputsHandler inputsHandler = new InputsHandler();
+				inputsHandler.checkProvidedInputs(dataflow.getInputPorts(),options);
+				Map<String, WorkflowDataToken> inputs = inputsHandler.registerInputs(options, context);
 
 				CommandLineResultListener resultListener = addResultListener(
 						facade, context, dataflow, options);

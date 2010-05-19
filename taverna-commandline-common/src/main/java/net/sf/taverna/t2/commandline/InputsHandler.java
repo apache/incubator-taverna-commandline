@@ -23,14 +23,18 @@ package net.sf.taverna.t2.commandline;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import net.sf.taverna.t2.commandline.exceptions.InputMismatchException;
 import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
 import net.sf.taverna.t2.commandline.exceptions.ReadInputException;
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
 import net.sf.taverna.t2.reference.T2Reference;
+import net.sf.taverna.t2.workflowmodel.DataflowInputPort;
 
 import org.apache.commons.io.IOUtils;
 import org.embl.ebi.escience.baclava.DataThing;
@@ -40,8 +44,34 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
 public class InputsHandler {
+	
 
-	protected Map<String, WorkflowDataToken> registerInputs(CommandLineOptions options,
+	public void checkProvidedInputs(List<? extends DataflowInputPort> list, CommandLineOptions options) throws InputMismatchException  {
+		//we dont check for the document 
+		if (options.getInputDocument()==null) {
+			List<String> providedInputNames = new ArrayList<String>();
+			for (int i=0;i<options.getInputs().length;i+=2) {
+				providedInputNames.add(options.getInputs()[i]);								
+			}
+			
+			List<String> portNames = new ArrayList<String>();
+			for (DataflowInputPort port : list) {
+				portNames.add(port.getName());
+			}
+			
+			if (list.size()*2!=options.getInputs().length) {
+				throw new InputMismatchException("The number of inputs provided does not match the number of input ports.",portNames,providedInputNames);
+			}
+			
+			for (String portName : portNames) {
+				if (!providedInputNames.contains(portName)) {
+					throw new InputMismatchException("The provided inputs does not contain an input for the port '"+portName+"'",portNames,providedInputNames);
+				}
+			}
+		}
+	}
+
+	public Map<String, WorkflowDataToken> registerInputs(CommandLineOptions options,
 			InvocationContext context) throws InvalidOptionException, ReadInputException  {
 		Map<String,WorkflowDataToken> inputs = new HashMap<String, WorkflowDataToken>();
 		URL url;
@@ -52,11 +82,7 @@ public class InputsHandler {
 			throw new ReadInputException("The was an internal error setting up the URL to open the inputs. You should contact Taverna support.",e1);
 		}
 		
-		if (options.hasOption("input") && options.hasOption("inputdoc")) {
-			throw new InvalidOptionException("You can't provide both -input and -inputdoc arguments");
-		}
-		
-		if (options.hasOption("input")) {
+		if (options.hasInputs()) {
 			String[] inputParams = options.getInputs();
 			for (int i = 0; i < inputParams.length; i = i + 2) {
 				String inputName = inputParams[i];
@@ -65,7 +91,7 @@ public class InputsHandler {
 					URL inputURL = new URL(url, inputParams[i + 1]);
 					
 					Object inputValue=IOUtils.toString(inputURL.openStream());
-					System.out.println("Input for "+inputName+" is '"+inputValue.toString()+"'");
+					
 					T2Reference entityId=context.getReferenceService().register(inputValue, 0, true, context);
 					WorkflowDataToken token = new WorkflowDataToken("",new int[]{}, entityId, context);
 					inputs.put(inputName, token);
