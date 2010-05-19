@@ -110,7 +110,7 @@ public class InputsHandler {
 			try {
 				inputDocURL = new URL(url, inputDocPath);
 			} catch (MalformedURLException e1) {
-				throw new ReadInputException("The a problem reading the input document from : "+inputDocPath+", "+e1.getMessage(),e1);
+				throw new ReadInputException("The a error reading the input document from : "+inputDocPath+", "+e1.getMessage(),e1);
 			}
 			SAXBuilder builder = new SAXBuilder();
 			Document inputDoc;
@@ -119,7 +119,7 @@ public class InputsHandler {
 			} catch (IOException e) {
 				throw new ReadInputException("There was an error reading the input document file: "+e.getMessage(),e);
 			} catch (JDOMException e) {
-				throw new ReadInputException("There was a problem processing the input document XML: "+e.getMessage(),e);
+				throw new ReadInputException("There was a error processing the input document XML: "+e.getMessage(),e);
 			}
 			Map<String,DataThing> things = DataThingXMLFactory.parseDataDocument(inputDoc);
 			for (String inputName : things.keySet()) {

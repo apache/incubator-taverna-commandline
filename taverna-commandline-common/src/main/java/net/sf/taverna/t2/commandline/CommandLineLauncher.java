@@ -92,8 +92,8 @@ public class CommandLineLauncher implements Launchable {
 			error("There was an error opening the workflow: " + e.getMessage());
 		} catch (DeserializationException e) {
 			error("There was an error opening the workflow: " + e.getMessage());
-		} catch (InvalidDataflowException e) {
-			error("There was an error opening the workflow: " + e.getMessage());
+		} catch (InvalidDataflowException e) {			
+			error("There was an error validating the workflow: " + e.getMessage());
 		} catch (TokenOrderException e) {
 			error("There was an error starting the workflow execution: "
 					+ e.getMessage());
@@ -122,8 +122,8 @@ public class CommandLineLauncher implements Launchable {
 				URL workflowURL = readWorkflowURL(options.getWorkflow());
 
 				Dataflow dataflow = openDataflow(workflowURL);
-				DataflowValidationReport report = validateDataflow(dataflow);
-
+				validateDataflow(dataflow);
+				
 				InvocationContext context = createInvocationContext();
 
 				WorkflowInstanceFacade facade = compileFacade(dataflow, context);				
@@ -154,6 +154,15 @@ public class CommandLineLauncher implements Launchable {
 		}
 
 		return 0;
+	}
+
+	protected void validateDataflow(Dataflow dataflow) throws InvalidDataflowException {
+		//FIXME: this needs expanding upon to give more details info back to the user
+		//FIXME: added a getMessage to InvalidDataflowException may be good place to do this.
+		DataflowValidationReport report = dataflow.checkValidity();
+		if (!report.isValid()) {
+			throw new InvalidDataflowException(dataflow, report);
+		}		
 	}
 
 	protected void executeWorkflow(WorkflowInstanceFacade facade,
@@ -262,7 +271,7 @@ public class CommandLineLauncher implements Launchable {
 			return new URL(url, workflowOption);
 		} catch (MalformedURLException e) {
 			throw new OpenDataflowException(
-					"The was a problem processing the URL to the workflow: "
+					"The was an error processing the URL to the workflow: "
 							+ e.getMessage(), e);
 		}
 	}
@@ -327,10 +336,6 @@ public class CommandLineLauncher implements Launchable {
 							+ e.getMessage(), e);
 		}
 		return deserializer.deserializeDataflow(el);
-	}
-
-	protected DataflowValidationReport validateDataflow(Dataflow dataflow) {
-		return dataflow.checkValidity();
 	}
 
 }
