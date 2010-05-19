@@ -33,7 +33,7 @@ public class CommandLineOptions {
 		if (hasOption("provenance") && !(hasOption("embedded") || hasOption("clientserver") || hasOption("dbproperties"))) throw new InvalidOptionException("You should be running with a database to use provenance");
 		if (hasOption("provenance") && hasOption("inmemory")) throw new InvalidOptionException("You should be running with a database to use provenance");
 		
-		if (getArgs().length!=1 && !hasOption("help")) throw new InvalidOptionException("You must specify a workflow");
+		if (getArgs().length!=1 && !(hasOption("help") || hasOption("startdb"))) throw new InvalidOptionException("You must specify a workflow");
 		if (hasOption("inmemory") && hasOption("embedded")) throw new InvalidOptionException("The options -embedded, -clientserver and -inmemory cannot be used together");
 		if (hasOption("inmemory") && hasOption("clientserver")) throw new InvalidOptionException("The options -embedded, -clientserver and -inmemory cannot be used together");
 		if (hasOption("embedded") && hasOption("clientserver")) throw new InvalidOptionException("The options -embedded, -clientserver and -inmemory cannot be used together");

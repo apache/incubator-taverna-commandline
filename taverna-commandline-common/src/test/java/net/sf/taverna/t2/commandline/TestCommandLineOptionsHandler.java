@@ -26,6 +26,18 @@ public class TestCommandLineOptionsHandler {
 		new CommandLineOptions(new String[]{"-help"});
 	}
 	
+	@Test
+	public void noWorkflowNameButStartDB() throws Exception {
+		//should not throw an error				
+		new CommandLineOptions(new String[]{"-startdb"});
+	}
+
+	@Test
+	public void workflowNameAndStartDB() throws Exception {
+		//should not throw an error
+		new CommandLineOptions(new String[]{"-startdb","myworkflow.t2flow"});
+	}
+	
 	@Test(expected=InvalidOptionException.class)
 	public void provenanceButNoDatabase() throws Exception {
 		new CommandLineOptions(new String[]{"-provenance","myworkflow.t2flow"});
