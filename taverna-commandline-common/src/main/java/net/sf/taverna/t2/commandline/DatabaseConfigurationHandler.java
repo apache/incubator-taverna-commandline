@@ -1,11 +1,11 @@
 package net.sf.taverna.t2.commandline;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import net.sf.taverna.t2.commandline.exceptions.DatabaseConfigurationException;
 import net.sf.taverna.t2.workbench.reference.config.DataManagementConfiguration;
 import net.sf.taverna.t2.workbench.reference.config.DataManagementHelper;
 
@@ -20,7 +20,7 @@ public class DatabaseConfigurationHandler {
 		dbConfig.disableAutoSave();
 	}
 
-	public void configureDatabase() throws IOException {
+	public void configureDatabase() throws DatabaseConfigurationException {
 		overrideDefaults();
 		useOptions();
 		if (dbConfig.getStartInternalDerbyServer()) {
@@ -31,7 +31,7 @@ public class DatabaseConfigurationHandler {
 		DataManagementHelper.setupDataSource();
 	}
 
-	public void useOptions() throws IOException {
+	public void useOptions() throws DatabaseConfigurationException {
 		
 		if (options.hasOption("port")) {			
 			dbConfig.setPort(options.getDatabasePort());		
@@ -61,14 +61,22 @@ public class DatabaseConfigurationHandler {
 		}		
 		
 		if (options.hasOption("dbproperties")) {
-			readConfigirationFromFile(options.getDatabaseProperties());
+			try {
+				readConfigirationFromFile(options.getDatabaseProperties());
+			} catch (IOException e) {
+				throw new DatabaseConfigurationException("There was an error reading the database configuration options at "+options.getDatabaseProperties()+" : "+e.getMessage(),e);
+			}
 		}
 	}
 
-	protected void overrideDefaults() throws IOException {
+	protected void overrideDefaults() throws DatabaseConfigurationException {
 		
 		InputStream inStr = DatabaseConfigurationHandler.class.getClassLoader().getResourceAsStream("database-defaults.properties");
-		importConfigurationFromStream(inStr);
+		try {
+			importConfigurationFromStream(inStr);
+		} catch (IOException e) {
+			throw new DatabaseConfigurationException("There was an error reading the default database configuration settings: "+e.getMessage(),e);
+		}
 	}
 
 	private void importConfigurationFromStream(InputStream inStr)

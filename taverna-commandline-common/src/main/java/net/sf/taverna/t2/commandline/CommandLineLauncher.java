@@ -10,6 +10,10 @@ import java.util.Map;
 
 import net.sf.taverna.platform.spring.RavenAwareClassPathXmlApplicationContext;
 import net.sf.taverna.raven.launcher.Launchable;
+import net.sf.taverna.t2.commandline.exceptions.DatabaseConfigurationException;
+import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
+import net.sf.taverna.t2.commandline.exceptions.OpenDataflowException;
+import net.sf.taverna.t2.commandline.exceptions.ReadInputException;
 import net.sf.taverna.t2.facade.WorkflowInstanceFacade;
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.invocation.TokenOrderException;
@@ -60,27 +64,28 @@ public class CommandLineLauncher implements Launchable {
 	
 	public int launch(String [] args) {
 		try {
-			return setupAndLaunch(args);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return setupAndLaunch(args);		
 		} catch (EditException e) {
 			error("There was an error opening the workflow: "+e.getMessage());
 		} catch (DeserializationException e) {
 			error("There was an error opening the workflow: "+e.getMessage());
 		} catch (InvalidDataflowException e) {
 			error("There was an error opening the workflow: "+e.getMessage());
-		}catch (JDOMException e) {
-			error("There was an error opening the workflow: "+e.getMessage());
-		}  catch (TokenOrderException e) {
+		} catch (TokenOrderException e) {
 			error("There was an error starting the workflow execution: "+e.getMessage());
 		} catch (InvalidOptionException e) {
 			error(e.getMessage());
-		}
+		} catch (ReadInputException e) {
+			error(e.getMessage());
+		} catch (OpenDataflowException e) {
+			error(e.getMessage());
+		} catch (DatabaseConfigurationException e) {
+			error(e.getMessage());
+		} 
 		return 0;
 	}
 
-	public int setupAndLaunch(String[] args) throws InvalidOptionException, IOException, EditException, DeserializationException, JDOMException, InvalidDataflowException, TokenOrderException {		
+	public int setupAndLaunch(String[] args) throws InvalidOptionException, EditException, DeserializationException, InvalidDataflowException, TokenOrderException, ReadInputException, OpenDataflowException, DatabaseConfigurationException {		
 		
 		CommandLineOptions options = new CommandLineOptions(args);
 		if (!options.askedForHelp()) {
@@ -88,10 +93,9 @@ public class CommandLineLauncher implements Launchable {
 			dbHandler.configureDatabase();
 			
 			URL workflowURL = readWorkflowURL(options.getWorkflow());
+			
 
-			InputStream stream = workflowURL.openStream();
-
-			Dataflow dataflow = openDataflowFromStream(stream);
+			Dataflow dataflow = openDataflow(workflowURL);
 			DataflowValidationReport report = validateDataflow(dataflow);		
 			
 			InvocationContext context = createInvocationContext();
@@ -174,14 +178,16 @@ public class CommandLineLauncher implements Launchable {
 	protected void error(String msg) {		
 		System.err.println(msg);
 		System.exit(-1);		
-	}
+	}	
 
-	
-
-	private URL readWorkflowURL(String workflowOption) throws MalformedURLException {
-		URL url = new URL("file:");		
-		URL workflowURL = new URL(url, workflowOption);
-		return workflowURL;
+	private URL readWorkflowURL(String workflowOption) throws OpenDataflowException {
+		URL url;
+		try {
+			url = new URL("file:");
+			return new URL(url, workflowOption);
+		} catch (MalformedURLException e) {
+			throw new OpenDataflowException("The was a problem processing the URL to the workflow: "+e.getMessage(),e);
+		}				
 	}		
 
 	private CommandLineResultListener addResultListener(WorkflowInstanceFacade facade,
@@ -220,12 +226,20 @@ public class CommandLineLauncher implements Launchable {
 		return edits.createWorkflowInstanceFacade(dataflow, context, "");
 	}
 
-	protected Dataflow openDataflowFromStream(InputStream stream) throws JDOMException, IOException, DeserializationException, EditException
+	protected Dataflow openDataflow(URL workflowURL) throws DeserializationException, EditException, OpenDataflowException
 			 {
 		XMLDeserializer deserializer = XMLDeserializerRegistry.getInstance()
 				.getDeserializer();
 		SAXBuilder builder = new SAXBuilder();
-		Element el = builder.build(stream).detachRootElement();
+		Element el;
+		try {
+			InputStream stream = workflowURL.openStream();
+			el = builder.build(stream).detachRootElement();
+		} catch (JDOMException e) {
+			throw new OpenDataflowException("There was a problem processing the workflow XML: "+e.getMessage(),e);
+		} catch (IOException e) {
+			throw new OpenDataflowException("There was a problem reading the workflow file: "+e.getMessage(),e);
+		}
 		return deserializer.deserializeDataflow(el);
 	}
 

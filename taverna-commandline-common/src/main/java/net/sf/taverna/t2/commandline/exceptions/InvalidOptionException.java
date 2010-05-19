@@ -1,4 +1,4 @@
-package net.sf.taverna.t2.commandline;
+package net.sf.taverna.t2.commandline.exceptions;
 
 public class InvalidOptionException extends Exception {
 

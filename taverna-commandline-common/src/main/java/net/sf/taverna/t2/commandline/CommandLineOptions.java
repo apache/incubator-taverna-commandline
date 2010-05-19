@@ -3,6 +3,8 @@ package net.sf.taverna.t2.commandline;
 import java.io.IOException;
 import java.io.InputStream;
 
+import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;

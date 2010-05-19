@@ -1,5 +1,7 @@
 package net.sf.taverna.t2.commandline;
 
+import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
+
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

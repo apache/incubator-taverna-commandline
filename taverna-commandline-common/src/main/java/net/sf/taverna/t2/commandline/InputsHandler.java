@@ -6,6 +6,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
+import net.sf.taverna.t2.commandline.exceptions.ReadInputException;
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
 import net.sf.taverna.t2.reference.T2Reference;
@@ -20,9 +22,15 @@ import org.jdom.input.SAXBuilder;
 public class InputsHandler {
 
 	protected Map<String, WorkflowDataToken> registerInputs(CommandLineOptions options,
-			InvocationContext context) throws InvalidOptionException, JDOMException, IOException  {
+			InvocationContext context) throws InvalidOptionException, ReadInputException  {
 		Map<String,WorkflowDataToken> inputs = new HashMap<String, WorkflowDataToken>();
-		URL url = new URL("file:");
+		URL url;
+		try {
+			url = new URL("file:");
+		} catch (MalformedURLException e1) {
+			//Should never happen, but just incase:
+			throw new ReadInputException("The was an internal error setting up the URL to open the inputs. You should contact Taverna support.",e1);
+		}
 		
 		if (options.hasOption("input") && options.hasOption("inputdoc")) {
 			throw new InvalidOptionException("You can't provide both -input and -inputdoc arguments");
@@ -52,9 +60,21 @@ public class InputsHandler {
 		
 		if (options.getInputDocument()!=null) {
 			String inputDocPath = options.getInputDocument();
-			URL inputDocURL = new URL(url, inputDocPath);
+			URL inputDocURL;
+			try {
+				inputDocURL = new URL(url, inputDocPath);
+			} catch (MalformedURLException e1) {
+				throw new ReadInputException("The a problem reading the input document from : "+inputDocPath+", "+e1.getMessage(),e1);
+			}
 			SAXBuilder builder = new SAXBuilder();
-			Document inputDoc = builder.build(inputDocURL.openStream());
+			Document inputDoc;
+			try {
+				inputDoc = builder.build(inputDocURL.openStream());
+			} catch (IOException e) {
+				throw new ReadInputException("There was an error reading the input document file: "+e.getMessage(),e);
+			} catch (JDOMException e) {
+				throw new ReadInputException("There was a problem processing the input document XML: "+e.getMessage(),e);
+			}
 			Map<String,DataThing> things = DataThingXMLFactory.parseDataDocument(inputDoc);
 			for (String inputName : things.keySet()) {
 				DataThing thing = things.get(inputName);
