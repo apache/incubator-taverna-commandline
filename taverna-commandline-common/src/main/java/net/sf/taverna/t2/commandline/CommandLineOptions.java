@@ -25,8 +25,7 @@ public class CommandLineOptions {
 	public CommandLineOptions(String [] args) throws InvalidOptionException{
 		this.options = intitialiseOptions();
 		this.commandLine = processArgs(args);	
-		checkForInvalid();
-		checkForHelp();		
+		checkForInvalid();		
 	}
 	
 	protected void checkForInvalid() throws InvalidOptionException {
@@ -39,20 +38,31 @@ public class CommandLineOptions {
 		if (hasOption("embedded") && hasOption("clientserver")) throw new InvalidOptionException("The options -embedded, -clientserver and -inmemory cannot be used together");
 	}
 		
+	public boolean getStartDatabaseOnly() throws InvalidOptionException {
+		return (getStartDatabase() && (getWorkflow()==null));
+	}
+		
+	public boolean getStartDatabase() {
+		return hasOption("startdb");
+	}
 	
 	public String getWorkflow() throws InvalidOptionException {
-		if (getArgs().length!=1) {
-			throw new InvalidOptionException("You must specify a workflow");
+		if (getArgs().length==0) {
+			return null;
 		}
-		return getArgs()[0];
+		else if (getArgs().length!=1) {
+			throw new InvalidOptionException("You should only specify one workflow file");
+		}
+		else {
+			return getArgs()[0];
+		}
 	}
 	
 	public String[] getArgs() {
 		return commandLine.getArgs();
 	}
 	
-	private void checkForHelp() {
-		if (askedForHelp()) {
+	public void displayHelp() {		
 			InputStream helpStream = CommandLineOptions.class.getClassLoader().getResourceAsStream("help.txt");
 			HelpFormatter formatter = new HelpFormatter();			
 			try {
@@ -60,8 +70,7 @@ public class CommandLineOptions {
 			} catch (IOException e) {
 				logger.error("Error reading the help document",e);	
 				System.exit(-1);
-			}						
-		}		
+			}									
 	}
 	
 	private String getOptionValue(String opt) {
@@ -78,6 +87,18 @@ public class CommandLineOptions {
 	 */
 	public String getDatabaseProperties() {
 		return getOptionValue("dbproperties");
+	}
+	
+	public boolean isInMemory() {
+		return hasOption("inmemory");
+	}
+	
+	public boolean isClientServer() {
+		return hasOption("clientserver");
+	}
+	
+	public boolean isEmbedded() {
+		return hasOption("embedded");
 	}
 	
 	/**

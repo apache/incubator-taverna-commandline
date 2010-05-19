@@ -3,7 +3,13 @@ package net.sf.taverna.t2.commandline;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Properties;
+
+import javax.naming.NamingException;
+
+import org.apache.log4j.Logger;
 
 import net.sf.taverna.t2.commandline.exceptions.DatabaseConfigurationException;
 import net.sf.taverna.t2.workbench.reference.config.DataManagementConfiguration;
@@ -12,7 +18,8 @@ import net.sf.taverna.t2.workbench.reference.config.DataManagementHelper;
 public class DatabaseConfigurationHandler {
 
 	private final CommandLineOptions options;
-	private static DataManagementConfiguration dbConfig;
+	private DataManagementConfiguration dbConfig;
+	private static Logger logger = Logger.getLogger(DatabaseConfigurationHandler.class);
 
 	public DatabaseConfigurationHandler(CommandLineOptions options) {
 		this.options = options;
@@ -28,7 +35,27 @@ public class DatabaseConfigurationHandler {
 			System.out.println("Started Derby Server on Port: "
 					+ dbConfig.getCurrentPort());
 		}
-		DataManagementHelper.setupDataSource();
+		DataManagementHelper.setupDataSource();				
+	}
+
+	public DataManagementConfiguration getDBConfig() {
+		return dbConfig;
+	}
+	
+	public void testDatabaseConnection()
+			throws DatabaseConfigurationException, NamingException, SQLException {
+		//try and get a connection
+		Connection con = null;
+		try {
+			con = DataManagementHelper.openConnection();
+		} finally {
+			if (con!=null)
+				try {
+					con.close();
+				} catch (SQLException e) {
+					logger.warn("There was an SQL error whilst closing the test connection: "+e.getMessage(),e);
+				}
+		}
 	}
 
 	public void useOptions() throws DatabaseConfigurationException {

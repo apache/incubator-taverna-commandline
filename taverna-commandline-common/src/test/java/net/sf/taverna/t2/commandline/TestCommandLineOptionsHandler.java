@@ -1,10 +1,12 @@
 package net.sf.taverna.t2.commandline;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
 
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class TestCommandLineOptionsHandler {
 
@@ -16,8 +18,15 @@ public class TestCommandLineOptionsHandler {
 	
 	@Test(expected=InvalidOptionException.class)
 	public void noWorkflowName() throws Exception {
-		CommandLineOptions handler = new CommandLineOptions(new String[]{});
-		handler.getWorkflow();
+		new CommandLineOptions(new String[]{});		
+	}
+	
+	@Test
+	public void getWorkflow() throws Exception {
+		CommandLineOptions options = new CommandLineOptions(new String[]{"-help"});
+		assertNull(options.getWorkflow());
+		options = new CommandLineOptions(new String[]{"myworkflow.t2flow"});
+		assertEquals("myworkflow.t2flow", options.getWorkflow());
 	}
 	
 	@Test
@@ -29,13 +38,17 @@ public class TestCommandLineOptionsHandler {
 	@Test
 	public void noWorkflowNameButStartDB() throws Exception {
 		//should not throw an error				
-		new CommandLineOptions(new String[]{"-startdb"});
+		CommandLineOptions options = new CommandLineOptions(new String[]{"-startdb"});
+		assertTrue(options.getStartDatabase());
+		assertTrue(options.getStartDatabaseOnly());
 	}
 
 	@Test
 	public void workflowNameAndStartDB() throws Exception {
 		//should not throw an error
-		new CommandLineOptions(new String[]{"-startdb","myworkflow.t2flow"});
+		CommandLineOptions options = new CommandLineOptions(new String[]{"-startdb","myworkflow.t2flow"});
+		assertTrue(options.getStartDatabase());
+		assertFalse(options.getStartDatabaseOnly());
 	}
 	
 	@Test(expected=InvalidOptionException.class)
@@ -87,6 +100,33 @@ public class TestCommandLineOptionsHandler {
 	@Test(expected=InvalidOptionException.class)
 	public void testInvalidClientServerAndInMemory() throws Exception {
 		new CommandLineOptions(new String[]{"-clientserver","-inmemory","myworkflow.t2flow"});
+	}
+	
+	@Test
+	public void isInMemory() throws Exception {
+		CommandLineOptions options = new CommandLineOptions(new String [] {"-inmemory","myworkflow.t2flow"});
+		
+		assertTrue(options.isInMemory());
+		assertFalse(options.isClientServer());
+		assertFalse(options.isEmbedded());
+	}
+	
+	@Test
+	public void isClientServer() throws Exception {
+		CommandLineOptions options = new CommandLineOptions(new String [] {"-clientserver","myworkflow.t2flow"});
+		
+		assertTrue(options.isClientServer());
+		assertFalse(options.isInMemory());		
+		assertFalse(options.isEmbedded());
+	}
+	
+	@Test
+	public void isEmbedded() throws Exception {
+		CommandLineOptions options = new CommandLineOptions(new String [] {"-embedded","myworkflow.t2flow"});
+		
+		assertTrue(options.isEmbedded());
+		assertFalse(options.isInMemory());
+		assertFalse(options.isClientServer());		
 	}
 	
 }

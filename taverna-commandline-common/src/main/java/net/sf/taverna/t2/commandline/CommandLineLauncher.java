@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.naming.NamingException;
 
 import net.sf.taverna.platform.spring.RavenAwareClassPathXmlApplicationContext;
 import net.sf.taverna.raven.launcher.Launchable;
@@ -49,30 +52,34 @@ import org.springframework.context.ApplicationContext;
  */
 
 public class CommandLineLauncher implements Launchable {
-	
-	private static Namespace namespace = Namespace.getNamespace("b","http://org.embl.ebi.escience/baclava/0.1alpha");
+
+	private static Namespace namespace = Namespace.getNamespace("b",
+			"http://org.embl.ebi.escience/baclava/0.1alpha");
 	private static Logger logger = Logger.getLogger(CommandLineLauncher.class);
-	
+
 	/**
-	 * Main method, purely for development and debugging purposes. Full execution of workflows will not work through this method.
+	 * Main method, purely for development and debugging purposes. Full
+	 * execution of workflows will not work through this method.
+	 * 
 	 * @param args
 	 * @throws Exception
 	 */
 	public static void main(String[] args) {
 		new CommandLineLauncher().launch(args);
 	}
-	
-	public int launch(String [] args) {
+
+	public int launch(String[] args) {
 		try {
-			return setupAndLaunch(args);		
+			return setupAndLaunch(args);
 		} catch (EditException e) {
-			error("There was an error opening the workflow: "+e.getMessage());
+			error("There was an error opening the workflow: " + e.getMessage());
 		} catch (DeserializationException e) {
-			error("There was an error opening the workflow: "+e.getMessage());
+			error("There was an error opening the workflow: " + e.getMessage());
 		} catch (InvalidDataflowException e) {
-			error("There was an error opening the workflow: "+e.getMessage());
+			error("There was an error opening the workflow: " + e.getMessage());
 		} catch (TokenOrderException e) {
-			error("There was an error starting the workflow execution: "+e.getMessage());
+			error("There was an error starting the workflow execution: "
+					+ e.getMessage());
 		} catch (InvalidOptionException e) {
 			error(e.getMessage());
 		} catch (ReadInputException e) {
@@ -81,70 +88,110 @@ public class CommandLineLauncher implements Launchable {
 			error(e.getMessage());
 		} catch (DatabaseConfigurationException e) {
 			error(e.getMessage());
-		} 
+		}
 		return 0;
 	}
 
-	public int setupAndLaunch(String[] args) throws InvalidOptionException, EditException, DeserializationException, InvalidDataflowException, TokenOrderException, ReadInputException, OpenDataflowException, DatabaseConfigurationException {		
-		
+	public int setupAndLaunch(String[] args) throws InvalidOptionException,
+			EditException, DeserializationException, InvalidDataflowException,
+			TokenOrderException, ReadInputException, OpenDataflowException,
+			DatabaseConfigurationException {
+
 		CommandLineOptions options = new CommandLineOptions(args);
 		if (!options.askedForHelp()) {
-			DatabaseConfigurationHandler dbHandler = new DatabaseConfigurationHandler(options);	
-			dbHandler.configureDatabase();
-			
-			URL workflowURL = readWorkflowURL(options.getWorkflow());
-			
+			setupDatabase(options);
 
-			Dataflow dataflow = openDataflow(workflowURL);
-			DataflowValidationReport report = validateDataflow(dataflow);		
-			
-			InvocationContext context = createInvocationContext();
-			
-			WorkflowInstanceFacade facade = compileFacade(dataflow, context);
-			Map<String,WorkflowDataToken> inputs = new InputsHandler().registerInputs(options, context);				
-			
-			CommandLineResultListener resultListener = addResultListener(facade, context,dataflow,options);
+			if (options.getWorkflow() != null) {
+				URL workflowURL = readWorkflowURL(options.getWorkflow());
 
-			facade.fire();
-			for (String inputName : inputs.keySet()) {					
+				Dataflow dataflow = openDataflow(workflowURL);
+				DataflowValidationReport report = validateDataflow(dataflow);
+
+				InvocationContext context = createInvocationContext();
+
+				WorkflowInstanceFacade facade = compileFacade(dataflow, context);
+				Map<String, WorkflowDataToken> inputs = new InputsHandler()
+						.registerInputs(options, context);
+
+				CommandLineResultListener resultListener = addResultListener(
+						facade, context, dataflow, options);
+
+				facade.fire();
+				for (String inputName : inputs.keySet()) {
 					WorkflowDataToken token = inputs.get(inputName);
 					facade.pushData(token, inputName);
-			}										
-			
-			while(!resultListener.isComplete()) {
+				}
+
+				while (!resultListener.isComplete()) {
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						logger
+								.warn(
+										"Thread Interuption Exception whilst waiting for dataflow completion",
+										e);
+					}
+				}
+			}
+		}
+		else {
+			options.displayHelp();
+		}
+		
+		//wait until user hits CTRL-C before exiting
+		if (options.getStartDatabaseOnly()) {
+			//FIXME: need to do this more gracefully.
+			while (true) {
 				try {
-					Thread.sleep(100);
+					Thread.sleep(500);
 				} catch (InterruptedException e) {
-					logger.warn("Thread Interuption Exception whilst waiting for dataflow completion",e);
-				}			
+					return 0;
+				}
+			}
+		}
+
+		return 0;
+	}
+
+	private void setupDatabase(CommandLineOptions options) throws DatabaseConfigurationException {
+		DatabaseConfigurationHandler dbHandler = new DatabaseConfigurationHandler(
+				options);		
+		dbHandler.configureDatabase();
+		if (!options.isInMemory()) {
+			try {
+				dbHandler.testDatabaseConnection();
+			} catch (NamingException e) {
+				throw new DatabaseConfigurationException("There was an error trying to setup the database datasource: "+e.getMessage(),e);
+			} catch (SQLException e) {
+				if (options.isClientServer()) {
+					throw new DatabaseConfigurationException("There was an error whilst making a test database connection. If running with -clientserver you should check that a server is running (check -startdb or -dbproperties)",e);
+				}
+				if (options.isEmbedded()) {
+					throw new DatabaseConfigurationException("There was an error whilst making a test database connection. If running with -embedded you should make sure that another process isn't using the database, or a server running through -startdb",e);
+				}
 			}
 		}
 		
-		
-
-		return 0;
-	}	
+	}
 
 	private InvocationContext createInvocationContext() {
 		ReferenceService referenceService = createReferenceServiceBean();
 		ProvenanceConnector connector = null;
-		DataManagementConfiguration dbConfig = DataManagementConfiguration.getInstance();
+		DataManagementConfiguration dbConfig = DataManagementConfiguration
+				.getInstance();
 		if (dbConfig.isProvenanceEnabled()) {
 			String connectorType = dbConfig.getConnectorType();
 
 			for (ProvenanceConnectorFactory factory : ProvenanceConnectorFactoryRegistry
 					.getInstance().getInstances()) {
-				if (connectorType.equalsIgnoreCase(factory
-						.getConnectorType())) {
-					connector = factory
-							.getProvenanceConnector();
+				if (connectorType.equalsIgnoreCase(factory.getConnectorType())) {
+					connector = factory.getProvenanceConnector();
 				}
-				
+
 			}
-			if (connector!=null) {
+			if (connector != null) {
 				connector.init();
-			}
-			else {
+			} else {
 				error("Unable to initialise the provenance - the ProvenanceConnector cannot be found.");
 			}
 		}
@@ -153,64 +200,73 @@ public class CommandLineLauncher implements Launchable {
 		return context;
 	}
 
-	private File determineOutputDir(CommandLineOptions options, String dataflowName) {
+	private File determineOutputDir(CommandLineOptions options,
+			String dataflowName) {
 		File result = null;
-		if (options.getOutputDirectory()!=null) {
+		if (options.getOutputDirectory() != null) {
 			result = new File(options.getOutputDirectory());
 			if (result.exists()) {
-				error("The specified output directory '" + options.getOutputDirectory() +"' already exists");
+				error("The specified output directory '"
+						+ options.getOutputDirectory() + "' already exists");
 			}
-		}
-		else if (options.getOutputDocument()==null) {
-			result = new File(dataflowName+"_output");
-			int x=1;
+		} else if (options.getOutputDocument() == null) {
+			result = new File(dataflowName + "_output");
+			int x = 1;
 			while (result.exists()) {
-				result=new File(dataflowName+"_output_"+x);
+				result = new File(dataflowName + "_output_" + x);
 				x++;
 			}
-		}		
-		if (result!=null) {
-			System.out.println("Outputs will be saved to the directory: "+result.getAbsolutePath());
+		}
+		if (result != null) {
+			System.out.println("Outputs will be saved to the directory: "
+					+ result.getAbsolutePath());
 		}
 		return result;
-	}	
+	}
 
-	protected void error(String msg) {		
+	protected void error(String msg) {
 		System.err.println(msg);
-		System.exit(-1);		
-	}	
+		System.exit(-1);
+	}
 
-	private URL readWorkflowURL(String workflowOption) throws OpenDataflowException {
+	private URL readWorkflowURL(String workflowOption)
+			throws OpenDataflowException {
 		URL url;
 		try {
 			url = new URL("file:");
 			return new URL(url, workflowOption);
 		} catch (MalformedURLException e) {
-			throw new OpenDataflowException("The was a problem processing the URL to the workflow: "+e.getMessage(),e);
-		}				
-	}		
+			throw new OpenDataflowException(
+					"The was a problem processing the URL to the workflow: "
+							+ e.getMessage(), e);
+		}
+	}
 
-	private CommandLineResultListener addResultListener(WorkflowInstanceFacade facade,
-			InvocationContext context,Dataflow dataflow,CommandLineOptions options) {
+	private CommandLineResultListener addResultListener(
+			WorkflowInstanceFacade facade, InvocationContext context,
+			Dataflow dataflow, CommandLineOptions options) {
 		File outputDir = null;
 		File baclavaDoc = null;
-		
+
 		if (options.saveResultsToDirectory()) {
-			outputDir = determineOutputDir(options,dataflow.getLocalName());
+			outputDir = determineOutputDir(options, dataflow.getLocalName());
 		}
-		if (options.getOutputDocument()!=null) {
+		if (options.getOutputDocument() != null) {
 			baclavaDoc = new File(options.getOutputDocument());
 		}
-		
-		Map<String,Integer> outputPortNamesAndDepth = new HashMap<String, Integer>();
+
+		Map<String, Integer> outputPortNamesAndDepth = new HashMap<String, Integer>();
 		for (DataflowOutputPort port : dataflow.getOutputPorts()) {
 			outputPortNamesAndDepth.put(port.getName(), port.getDepth());
 		}
-		SaveResultsHandler resultsHandler = new SaveResultsHandler(outputPortNamesAndDepth, outputDir, baclavaDoc);
-		CommandLineResultListener listener = new CommandLineResultListener(outputPortNamesAndDepth.size(),resultsHandler,outputDir!=null,baclavaDoc!=null);
+		SaveResultsHandler resultsHandler = new SaveResultsHandler(
+				outputPortNamesAndDepth, outputDir, baclavaDoc);
+		CommandLineResultListener listener = new CommandLineResultListener(
+				outputPortNamesAndDepth.size(), resultsHandler,
+				outputDir != null, baclavaDoc != null);
 		facade.addResultListener(listener);
 		return listener;
-		
+
 	}
 
 	protected ReferenceService createReferenceServiceBean() {
@@ -221,13 +277,14 @@ public class CommandLineLauncher implements Launchable {
 	}
 
 	protected WorkflowInstanceFacade compileFacade(Dataflow dataflow,
-			InvocationContext context) throws InvalidDataflowException  {
+			InvocationContext context) throws InvalidDataflowException {
 		Edits edits = EditsRegistry.getEdits();
 		return edits.createWorkflowInstanceFacade(dataflow, context, "");
 	}
 
-	protected Dataflow openDataflow(URL workflowURL) throws DeserializationException, EditException, OpenDataflowException
-			 {
+	protected Dataflow openDataflow(URL workflowURL)
+			throws DeserializationException, EditException,
+			OpenDataflowException {
 		XMLDeserializer deserializer = XMLDeserializerRegistry.getInstance()
 				.getDeserializer();
 		SAXBuilder builder = new SAXBuilder();
@@ -236,9 +293,13 @@ public class CommandLineLauncher implements Launchable {
 			InputStream stream = workflowURL.openStream();
 			el = builder.build(stream).detachRootElement();
 		} catch (JDOMException e) {
-			throw new OpenDataflowException("There was a problem processing the workflow XML: "+e.getMessage(),e);
+			throw new OpenDataflowException(
+					"There was a problem processing the workflow XML: "
+							+ e.getMessage(), e);
 		} catch (IOException e) {
-			throw new OpenDataflowException("There was a problem reading the workflow file: "+e.getMessage(),e);
+			throw new OpenDataflowException(
+					"There was a problem reading the workflow file: "
+							+ e.getMessage(), e);
 		}
 		return deserializer.deserializeDataflow(el);
 	}
