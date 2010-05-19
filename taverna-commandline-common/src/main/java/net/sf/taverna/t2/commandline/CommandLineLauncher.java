@@ -70,7 +70,7 @@ public class CommandLineLauncher implements Launchable {
 
 	public int launch(String[] args) {
 		try {
-			return setupAndLaunch(args);
+			return setupAndExecute(args);
 		} catch (EditException e) {
 			error("There was an error opening the workflow: " + e.getMessage());
 		} catch (DeserializationException e) {
@@ -92,7 +92,7 @@ public class CommandLineLauncher implements Launchable {
 		return 0;
 	}
 
-	public int setupAndLaunch(String[] args) throws InvalidOptionException,
+	public int setupAndExecute(String[] args) throws InvalidOptionException,
 			EditException, DeserializationException, InvalidDataflowException,
 			TokenOrderException, ReadInputException, OpenDataflowException,
 			DatabaseConfigurationException {
@@ -116,22 +116,7 @@ public class CommandLineLauncher implements Launchable {
 				CommandLineResultListener resultListener = addResultListener(
 						facade, context, dataflow, options);
 
-				facade.fire();
-				for (String inputName : inputs.keySet()) {
-					WorkflowDataToken token = inputs.get(inputName);
-					facade.pushData(token, inputName);
-				}
-
-				while (!resultListener.isComplete()) {
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e) {
-						logger
-								.warn(
-										"Thread Interuption Exception whilst waiting for dataflow completion",
-										e);
-					}
-				}
+				executeWorkflow(facade, inputs, resultListener);
 			}
 		}
 		else {
@@ -151,6 +136,28 @@ public class CommandLineLauncher implements Launchable {
 		}
 
 		return 0;
+	}
+
+	protected void executeWorkflow(WorkflowInstanceFacade facade,
+			Map<String, WorkflowDataToken> inputs,
+			CommandLineResultListener resultListener)
+			throws TokenOrderException {
+		facade.fire();
+		for (String inputName : inputs.keySet()) {
+			WorkflowDataToken token = inputs.get(inputName);
+			facade.pushData(token, inputName);
+		}
+
+		while (!resultListener.isComplete()) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				logger
+						.warn(
+								"Thread Interuption Exception whilst waiting for dataflow completion",
+								e);
+			}
+		}
 	}
 
 	private void setupDatabase(CommandLineOptions options) throws DatabaseConfigurationException {

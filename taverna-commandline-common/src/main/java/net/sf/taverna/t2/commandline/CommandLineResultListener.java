@@ -3,10 +3,10 @@ package net.sf.taverna.t2.commandline;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 import net.sf.taverna.t2.facade.ResultListener;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
+
+import org.apache.log4j.Logger;
 
 public class CommandLineResultListener implements ResultListener {
 	

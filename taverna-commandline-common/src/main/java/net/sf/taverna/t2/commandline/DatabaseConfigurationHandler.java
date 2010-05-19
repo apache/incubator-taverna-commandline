@@ -9,11 +9,11 @@ import java.util.Properties;
 
 import javax.naming.NamingException;
 
-import org.apache.log4j.Logger;
-
 import net.sf.taverna.t2.commandline.exceptions.DatabaseConfigurationException;
 import net.sf.taverna.t2.workbench.reference.config.DataManagementConfiguration;
 import net.sf.taverna.t2.workbench.reference.config.DataManagementHelper;
+
+import org.apache.log4j.Logger;
 
 public class DatabaseConfigurationHandler {
 
