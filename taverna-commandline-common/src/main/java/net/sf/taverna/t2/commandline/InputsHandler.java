@@ -44,8 +44,8 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
 public class InputsHandler {
-	
 
+	
 	public void checkProvidedInputs(List<? extends DataflowInputPort> list, CommandLineOptions options) throws InputMismatchException  {
 		//we dont check for the document 
 		if (options.getInputDocument()==null) {
@@ -71,6 +71,7 @@ public class InputsHandler {
 		}
 	}
 
+
 	public Map<String, WorkflowDataToken> registerInputs(CommandLineOptions options,
 			InvocationContext context) throws InvalidOptionException, ReadInputException  {
 		Map<String,WorkflowDataToken> inputs = new HashMap<String, WorkflowDataToken>();
@@ -86,13 +87,11 @@ public class InputsHandler {
 			String[] inputParams = options.getInputs();
 			for (int i = 0; i < inputParams.length; i = i + 2) {
 				String inputName = inputParams[i];
-				try {
-					
+				try {					
 					URL inputURL = new URL(url, inputParams[i + 1]);
 					
-					Object inputValue=IOUtils.toString(inputURL.openStream());
-					
-					T2Reference entityId=context.getReferenceService().register(inputValue, 0, true, context);
+					T2Reference entityId=context.getReferenceService().register(IOUtils.toByteArray(inputURL.openStream()), 0, true, context);
+
 					WorkflowDataToken token = new WorkflowDataToken("",new int[]{}, entityId, context);
 					inputs.put(inputName, token);
 					

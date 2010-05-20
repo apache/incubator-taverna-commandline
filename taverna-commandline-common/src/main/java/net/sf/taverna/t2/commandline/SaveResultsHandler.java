@@ -170,6 +170,7 @@ public class SaveResultsHandler {
 		FileOutputStream fos;
 		try {
 			fos = new FileOutputStream(dataFile);
+			
 			if (data instanceof byte[]) {
 				fos.write((byte[]) data);
 				fos.flush();
