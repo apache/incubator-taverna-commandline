@@ -24,17 +24,27 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
 import net.sf.taverna.t2.reference.ErrorDocument;
+import net.sf.taverna.t2.reference.ExternalReferenceSPI;
+import net.sf.taverna.t2.reference.Identified;
 import net.sf.taverna.t2.reference.IdentifiedList;
+import net.sf.taverna.t2.reference.ReferenceSet;
 import net.sf.taverna.t2.reference.T2Reference;
 import net.sf.taverna.t2.reference.T2ReferenceType;
+import net.sf.taverna.t2.reference.impl.external.object.InlineByteArrayReference;
+import net.sf.taverna.t2.reference.impl.external.object.InlineStringReference;
 
 import org.apache.log4j.Logger;
 
@@ -162,14 +172,33 @@ public class SaveResultsHandler {
 			data = ErrorDocumentHandler.buildErrorDocumentString(errorDoc, context);			
 		} else {
 			// FIXME: this really should be done using a stream rather
-			// than an instance of the object in memory
-			data = context.getReferenceService().renderIdentifier(reference,
-					Object.class, context);
+			// than an instance of the object in memory			
+			
+			Identified identified = context.getReferenceService().resolveIdentifier(reference, null, context);
+			ReferenceSet referenceSet = (ReferenceSet) identified;
+			
+			if (referenceSet.getExternalReferences().isEmpty()) {
+				data = context.getReferenceService().renderIdentifier(reference,
+						Object.class, context);
+			}
+			else {
+				ExternalReferenceSPI externalReference = referenceSet.getExternalReferences().iterator().next();				
+				data = externalReference.openStream(context);
+			}			
 		}
 
 		FileOutputStream fos;
 		try {
-			fos = new FileOutputStream(dataFile);			
+			fos = new FileOutputStream(dataFile);
+			if (data instanceof InputStream) {			
+				InputStream inStream = (InputStream)data;
+				int c;
+				while ( ( c = inStream.read() ) != -1  ) {
+					fos.write( (char) c);
+				}				
+				fos.flush();
+				fos.close();
+			}
 			if (data instanceof byte[]) {
 				fos.write((byte[]) data);
 				fos.flush();
