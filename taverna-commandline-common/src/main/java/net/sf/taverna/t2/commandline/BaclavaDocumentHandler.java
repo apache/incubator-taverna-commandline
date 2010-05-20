@@ -22,13 +22,17 @@ package net.sf.taverna.t2.commandline;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.taverna.t2.commandline.exceptions.ReadInputException;
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
 import net.sf.taverna.t2.reference.ErrorDocument;
@@ -40,9 +44,12 @@ import net.sf.taverna.t2.reference.T2ReferenceType;
 import org.apache.log4j.Logger;
 import org.embl.ebi.escience.baclava.DataThing;
 import org.embl.ebi.escience.baclava.factory.DataThingFactory;
+import org.embl.ebi.escience.baclava.factory.DataThingXMLFactory;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.JDOMException;
 import org.jdom.Namespace;
+import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
@@ -53,7 +60,32 @@ public class BaclavaDocumentHandler {
 	private static final Logger logger = Logger
 			.getLogger(BaclavaDocumentHandler.class);
 	
-	
+	public Map<String, DataThing> readInputDocument(String inputDocPath) throws ReadInputException {
+		URL url;
+		try {
+			url = new URL("file:");
+		} catch (MalformedURLException e1) {
+			//Should never happen, but just incase:
+			throw new ReadInputException("The was an internal error setting up the URL to open the inputs. You should contact Taverna support.",e1);
+		}
+		URL inputDocURL;
+		try {
+			inputDocURL = new URL(url, inputDocPath);
+		} catch (MalformedURLException e1) {
+			throw new ReadInputException("The a error reading the input document from : "+inputDocPath+", "+e1.getMessage(),e1);
+		}
+		SAXBuilder builder = new SAXBuilder();
+		Document inputDoc;
+		try {
+			inputDoc = builder.build(inputDocURL.openStream());
+		} catch (IOException e) {
+			throw new ReadInputException("There was an error reading the input document file: "+e.getMessage(),e);
+		} catch (JDOMException e) {
+			throw new ReadInputException("There was a error processing the input document XML: "+e.getMessage(),e);
+		}
+		Map<String,DataThing> things = DataThingXMLFactory.parseDataDocument(inputDoc);
+		return things;
+	}
 
 	public void storeDocument(Map<String, WorkflowDataToken> finalResults,
 			File outputFile) throws Exception {

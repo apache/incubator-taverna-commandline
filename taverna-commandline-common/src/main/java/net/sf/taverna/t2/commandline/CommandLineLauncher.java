@@ -47,6 +47,7 @@ import net.sf.taverna.t2.provenance.connector.ProvenanceConnector;
 import net.sf.taverna.t2.reference.ReferenceService;
 import net.sf.taverna.t2.workbench.reference.config.DataManagementConfiguration;
 import net.sf.taverna.t2.workflowmodel.Dataflow;
+import net.sf.taverna.t2.workflowmodel.DataflowInputPort;
 import net.sf.taverna.t2.workflowmodel.DataflowOutputPort;
 import net.sf.taverna.t2.workflowmodel.DataflowValidationReport;
 import net.sf.taverna.t2.workflowmodel.EditException;
@@ -128,8 +129,13 @@ public class CommandLineLauncher implements Launchable {
 
 				WorkflowInstanceFacade facade = compileFacade(dataflow, context);				
 				InputsHandler inputsHandler = new InputsHandler();
-				inputsHandler.checkProvidedInputs(dataflow.getInputPorts(),options);
-				Map<String, WorkflowDataToken> inputs = inputsHandler.registerInputs(options, context);
+				Map<String,DataflowInputPort> portMap = new HashMap<String, DataflowInputPort>();
+				
+				for (DataflowInputPort port : dataflow.getInputPorts()) {
+					portMap.put(port.getName(), port);
+				}
+				inputsHandler.checkProvidedInputs(portMap,options);
+				Map<String, WorkflowDataToken> inputs = inputsHandler.registerInputs(portMap,options, context);
 
 				CommandLineResultListener resultListener = addResultListener(
 						facade, context, dataflow, options);

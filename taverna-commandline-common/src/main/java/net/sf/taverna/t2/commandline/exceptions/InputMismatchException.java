@@ -20,15 +20,15 @@
  ******************************************************************************/
 package net.sf.taverna.t2.commandline.exceptions;
 
-import java.util.List;
+import java.util.Set;
 
 public class InputMismatchException extends InvalidOptionException {	
 	
 	private static final long serialVersionUID = -5368068332397293706L;
-	private final List<String> expectedInputNames;
-	private final List<String> providedInputNames;
+	private final Set<String> expectedInputNames;
+	private final Set<String> providedInputNames;
 	
-	public InputMismatchException(String msg, List<String> expectedInputNames, List<String> providedInputNames) {
+	public InputMismatchException(String msg, Set<String> expectedInputNames, Set<String> providedInputNames) {
 		super(msg);
 		this.expectedInputNames = expectedInputNames;
 		this.providedInputNames = providedInputNames;				

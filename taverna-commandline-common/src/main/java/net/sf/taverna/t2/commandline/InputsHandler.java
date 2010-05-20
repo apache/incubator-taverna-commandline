@@ -23,10 +23,11 @@ package net.sf.taverna.t2.commandline;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import net.sf.taverna.t2.commandline.exceptions.InputMismatchException;
 import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
@@ -46,33 +47,28 @@ import org.jdom.input.SAXBuilder;
 public class InputsHandler {
 
 	
-	public void checkProvidedInputs(List<? extends DataflowInputPort> list, CommandLineOptions options) throws InputMismatchException  {
+	public void checkProvidedInputs(Map<String, DataflowInputPort> portMap, CommandLineOptions options) throws InputMismatchException  {
 		//we dont check for the document 
 		if (options.getInputDocument()==null) {
-			List<String> providedInputNames = new ArrayList<String>();
+			Set<String> providedInputNames = new HashSet<String>();
 			for (int i=0;i<options.getInputs().length;i+=2) {
 				providedInputNames.add(options.getInputs()[i]);								
+			}								
+			
+			if (portMap.size()*2!=options.getInputs().length) {
+				throw new InputMismatchException("The number of inputs provided does not match the number of input ports.",portMap.keySet(),providedInputNames);
 			}
 			
-			List<String> portNames = new ArrayList<String>();
-			for (DataflowInputPort port : list) {
-				portNames.add(port.getName());
-			}
-			
-			if (list.size()*2!=options.getInputs().length) {
-				throw new InputMismatchException("The number of inputs provided does not match the number of input ports.",portNames,providedInputNames);
-			}
-			
-			for (String portName : portNames) {
+			for (String portName : portMap.keySet()) {
 				if (!providedInputNames.contains(portName)) {
-					throw new InputMismatchException("The provided inputs does not contain an input for the port '"+portName+"'",portNames,providedInputNames);
+					throw new InputMismatchException("The provided inputs does not contain an input for the port '"+portName+"'",portMap.keySet(),providedInputNames);
 				}
 			}
 		}
 	}
 
 
-	public Map<String, WorkflowDataToken> registerInputs(CommandLineOptions options,
+	public Map<String, WorkflowDataToken> registerInputs(Map<String, DataflowInputPort> portMap, CommandLineOptions options,
 			InvocationContext context) throws InvalidOptionException, ReadInputException  {
 		Map<String,WorkflowDataToken> inputs = new HashMap<String, WorkflowDataToken>();
 		URL url;
@@ -89,8 +85,13 @@ public class InputsHandler {
 				String inputName = inputParams[i];
 				try {					
 					URL inputURL = new URL(url, inputParams[i + 1]);
+					DataflowInputPort port = portMap.get(inputName);
 					
-					T2Reference entityId=context.getReferenceService().register(IOUtils.toByteArray(inputURL.openStream()), 0, true, context);
+					if (port==null) {
+						throw new InvalidOptionException("Cannot find an input port named '"+inputName+"'");
+					}
+					
+					T2Reference entityId=context.getReferenceService().register(IOUtils.toByteArray(inputURL.openStream()), port.getDepth(), true, context);
 
 					WorkflowDataToken token = new WorkflowDataToken("",new int[]{}, entityId, context);
 					inputs.put(inputName, token);
@@ -105,30 +106,34 @@ public class InputsHandler {
 		
 		if (options.getInputDocument()!=null) {
 			String inputDocPath = options.getInputDocument();
-			URL inputDocURL;
-			try {
-				inputDocURL = new URL(url, inputDocPath);
-			} catch (MalformedURLException e1) {
-				throw new ReadInputException("The a error reading the input document from : "+inputDocPath+", "+e1.getMessage(),e1);
-			}
-			SAXBuilder builder = new SAXBuilder();
-			Document inputDoc;
-			try {
-				inputDoc = builder.build(inputDocURL.openStream());
-			} catch (IOException e) {
-				throw new ReadInputException("There was an error reading the input document file: "+e.getMessage(),e);
-			} catch (JDOMException e) {
-				throw new ReadInputException("There was a error processing the input document XML: "+e.getMessage(),e);
-			}
-			Map<String,DataThing> things = DataThingXMLFactory.parseDataDocument(inputDoc);
+			Map<String, DataThing> things = new BaclavaDocumentHandler().readInputDocument(inputDocPath);
 			for (String inputName : things.keySet()) {
 				DataThing thing = things.get(inputName);
-				T2Reference entityId=context.getReferenceService().register(thing.getDataObject(), 0, true, context);
+				Object object = thing.getDataObject();
+				T2Reference entityId=context.getReferenceService().register(object,getObjectDepth(object), true, context);
 				WorkflowDataToken token = new WorkflowDataToken("",new int[]{}, entityId, context);
 				inputs.put(inputName, token);
 			}
 		}
 		
 		return inputs;
+	}
+
+
+	
+	
+	
+	private int getObjectDepth(Object o) {
+		int result = 0;
+		if (o instanceof Iterable) {
+			result++;
+			Iterator i = ((Iterable) o).iterator();
+			
+			if (i.hasNext()) {
+				Object child = i.next();
+				result = result + getObjectDepth(child);
+			}
+		}
+		return result;
 	}
 }
