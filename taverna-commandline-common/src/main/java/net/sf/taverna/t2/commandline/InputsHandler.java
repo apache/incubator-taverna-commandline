@@ -39,10 +39,6 @@ import net.sf.taverna.t2.workflowmodel.DataflowInputPort;
 
 import org.apache.commons.io.IOUtils;
 import org.embl.ebi.escience.baclava.DataThing;
-import org.embl.ebi.escience.baclava.factory.DataThingXMLFactory;
-import org.jdom.Document;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
 
 public class InputsHandler {
 
@@ -51,11 +47,15 @@ public class InputsHandler {
 		//we dont check for the document 
 		if (options.getInputDocument()==null) {
 			Set<String> providedInputNames = new HashSet<String>();
-			for (int i=0;i<options.getInputs().length;i+=2) {
-				providedInputNames.add(options.getInputs()[i]);								
-			}								
+			for (int i=0;i<options.getInputFiles().length;i+=2) {
+				providedInputNames.add(options.getInputFiles()[i]);								
+			}
 			
-			if (portMap.size()*2!=options.getInputs().length) {
+			for (int i=0;i<options.getInputValues().length;i+=2) {
+				providedInputNames.add(options.getInputValues()[i]);								
+			}
+			
+			if (portMap.size()*2 != (options.getInputFiles().length + options.getInputValues().length)) {
 				throw new InputMismatchException("The number of inputs provided does not match the number of input ports.",portMap.keySet(),providedInputNames);
 			}
 			
@@ -79,8 +79,9 @@ public class InputsHandler {
 			throw new ReadInputException("The was an internal error setting up the URL to open the inputs. You should contact Taverna support.",e1);
 		}
 		
-		if (options.hasInputs()) {
-			String[] inputParams = options.getInputs();
+		
+		if (options.hasInputFiles()) {
+			String[] inputParams = options.getInputFiles();
 			for (int i = 0; i < inputParams.length; i = i + 2) {
 				String inputName = inputParams[i];
 				try {					
@@ -104,6 +105,30 @@ public class InputsHandler {
 			}
 		}
 		
+		if (options.hasInputValues()) {
+			String[] inputParams = options.getInputValues();
+			for (int i = 0; i < inputParams.length; i = i + 2) {
+				String inputName = inputParams[i];
+				try {					
+					String inputValue = inputParams[i + 1];
+					DataflowInputPort port = portMap.get(inputName);
+					
+					if (port==null) {
+						throw new InvalidOptionException("Cannot find an input port named '"+inputName+"'");
+					}
+					
+					T2Reference entityId=context.getReferenceService().register(inputValue, port.getDepth(), true, context);
+
+					WorkflowDataToken token = new WorkflowDataToken("",new int[]{}, entityId, context);
+					inputs.put(inputName, token);
+					
+				} catch (IndexOutOfBoundsException e) {
+					throw new InvalidOptionException("Missing input value for input "+ inputName);					
+				} 
+			}
+			
+		}
+		
 		if (options.getInputDocument()!=null) {
 			String inputDocPath = options.getInputDocument();
 			Map<String, DataThing> things = new BaclavaDocumentHandler().readInputDocument(inputDocPath);
@@ -120,9 +145,7 @@ public class InputsHandler {
 	}
 
 
-	
-	
-	
+	@SuppressWarnings("unchecked")
 	private int getObjectDepth(Object o) {
 		int result = 0;
 		if (o instanceof Iterable) {

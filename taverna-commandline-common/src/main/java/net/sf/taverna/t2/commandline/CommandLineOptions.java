@@ -51,7 +51,7 @@ public class CommandLineOptions {
 	protected void checkForInvalid() throws InvalidOptionException {
 		if (hasOption("provenance") && !(hasOption("embedded") || hasOption("clientserver") || hasOption("dbproperties"))) throw new InvalidOptionException("You should be running with a database to use provenance");
 		if (hasOption("provenance") && hasOption("inmemory")) throw new InvalidOptionException("You should be running with a database to use provenance");
-		if (hasOption("input") && hasOption("inputdoc")) throw new InvalidOptionException("You can't provide both -input and -inputdoc arguments");
+		if ((hasOption("inputfile") || hasOption("inputvalue")) && hasOption("inputdoc")) throw new InvalidOptionException("You can't provide both -input and -inputdoc arguments");
 		
 		if (getArgs().length!=1 && !(hasOption("help") || hasOption("startdb"))) throw new InvalidOptionException("You must specify a workflow");
 		if (hasOption("inmemory") && hasOption("embedded")) throw new InvalidOptionException("The options -embedded, -clientserver and -inmemory cannot be used together");
@@ -168,17 +168,30 @@ public class CommandLineOptions {
 	 * 
 	 * @return an array of portname and path to files containing individual inputs.
 	 */
-	public String [] getInputs() {
-		if (hasInputs()) {
-			return getOptionValues("input");
+	public String [] getInputFiles() {
+		if (hasInputFiles()) {
+			return getOptionValues("inputfile");
 		}
 		else {
 			return new String[]{};
 		}
 	}
 	
-	public boolean hasInputs() {
-		return hasOption("input");
+	public String [] getInputValues() {
+		if (hasInputValues()) {
+			return getOptionValues("inputvalue");
+		}
+		else {
+			return new String[]{};
+		}
+	}
+	
+	public boolean hasInputValues() {
+		return hasOption("inputvalue");
+	}
+	
+	public boolean hasInputFiles() {
+		return hasOption("inputfile");
 	}
 
 	public boolean hasOption(String option) {
@@ -199,6 +212,7 @@ public class CommandLineOptions {
 		return line;
 	}
 
+	@SuppressWarnings("static-access")
 	private Options intitialiseOptions() {
 		Option helpOption = new Option("help", "print this message");
 
@@ -209,17 +223,24 @@ public class CommandLineOptions {
 						"save outputs as files in directory, default "
 								+ "is to make a new directory workflowName_output")
 				.create("outputdir");
+		
 		Option outputdocOption = OptionBuilder.withArgName("document").hasArg()
 				.withDescription("save outputs to a new XML document").create(
 						"outputdoc");		
+		
 		Option inputdocOption = OptionBuilder.withArgName("document").hasArg()
 				.withDescription("load inputs from XML document").create(
 						"inputdoc");
 
-		Option inputOption = OptionBuilder.withArgName("name filename")
+		Option inputFileOption = OptionBuilder.withArgName("inputname filename")
 				.hasArgs(2).withValueSeparator(' ').withDescription(
 						"load the named input from file or URL")
-				.create("input");
+				.create("inputfile");
+		
+		Option inputValueOption = OptionBuilder.withArgName("inputname value")
+		.hasArgs(2).withValueSeparator(' ').withDescription(
+				"directly use the value for the named input")
+		.create("inputvalue");
 		
 		Option dbProperties = OptionBuilder.withArgName("filename").hasArg().withDescription(
 				"loads a properties file to configure the database").create("dbproperties");
@@ -237,7 +258,8 @@ public class CommandLineOptions {
 		
 		Options options = new Options();
 		options.addOption(helpOption);
-		options.addOption(inputOption);
+		options.addOption(inputFileOption);
+		options.addOption(inputValueOption);
 		options.addOption(inputdocOption);
 		options.addOption(outputOption);
 		options.addOption(outputdocOption);		
