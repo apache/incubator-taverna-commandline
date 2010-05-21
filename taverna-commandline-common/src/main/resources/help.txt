@@ -23,13 +23,15 @@ file containing the input data, or the input value itself respectively.
 If a workflow has a high memory requirement, then it should be executed
 together with a database. There are 2 options for this
 
-- embedded, runs with an embedded database. This is slightly faster than
+-embedded, runs with an embedded database. This is slightly faster than
   -clientserver (below), but has the limitation that only one executeworkflow
-may be executed simultaneously 
-- clientserver allows the workflow to be executed backed by the database
+may be executed simultaneously
+ 
+-clientserver allows the workflow to be executed backed by the database
   running as a server. By default a database isn't started for you, but may be
 started using -startdb
-- startdb starts a database. It may be used without providing a workflow to
+
+-startdb starts a database. It may be used without providing a workflow to
   allow a database to be started separately, allowing multiple executeworkflow
 runs simultaneously
 
