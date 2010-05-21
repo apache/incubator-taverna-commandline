@@ -1,8 +1,54 @@
-executeworkflow [options] <workflow>
+By default, the workflow is executing -inmemory, and results are written out to
+a directory named after the workflow name.
 
-Execute workflow and save outputs. Inputs can be specified by multiple -input options, 
-or loaded from an XML input document. By default, results are saved as individual files
-to a directory named after the workflow name. If this directory already exists then a new directory
-is created appended with _x where x increments. A specific directory for the results can be specified
-using -outputdir. Outputs may also be stored to an XML file using -outputdoc, which unless 
--outputdir is specified will prevent the storing of individual results into a directory.
+If this directory already exists then an new directory is created, and appended
+with _<n> - where n is incremented to the next available directory.
+
+Results are written out to files named after the output port for that result.
+If a result is composed of lists, then a directory is created for the output
+port and individual list items are named after the list element index (with 1
+being the first index).
+
+You can provide your own output directory with the -outputdir option. There
+will be an error if the directory already exists.
+
+You can also record your results to a Baclava document using -outputdoc. The
+document will be overwritten if it already exists.
+
+Inputs can be provided in 3 ways. Both -inputfile and -inputvalue can be used
+together, -inputdoc must be used on its own. -inputfile and -inputvalue both
+take 2 additional arguements, the name of the port for the input, and either a
+file containing the input data, or the input value itself respectively.
+
+If a workflow has a high memory requirement, then it should be executed
+together with a database. There are 2 options for this
+
+- embedded, runs with an embedded database. This is slightly faster than
+  -clientserver (below), but has the limitation that only one executeworkflow
+may be executed simultaneously 
+- clientserver allows the workflow to be executed backed by the database
+  running as a server. By default a database isn't started for you, but may be
+started using -startdb
+- startdb starts a database. It may be used without providing a workflow to
+  allow a database to be started separately, allowing multiple executeworkflow
+runs simultaneously
+
+
+More advanced database configurations can be specified using -dbproperties,
+allowing you to take full control over the database used. This takes a second
+argument, the filename of the propeties file, for which the following example
+contains the default settings used:
+
+in_memory = false 
+provenance = false 
+connector = derby 
+port = 1527 
+dialect = org.hibernate.dialect.DerbyDialect 
+start_derby = false 
+driver = org.apache.derby.jdbc.EmbeddedDriver 
+jdbcuri = jdbc:derby:t2-database;create=true;upgrade=true
+
+When using -dbproperties together with other options, the other options take
+precedence.
+
+

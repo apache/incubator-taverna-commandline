@@ -30,6 +30,7 @@ import java.util.Properties;
 import javax.naming.NamingException;
 
 import net.sf.taverna.t2.commandline.exceptions.DatabaseConfigurationException;
+import net.sf.taverna.t2.commandline.options.CommandLineOptions;
 import net.sf.taverna.t2.workbench.reference.config.DataManagementConfiguration;
 import net.sf.taverna.t2.workbench.reference.config.DataManagementHelper;
 

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
+import net.sf.taverna.t2.commandline.options.CommandLineOptions;
 
 import org.junit.Test;
 

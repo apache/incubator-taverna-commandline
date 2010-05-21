@@ -32,6 +32,7 @@ import java.util.Set;
 import net.sf.taverna.t2.commandline.exceptions.InputMismatchException;
 import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
 import net.sf.taverna.t2.commandline.exceptions.ReadInputException;
+import net.sf.taverna.t2.commandline.options.CommandLineOptions;
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
 import net.sf.taverna.t2.reference.T2Reference;

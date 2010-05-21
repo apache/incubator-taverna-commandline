@@ -37,6 +37,7 @@ import net.sf.taverna.t2.commandline.exceptions.DatabaseConfigurationException;
 import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
 import net.sf.taverna.t2.commandline.exceptions.OpenDataflowException;
 import net.sf.taverna.t2.commandline.exceptions.ReadInputException;
+import net.sf.taverna.t2.commandline.options.CommandLineOptions;
 import net.sf.taverna.t2.facade.WorkflowInstanceFacade;
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.invocation.TokenOrderException;
