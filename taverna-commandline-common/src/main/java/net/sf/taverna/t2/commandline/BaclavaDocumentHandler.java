@@ -35,9 +35,13 @@ import java.util.Map;
 import net.sf.taverna.t2.commandline.exceptions.ReadInputException;
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
+import net.sf.taverna.t2.reference.DereferenceException;
 import net.sf.taverna.t2.reference.ErrorDocument;
+import net.sf.taverna.t2.reference.ExternalReferenceSPI;
 import net.sf.taverna.t2.reference.IdentifiedList;
 import net.sf.taverna.t2.reference.ReferenceServiceException;
+import net.sf.taverna.t2.reference.ReferenceSet;
+import net.sf.taverna.t2.reference.ReferencedDataNature;
 import net.sf.taverna.t2.reference.T2Reference;
 import net.sf.taverna.t2.reference.T2ReferenceType;
 
@@ -53,50 +57,57 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
+import eu.medsea.mimeutil.MimeType;
+
 public class BaclavaDocumentHandler {
 
-	private static Namespace namespace = Namespace.getNamespace("b","http://org.embl.ebi.escience/baclava/0.1alpha");
-	
+	private static Namespace namespace = Namespace.getNamespace("b",
+			"http://org.embl.ebi.escience/baclava/0.1alpha");
+
 	private static final Logger logger = Logger
 			.getLogger(BaclavaDocumentHandler.class);
-	
-	public Map<String, DataThing> readInputDocument(String inputDocPath) throws ReadInputException {
+
+	public Map<String, DataThing> readInputDocument(String inputDocPath)
+			throws ReadInputException {
 		URL url;
 		try {
 			url = new URL("file:");
 		} catch (MalformedURLException e1) {
-			//Should never happen, but just incase:
-			throw new ReadInputException("The was an internal error setting up the URL to open the inputs. You should contact Taverna support.",e1);
+			// Should never happen, but just incase:
+			throw new ReadInputException(
+					"The was an internal error setting up the URL to open the inputs. You should contact Taverna support.",
+					e1);
 		}
 		URL inputDocURL;
 		try {
 			inputDocURL = new URL(url, inputDocPath);
 		} catch (MalformedURLException e1) {
-			throw new ReadInputException("The a error reading the input document from : "+inputDocPath+", "+e1.getMessage(),e1);
+			throw new ReadInputException(
+					"The a error reading the input document from : "
+							+ inputDocPath + ", " + e1.getMessage(), e1);
 		}
 		SAXBuilder builder = new SAXBuilder();
 		Document inputDoc;
 		try {
 			inputDoc = builder.build(inputDocURL.openStream());
 		} catch (IOException e) {
-			throw new ReadInputException("There was an error reading the input document file: "+e.getMessage(),e);
+			throw new ReadInputException(
+					"There was an error reading the input document file: "
+							+ e.getMessage(), e);
 		} catch (JDOMException e) {
-			throw new ReadInputException("There was a error processing the input document XML: "+e.getMessage(),e);
+			throw new ReadInputException(
+					"There was a error processing the input document XML: "
+							+ e.getMessage(), e);
 		}
-		Map<String,DataThing> things = DataThingXMLFactory.parseDataDocument(inputDoc);
+		Map<String, DataThing> things = DataThingXMLFactory
+				.parseDataDocument(inputDoc);
 		return things;
 	}
 
 	public void storeDocument(Map<String, WorkflowDataToken> finalResults,
-			File outputFile) throws Exception {
-		// Build the DataThing map from the chosenReferences
-		// First convert map of references to objects into a map of real result
-		// objects
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		for (String portName : finalResults.keySet()) {
-			resultMap.put(portName, convertReferencesToObjects(finalResults.get(portName).getData(), finalResults.get(portName).getContext()));
-		}
-		Map<String, DataThing> dataThings = bakeDataThingMap(resultMap);
+			File outputFile) throws DereferenceException, IOException {
+
+		Map<String, DataThing> dataThings = backDataThingMapFromWorkflowDataTokens(finalResults);
 
 		// Build the string containing the XML document from the result map
 		Document doc = getDataDocument(dataThings);
@@ -109,20 +120,17 @@ public class BaclavaDocumentHandler {
 	}
 
 	protected Object convertReferencesToObjects(T2Reference reference,
-			InvocationContext context) throws Exception {
+			InvocationContext context) {
 
 		if (reference.getReferenceType() == T2ReferenceType.ReferenceSet) {
 			// Dereference the object
 			Object dataValue;
-			try {
-				dataValue = context.getReferenceService().renderIdentifier(
-						reference, Object.class, context);
-			} catch (ReferenceServiceException rse) {
-				String message = "Problem rendering T2Reference in convertReferencesToObjects().";
-				logger.error("SaveAllResultsAsXML Error: " + message, rse);
-				throw new Exception(message);
-			}
+
+			dataValue = context.getReferenceService().renderIdentifier(
+					reference, Object.class, context);
+
 			return dataValue;
+
 		} else if (reference.getReferenceType() == T2ReferenceType.ErrorDocument) {
 			// Dereference the ErrorDocument and convert it to some string
 			// representation
@@ -131,7 +139,7 @@ public class BaclavaDocumentHandler {
 							context);
 			String errorString = ErrorDocumentHandler.buildErrorDocumentString(
 					errorDocument, context);
-			return errorString;			
+			return errorString;
 		} else { // it is an IdentifiedList<T2Reference> - go recursively
 			IdentifiedList<T2Reference> identifiedList = context
 					.getReferenceService().getListService().getList(reference);
@@ -143,11 +151,11 @@ public class BaclavaDocumentHandler {
 			}
 			return list;
 		}
-	}		
-	
+	}
+
 	/**
-	 * Returns a org.jdom.Document from a map of port named to DataThingS containing
-	 * the port's results.
+	 * Returns a org.jdom.Document from a map of port named to DataThingS
+	 * containing the port's results.
 	 */
 	public static Document getDataDocument(Map<String, DataThing> dataThings) {
 		Element rootElement = new Element("dataThingMap", namespace);
@@ -164,16 +172,114 @@ public class BaclavaDocumentHandler {
 	}
 
 	/**
-	 * Returns a map of port names to DataThings from a map of port names to a 
+	 * Returns a map of port names to DataThings from a map of port names to a
 	 * list of (lists of ...) result objects.
 	 */
-	protected Map<String, DataThing> bakeDataThingMap(Map<String, Object> resultMap) {
-		
+	protected Map<String, DataThing> bakeDataThingMap(
+			Map<String, Object> resultMap) {
+
 		Map<String, DataThing> dataThingMap = new HashMap<String, DataThing>();
 		for (Iterator<String> i = resultMap.keySet().iterator(); i.hasNext();) {
 			String portName = (String) i.next();
-			dataThingMap.put(portName, DataThingFactory.bake(resultMap.get(portName)));
+			dataThingMap.put(portName, DataThingFactory.bake(resultMap
+					.get(portName)));
 		}
 		return dataThingMap;
+	}
+
+	protected Map<String, DataThing> backDataThingMapFromWorkflowDataTokens(
+			Map<String, WorkflowDataToken> tokenMap)
+			throws DereferenceException, IOException {
+		Map<String, DataThing> dataThingMap = new HashMap<String, DataThing>();
+		for (Iterator<String> i = tokenMap.keySet().iterator(); i.hasNext();) {
+			String portName = (String) i.next();
+			WorkflowDataToken token = tokenMap.get(portName);
+			InvocationContext context = token.getContext();
+			List<String> mimeTypeList = new ArrayList<String>();
+
+			if (token.getData().getReferenceType() == T2ReferenceType.ReferenceSet) {
+				mimeTypeList
+						.addAll(determineMimeTypes(token.getData(), context));
+
+				Object data = context.getReferenceService().renderIdentifier(
+						token.getData(), Object.class, context);
+				DataThing thingy = DataThingFactory.bake(data);
+				thingy.getMetadata().setMIMETypes(mimeTypeList);
+				dataThingMap.put(portName, thingy);
+
+			} else if (token.getData().getReferenceType() == T2ReferenceType.ErrorDocument) {
+				DataThing thingy = DataThingFactory.bake(convertReferencesToObjects(token.getData(), context));
+				thingy.getMetadata().addMIMEType("text/xml");
+				dataThingMap.put(portName, thingy);
+			} else {
+				System.out.println("Its a list");
+				IdentifiedList<T2Reference> identifiedList = context
+						.getReferenceService().getListService().getList(
+								token.getData());
+				List<Object> list = new ArrayList<Object>();
+
+				for (int j = 0; j < identifiedList.size(); j++) {
+					System.out.println("J = " + j);
+					T2Reference ref = identifiedList.get(j);
+					list.add(convertReferencesToObjects(ref, context));
+				}
+
+				// ripple through to get the leaf, to find its mimetype. Seems a
+				// limitation of Baclava
+				// is that the mime-type is set on the entire list, and is not
+				// possible for individual items
+				T2Reference ref = token.getData();
+				while (ref.getReferenceType() != T2ReferenceType.ReferenceSet
+						&& ref.getReferenceType() != T2ReferenceType.ErrorDocument) {
+					identifiedList = context.getReferenceService().getListService()
+							.getList(ref);
+					ref = identifiedList.get(0);
+				}
+				mimeTypeList.addAll(determineMimeTypes(ref, context));
+				DataThing thingy = DataThingFactory.bake(list);
+				thingy.getMetadata().setMIMETypes(mimeTypeList);
+				dataThingMap.put(portName, thingy);
+			}
+
+		}
+		return dataThingMap;
+	}
+
+	private List<String> determineMimeTypes(T2Reference reference,
+			InvocationContext context) throws IOException {
+		List<String> mimeTypeList = new ArrayList<String>();
+
+		System.out.println("Calling deterimine mime types");
+
+		ReferenceSet referenceSet = (ReferenceSet) context
+				.getReferenceService().resolveIdentifier(reference, null,
+						context);
+
+		if (!referenceSet.getExternalReferences().isEmpty()) {
+			ExternalReferenceSPI externalReference = referenceSet
+					.getExternalReferences().iterator().next();
+
+			List<MimeType> mimeTypes = MimeTypeHandler.getMimeTypes(
+					externalReference.openStream(context), context);
+
+			for (MimeType type : mimeTypes) {
+				if (!type.toString().equals("text/plain")
+						&& !type.toString().equals("application/octet-stream")) {
+					mimeTypeList.add(type.toString());
+				}
+			}
+			if (externalReference.getDataNature() == ReferencedDataNature.TEXT) {
+				mimeTypeList.add("text/plain");
+			}
+			else {
+				mimeTypeList.add("application/octet-stream");
+			}
+			
+		} else {
+			System.out.println("No external reference found");
+		}
+		
+		
+		return mimeTypeList;
 	}
 }

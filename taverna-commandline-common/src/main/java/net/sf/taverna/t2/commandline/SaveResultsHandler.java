@@ -26,13 +26,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
@@ -43,8 +39,6 @@ import net.sf.taverna.t2.reference.IdentifiedList;
 import net.sf.taverna.t2.reference.ReferenceSet;
 import net.sf.taverna.t2.reference.T2Reference;
 import net.sf.taverna.t2.reference.T2ReferenceType;
-import net.sf.taverna.t2.reference.impl.external.object.InlineByteArrayReference;
-import net.sf.taverna.t2.reference.impl.external.object.InlineStringReference;
 
 import org.apache.log4j.Logger;
 
@@ -55,7 +49,7 @@ public class SaveResultsHandler {
 	private final File rootDirectory;
 	private static Logger logger = Logger
 			.getLogger(CommandLineResultListener.class);
-	private final File outputDocumentFile;
+	private final File outputDocumentFile;	
 
 	public SaveResultsHandler(Map<String, Integer> portsAndDepth,
 			File rootDirectory, File outputDocumentFile) {
@@ -217,5 +211,6 @@ public class SaveResultsHandler {
 					+ dataFile.getAbsolutePath(), e);
 		}
 	}
+	
 	
 }
