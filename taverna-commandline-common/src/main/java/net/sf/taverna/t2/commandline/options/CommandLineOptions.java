@@ -112,8 +112,7 @@ public class CommandLineOptions {
 				if (showFullText) {
 					InputStream helpStream = CommandLineOptions.class.getClassLoader()
 					.getResourceAsStream("help.txt");
-					String helpText = IOUtils.toString(helpStream);
-					formatter.printHelp("executeworkflow [options] [workflow]", options);
+					String helpText = IOUtils.toString(helpStream);					
 					System.out.println(helpText);
 				}
 
