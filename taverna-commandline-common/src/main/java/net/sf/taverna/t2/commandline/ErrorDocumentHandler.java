@@ -58,7 +58,6 @@ public class ErrorDocumentHandler {
 							+ "\n";
 				}
 			}
-
 		}
 
 		Set<T2Reference> errorReferences = errDocument.getErrorReferences();

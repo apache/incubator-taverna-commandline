@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -32,6 +33,8 @@ import java.util.Map;
 import javax.naming.NamingException;
 
 import net.sf.taverna.platform.spring.RavenAwareClassPathXmlApplicationContext;
+import net.sf.taverna.raven.appconfig.ApplicationConfig;
+import net.sf.taverna.raven.appconfig.ApplicationRuntime;
 import net.sf.taverna.raven.launcher.Launchable;
 import net.sf.taverna.t2.commandline.exceptions.DatabaseConfigurationException;
 import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
@@ -59,7 +62,12 @@ import net.sf.taverna.t2.workflowmodel.serialization.DeserializationException;
 import net.sf.taverna.t2.workflowmodel.serialization.xml.XMLDeserializer;
 import net.sf.taverna.t2.workflowmodel.serialization.xml.XMLDeserializerRegistry;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
+import org.apache.log4j.PropertyConfigurator;
+import org.apache.log4j.RollingFileAppender;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
@@ -73,7 +81,7 @@ import org.springframework.context.ApplicationContext;
  */
 
 public class CommandLineLauncher implements Launchable {
-	
+
 	private static Logger logger = Logger.getLogger(CommandLineLauncher.class);
 
 	/**
@@ -84,18 +92,22 @@ public class CommandLineLauncher implements Launchable {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) {
-		new CommandLineLauncher().launch(args);		
+		new CommandLineLauncher().launch(args);
 	}
 
 	public int launch(String[] args) {
+		
 		try {
-			return setupAndExecute(args);
+			CommandLineOptions options = new CommandLineOptions(args);
+			initialiseLogging(options);
+			return setupAndExecute(args,options);
 		} catch (EditException e) {
 			error("There was an error opening the workflow: " + e.getMessage());
 		} catch (DeserializationException e) {
 			error("There was an error opening the workflow: " + e.getMessage());
-		} catch (InvalidDataflowException e) {			
-			error("There was an error validating the workflow: " + e.getMessage());
+		} catch (InvalidDataflowException e) {
+			error("There was an error validating the workflow: "
+					+ e.getMessage());
 		} catch (TokenOrderException e) {
 			error("There was an error starting the workflow execution: "
 					+ e.getMessage());
@@ -111,12 +123,56 @@ public class CommandLineLauncher implements Launchable {
 		return 0;
 	}
 
-	public int setupAndExecute(String[] args) throws InvalidOptionException,
+	private void initialiseLogging(CommandLineOptions options) {
+		LogManager.resetConfiguration();
+
+		if (System.getProperty("log4j.configuration") == null) {
+			try {
+				PropertyConfigurator.configure(CommandLineLauncher.class
+						.getClassLoader().getResource("cl-log4j.properties")
+						.toURI().toURL());
+			} catch (MalformedURLException e) {
+				logger
+						.error(
+								"There was a serious error reading the default logging configuration",
+								e);
+			} catch (URISyntaxException e) {
+				logger
+						.error(
+								"There was a serious error reading the default logging configuration",
+								e);
+			}
+						
+		} else {			
+			PropertyConfigurator.configure(System
+					.getProperty("log4j.configuration"));
+		}	
+		
+		if (options.hasLogFile()) {
+			RollingFileAppender appender;
+			try {
+
+				PatternLayout layout = new PatternLayout(
+						"%-5p %d{ISO8601} (%c:%L) - %m%n");
+				appender = new RollingFileAppender(layout, options.getLogFile());
+				appender.setMaxFileSize("1MB");
+				appender.setEncoding("UTF-8");
+				appender.setMaxBackupIndex(4);
+				// Let root logger decide level
+				appender.setThreshold(Level.ALL);
+				LogManager.getRootLogger().addAppender(appender);
+			} catch (IOException e) {
+				System.err.println("Could not log to " + options.getLogFile());
+			}
+		}
+	}
+
+	public int setupAndExecute(String[] args,CommandLineOptions options) throws InvalidOptionException,
 			EditException, DeserializationException, InvalidDataflowException,
 			TokenOrderException, ReadInputException, OpenDataflowException,
 			DatabaseConfigurationException {
 
-		CommandLineOptions options = new CommandLineOptions(args);
+		
 		if (!options.askedForHelp()) {
 			setupDatabase(options);
 
@@ -125,32 +181,32 @@ public class CommandLineLauncher implements Launchable {
 
 				Dataflow dataflow = openDataflow(workflowURL);
 				validateDataflow(dataflow);
-				
+
 				InvocationContext context = createInvocationContext();
 
-				WorkflowInstanceFacade facade = compileFacade(dataflow, context);				
+				WorkflowInstanceFacade facade = compileFacade(dataflow, context);
 				InputsHandler inputsHandler = new InputsHandler();
-				Map<String,DataflowInputPort> portMap = new HashMap<String, DataflowInputPort>();
-				
+				Map<String, DataflowInputPort> portMap = new HashMap<String, DataflowInputPort>();
+
 				for (DataflowInputPort port : dataflow.getInputPorts()) {
 					portMap.put(port.getName(), port);
 				}
-				inputsHandler.checkProvidedInputs(portMap,options);
-				Map<String, WorkflowDataToken> inputs = inputsHandler.registerInputs(portMap,options, context);
+				inputsHandler.checkProvidedInputs(portMap, options);
+				Map<String, WorkflowDataToken> inputs = inputsHandler
+						.registerInputs(portMap, options, context);
 
 				CommandLineResultListener resultListener = addResultListener(
 						facade, context, dataflow, options);
 
 				executeWorkflow(facade, inputs, resultListener);
 			}
-		}
-		else {
+		} else {
 			options.displayHelp();
 		}
-		
-		//wait until user hits CTRL-C before exiting
+
+		// wait until user hits CTRL-C before exiting
 		if (options.getStartDatabaseOnly()) {
-			//FIXME: need to do this more gracefully.
+			// FIXME: need to do this more gracefully.
 			while (true) {
 				try {
 					Thread.sleep(500);
@@ -163,13 +219,16 @@ public class CommandLineLauncher implements Launchable {
 		return 0;
 	}
 
-	protected void validateDataflow(Dataflow dataflow) throws InvalidDataflowException {
-		//FIXME: this needs expanding upon to give more details info back to the user
-		//FIXME: added a getMessage to InvalidDataflowException may be good place to do this.
+	protected void validateDataflow(Dataflow dataflow)
+			throws InvalidDataflowException {
+		// FIXME: this needs expanding upon to give more details info back to
+		// the user
+		// FIXME: added a getMessage to InvalidDataflowException may be good
+		// place to do this.
 		DataflowValidationReport report = dataflow.checkValidity();
 		if (!report.isValid()) {
 			throw new InvalidDataflowException(dataflow, report);
-		}		
+		}
 	}
 
 	protected void executeWorkflow(WorkflowInstanceFacade facade,
@@ -194,25 +253,32 @@ public class CommandLineLauncher implements Launchable {
 		}
 	}
 
-	private void setupDatabase(CommandLineOptions options) throws DatabaseConfigurationException {
+	private void setupDatabase(CommandLineOptions options)
+			throws DatabaseConfigurationException {
 		DatabaseConfigurationHandler dbHandler = new DatabaseConfigurationHandler(
-				options);		
+				options);
 		dbHandler.configureDatabase();
 		if (!options.isInMemory()) {
 			try {
 				dbHandler.testDatabaseConnection();
 			} catch (NamingException e) {
-				throw new DatabaseConfigurationException("There was an error trying to setup the database datasource: "+e.getMessage(),e);
+				throw new DatabaseConfigurationException(
+						"There was an error trying to setup the database datasource: "
+								+ e.getMessage(), e);
 			} catch (SQLException e) {
 				if (options.isClientServer()) {
-					throw new DatabaseConfigurationException("There was an error whilst making a test database connection. If running with -clientserver you should check that a server is running (check -startdb or -dbproperties)",e);
+					throw new DatabaseConfigurationException(
+							"There was an error whilst making a test database connection. If running with -clientserver you should check that a server is running (check -startdb or -dbproperties)",
+							e);
 				}
 				if (options.isEmbedded()) {
-					throw new DatabaseConfigurationException("There was an error whilst making a test database connection. If running with -embedded you should make sure that another process isn't using the database, or a server running through -startdb",e);
+					throw new DatabaseConfigurationException(
+							"There was an error whilst making a test database connection. If running with -embedded you should make sure that another process isn't using the database, or a server running through -startdb",
+							e);
 				}
 			}
 		}
-		
+
 	}
 
 	private InvocationContext createInvocationContext() {

@@ -241,7 +241,5 @@ public class BaclavaDocumentHandler {
 			}
 		}
 		return dataThingMap;
-	}
-
-	
+	}	
 }

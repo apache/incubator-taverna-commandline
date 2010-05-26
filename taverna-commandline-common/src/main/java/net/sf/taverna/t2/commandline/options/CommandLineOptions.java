@@ -259,6 +259,10 @@ public class CommandLineOptions {
 		Option outputdocOption = OptionBuilder.withArgName("document").hasArg()
 				.withDescription("save outputs to a new Baclava document").create(
 						"outputdoc");
+		
+		Option logFileOption = OptionBuilder.withArgName("filename").hasArg()
+		.withDescription("the logfile that more detailed logging will be written to").create(
+				"logfile");
 
 		Option inputdocOption = OptionBuilder.withArgName("document").hasArg()
 				.withDescription("load inputs from a Baclava document").create(
@@ -298,6 +302,7 @@ public class CommandLineOptions {
 				"automatically starts an internal Derby database server.");
 		Option provenance = new Option("provenance",
 				"generates provenance information and stores it in the database.");
+				
 
 		Options options = new Options();
 		options.addOption(helpOption);
@@ -313,9 +318,18 @@ public class CommandLineOptions {
 		options.addOption(port);
 		options.addOption(startDB);
 		options.addOption(provenance);
+		options.addOption(logFileOption);
 
 		return options;
 
+	}
+	
+	public boolean hasLogFile() {
+		return hasOption("logfile");
+	}
+	
+	public String getLogFile() {
+		return getOptionValue("logfile");
 	}
 
 	public boolean askedForHelp() {

@@ -211,6 +211,21 @@ public class TestCommandLineOptionsHandler {
 		assertFalse(options.isInMemory());
 		assertFalse(options.isEmbedded());
 	}
+	
+	@Test
+	public void hasLogFile() throws Exception {
+		CommandLineOptions options = new CommandLineOptions(new String[] {
+				"-logfile","/tmp/logging", "myworkflow.t2flow" });
+
+		assertTrue(options.hasLogFile());
+		assertEquals("/tmp/logging", options.getLogFile());
+	}
+	
+	@Test(expected = InvalidOptionException.class)
+	public void hasLogFileNotValidWithoutWorkflow() throws Exception{
+		CommandLineOptions options = new CommandLineOptions(new String[] {
+				"-logfile","/tmp/logging"});
+	}
 
 	@Test
 	public void isEmbedded() throws Exception {
