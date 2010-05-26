@@ -127,8 +127,7 @@ public class BaclavaDocumentHandler {
 			Object dataValue;
 
 			dataValue = context.getReferenceService().renderIdentifier(
-					reference, Object.class, context);
-
+					reference, Object.class, context);			
 			return dataValue;
 
 		} else if (reference.getReferenceType() == T2ReferenceType.ErrorDocument) {
@@ -198,22 +197,21 @@ public class BaclavaDocumentHandler {
 			List<String> mimeTypeList = new ArrayList<String>();
 
 			if (token.getData().getReferenceType() == T2ReferenceType.ReferenceSet) {
+				
 				mimeTypeList
-						.addAll(MimeTypeHandler.determineMimeTypes(token.getData(), context));
-
-				Object data = context.getReferenceService().renderIdentifier(
-						token.getData(), Object.class, context);
-				DataThing thingy = DataThingFactory.bake(data);
-				thingy.getMetadata().setMIMETypes(mimeTypeList);
+						.addAll(MimeTypeHandler.determineMimeTypes(token.getData(), context));				
+				DataThing thingy = DataThingFactory.bake(convertReferencesToObjects(token.getData(), context));
+				thingy.getMetadata().setMIMETypes(mimeTypeList);				
 				dataThingMap.put(portName, thingy);
-
+				
 			} else if (token.getData().getReferenceType() == T2ReferenceType.ErrorDocument) {
-				DataThing thingy = DataThingFactory
-						.bake(convertReferencesToObjects(token.getData(),
-								context));
+				
+				DataThing thingy = DataThingFactory.bake(convertReferencesToObjects(token.getData(), context));
 				thingy.getMetadata().addMIMEType("text/plain");
 				dataThingMap.put(portName, thingy);
+				
 			} else {
+				
 				IdentifiedList<T2Reference> identifiedList = context
 						.getReferenceService().getListService().getList(
 								token.getData());
@@ -239,8 +237,8 @@ public class BaclavaDocumentHandler {
 				DataThing thingy = DataThingFactory.bake(list);
 				thingy.getMetadata().setMIMETypes(mimeTypeList);
 				dataThingMap.put(portName, thingy);
+				
 			}
-
 		}
 		return dataThingMap;
 	}
