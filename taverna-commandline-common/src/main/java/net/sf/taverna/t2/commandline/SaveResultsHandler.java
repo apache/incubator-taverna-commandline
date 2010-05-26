@@ -99,13 +99,14 @@ public class SaveResultsHandler {
 				dataDirectory = new File(rootDirectory, portName);
 				for (int i = 0; i < token.getIndex().length - 1; i++) {
 					dataDirectory = new File(dataDirectory, String
-							.valueOf(token.getIndex()[i]));
+							.valueOf(token.getIndex()[i] + 1));
 				}
 				dataFile = new File(dataDirectory, String.valueOf(token
-						.getIndex()[token.getIndex().length - 1]));
+						.getIndex()[token.getIndex().length - 1] + 1));
 			} else {
 				dataFile = new File(dataDirectory, portName);
 			}
+			
 			if (!dataDirectory.exists()) {
 				dataDirectory.mkdirs();
 			}
@@ -115,6 +116,7 @@ public class SaveResultsHandler {
 						+ dataFile.getAbsolutePath());
 				System.exit(-1);
 			}
+			
 			saveIndividualDataFile(token.getData(), dataFile, token
 					.getContext());
 		}
@@ -128,10 +130,10 @@ public class SaveResultsHandler {
 			dataDirectory = new File(rootDirectory, portName);
 			for (int i = 0; i < index.length - 1; i++) {
 				dataDirectory = new File(dataDirectory, String.valueOf(token
-						.getIndex()[i]));
+						.getIndex()[i] + 1));
 			}
 			dataDirectory = new File(dataDirectory, String.valueOf(token
-					.getIndex()[index.length - 1]));
+					.getIndex()[index.length - 1]+ 1));
 		} else {
 			dataDirectory = new File(rootDirectory, portName);
 		}
@@ -144,7 +146,7 @@ public class SaveResultsHandler {
 				.getReferenceService().getListService().getList(reference);
 		int c = 0;
 		for (T2Reference id : list) {
-			File dataFile = new File(dataDirectory, String.valueOf(c));
+			File dataFile = new File(dataDirectory, String.valueOf(c+1));
 			saveIndividualDataFile(id, dataFile, token.getContext());
 			c++;
 		}
