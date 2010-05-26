@@ -199,7 +199,7 @@ public class BaclavaDocumentHandler {
 
 			if (token.getData().getReferenceType() == T2ReferenceType.ReferenceSet) {
 				mimeTypeList
-						.addAll(determineMimeTypes(token.getData(), context));
+						.addAll(MimeTypeHandler.determineMimeTypes(token.getData(), context));
 
 				Object data = context.getReferenceService().renderIdentifier(
 						token.getData(), Object.class, context);
@@ -208,18 +208,18 @@ public class BaclavaDocumentHandler {
 				dataThingMap.put(portName, thingy);
 
 			} else if (token.getData().getReferenceType() == T2ReferenceType.ErrorDocument) {
-				DataThing thingy = DataThingFactory.bake(convertReferencesToObjects(token.getData(), context));
-				thingy.getMetadata().addMIMEType("text/xml");
+				DataThing thingy = DataThingFactory
+						.bake(convertReferencesToObjects(token.getData(),
+								context));
+				thingy.getMetadata().addMIMEType("text/plain");
 				dataThingMap.put(portName, thingy);
 			} else {
-				System.out.println("Its a list");
 				IdentifiedList<T2Reference> identifiedList = context
 						.getReferenceService().getListService().getList(
 								token.getData());
 				List<Object> list = new ArrayList<Object>();
 
 				for (int j = 0; j < identifiedList.size(); j++) {
-					System.out.println("J = " + j);
 					T2Reference ref = identifiedList.get(j);
 					list.add(convertReferencesToObjects(ref, context));
 				}
@@ -231,11 +231,11 @@ public class BaclavaDocumentHandler {
 				T2Reference ref = token.getData();
 				while (ref.getReferenceType() != T2ReferenceType.ReferenceSet
 						&& ref.getReferenceType() != T2ReferenceType.ErrorDocument) {
-					identifiedList = context.getReferenceService().getListService()
-							.getList(ref);
+					identifiedList = context.getReferenceService()
+							.getListService().getList(ref);
 					ref = identifiedList.get(0);
 				}
-				mimeTypeList.addAll(determineMimeTypes(ref, context));
+				mimeTypeList.addAll(MimeTypeHandler.determineMimeTypes(ref, context));
 				DataThing thingy = DataThingFactory.bake(list);
 				thingy.getMetadata().setMIMETypes(mimeTypeList);
 				dataThingMap.put(portName, thingy);
@@ -245,41 +245,5 @@ public class BaclavaDocumentHandler {
 		return dataThingMap;
 	}
 
-	private List<String> determineMimeTypes(T2Reference reference,
-			InvocationContext context) throws IOException {
-		List<String> mimeTypeList = new ArrayList<String>();
-
-		System.out.println("Calling deterimine mime types");
-
-		ReferenceSet referenceSet = (ReferenceSet) context
-				.getReferenceService().resolveIdentifier(reference, null,
-						context);
-
-		if (!referenceSet.getExternalReferences().isEmpty()) {
-			ExternalReferenceSPI externalReference = referenceSet
-					.getExternalReferences().iterator().next();
-
-			List<MimeType> mimeTypes = MimeTypeHandler.getMimeTypes(
-					externalReference.openStream(context), context);
-
-			for (MimeType type : mimeTypes) {
-				if (!type.toString().equals("text/plain")
-						&& !type.toString().equals("application/octet-stream")) {
-					mimeTypeList.add(type.toString());
-				}
-			}
-			if (externalReference.getDataNature() == ReferencedDataNature.TEXT) {
-				mimeTypeList.add("text/plain");
-			}
-			else {
-				mimeTypeList.add("application/octet-stream");
-			}
-			
-		} else {
-			System.out.println("No external reference found");
-		}
-		
-		
-		return mimeTypeList;
-	}
+	
 }

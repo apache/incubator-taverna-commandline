@@ -1,5 +1,3 @@
-package net.sf.taverna.t2.commandline;
-
 /*******************************************************************************
  * Copyright (C) 2007 The University of Manchester   
  * 
@@ -20,6 +18,7 @@ package net.sf.taverna.t2.commandline;
  *  License along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
  ******************************************************************************/
+package net.sf.taverna.t2.commandline;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;

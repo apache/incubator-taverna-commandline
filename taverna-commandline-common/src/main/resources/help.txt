@@ -41,13 +41,13 @@ allowing you to take full control over the database used. This takes a second
 argument, the filename of the propeties file, for which the following example
 contains the default settings used:
 
-in_memory = false 
-provenance = false 
-connector = derby 
+in_memory = true
+provenance = false
+connector = derby
 port = 1527 
-dialect = org.hibernate.dialect.DerbyDialect 
-start_derby = false 
-driver = org.apache.derby.jdbc.EmbeddedDriver 
+dialect = org.hibernate.dialect.DerbyDialect
+start_derby = false
+driver = org.apache.derby.jdbc.EmbeddedDriver
 jdbcuri = jdbc:derby:t2-database;create=true;upgrade=true
 
 When using -dbproperties together with other options, the other options take

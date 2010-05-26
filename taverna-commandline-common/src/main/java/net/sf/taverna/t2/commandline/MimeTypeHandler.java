@@ -30,6 +30,10 @@ import org.apache.log4j.Logger;
 
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.reference.ExternalReferenceSPI;
+import net.sf.taverna.t2.reference.ReferenceSet;
+import net.sf.taverna.t2.reference.ReferencedDataNature;
+import net.sf.taverna.t2.reference.T2Reference;
+import net.sf.taverna.t2.reference.T2ReferenceType;
 import eu.medsea.mimeutil.MimeType;
 import eu.medsea.mimeutil.MimeUtil2;
 
@@ -64,6 +68,43 @@ public class MimeTypeHandler {
 			}
 		}
 		return mimeList;
+	}
+	
+	public static List<String> determineMimeTypes(T2Reference reference,
+			InvocationContext context) throws IOException {
+		List<String> mimeTypeList = new ArrayList<String>();
+
+		if (reference.getReferenceType() == T2ReferenceType.ErrorDocument) {
+			mimeTypeList.add("text/plain");
+		} else {
+			ReferenceSet referenceSet = (ReferenceSet) context
+			.getReferenceService().resolveIdentifier(reference,
+					null, context);
+			if (!referenceSet.getExternalReferences().isEmpty()) {
+				
+				ExternalReferenceSPI externalReference = referenceSet
+						.getExternalReferences().iterator().next();
+
+				List<MimeType> mimeTypes = getMimeTypes(
+						externalReference.openStream(context), context);
+
+				for (MimeType type : mimeTypes) {
+					if (!type.toString().equals("text/plain")
+							&& !type.toString().equals(
+									"application/octet-stream")) {
+						mimeTypeList.add(type.toString());
+					}
+				}
+				if (externalReference.getDataNature() == ReferencedDataNature.TEXT) {
+					mimeTypeList.add("text/plain");
+				} else {
+					mimeTypeList.add("application/octet-stream");
+				}
+			}
+
+		}
+
+		return mimeTypeList;
 	}
 		
 	public static List<MimeType> getMimeTypes(
