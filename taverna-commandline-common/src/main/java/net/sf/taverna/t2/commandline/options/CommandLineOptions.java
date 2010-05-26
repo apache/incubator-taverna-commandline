@@ -261,7 +261,7 @@ public class CommandLineOptions {
 						"outputdoc");
 		
 		Option logFileOption = OptionBuilder.withArgName("filename").hasArg()
-		.withDescription("the logfile that more detailed logging will be written to").create(
+		.withDescription("the logfile to which more verbose logging will be written to").create(
 				"logfile");
 
 		Option inputdocOption = OptionBuilder.withArgName("document").hasArg()
