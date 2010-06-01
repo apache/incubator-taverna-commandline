@@ -109,7 +109,7 @@ public class TestCommandLineOptionsHandler {
 	@Test
 	public void noWorkflowNameButHelp() throws Exception {
 		// should not throw an error
-		new CommandLineOptions(new String[] { "-help" });
+		new CommandLineOptions(new String[] { "-help" });		
 	}
 
 	@Test
@@ -151,6 +151,31 @@ public class TestCommandLineOptionsHandler {
 				"myworkflow.t2flow" });
 		new CommandLineOptions(new String[] { "-provenance", "-dbproperties",
 				"dbproperties.properties", "myworkflow.t2flow" });
+	}
+	
+	@Test
+	public void testHasInputDelimiter() throws Exception {
+		CommandLineOptions options = new CommandLineOptions(new String[] {
+				"-inputvalue","in1","1,2,3","-inputdelimiter","in1",",","-inputdelimiter","in2",",","myworkflow.t2flow" });
+		assertTrue(options.hasDelimiterFor("in1"));
+		assertTrue(options.hasDelimiterFor("in2"));
+		assertFalse(options.hasDelimiterFor("in3"));
+	}
+	
+	@Test(expected = InvalidOptionException.class)
+	public void testInputDelimiterInvalidWithInputDoc() throws Exception {
+		new CommandLineOptions(new String[] {
+				"-inputdoc","doc.xml","-inputdelimiter","in1",",","myworkflow.t2flow" });
+	}
+	
+	
+	@Test
+	public void testInputDelimiter() throws Exception {
+		CommandLineOptions options = new CommandLineOptions(new String[] {
+				"-inputvalue","in1","1,2,3","-inputdelimiter","in1",",","-inputdelimiter","in2","!","myworkflow.t2flow" });
+		assertEquals(",",options.inputDelimiter("in1"));
+		assertEquals("!",options.inputDelimiter("in2"));
+		assertNull(options.inputDelimiter("in3"));
 	}
 
 	@Test

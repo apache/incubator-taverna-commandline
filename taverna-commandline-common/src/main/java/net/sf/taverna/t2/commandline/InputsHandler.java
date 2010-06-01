@@ -23,9 +23,11 @@ package net.sf.taverna.t2.commandline;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -39,9 +41,12 @@ import net.sf.taverna.t2.reference.T2Reference;
 import net.sf.taverna.t2.workflowmodel.DataflowInputPort;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.embl.ebi.escience.baclava.DataThing;
 
 public class InputsHandler {
+	
+	private static Logger logger = Logger.getLogger(InputsHandler.class); 
 
 	
 	public void checkProvidedInputs(Map<String, DataflowInputPort> portMap, CommandLineOptions options) throws InputMismatchException  {
@@ -79,8 +84,7 @@ public class InputsHandler {
 			//Should never happen, but just incase:
 			throw new ReadInputException("The was an internal error setting up the URL to open the inputs. You should contact Taverna support.",e1);
 		}
-		
-		
+				
 		if (options.hasInputFiles()) {
 			String[] inputParams = options.getInputFiles();
 			for (int i = 0; i < inputParams.length; i = i + 2) {
@@ -93,8 +97,22 @@ public class InputsHandler {
 						throw new InvalidOptionException("Cannot find an input port named '"+inputName+"'");
 					}
 					
-					T2Reference entityId=context.getReferenceService().register(IOUtils.toByteArray(inputURL.openStream()), port.getDepth(), true, context);
-
+					T2Reference entityId=null;
+					
+					if (options.hasDelimiterFor(inputName)) {
+						String delimiter=options.inputDelimiter(inputName);
+						Object value = IOUtils.toString(inputURL.openStream()).split(delimiter);
+						
+						value=checkForDepthMismatch(1, port.getDepth(), inputName, value);						
+						entityId=context.getReferenceService().register(value, port.getDepth(), true, context);						
+					}
+					else
+					{
+						Object value = IOUtils.toByteArray(inputURL.openStream());
+						value=checkForDepthMismatch(0, port.getDepth(), inputName, value);
+						entityId=context.getReferenceService().register(value, port.getDepth(), true, context);
+					}
+															
 					WorkflowDataToken token = new WorkflowDataToken("",new int[]{}, entityId, context);
 					inputs.put(inputName, token);
 					
@@ -117,11 +135,21 @@ public class InputsHandler {
 					if (port==null) {
 						throw new InvalidOptionException("Cannot find an input port named '"+inputName+"'");
 					}
-					
-					T2Reference entityId=context.getReferenceService().register(inputValue, port.getDepth(), true, context);
-
-					WorkflowDataToken token = new WorkflowDataToken("",new int[]{}, entityId, context);
-					inputs.put(inputName, token);
+										
+					T2Reference entityId=null;
+					if (options.hasDelimiterFor(inputName)) {
+						String delimiter=options.inputDelimiter(inputName);
+						Object value=checkForDepthMismatch(1, port.getDepth(), inputName, inputValue.split(delimiter));
+						entityId=context.getReferenceService().register(value, port.getDepth(), true, context);						
+					}
+					else
+					{
+						Object value=checkForDepthMismatch(0, port.getDepth(), inputName, inputValue);
+						entityId=context.getReferenceService().register(value, port.getDepth(), true, context);
+					}
+										
+					WorkflowDataToken token = new WorkflowDataToken("",new int[]{}, entityId, context);								
+					inputs.put(inputName, token);					
 					
 				} catch (IndexOutOfBoundsException e) {
 					throw new InvalidOptionException("Missing input value for input "+ inputName);					
@@ -143,6 +171,39 @@ public class InputsHandler {
 		}
 		
 		return inputs;
+	}
+	
+	private Object checkForDepthMismatch(int inputDepth,int portDepth,String inputName,Object inputValue) throws InvalidOptionException {
+		if (inputDepth!=portDepth) {
+			if (inputDepth<portDepth) {
+				logger.warn("Wrapping input for '" + inputName + "' from a depth of "+inputDepth+" to the required depth of "+portDepth);
+				while (inputDepth<portDepth) {
+					List<Object> l=new ArrayList<Object>();
+					l.add(inputValue);
+					inputValue=l;
+					inputDepth++;
+				}
+			}
+			else {
+				String msg="There is an irreconcilable mismatch between depth of the list for the input port '"+inputName+"' and the data presented. The input port requires a "+depthToString(portDepth)+" and the data presented is a "+depthToString(inputDepth);				
+				throw new InvalidOptionException(msg);
+			}
+		}
+		
+		return inputValue;
+	}
+	
+	private String depthToString(int depth) {
+		switch (depth) {
+		case 0:
+			return "single item";			
+		case 1:
+			return "list";			
+		case 2:
+			return "list of lists";			
+		default:
+			return "list of depth "+depth;
+		}
 	}
 
 

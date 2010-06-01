@@ -22,7 +22,6 @@ package net.sf.taverna.t2.commandline.options;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 
 import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
 
@@ -62,6 +61,9 @@ public class CommandLineOptions {
 				&& hasOption("inputdoc"))
 			throw new InvalidOptionException(
 					"You can't provide both -input and -inputdoc arguments");
+		
+		if (hasOption("inputdelimiter") && hasOption("inputdoc"))
+			throw new InvalidOptionException("You cannot combine the -inputdelimiter and -inputdoc arguments");
 
 		if (getArgs().length != 1
 				&& !(hasOption("help") || hasOption("startdb")))
@@ -103,18 +105,19 @@ public class CommandLineOptions {
 	public void displayHelp() {
 		displayHelp(true);
 	}
-	
+
 	public void displayHelp(boolean showFullText) {
-		
+
 		HelpFormatter formatter = new HelpFormatter();
-		try {	
-				formatter.printHelp("executeworkflow [options] [workflow]", options);
-				if (showFullText) {
-					InputStream helpStream = CommandLineOptions.class.getClassLoader()
-					.getResourceAsStream("help.txt");
-					String helpText = IOUtils.toString(helpStream);					
-					System.out.println(helpText);
-				}
+		try {
+			formatter
+					.printHelp("executeworkflow [options] [workflow]", options);
+			if (showFullText) {
+				InputStream helpStream = CommandLineOptions.class
+						.getClassLoader().getResourceAsStream("help.txt");
+				String helpText = IOUtils.toString(helpStream);
+				System.out.println(helpText);
+			}
 
 		} catch (IOException e) {
 			logger.error("Error reading the help document", e);
@@ -257,12 +260,15 @@ public class CommandLineOptions {
 				.create("outputdir");
 
 		Option outputdocOption = OptionBuilder.withArgName("document").hasArg()
-				.withDescription("save outputs to a new Baclava document").create(
-						"outputdoc");
-		
-		Option logFileOption = OptionBuilder.withArgName("filename").hasArg()
-		.withDescription("the logfile to which more verbose logging will be written to").create(
-				"logfile");
+				.withDescription("save outputs to a new Baclava document")
+				.create("outputdoc");
+
+		Option logFileOption = OptionBuilder
+				.withArgName("filename")
+				.hasArg()
+				.withDescription(
+						"the logfile to which more verbose logging will be written to")
+				.create("logfile");
 
 		Option inputdocOption = OptionBuilder.withArgName("document").hasArg()
 				.withDescription("load inputs from a Baclava document").create(
@@ -278,6 +284,14 @@ public class CommandLineOptions {
 				.hasArgs(2).withValueSeparator(' ').withDescription(
 						"directly use the value for the named input").create(
 						"inputvalue");
+
+		Option inputDelimiterOption = OptionBuilder
+				.withArgName("inputname delimiter")
+				.hasArgs(2)
+				.withValueSeparator(' ')
+				.withDescription(
+						"causes an inputvalue or inputfile to be split into a list according to the delimiter. The associated workflow input must be expected to receive a list")
+				.create("inputdelimiter");
 
 		Option dbProperties = OptionBuilder.withArgName("filename").hasArg()
 				.withDescription(
@@ -302,12 +316,12 @@ public class CommandLineOptions {
 				"automatically starts an internal Derby database server.");
 		Option provenance = new Option("provenance",
 				"generates provenance information and stores it in the database.");
-				
 
 		Options options = new Options();
 		options.addOption(helpOption);
 		options.addOption(inputFileOption);
 		options.addOption(inputValueOption);
+		options.addOption(inputDelimiterOption);
 		options.addOption(inputdocOption);
 		options.addOption(outputOption);
 		options.addOption(outputdocOption);
@@ -323,11 +337,41 @@ public class CommandLineOptions {
 		return options;
 
 	}
-	
+
+	public boolean hasDelimiterFor(String inputName) {
+		boolean result = false;
+		if (hasOption("inputdelimiter")) {
+			String [] values = getOptionValues("inputdelimiter");
+			for (int i=0;i<values.length;i+=2) {
+				if (values[i].equals(inputName))
+				{
+					result=true;
+					break;
+				}
+			}
+		}
+		return result;
+	}
+
+	public String inputDelimiter(String inputName) {
+		String result = null;
+		if (hasOption("inputdelimiter")) {
+			String [] values = getOptionValues("inputdelimiter");
+			for (int i=0;i<values.length;i+=2) {
+				if (values[i].equals(inputName))
+				{
+					result=values[i+1];
+					break;
+				}
+			}
+		}
+		return result;
+	}
+
 	public boolean hasLogFile() {
 		return hasOption("logfile");
 	}
-	
+
 	public String getLogFile() {
 		return getOptionValue("logfile");
 	}
