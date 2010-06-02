@@ -20,19 +20,34 @@ together, -inputdoc must be used on its own. -inputfile and -inputvalue both
 take 2 additional arguements, the name of the port for the input, and either a
 file containing the input data, or the input value itself respectively.
 
+If one of more of you workflow inputs is described as a list, you can create a
+list by using the -inputdelimiter option, which may be used with either
+-inputfile or -inputvalue. This option takes 2 parameters - an input name and
+the delimiter by which to split the input into a list. 
+
+The delimiter may be a simple character, such as a comma or a new-line
+character, or a regular expression.  The input string, or file, will then be
+converted into a list being split by the delimiter specified.  
+
+If a list of greater depth (i.e. a list or lists or deeper) is required then
+you will need to use -inputdoc.  However, if you provide an input of lower
+depth to that required, then it will automatically be wrapped in one or more
+lists up to the required depth.  Providing an input of greater depth than that
+required will result in an error.
+
 If a workflow has a high memory requirement, then it should be executed
-together with a database. There are 2 options for this
+together with a database. There are 3 options to help with this
 
 -embedded, runs with an embedded database. This is slightly faster than
-  -clientserver (below), but has the limitation that only one executeworkflow
-may be executed simultaneously
+-clientserver (below), but has the limitation that only one executeworkflow may
+be executed simultaneously
  
--clientserver allows the workflow to be executed backed by the database
-  running as a server. By default a database isn't started for you, but may be
-started using -startdb
+-clientserver allows the workflow to be executed backed by the database running
+as a server. By default a database isn't started for you, but may be started
+using -startdb
 
 -startdb starts a database. It may be used without providing a workflow to
-  allow a database to be started separately, allowing multiple executeworkflow
+allow a database to be started separately, allowing multiple executeworkflow
 runs simultaneously
 
 
@@ -44,7 +59,7 @@ contains the default settings used:
 in_memory = true
 provenance = false
 connector = derby
-port = 1527 
+port = 1527
 dialect = org.hibernate.dialect.DerbyDialect
 start_derby = false
 driver = org.apache.derby.jdbc.EmbeddedDriver

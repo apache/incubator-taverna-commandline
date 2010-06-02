@@ -45,11 +45,12 @@ public class CommandLineOptions {
 
 	public CommandLineOptions(String[] args) throws InvalidOptionException {
 		this.options = intitialiseOptions();
-		this.commandLine = processArgs(args);
+		this.commandLine = processArgs(args);		
 		checkForInvalid();
 	}
 
 	protected void checkForInvalid() throws InvalidOptionException {
+		if (askedForHelp()) return;
 		if (hasOption("provenance")
 				&& !(hasOption("embedded") || hasOption("clientserver") || hasOption("dbproperties")))
 			throw new InvalidOptionException(
@@ -65,9 +66,10 @@ public class CommandLineOptions {
 		if (hasOption("inputdelimiter") && hasOption("inputdoc"))
 			throw new InvalidOptionException("You cannot combine the -inputdelimiter and -inputdoc arguments");
 
-		if (getArgs().length != 1
+		if (getArgs().length == 0
 				&& !(hasOption("help") || hasOption("startdb")))
 			throw new InvalidOptionException("You must specify a workflow");
+		
 		if (hasOption("inmemory") && hasOption("embedded"))
 			throw new InvalidOptionException(
 					"The options -embedded, -clientserver and -inmemory cannot be used together");
@@ -100,10 +102,16 @@ public class CommandLineOptions {
 
 	public String[] getArgs() {
 		return commandLine.getArgs();
+	}		
+	
+	public Option [] getOptions() {
+		return commandLine.getOptions();
 	}
 
 	public void displayHelp() {
-		displayHelp(true);
+		boolean full = false;
+		if (hasOption("help")) full=true;
+		displayHelp(full);
 	}
 
 	public void displayHelp(boolean showFullText) {
@@ -249,7 +257,7 @@ public class CommandLineOptions {
 
 	@SuppressWarnings("static-access")
 	private Options intitialiseOptions() {
-		Option helpOption = new Option("help", "prints this message");
+		Option helpOption = new Option("help", "displays comprehensive help information");
 
 		Option outputOption = OptionBuilder
 				.withArgName("directory")
@@ -377,6 +385,6 @@ public class CommandLineOptions {
 	}
 
 	public boolean askedForHelp() {
-		return hasOption("help");
+		return hasOption("help") || (getArgs().length==0 && getOptions().length==0);
 	}
 }

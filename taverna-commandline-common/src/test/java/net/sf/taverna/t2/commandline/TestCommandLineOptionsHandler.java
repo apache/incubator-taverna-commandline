@@ -17,11 +17,18 @@ public class TestCommandLineOptionsHandler {
 		CommandLineOptions handler = new CommandLineOptions(
 				new String[] { "myworkflow.t2flow" });
 		assertEquals("myworkflow.t2flow", handler.getWorkflow());
-	}
-
-	@Test(expected = InvalidOptionException.class)
-	public void noWorkflowName() throws Exception {
-		new CommandLineOptions(new String[] {});
+	}	
+	
+	@Test
+	public void shouldShowHelp() throws Exception {
+		CommandLineOptions options = new CommandLineOptions(
+				new String[] { "-help" });
+		assertTrue(options.askedForHelp());
+		options = new CommandLineOptions(
+				new String[] {});
+		assertTrue(options.askedForHelp());
+		options = new CommandLineOptions(new String[] { "myworkflow.t2flow" });
+		assertFalse(options.askedForHelp());
 	}
 
 	@Test
@@ -104,13 +111,7 @@ public class TestCommandLineOptionsHandler {
 
 		options = new CommandLineOptions(new String[] { "myworkflow.t2flow" });
 		assertFalse(options.hasInputFiles());
-	}
-
-	@Test
-	public void noWorkflowNameButHelp() throws Exception {
-		// should not throw an error
-		new CommandLineOptions(new String[] { "-help" });		
-	}
+	}	
 
 	@Test
 	public void noWorkflowNameButStartDB() throws Exception {
