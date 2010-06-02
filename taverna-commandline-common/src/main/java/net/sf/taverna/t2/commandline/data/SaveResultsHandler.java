@@ -166,7 +166,8 @@ public class SaveResultsHandler {
 		if (reference.containsErrors()) {
 			ErrorDocument errorDoc = context.getReferenceService()
 			.getErrorDocumentService().getError(reference);
-			data = ErrorDocumentHandler.buildErrorDocumentString(errorDoc, context);			
+			data = ErrorDocumentHandler.buildErrorDocumentString(errorDoc, context);
+			dataFile = new File(dataFile.getAbsolutePath()+".error");
 		} else {
 			// FIXME: this really should be done using a stream rather
 			// than an instance of the object in memory			

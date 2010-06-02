@@ -7,7 +7,8 @@ with _<n> - where n is incremented to the next available directory.
 Results are written out to files named after the output port for that result.
 If a result is composed of lists, then a directory is created for the output
 port and individual list items are named after the list element index (with 1
-being the first index).
+being the first index). The the output is the result of an error, the filename
+is appended with '.error'.
 
 You can provide your own output directory with the -outputdir option. There
 will be an error if the directory already exists.
