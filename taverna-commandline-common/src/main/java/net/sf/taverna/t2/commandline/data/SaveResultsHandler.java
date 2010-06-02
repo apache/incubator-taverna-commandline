@@ -18,7 +18,7 @@
  *  License along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
  ******************************************************************************/
-package net.sf.taverna.t2.commandline;
+package net.sf.taverna.t2.commandline.data;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,6 +30,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sf.taverna.t2.commandline.CommandLineResultListener;
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
 import net.sf.taverna.t2.reference.ErrorDocument;

@@ -33,9 +33,10 @@ import java.util.Map;
 import javax.naming.NamingException;
 
 import net.sf.taverna.platform.spring.RavenAwareClassPathXmlApplicationContext;
-import net.sf.taverna.raven.appconfig.ApplicationConfig;
-import net.sf.taverna.raven.appconfig.ApplicationRuntime;
 import net.sf.taverna.raven.launcher.Launchable;
+import net.sf.taverna.t2.commandline.data.DatabaseConfigurationHandler;
+import net.sf.taverna.t2.commandline.data.InputsHandler;
+import net.sf.taverna.t2.commandline.data.SaveResultsHandler;
 import net.sf.taverna.t2.commandline.exceptions.DatabaseConfigurationException;
 import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
 import net.sf.taverna.t2.commandline.exceptions.OpenDataflowException;
