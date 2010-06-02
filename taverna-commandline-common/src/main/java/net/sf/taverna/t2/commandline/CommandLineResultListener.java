@@ -29,6 +29,12 @@ import net.sf.taverna.t2.invocation.WorkflowDataToken;
 
 import org.apache.log4j.Logger;
 
+/**
+ * A ResultListener that is using for collecting and storing results when running
+ * workflows from the commandline.
+ * 
+ * @author Stuart Owen 
+ */
 public class CommandLineResultListener implements ResultListener {
 	
 	private static final Logger logger = Logger.getLogger(CommandLineResultListener.class);
@@ -47,6 +53,14 @@ public class CommandLineResultListener implements ResultListener {
 		this.saveOutputDocument = saveOutputDocument;						
 	}
 
+	public Map<String, WorkflowDataToken> getOutputMap() {
+		return outputMap;
+	}
+
+	public boolean isComplete() {		
+		return finalTokens.size() == numberOfOutputs;
+	}
+
 	public void resultTokenProduced(WorkflowDataToken token, String portName) {		
 		if (saveIndividualResults) {
 			saveResultsHandler.tokenReceived(token, portName);
@@ -62,14 +76,6 @@ public class CommandLineResultListener implements ResultListener {
 				}
 			}
 		}
-	}
-
-	public Map<String, WorkflowDataToken> getOutputMap() {
-		return outputMap;
-	}
-
-	public boolean isComplete() {		
-		return finalTokens.size() == numberOfOutputs;
 	}
 
 }

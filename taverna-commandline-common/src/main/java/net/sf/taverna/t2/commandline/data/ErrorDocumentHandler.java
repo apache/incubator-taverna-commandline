@@ -35,6 +35,13 @@ import net.sf.taverna.t2.reference.StackTraceElementBean;
 import net.sf.taverna.t2.reference.T2Reference;
 import net.sf.taverna.t2.reference.T2ReferenceType;
 
+/**
+ * Handles Error documents and transforming them into String representations 
+ * that can be stored as a file, or within a Baclava document.
+ * 
+ * @author Stuart Owen
+ *
+ */
 public class ErrorDocumentHandler {
 
 	/**

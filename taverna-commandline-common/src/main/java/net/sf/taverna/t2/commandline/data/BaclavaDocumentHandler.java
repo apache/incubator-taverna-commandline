@@ -53,6 +53,13 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
+/**
+ * Handles creating and reading of Baclava documents. 
+ * Baclava is a standard originating from Taverna 1.
+ * 
+ * @author Stuart Owen
+ *
+ */
 public class BaclavaDocumentHandler {
 
 	private static Namespace namespace = Namespace.getNamespace("b",

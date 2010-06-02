@@ -35,6 +35,14 @@ import net.sf.taverna.t2.workbench.reference.config.DataManagementHelper;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Handles the initialisation and configuration of the data source according to 
+ * the command line arguments, or a properties file. 
+ * This also handles starting a network based instance of a Derby server, if requested. 
+ * 
+ * @author Stuart Owen
+ *
+ */
 public class DatabaseConfigurationHandler {
 
 	private final CommandLineOptions options;
@@ -62,6 +70,31 @@ public class DatabaseConfigurationHandler {
 		return dbConfig;
 	}
 	
+	private void importConfigurationFromStream(InputStream inStr)
+			throws IOException {
+		Properties p = new Properties();
+		p.load(inStr);		
+		for (Object key : p.keySet()) {
+			dbConfig.setProperty((String)key, p.getProperty((String)key).trim());
+		}
+	}
+
+	protected void overrideDefaults() throws DatabaseConfigurationException {
+		
+		InputStream inStr = DatabaseConfigurationHandler.class.getClassLoader().getResourceAsStream("database-defaults.properties");
+		try {
+			importConfigurationFromStream(inStr);
+		} catch (IOException e) {
+			throw new DatabaseConfigurationException("There was an error reading the default database configuration settings: "+e.getMessage(),e);
+		}
+	}
+
+	protected void readConfigirationFromFile(String filename) throws IOException {
+		FileInputStream fileInputStream = new FileInputStream(filename);
+		importConfigurationFromStream(fileInputStream);
+		fileInputStream.close();
+	}
+
 	public void testDatabaseConnection()
 			throws DatabaseConfigurationException, NamingException, SQLException {
 		//try and get a connection
@@ -77,7 +110,7 @@ public class DatabaseConfigurationHandler {
 				}
 		}
 	}
-
+	
 	public void useOptions() throws DatabaseConfigurationException {
 		
 		if (options.hasOption("port")) {			
@@ -114,31 +147,6 @@ public class DatabaseConfigurationHandler {
 				throw new DatabaseConfigurationException("There was an error reading the database configuration options at "+options.getDatabaseProperties()+" : "+e.getMessage(),e);
 			}
 		}
-	}
-
-	protected void overrideDefaults() throws DatabaseConfigurationException {
-		
-		InputStream inStr = DatabaseConfigurationHandler.class.getClassLoader().getResourceAsStream("database-defaults.properties");
-		try {
-			importConfigurationFromStream(inStr);
-		} catch (IOException e) {
-			throw new DatabaseConfigurationException("There was an error reading the default database configuration settings: "+e.getMessage(),e);
-		}
-	}
-
-	private void importConfigurationFromStream(InputStream inStr)
-			throws IOException {
-		Properties p = new Properties();
-		p.load(inStr);		
-		for (Object key : p.keySet()) {
-			dbConfig.setProperty((String)key, p.getProperty((String)key).trim());
-		}
-	}
-	
-	protected void readConfigirationFromFile(String filename) throws IOException {
-		FileInputStream fileInputStream = new FileInputStream(filename);
-		importConfigurationFromStream(fileInputStream);
-		fileInputStream.close();
 	}
 
 }

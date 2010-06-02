@@ -27,7 +27,12 @@ import java.util.List;
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.provenance.reporter.ProvenanceReporter;
 import net.sf.taverna.t2.reference.ReferenceService;
-
+/**
+ * An InvocationContext used by the command line tool.
+ * 
+ * @author Stuart Owen
+ *
+ */
 public class CommandLineInvocationContext implements InvocationContext {
 
 	private final ReferenceService referenceService;
@@ -43,12 +48,8 @@ public class CommandLineInvocationContext implements InvocationContext {
 		this.provenanceReporter = provenanceReporter;
 	}
 
-	public ReferenceService getReferenceService() {
-		return referenceService;
-	}
-
-	public ProvenanceReporter getProvenanceReporter() {
-		return provenanceReporter;
+	public void addEntity(Object entity) {
+		entities.add(entity);
 	}
 
 	public <T extends Object> List<T> getEntities(Class<T> entityType) {
@@ -63,8 +64,12 @@ public class CommandLineInvocationContext implements InvocationContext {
 		return entitiesOfType;
 	}
 
-	public void addEntity(Object entity) {
-		entities.add(entity);
+	public ProvenanceReporter getProvenanceReporter() {
+		return provenanceReporter;
+	}
+
+	public ReferenceService getReferenceService() {
+		return referenceService;
 	}
 
 	public void removeEntity(Object entity) {

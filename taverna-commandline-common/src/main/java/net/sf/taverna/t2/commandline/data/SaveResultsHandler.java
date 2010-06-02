@@ -43,6 +43,16 @@ import net.sf.taverna.t2.reference.T2ReferenceType;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Handles all recording of results as they are received by the {@link CommandLineResultListener}
+ * or when the workflow enactment has completed.
+ * This includes saving as a Baclava Document, or storing individual results.
+ * 
+ * @author Stuart Owen
+ * @see BaclavaDocumentHandler
+ * @see CommandLineResultListener
+ *
+ */
 public class SaveResultsHandler {
 
 	private final Map<String, Integer> portsAndDepth;

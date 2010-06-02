@@ -44,6 +44,17 @@ import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.embl.ebi.escience.baclava.DataThing;
 
+/**
+ * 
+ * Handles the reading, or processing, or input values according to arguments provided to the commandline.
+ * The may be either as direct values, from a file, or from a Baclava document.
+ * 
+ * Also handles registering the input values with the Reference Service, ready to initiate
+ * the workflow run.
+ * 
+ * @author Stuart Owen
+ *
+ */
 public class InputsHandler {
 	
 	private static Logger logger = Logger.getLogger(InputsHandler.class); 

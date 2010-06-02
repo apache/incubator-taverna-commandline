@@ -38,6 +38,11 @@ import org.apache.log4j.Logger;
 import eu.medsea.mimeutil.MimeType;
 import eu.medsea.mimeutil.MimeUtil2;
 
+/**
+ * Handles identifying mime-types for a given data stream, or T2Reference
+ * 
+ * @author Stuart Owen 
+ */
 public class MimeTypeHandler {
 	
 	private static Logger logger = Logger.getLogger(MimeTypeHandler.class);
