@@ -196,7 +196,7 @@ public class InputsHandler {
 				}
 			}
 			else {
-				String msg="There is an irreconcilable mismatch between depth of the list for the input port '"+inputName+"' and the data presented. The input port requires a "+depthToString(portDepth)+" and the data presented is a "+depthToString(inputDepth);				
+				String msg="There is a mismatch between depth of the list for the input port '"+inputName+"' and the data presented. The input port requires a "+depthToString(portDepth)+" and the data presented is a "+depthToString(inputDepth);				
 				throw new InvalidOptionException(msg);
 			}
 		}
