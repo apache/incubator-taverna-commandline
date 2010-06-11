@@ -11,7 +11,7 @@
 	<packaging>jar</packaging>
 
 
-	<name>taverna-commandline-common</name>
+	<name>Taverna Commandline Common</name>
 	<dependencies>
 
 		<dependency>
