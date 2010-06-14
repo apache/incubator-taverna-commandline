@@ -4,15 +4,14 @@
 	<parent>
 		<groupId>net.sf.taverna.t2.taverna-commandline</groupId>
 		<artifactId>taverna-commandline</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.3-SNAPSHOT</version>
 	</parent>
 	<groupId>net.sf.taverna.t2.taverna-commandline</groupId>
 	<artifactId>taverna-commandline-common</artifactId>
-	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 
-	<name>taverna-commandline-common</name>
+	<name>Taverna Commandline Common</name>
 	<dependencies>
 
 		<dependency>
