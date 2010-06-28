@@ -137,7 +137,7 @@ public class SaveResultsHandler {
 		File dataDirectory = null;
 		int[] index = token.getIndex();
 
-		if (token.getIndex().length > 0) {
+		if (index.length > 0) {
 			dataDirectory = new File(rootDirectory, portName);
 			for (int i = 0; i < index.length - 1; i++) {
 				dataDirectory = new File(dataDirectory, String.valueOf(token
@@ -148,17 +148,28 @@ public class SaveResultsHandler {
 		} else {
 			dataDirectory = new File(rootDirectory, portName);
 		}
-		if (!dataDirectory.exists()) {
-			dataDirectory.mkdirs();
-		}
-
+		
 		T2Reference reference = token.getData();
 		IdentifiedList<T2Reference> list = token.getContext()
 				.getReferenceService().getListService().getList(reference);
+		saveListItems(token.getContext(), dataDirectory,  list);
+	}
+
+	private void saveListItems(InvocationContext context, File dataDirectory,IdentifiedList<T2Reference> list) {
 		int c = 0;
-		for (T2Reference id : list) {
+		if (!dataDirectory.exists()) {
+			dataDirectory.mkdirs();
+		}
+		for (T2Reference id : list) {			
 			File dataFile = new File(dataDirectory, String.valueOf(c+1));
-			saveIndividualDataFile(id, dataFile, token.getContext());
+			if (id.getReferenceType() ==  T2ReferenceType.IdentifiedList) {
+				IdentifiedList<T2Reference> innerList = context
+				.getReferenceService().getListService().getList(id);				
+				saveListItems(context, dataFile, innerList);
+			}
+			else {				
+				saveIndividualDataFile(id, dataFile, context);				
+			}
 			c++;
 		}
 	}
