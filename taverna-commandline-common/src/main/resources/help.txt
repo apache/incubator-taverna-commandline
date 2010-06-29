@@ -1,8 +1,8 @@
-By default, the workflow is executing -inmemory, and results are written out to
-a directory named after the workflow name.
+By default, the workflow is executed using the -inmemory option, and the
+results are written out to a directory named after the workflow name.
 
-If this directory already exists then an new directory is created, and appended
-with _<n> - where n is incremented to the next available directory.
+If this directory already exists then an new directory is created, and
+appended with _<n>, where n is incremented to the next available index.
 
 Results are written out to files named after the output port for that result.
 If a result is composed of lists, then a directory is created for the output
@@ -13,49 +13,52 @@ is appended with '.error'.
 You can provide your own output directory with the -outputdir option. There
 will be an error if the directory already exists.
 
-You can also record your results to a Baclava document using -outputdoc. The
-document will be overwritten if it already exists.
+You can also record your results to a Baclava document using -outputdoc
+option.  The document will be overwritten if it already exists.
 
-Inputs can be provided in 3 ways. Both -inputfile and -inputvalue can be used
-together, -inputdoc must be used on its own. -inputfile and -inputvalue both
-take 2 additional arguements, the name of the port for the input, and either a
-file containing the input data, or the input value itself respectively.
+Inputs can be provided in three ways. Both -inputfile and -inputvalue options
+can be used together; -inputdoc option must be used on its own. -inputfile and
+-inputvalue options both take two additional arguments, the name of the port
+for the input, and either a file containing the input data, or the input value
+itself respectively.
 
 If one of more of you workflow inputs is described as a list, you can create a
 list by using the -inputdelimiter option, which may be used with either
--inputfile or -inputvalue. This option takes 2 parameters - an input name and
-the delimiter by which to split the input into a list. 
+-inputfile or -inputvalue. This option takes two parameters - an input name
+and the delimiter by which to split the input into a list.
 
 The delimiter may be a simple character, such as a comma or a new-line
-character, or a regular expression.  The input string, or file, will then be
-converted into a list being split by the delimiter specified.  
+character, or a regular expression. The input string, or file, will then be
+converted into a list being split by the delimiter specified. Make sure to 
+put the delimiter character in quotes as it may be interpreted by the shell 
+as a special character, e.g. ;.
 
 If a list of greater depth (i.e. a list or lists or deeper) is required then
-you will need to use -inputdoc.  However, if you provide an input of lower
-depth to that required, then it will automatically be wrapped in one or more
-lists up to the required depth.  Providing an input of greater depth than that
-required will result in an error.
+you will need to use the -inputdoc option.  However, if you provide an input
+of lower depth to that required, then it will automatically be wrapped in one
+or more lists up to the required depth.  Providing an input of greater depth
+than that required will result in an error.
 
-If a workflow has a high memory requirement, then it should be executed
-together with a database. There are 3 options to help with this
+If a workflow has a high memory requirement, then it may be better to run it
+using a database to store data rather than storing it in memory, which is the
+default option. There are three options for using a database:
 
--embedded, runs with an embedded database. This is slightly faster than
--clientserver (below), but has the limitation that only one executeworkflow may
-be executed simultaneously
- 
--clientserver allows the workflow to be executed backed by the database running
-as a server. By default a database isn't started for you, but may be started
-using -startdb
+-embedded option, runs with an embedded database. This is slightly faster than
+the -clientserver option (below), but has the limitation that only one
+executeworkflow script may be executed simultaneously.
 
--startdb starts a database. It may be used without providing a workflow to
-allow a database to be started separately, allowing multiple executeworkflow
-runs simultaneously
+-clientserver option allows the workflow to be executed backed by the database
+running as a server. By default a database is not started for you, but may be
+started using -startdb option.
 
+-startdb option starts a database. It may be used without providing a workflow
+to allow a database to be started separately, allowing multiple simultaneous
+executeworkflow script runs.
 
-More advanced database configurations can be specified using -dbproperties,
-allowing you to take full control over the database used. This takes a second
-argument, the filename of the propeties file, for which the following example
-contains the default settings used:
+More advanced database configurations can be specified using -dbproperties
+option, allowing you to take full control over the database used. This takes a
+second argument, the filename of the propeties file, for which the following
+example contains the default settings used:
 
 in_memory = true
 provenance = false
@@ -66,7 +69,5 @@ start_derby = false
 driver = org.apache.derby.jdbc.EmbeddedDriver
 jdbcuri = jdbc:derby:t2-database;create=true;upgrade=true
 
-When using -dbproperties together with other options, the other options take
-precedence.
-
-
+Note that when using -dbproperties together with other options, the other
+options take precedence.
