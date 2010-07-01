@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+	
+	<dependencySets>
+		<dependencySet>
+			<unpack>true</unpack>
+			<unpackOptions>
+				<includes>				
+					<include>conf/log4j.properties</include>
+					<include>executeworkflow.*</include>
+					<include>known-issues.txt</include>
+					<include>release-notes.txt</include>
+					<include>LICENCE.txt</include>
+				</includes>
+			</unpackOptions>
+		</dependencySet>
+	</dependencySets>
+	<fileSets>
+		<fileSet>
+			<directory>src/main/resources</directory>
+			<outputDirectory>/</outputDirectory>
+			<excludes>
+				<exclude>plugins/plugins.xml</exclude>
+				<exclude>conf/raven-launcher.properties</exclude>
+				<exclude>conf/current-profile.xml</exclude>
+			</excludes>
+		</fileSet>
+		<fileSet>
+			<directory>${project.build.directory}/repository</directory>
+			<outputDirectory>/repository</outputDirectory>
+		</fileSet>
+	</fileSets>
+	<files>
+		<file>
+			<source>src/main/resources/plugins/plugins.xml</source>
+			<outputDirectory>/plugins</outputDirectory>
+			<filtered>true</filtered>
+		</file>
+		<file>
+			<source>src/main/resources/conf/raven-launcher.properties</source>
+			<outputDirectory>/conf</outputDirectory>
+			<filtered>true</filtered>
+		</file>
+		<file>
+			<source>src/main/resources/conf/current-profile.xml</source>
+			<outputDirectory>/conf</outputDirectory>
+			<filtered>true</filtered>
+		</file>
+	</files>
+</component>
