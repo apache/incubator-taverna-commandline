@@ -37,7 +37,7 @@
 		<file>
 			<source>src/main/resources/plugins/plugins.xml</source>
 			<outputDirectory>/plugins</outputDirectory>
-			<filtered>true</filtered>
+			<filtered>true</filtered>			
 		</file>
 		<file>
 			<source>src/main/resources/conf/raven-launcher.properties</source>

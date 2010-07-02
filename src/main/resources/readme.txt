@@ -1,6 +1,6 @@
-=======================
-Taverna workbench 2.2.0
-=======================
+===============================
+Taverna command line tool 2.2.0
+===============================
 http://www.taverna.org.uk/
 http://www.mygrid.org.uk/
 
@@ -20,29 +20,100 @@ Taverna uses various third-party libraries that are included under compatible
 open source licences such as Apache Licence.
 
 
-Running Taverna
-===============
-For Windows, if you used the installer you should have 
-Taverna->Taverna workbench 2.2.0 in your Start menu. If you used the
-self-extracting archive, double-click on "taverna.exe" in the extracted folder.
-
-For OS X, copy the Taverna application bundle to /Applications or your
-preference. Eject the disk image, and run Taverna from the installed location.
-
-For Linux, either double-click on "taverna.sh", or start a Terminal and execute
-"./taverna.sh" or "sh taverna.sh" from the folder where you extracted Taverna.
-
 Documentation
 =============
 See http://www.taverna.org.uk/documentation/taverna-2-x/ for
-documentation and tutorials on using Taverna.
+documentation and tutorials on using Taverna, in particular 
+http://www.taverna.org.uk/documentation/taverna-2-x/command-line-tool/
+will explain how to use the command line tool.
 
 See the file known-issues.txt for known issues with this release, and the file
 release-notes.txt for improvements since the previous version of Taverna.
 
 
-Examples
-========
+Usage
+=====
+In Windows, execute "executeworkflow.bat", while on OSX/Linux/UNIX,
+execute "sh executeworkflow.sh".
+
+On UNIX you may set the executable bit using 
+"chmod 755 executeworkflow.sh", allowing you to execute ./executeworkflow.sh
+directly. You can make symlinks to this shell script from /usr/local/bin or
+equivalent. 
+
+Run executeworkflow with parameter -help for detailed help, also see
+http://www.taverna.org.uk/documentation/taverna-2-x/command-line-tool/
+
+
+
+usage: executeworkflow [options] [workflow]
+ -clientserver                           connects as a client to a derby
+                                         server instance.
+ -dbproperties <filename>                loads a properties file to
+                                         configure the database
+ -embedded                               connects to an embedded Derby
+                                         database. This can prevent
+                                         mulitple invocations
+ -help                                   displays comprehensive help
+                                         information
+ -inmemory                               runs the workflow with data
+                                         stored in-memory rather than in a
+                                         database. This can give
+                                         performance inprovements, at the
+                                         cost of overall memory usage
+ -inputdelimiter <inputname delimiter>   causes an inputvalue or inputfile
+                                         to be split into a list according
+                                         to the delimiter. The associated
+                                         workflow input must be expected
+                                         to receive a list
+ -inputdoc <document>                    load inputs from a Baclava
+                                         document
+ -inputfile <inputname filename>         load the named input from file or
+                                         URL
+ -inputvalue <inputname value>           directly use the value for the
+                                         named input
+ -logfile <filename>                     the logfile to which more verbose
+                                         logging will be written to
+ -outputdir <directory>                  save outputs as files in
+                                         directory, default is to make a
+                                         new directory workflowName_output
+ -outputdoc <document>                   save outputs to a new Baclava
+                                         document
+ -port <portnumber>                      the port that the database is
+                                         running on. If set requested to
+                                         start its own internal server,
+                                         this is the start port that will
+                                         be used.
+ -provenance                             generates provenance information
+                                         and stores it in the database.
+ -startdb                                automatically starts an internal
+                                         Derby database server.
+
+For example:
+
+$ taverna-commandline-2.2.0/executeworkflow.sh Retrieve_sequence_in_EMBL_format.t2flow
+Outputs will be saved to the directory:
+/home/stain/Desktop/Retrieve_sequence_in_EMBL_format_output
+
+$ cat Retrieve_sequence_in_EMBL_format_output/sequence 
+ID   X52524; SV 1; linear; genomic DNA; STD; INV; 4507 BP.
+XX
+AC   X52524;
+XX
+DT   20-SEP-1990 (Rel. 25, Created)
+DT   18-FEB-1991 (Rel. 27, Last updated, Version 6)
+..
+     aggttagaaa aaataaataa aaataaaatt gagaagaatg taaattaaat atagaattcg      4500
+     agctcgg                                                                4507
+//
+
+
+You can use full URLs to workflows and inputs, for instance: 
+http://www.myexperiment.org/workflows/1004/download/retrieve_sequence_in_embl_format_873401.t2flow
+
+   
+Example workflows
+=================
 Example Taverna 2.2 workflows can be found in the myExperiment starter pack at
 http://www.myexperiment.org/packs/122
 
@@ -51,7 +122,8 @@ view inside Taverna.
 
 You can share and find other workflows at http://www.myexperiment.org/
 
-You can find and describe web services at http://www.biocatalogue.org/
+You can build your own workflows using the Taverna Workbench. See
+http://www.taverna.org.uk/download/workbench/
 
 
 Support
@@ -81,24 +153,6 @@ where you can also track the latest developments of Taverna.
 
   * http://lists.sourceforge.net/lists/listinfo/taverna-hackers
   * http://taverna-hackers.markmail.org/search/?q=
-
-
-Registration
-============
-Taverna might ask if you would like to register as a Taverna user. The myGrid
-team would appreciate if you do, as it would:
-
-  * Allow us to support you better; future plans will be directed towards
-    solutions Taverna users require
-
-  * Help sustain Taverna development
-
-By registering, you will *not* be giving us access to your data or service
-usage. We will *not* be monitoring your usage of Taverna, we will only record
-the information you provide at registration time.
-
-For full terms and condition of our registration, see
-http://www.taverna.org.uk/about/legal-stuff/terms/
 
 
 Requirements
@@ -179,66 +233,36 @@ Advanced
 Logging
 -------
 
-If you are using a Windows operating system and want to see Taverna's
-logging information, then run "taverna-debug.bat" from the installed
-Taverna folder.
-
-In OS X, start "/Applications/Utillities/Console".
-
-In Linux run "taverna.sh" from a Terminal.
-
-You can also find detailed logs in Taverna's home directory. You can 
+You will find detailed logs in Taverna's home directory. You can 
 view this directory from within Taverna by choosing 
 Advanced->Show Log Folder in the menu.
 
 See:
 
     Windows XP: C:\Documents and settings\JohnDoe\
-                   Application Data\taverna-2.2.0\logs
+                   Application Data\taverna-cmd-2.2.0\logs
 
-    Vista/Windows 7: C:\Users\JohnDoe\AppData\Roaming\taverna-2.2.0\logs
+    Vista/Windows 7: C:\Users\JohnDoe\AppData\Roaming\taverna-cmd-2.2.0\logs
 
-    OS X: /Users/JohnDoe/Library/Application support/taverna-2.2.0/logs
+    OS X: /Users/JohnDoe/Library/Application support/taverna-cmd-2.2.0/logs
 
-    Linux: /home/johndoe/.taverna-2.2.0/logs
+    Linux: /home/johndoe/.taverna-cmd-2.2.0/logs
 
 Note that "Application data" and "AppData" are hidden folders in Windows.
 
 To modify the log levels, edit "conf/log4j.properties" in the Taverna
 installation folder.
 
-Default services and plugins
-----------------------------
-
-You can edit the default service list for the Taverna installation by
-editing "conf/default_service_providers.xml". You can generate this
-service list from within Taverna by right-clicking on "Available
-Services" and selecting "Export Services To File".
- 
-Similarly you can replace the installation "plugins/plugins.xml" with
-"plugins.xml" from the Taverna home directory to force installation of a
-plugin by default. Note that in this case it is also recommended to copy
-the full content of "repository" from the Taverna home directory to
-append the installation directory's "repository".
-
 
 Memory usage 
 ------------
-For OS X and Linux, Taverna will use a maximum of 400 MB. In Windows,
-"taverna-debug.bat" will also use 400 MB, while "taverna.exe" will use
-400 MB or up to 50% of available memory when launching Taverna.
+The Taverna command line tool will by default use a maximum of 
+300 MB. 
 
 If Taverna happens to run out of memory while running a workflow with
-large data (or large number of data), you can set Taverna to store data
-in a database by going to Preferences->Data and Provenance and remove
-the tick for "In-memory storage". This will reduce execution speed
-slightly, but should consume less memory. Also remember to click
-'Remove' on old runs you are no longer interested in.
+large data by using the option -embedded This will reduce execution speed
+slightly, but should consume less memory.
 
-If you need to increase the available memory, edit "taverna.sh" or
-"taverna-debug.bat" and replace "-Xmx400m" with say "-Xmx600m" to use
+If you need to increase the available memory, edit "executeworkflow.sh" or
+"executeworkflow.bat" and replace "-Xmx300m" with say "-Xmx600m" to use
 600 MiB.
-
-For OS X you would need to right click on "Taverna.app" and go inside
-the application bundle to edit Contents/Info.plist and change the same
-parameter using the Property List Editor.

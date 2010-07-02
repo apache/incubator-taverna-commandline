@@ -37,7 +37,7 @@
     </plugin>
     <plugin>
         <provider>taverna.sf.net</provider>
-        <identifier>net.sf.taverna.t2.taverna-workbench.provenanceconnectors-plugin</identifier>
+        <identifier>net.sf.taverna.t2.provenanceconnectors</identifier>
 		<version>${t2.taverna.workbench.version}</version>
         <name>Provenance (required)</name>
         <description>Taverna 2 provenance connectors</description>

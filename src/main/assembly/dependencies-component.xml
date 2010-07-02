@@ -9,8 +9,7 @@
 			<useProjectArtifact>false</useProjectArtifact>
 			<excludes>
 				<exclude>workbench-*.jar</exclude>
-			</excludes>
-			
+			</excludes>			
 		</dependencySet>
 	</dependencySets>
 </component>
