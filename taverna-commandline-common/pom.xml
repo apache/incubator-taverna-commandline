@@ -30,6 +30,12 @@
 			<groupId>uk.org.mygrid.taverna.baclava</groupId>
 			<artifactId>baclava-core</artifactId>
 			<version>${taverna.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>raven</artifactId>
+					<groupId>uk.org.mygrid.taverna.raven</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
