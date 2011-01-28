@@ -71,3 +71,17 @@ jdbcuri = jdbc:derby:t2-database;create=true;upgrade=true
 
 Note that when using -dbproperties together with other options, the other
 options take precedence.
+
+-cmdir option lets you specify an absolute path to the directory where 
+Credential Manager's files (containing user's credentials and trusted  
+certificates for accessing secure services) are stored. If not specified and 
+the workflow requires access to these files, Taverna will try to find them in 
+the default location in <TAVERNA_HOME>/security somewhere inside user's home 
+directory (depending on the platform).
+
+-cmpassword option can be used to tell Taverna to expect the password for the 
+Credential Manager on standard input. If the password is not piped in, Taverna 
+will prompt you for it in the terminal and block until it is entered. Do not 
+enter your password in the command line! If -cmpassword option is not specified 
+and -cmdir option is used, Taverna will try to find the password in a special 
+file in the directory specified with -cmdir option.

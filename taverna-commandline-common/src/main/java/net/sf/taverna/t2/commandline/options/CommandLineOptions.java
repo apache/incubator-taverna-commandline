@@ -51,6 +51,9 @@ public class CommandLineOptions {
 			.getLogger(CommandLineOptions.class);
 	private Options options;
 	private CommandLine commandLine;
+	
+	public static final String CREDENTIAL_MANAGER_DIR_OPTION = "cmdir";
+	public static final String CREDENTIAL_MANAGER_PASSWORD_OPTION = "cmpassword";
 
 	public CommandLineOptions(String[] args) throws InvalidOptionException {
 		this.options = intitialiseOptions();
@@ -207,6 +210,13 @@ public class CommandLineOptions {
 	public boolean getStartDatabase() {
 		return hasOption("startdb");
 	}
+	
+	/**
+	 * @return the directory with Credential Manager's files
+	 */
+	public String getCredentialManagerDir() {
+		return getOptionValue(CREDENTIAL_MANAGER_DIR_OPTION);
+	}
 
 	public boolean getStartDatabaseOnly() throws InvalidOptionException {
 		return (getStartDatabase() && (getWorkflow() == null));
@@ -338,7 +348,13 @@ public class CommandLineOptions {
 				"automatically starts an internal Derby database server.");
 		Option provenance = new Option("provenance",
 				"generates provenance information and stores it in the database.");
-
+		
+		Option credentialManagerDirectory = OptionBuilder.withArgName("Credential Manager's directory path").
+		hasArg().withDescription(
+				"Absolute path to the directory on the disk where Credential Manager's files are located")
+		.create(CREDENTIAL_MANAGER_DIR_OPTION);
+		Option credentialManagerPassword = new Option(CREDENTIAL_MANAGER_PASSWORD_OPTION, "Indicates that the master password for Credential Manager will be provided on standard input"); // optional password option, to be read from standard input
+		
 		Options options = new Options();
 		options.addOption(helpOption);
 		options.addOption(inputFileOption);
@@ -355,6 +371,8 @@ public class CommandLineOptions {
 		options.addOption(startDB);
 		options.addOption(provenance);
 		options.addOption(logFileOption);
+		options.addOption(credentialManagerDirectory);
+		options.addOption(credentialManagerPassword);
 
 		return options;
 
