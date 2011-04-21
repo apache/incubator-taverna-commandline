@@ -87,13 +87,16 @@ public class CommandLineResultListener implements ResultListener {
 					logger.error("An error occurred saving the final results to -outputdoc",e);
 				}
 			}
-			if (saveOpm) {
-				saveResultsHandler.saveOpm(workflowRunId);
-			}
-			if (saveJanus) {
-				saveResultsHandler.saveJanus(workflowRunId);
-			}			
 		}
+	}
+
+	public void saveProvenance() {
+		if (saveOpm) {
+			saveResultsHandler.saveOpm(workflowRunId);
+		}
+		if (saveJanus) {
+			saveResultsHandler.saveJanus(workflowRunId);
+		}			
 	}
 
 }

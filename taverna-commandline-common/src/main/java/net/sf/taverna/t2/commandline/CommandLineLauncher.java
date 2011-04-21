@@ -47,6 +47,7 @@ import net.sf.taverna.t2.commandline.exceptions.OpenDataflowException;
 import net.sf.taverna.t2.commandline.exceptions.ReadInputException;
 import net.sf.taverna.t2.commandline.options.CommandLineOptions;
 import net.sf.taverna.t2.facade.WorkflowInstanceFacade;
+import net.sf.taverna.t2.facade.WorkflowInstanceFacade.State;
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.invocation.TokenOrderException;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
@@ -280,8 +281,11 @@ public class CommandLineLauncher implements Launchable {
 			WorkflowDataToken token = inputs.get(inputName);
 			facade.pushData(token, inputName);
 		}
+		while (facade.getState().compareTo(State.completed) < 0) {
+			// Test facade state, resultListener.isComplete() does not check wait for any
+			// dangling processors not connected to an output port.
 
-		while (!resultListener.isComplete()) {
+			//		while (!resultListener.isComplete()) {
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
@@ -291,6 +295,7 @@ public class CommandLineLauncher implements Launchable {
 								e);
 			}
 		}
+		resultListener.saveProvenance();
 	}
 
 	private void setupDatabase(CommandLineOptions options)
@@ -497,8 +502,8 @@ public class CommandLineLauncher implements Launchable {
 		if (options.getOutputDocument() != null) {
 			baclavaDoc = new File(options.getOutputDocument());
 		}
-		if (options.getJanus() != null) {
-			if (options.getJanus().isEmpty()) {
+		if (options.isJanus()) {
+			if (options.getJanus() == null) {
 				if (janusDir == null) {
 					janusDir = determineOutputDir(options, dataflow.getLocalName());
 				}
@@ -507,8 +512,8 @@ public class CommandLineLauncher implements Launchable {
 				janus = new File(options.getJanus());
 			}
 		}
-		if (options.getOPM() != null) {
-			if (options.getOPM().isEmpty()) {
+		if (options.isOPM()) {
+			if (options.getOPM() == null) {
 				if (janusDir == null) {
 					janusDir = determineOutputDir(options, dataflow.getLocalName());
 				}
@@ -526,7 +531,7 @@ public class CommandLineLauncher implements Launchable {
 				outputPortNamesAndDepth, outputDir, baclavaDoc, janus, opm);
 		CommandLineResultListener listener = new CommandLineResultListener(
 				outputPortNamesAndDepth.size(), resultsHandler,
-				outputDir != null, baclavaDoc != null, janus != null, opm != null, facade.getWorkflowRunId());
+				outputDir != null, baclavaDoc != null, opm != null, janus != null, facade.getWorkflowRunId());
 		facade.addResultListener(listener);
 		return listener;
 

@@ -52,6 +52,8 @@ public class CommandLineOptions {
 	private Options options;
 	private CommandLine commandLine;
 	
+	private static final String JANUS = "janus";
+	private static final String OPM = "opm";
 	public static final String CREDENTIAL_MANAGER_DIR_OPTION = "cmdir";
 	public static final String CREDENTIAL_MANAGER_PASSWORD_OPTION = "cmpassword";
 
@@ -66,7 +68,7 @@ public class CommandLineOptions {
 	}
 	
 	public boolean isProvenanceEnabled() {
-		return hasOption("provenance") || hasOption("opm") || hasOption("janus");
+		return hasOption("provenance") || hasOption(OPM) || hasOption(JANUS);
 	}
 	
 	protected void checkForInvalid() throws InvalidOptionException {
@@ -359,14 +361,14 @@ public class CommandLineOptions {
 				.hasOptionalArg()
 				.withDescription(
 						"saves Open Provenance Model (OPM) RDF/XML trace of execution to FILE or 'provenance-opm.rdf'")
-				.create("opm");
+				.create(OPM);
 
 		Option janus = OptionBuilder
 				.withArgName("file")
 				.hasOptionalArg()
 				.withDescription(
 						"saves Janus RDF/XML trace of execution to FILE or 'provenance-janus.rdf'")
-				.create("janus");		
+				.create(JANUS);		
 		
 		Option credentialManagerDirectory = OptionBuilder.withArgName("Credential Manager's directory path").
 		hasArg().withDescription(
@@ -436,10 +438,17 @@ public class CommandLineOptions {
 	}
 
 	public String getJanus() {
-		return getOptionValue("janus");
+		return getOptionValue(JANUS);
 	}
 	public String getOPM() {
-		return getOptionValue("opm");
+		return getOptionValue(OPM);
+	}
+	
+	public boolean isOPM() {
+		return hasOption(OPM);
+	}
+	public boolean isJanus() {
+		return hasOption(JANUS);
 	}
 
 }

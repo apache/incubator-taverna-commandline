@@ -251,6 +251,7 @@ public class SaveResultsHandler {
 	}
 
 	public void saveOpm(String workflowRunId) {
+		opm.getParentFile().mkdirs();
 		BufferedOutputStream outStream;
 		try {
 			outStream = new BufferedOutputStream(new FileOutputStream(opm));
@@ -281,6 +282,7 @@ public class SaveResultsHandler {
 	}
 
 	public void saveJanus(String workflowRunId) {
+		janus.getParentFile().mkdirs();
 		BufferedOutputStream outStream;
 		try {
 			outStream = new BufferedOutputStream(new FileOutputStream(janus));
