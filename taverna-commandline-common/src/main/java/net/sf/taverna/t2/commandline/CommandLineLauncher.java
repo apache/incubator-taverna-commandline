@@ -205,17 +205,27 @@ public class CommandLineLauncher implements Launchable {
 				if (credentialManagerPassword != null){
 					// Initialise Credential Manager (Taverna's Keystore and Truststore) and 
 					// SSL stuff - set the SSLSocketFactory to use Taverna's Keystore and Truststore.
-					if (credentialManagerDirPath != null){
-						CredentialManager.initialiseSSL(credentialManagerDirPath, credentialManagerPassword);
-					}
-					else{
+					
+					// If credentialManagerDirPath is null - initialize from the default location in <TAVERNA_HOME>/security somewhere 
+					// inside user's home directory. This should not be used when running command 
+					// line tool on a server and the Credential Manager dir path should always be 
+					// passed in as we do not want to store the security files in user's home directory 
+					// on the server (we do not even know which user the command line tool will be running as).
+
+					//if (credentialManagerDirPath != null){
+						CredentialManager.initialiseSSL(credentialManagerDirPath, credentialManagerPassword); // this can now handle situations when credentialManagerDirPath is null
+					//}
+					//else{
 						// Initialize from the default location in <TAVERNA_HOME>/security somewhere 
 						// inside user's home directory. This should not be used when running command 
 						// line tool on a server and the Credential Manager dir path should always be 
 						// passed in as we do not want to store the security files in user's home directory 
 						// on the server (we do not even know which user the command line tool will be running as).
-						CredentialManager.initialiseSSL(credentialManagerPassword);
-					}
+					//	CredentialManager.initialiseSSL(credentialManagerPassword);
+					//}
+				}
+				else{
+					logger.warn("No master password provided for Credential Manager.");
 				}
 
 				URL workflowURL = readWorkflowURL(options.getWorkflow());
