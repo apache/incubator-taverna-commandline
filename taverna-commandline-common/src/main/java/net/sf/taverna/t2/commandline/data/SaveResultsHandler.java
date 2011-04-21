@@ -20,6 +20,7 @@
  ******************************************************************************/
 package net.sf.taverna.t2.commandline.data;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -27,12 +28,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 import net.sf.taverna.t2.commandline.CommandLineResultListener;
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
+import net.sf.taverna.t2.provenance.api.ProvenanceAccess;
+import net.sf.taverna.t2.provenance.client.ProvenanceExporter;
+import net.sf.taverna.t2.provenance.client.XMLQuery.QueryParseException;
+import net.sf.taverna.t2.provenance.client.XMLQuery.QueryValidationException;
 import net.sf.taverna.t2.reference.ErrorDocument;
 import net.sf.taverna.t2.reference.ExternalReferenceSPI;
 import net.sf.taverna.t2.reference.Identified;
@@ -40,8 +46,10 @@ import net.sf.taverna.t2.reference.IdentifiedList;
 import net.sf.taverna.t2.reference.ReferenceSet;
 import net.sf.taverna.t2.reference.T2Reference;
 import net.sf.taverna.t2.reference.T2ReferenceType;
+import net.sf.taverna.t2.workbench.reference.config.DataManagementConfiguration;
 
 import org.apache.log4j.Logger;
+import org.jdom.JDOMException;
 
 /**
  * Handles all recording of results as they are received by the {@link CommandLineResultListener}
@@ -60,14 +68,19 @@ public class SaveResultsHandler {
 	private final File rootDirectory;
 	private static Logger logger = Logger
 			.getLogger(CommandLineResultListener.class);
-	private final File outputDocumentFile;	
+	private final File outputDocumentFile;
+	private final File janus;
+	private final File opm;
+	private ProvenanceExporter provExport;	
 
 	public SaveResultsHandler(Map<String, Integer> portsAndDepth,
-			File rootDirectory, File outputDocumentFile) {
+			File rootDirectory, File outputDocumentFile, File janus, File opm) {
 
 		this.portsAndDepth = portsAndDepth;
 		this.rootDirectory = rootDirectory;
 		this.outputDocumentFile = outputDocumentFile;
+		this.janus = janus;
+		this.opm = opm;
 
 		depthSeen = new HashMap<String, Integer>();
 		for (String portName : portsAndDepth.keySet()) {
@@ -234,6 +247,56 @@ public class SaveResultsHandler {
 		} catch (IOException e) {
 			logger.error("IO Error writing resuts to: '"
 					+ dataFile.getAbsolutePath(), e);
+		}
+	}
+
+	public void saveOpm(String workflowRunId) {
+		BufferedOutputStream outStream;
+		try {
+			outStream = new BufferedOutputStream(new FileOutputStream(opm));
+		} catch (FileNotFoundException e1) {
+			logger.error("Can't find directory for writing OPM to " + opm, e1);
+			return;
+		}
+		try {
+			getProvenanceExporter().exportAsOPMRDF(workflowRunId, outStream);
+		} catch (Exception e) {
+			logger.error("Can't write OPM to " + opm, e);
+		} finally {
+			try {
+				outStream.close();
+			} catch (IOException e) {
+			}
+		}
+	}
+
+	protected synchronized ProvenanceExporter getProvenanceExporter() {
+		if (provExport == null) {
+			DataManagementConfiguration dbConfig = DataManagementConfiguration.getInstance();
+			String connectorType = dbConfig.getConnectorType();
+			ProvenanceAccess provAccess = new ProvenanceAccess(connectorType);
+			provExport = new ProvenanceExporter(provAccess);
+		}
+		return provExport;
+	}
+
+	public void saveJanus(String workflowRunId) {
+		BufferedOutputStream outStream;
+		try {
+			outStream = new BufferedOutputStream(new FileOutputStream(janus));
+		} catch (FileNotFoundException e1) {
+			logger.error("Can't find directory for writing Janus to " + janus, e1);
+			return;
+		}
+		try {
+			getProvenanceExporter().exportAsJanusRDF(workflowRunId, outStream);
+		} catch (Exception e) {
+			logger.error("Can't write Janus to " + janus, e);
+		} finally {
+			try {
+				outStream.close();
+			} catch (IOException e) {
+			}
 		}
 	}
 	

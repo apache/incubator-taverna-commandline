@@ -201,11 +201,7 @@ public class CommandLineLauncher implements Launchable {
 					// Credential Manager directory (if the dir was not null)
 					credentialManagerPassword = getCredentialManagerPasswordFromFile(options.getCredentialManagerDir());
 				}
-				if (credentialManagerPassword == null){
-					// If password is null after all - report an error
-					throw new CMException("You have not provided the password for Credential Manager either on stdin or in a password file.");
-				}
-				else{		
+				if (credentialManagerPassword != null){
 					// Initialise Credential Manager (Taverna's Keystore and Truststore) and 
 					// SSL stuff - set the SSLSocketFactory to use Taverna's Keystore and Truststore.
 					if (credentialManagerDirPath != null){
@@ -490,23 +486,47 @@ public class CommandLineLauncher implements Launchable {
 			Dataflow dataflow, CommandLineOptions options) {
 		File outputDir = null;
 		File baclavaDoc = null;
-
+		File janus = null;
+		File janusDir = null;
+		File opm = null;
+		
 		if (options.saveResultsToDirectory()) {
 			outputDir = determineOutputDir(options, dataflow.getLocalName());
+			janusDir = outputDir;
 		}
 		if (options.getOutputDocument() != null) {
 			baclavaDoc = new File(options.getOutputDocument());
 		}
-
+		if (options.getJanus() != null) {
+			if (options.getJanus().isEmpty()) {
+				if (janusDir == null) {
+					janusDir = determineOutputDir(options, dataflow.getLocalName());
+				}
+				janus = new File(janusDir, "provenance-janus.rdf");
+			} else {
+				janus = new File(options.getJanus());
+			}
+		}
+		if (options.getOPM() != null) {
+			if (options.getOPM().isEmpty()) {
+				if (janusDir == null) {
+					janusDir = determineOutputDir(options, dataflow.getLocalName());
+				}
+				opm = new File(janusDir, "provenance-opm.rdf");
+			} else {
+				opm = new File(options.getOPM());
+			}
+		}
+		
 		Map<String, Integer> outputPortNamesAndDepth = new HashMap<String, Integer>();
 		for (DataflowOutputPort port : dataflow.getOutputPorts()) {
 			outputPortNamesAndDepth.put(port.getName(), port.getDepth());
 		}
 		SaveResultsHandler resultsHandler = new SaveResultsHandler(
-				outputPortNamesAndDepth, outputDir, baclavaDoc);
+				outputPortNamesAndDepth, outputDir, baclavaDoc, janus, opm);
 		CommandLineResultListener listener = new CommandLineResultListener(
 				outputPortNamesAndDepth.size(), resultsHandler,
-				outputDir != null, baclavaDoc != null);
+				outputDir != null, baclavaDoc != null, janus != null, opm != null, facade.getWorkflowRunId());
 		facade.addResultListener(listener);
 		return listener;
 

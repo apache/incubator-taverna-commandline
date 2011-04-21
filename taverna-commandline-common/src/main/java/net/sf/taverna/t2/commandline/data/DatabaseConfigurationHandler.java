@@ -130,7 +130,7 @@ public class DatabaseConfigurationHandler {
 			dbConfig.setDriverClassName("org.apache.derby.jdbc.EmbeddedDriver");
 		}
 		
-		if (options.hasOption("provenance")) {
+		if (options.isProvenanceEnabled()) {
 			dbConfig.setProvenanceEnabled(true);
 		}
 		

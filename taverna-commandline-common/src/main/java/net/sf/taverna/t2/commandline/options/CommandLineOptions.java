@@ -64,14 +64,18 @@ public class CommandLineOptions {
 	public boolean askedForHelp() {
 		return hasOption("help") || (getArgs().length==0 && getOptions().length==0);
 	}
-
+	
+	public boolean isProvenanceEnabled() {
+		return hasOption("provenance") || hasOption("opm") || hasOption("janus");
+	}
+	
 	protected void checkForInvalid() throws InvalidOptionException {
 		if (askedForHelp()) return;
-		if (hasOption("provenance")
+		if (isProvenanceEnabled()
 				&& !(hasOption("embedded") || hasOption("clientserver") || hasOption("dbproperties")))
 			throw new InvalidOptionException(
 					"You should be running with a database to use provenance");
-		if (hasOption("provenance") && hasOption("inmemory"))
+		if (isProvenanceEnabled() && hasOption("inmemory"))
 			throw new InvalidOptionException(
 					"You should be running with a database to use provenance");
 		if ((hasOption("inputfile") || hasOption("inputvalue"))
@@ -349,6 +353,21 @@ public class CommandLineOptions {
 		Option provenance = new Option("provenance",
 				"generates provenance information and stores it in the database.");
 		
+		
+		Option opm = OptionBuilder
+				.withArgName("file")
+				.hasOptionalArg()
+				.withDescription(
+						"saves Open Provenance Model (OPM) RDF/XML trace of execution to FILE or 'provenance-opm.rdf'")
+				.create("opm");
+
+		Option janus = OptionBuilder
+				.withArgName("file")
+				.hasOptionalArg()
+				.withDescription(
+						"saves Janus RDF/XML trace of execution to FILE or 'provenance-janus.rdf'")
+				.create("janus");		
+		
 		Option credentialManagerDirectory = OptionBuilder.withArgName("Credential Manager's directory path").
 		hasArg().withDescription(
 				"Absolute path to the directory on the disk where Credential Manager's files are located")
@@ -370,12 +389,13 @@ public class CommandLineOptions {
 		options.addOption(port);
 		options.addOption(startDB);
 		options.addOption(provenance);
+		options.addOption(opm);
+		options.addOption(janus);
 		options.addOption(logFileOption);
 		options.addOption(credentialManagerDirectory);
 		options.addOption(credentialManagerPassword);
 
 		return options;
-
 	}
 
 	public boolean isClientServer() {
@@ -414,4 +434,12 @@ public class CommandLineOptions {
 		return (options.hasOption("outputdir") || !options
 				.hasOption("outputdoc"));
 	}
+
+	public String getJanus() {
+		return getOptionValue("janus");
+	}
+	public String getOPM() {
+		return getOptionValue("opm");
+	}
+
 }
