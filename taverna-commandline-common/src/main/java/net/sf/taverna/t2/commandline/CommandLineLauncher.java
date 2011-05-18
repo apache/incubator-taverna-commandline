@@ -108,7 +108,9 @@ public class CommandLineLauncher implements Launchable {
 		try {
 			CommandLineOptions options = new CommandLineOptions(args);
 			initialiseLogging(options);
-			return setupAndExecute(args,options);
+			int result = setupAndExecute(args,options);
+			System.exit(result);
+			return result;
 		} catch (EditException e) {
 			error("There was an error opening the workflow: " + e.getMessage());
 		} catch (DeserializationException e) {
@@ -131,7 +133,9 @@ public class CommandLineLauncher implements Launchable {
 		catch (CMException e) {
 			error("There was an error instantiating Credential Manager: " + e.getMessage());
 		}
-		return 0;
+		// Should be unreachable
+		System.exit(-1);
+		return -1;
 	}
 
 	private void initialiseLogging(CommandLineOptions options) {

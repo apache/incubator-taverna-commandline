@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,8 +36,6 @@ import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
 import net.sf.taverna.t2.provenance.api.ProvenanceAccess;
 import net.sf.taverna.t2.provenance.client.ProvenanceExporter;
-import net.sf.taverna.t2.provenance.client.XMLQuery.QueryParseException;
-import net.sf.taverna.t2.provenance.client.XMLQuery.QueryValidationException;
 import net.sf.taverna.t2.reference.ErrorDocument;
 import net.sf.taverna.t2.reference.ExternalReferenceSPI;
 import net.sf.taverna.t2.reference.Identified;
@@ -49,7 +46,6 @@ import net.sf.taverna.t2.reference.T2ReferenceType;
 import net.sf.taverna.t2.workbench.reference.config.DataManagementConfiguration;
 
 import org.apache.log4j.Logger;
-import org.jdom.JDOMException;
 
 /**
  * Handles all recording of results as they are received by the {@link CommandLineResultListener}
@@ -197,6 +193,8 @@ public class SaveResultsHandler {
 		}
 
 		Object data = null;
+		InputStream stream = null;
+		try {
 		if (reference.containsErrors()) {
 			ErrorDocument errorDoc = context.getReferenceService()
 			.getErrorDocumentService().getError(reference);
@@ -215,26 +213,28 @@ public class SaveResultsHandler {
 			}
 			else {
 				ExternalReferenceSPI externalReference = referenceSet.getExternalReferences().iterator().next();				
-				data = externalReference.openStream(context);
+				stream = externalReference.openStream(context);
+				data = stream;
 			}			
 		}
 
-		FileOutputStream fos;
+		FileOutputStream fos = null;
 		try {
 			fos = new FileOutputStream(dataFile);
 			if (data instanceof InputStream) {			
-				InputStream inStream = (InputStream)data;
+
 				int c;
-				while ( ( c = inStream.read() ) != -1  ) {
+				while ( ( c = stream.read() ) != -1  ) {
 					fos.write( (char) c);
-				}				
+				}
+				stream.close();
 				fos.flush();
-				fos.close();
+				//fos.close();
 			}
 			if (data instanceof byte[]) {
 				fos.write((byte[]) data);
 				fos.flush();
-				fos.close();
+				//fos.close();
 			} else {
 				PrintWriter out = new PrintWriter(new OutputStreamWriter(fos));
 				out.print(data.toString());
@@ -247,7 +247,24 @@ public class SaveResultsHandler {
 		} catch (IOException e) {
 			logger.error("IO Error writing resuts to: '"
 					+ dataFile.getAbsolutePath(), e);
+		} finally {
+			if (fos != null) {
+				try {
+					fos.close();
+				} catch (IOException e) {
+					logger.error("Cannot close file output stream", e);
+				}
+			}
 		}
+	} finally {
+		if (stream != null) {
+			try {
+				stream.close();
+			} catch (IOException e) {
+				logger.error("Cannot close stream from reference", e);
+			}
+		}
+	}
 	}
 
 	public void saveOpm(String workflowRunId) {
