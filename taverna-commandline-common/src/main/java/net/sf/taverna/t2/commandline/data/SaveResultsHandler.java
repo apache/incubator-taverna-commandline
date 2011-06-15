@@ -222,8 +222,7 @@ public class SaveResultsHandler {
 			dataFile = new File(dataFile.getAbsolutePath()+".error");
 		} else {
 			// FIXME: this really should be done using a stream rather
-			// than an instance of the object in memory			
-			
+			// than an instance of the object in memory						
 			Identified identified = context.getReferenceService().resolveIdentifier(reference, null, context);
 			ReferenceSet referenceSet = (ReferenceSet) identified;
 			
@@ -241,21 +240,18 @@ public class SaveResultsHandler {
 		FileOutputStream fos = null;
 		try {
 			fos = new FileOutputStream(dataFile);
-			if (data instanceof InputStream) {			
-
-				int c;
-				while ( ( c = stream.read() ) != -1  ) {
-					fos.write( (char) c);
+			if (data instanceof InputStream) {									
+				byte [] bytes = new byte[1024];
+				while ( ((InputStream)data).read(bytes)  != -1  ) {
+					fos.write(bytes);
 				}
 				stream.close();
 				fos.flush();
-				//fos.close();
 			}
-			if (data instanceof byte[]) {
+			if (data instanceof byte[]) {				
 				fos.write((byte[]) data);
 				fos.flush();
-				//fos.close();
-			} else {
+			} else {				
 				PrintWriter out = new PrintWriter(new OutputStreamWriter(fos));
 				out.print(data.toString());
 				out.flush();
