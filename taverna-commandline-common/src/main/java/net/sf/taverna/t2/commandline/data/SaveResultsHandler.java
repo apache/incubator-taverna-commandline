@@ -34,12 +34,14 @@ import java.util.Map;
 import net.sf.taverna.t2.commandline.CommandLineResultListener;
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
+import net.sf.taverna.t2.lang.baclava.BaclavaDocumentHandler;
 import net.sf.taverna.t2.provenance.api.ProvenanceAccess;
 import net.sf.taverna.t2.provenance.client.ProvenanceExporter;
 import net.sf.taverna.t2.reference.ErrorDocument;
 import net.sf.taverna.t2.reference.ExternalReferenceSPI;
 import net.sf.taverna.t2.reference.Identified;
 import net.sf.taverna.t2.reference.IdentifiedList;
+import net.sf.taverna.t2.reference.ReferenceService;
 import net.sf.taverna.t2.reference.ReferenceSet;
 import net.sf.taverna.t2.reference.T2Reference;
 import net.sf.taverna.t2.reference.T2ReferenceType;
@@ -53,7 +55,7 @@ import org.apache.log4j.Logger;
  * This includes saving as a Baclava Document, or storing individual results.
  * 
  * @author Stuart Owen
- * @see BaclavaDocumentHandler
+ * @see BaclavaHandler
  * @see CommandLineResultListener
  *
  */
@@ -102,8 +104,26 @@ public class SaveResultsHandler {
 	}
 	
 	public void saveOutputDocument(Map<String,WorkflowDataToken> allResults) throws Exception {
-		if (outputDocumentFile!=null) {
-			new BaclavaDocumentHandler().storeDocument(allResults, outputDocumentFile);
+		if (outputDocumentFile!=null) {			
+			BaclavaDocumentHandler handler = new BaclavaDocumentHandler();
+			InvocationContext context = null;
+			Map<String,T2Reference> references = new HashMap<String, T2Reference>();			
+			//fetch the references from the tokens, and pick up the context on the way
+			for (String portname : allResults.keySet()) {
+				WorkflowDataToken token = allResults.get(portname);
+				if (context==null) {
+					context=token.getContext();
+				}
+				references.put(portname, token.getData());
+			} 
+			handler.setChosenReferences(references);
+			
+			handler.setInvocationContext(context);
+			ReferenceService referenceService=null;
+			if (context!=null) referenceService = context.getReferenceService();
+			handler.setReferenceService(referenceService);
+			
+			handler.saveData(outputDocumentFile);
 		}
 	}
 

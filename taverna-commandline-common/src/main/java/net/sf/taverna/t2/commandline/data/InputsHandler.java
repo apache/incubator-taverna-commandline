@@ -171,7 +171,7 @@ public class InputsHandler {
 		
 		if (options.getInputDocument()!=null) {
 			String inputDocPath = options.getInputDocument();
-			Map<String, DataThing> things = new BaclavaDocumentHandler().readInputDocument(inputDocPath);
+			Map<String, DataThing> things = new BaclavaHandler().readInputDocument(inputDocPath);
 			for (String inputName : things.keySet()) {
 				DataThing thing = things.get(inputName);
 				Object object = thing.getDataObject();
