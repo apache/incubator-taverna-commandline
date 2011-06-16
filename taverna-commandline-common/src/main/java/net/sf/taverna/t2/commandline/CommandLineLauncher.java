@@ -295,11 +295,7 @@ public class CommandLineLauncher implements Launchable {
 			WorkflowDataToken token = inputs.get(inputName);
 			facade.pushData(token, inputName);
 		}
-		while (facade.getState().compareTo(State.completed) < 0) {
-			// Test facade state, resultListener.isComplete() does not check wait for any
-			// dangling processors not connected to an output port.
-
-			//		while (!resultListener.isComplete()) {
+		while (facade.getState().compareTo(State.completed) < 0) {			
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
