@@ -64,11 +64,7 @@ public class CommandLineResultListener implements ResultListener {
 
 	public Map<String, WorkflowDataToken> getOutputMap() {
 		return outputMap;
-	}
-
-	public boolean isComplete() {		
-		return finalTokens.size() == numberOfOutputs;
-	}
+	}	
 
 	public void resultTokenProduced(WorkflowDataToken token, String portName) {		
 		if (saveIndividualResults) {
@@ -76,16 +72,16 @@ public class CommandLineResultListener implements ResultListener {
 		}
 		
 		if (token.isFinal()) {
-			finalTokens.put(portName, token);
-			if (! isComplete()) {
-				return;
-			}
-			if (saveOutputDocument) {
-				try {
-					saveResultsHandler.saveOutputDocument(finalTokens);
-				} catch (Exception e) {
-					logger.error("An error occurred saving the final results to -outputdoc",e);
-				}
+			finalTokens.put(portName, token);			
+		}
+	}
+	
+	public void saveOutputDocument() {
+		if (saveOutputDocument) {
+			try {
+				saveResultsHandler.saveOutputDocument(finalTokens);
+			} catch (Exception e) {
+				logger.error("An error occurred saving the final results to -outputdoc",e);
 			}
 		}
 	}

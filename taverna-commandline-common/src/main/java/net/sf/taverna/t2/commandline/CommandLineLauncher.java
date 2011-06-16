@@ -310,6 +310,7 @@ public class CommandLineLauncher implements Launchable {
 			}
 		}
 		resultListener.saveProvenance();
+		resultListener.saveOutputDocument();
 	}
 
 	private void setupDatabase(CommandLineOptions options)
