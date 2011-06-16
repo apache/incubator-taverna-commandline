@@ -55,6 +55,7 @@ import org.apache.log4j.Logger;
  * This includes saving as a Baclava Document, or storing individual results.
  * 
  * @author Stuart Owen
+ * 
  * @see BaclavaHandler
  * @see CommandLineResultListener
  *
@@ -240,15 +241,15 @@ public class SaveResultsHandler {
 		FileOutputStream fos = null;
 		try {
 			fos = new FileOutputStream(dataFile);
-			if (data instanceof InputStream) {									
-				byte [] bytes = new byte[1024];
+			if (data instanceof InputStream) {	
+				byte [] bytes = new byte[500000];
 				while ( ((InputStream)data).read(bytes)  != -1  ) {
 					fos.write(bytes);
 				}
 				stream.close();
 				fos.flush();
 			}
-			if (data instanceof byte[]) {				
+			else if (data instanceof byte[]) {				
 				fos.write((byte[]) data);
 				fos.flush();
 			} else {				
