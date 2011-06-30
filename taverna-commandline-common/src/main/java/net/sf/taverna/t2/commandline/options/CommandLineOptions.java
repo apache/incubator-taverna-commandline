@@ -287,40 +287,40 @@ public class CommandLineOptions {
 
 	@SuppressWarnings("static-access")
 	private Options intitialiseOptions() {
-		Option helpOption = new Option("help", "displays comprehensive help information");
+		Option helpOption = new Option("help", "Display comprehensive help information.");
 
 		Option outputOption = OptionBuilder
 				.withArgName("directory")
 				.hasArg()
 				.withDescription(
-						"save outputs as files in directory, default "
-								+ "is to make a new directory workflowName_output")
+						"Save outputs as files in directory, default "
+								+ "is to make a new directory workflowName_output.")
 				.create("outputdir");
 
 		Option outputdocOption = OptionBuilder.withArgName("document").hasArg()
-				.withDescription("save outputs to a new Baclava document")
+				.withDescription("Save outputs to a new Baclava document.")
 				.create("outputdoc");
 
 		Option logFileOption = OptionBuilder
 				.withArgName("filename")
 				.hasArg()
 				.withDescription(
-						"the logfile to which more verbose logging will be written to")
+						"The logfile to which more verbose logging will be written to.")
 				.create("logfile");
 
 		Option inputdocOption = OptionBuilder.withArgName("document").hasArg()
-				.withDescription("load inputs from a Baclava document").create(
+				.withDescription("Load inputs from a Baclava document.").create(
 						"inputdoc");
 
 		Option inputFileOption = OptionBuilder
 				.withArgName("inputname filename").hasArgs(2)
 				.withValueSeparator(' ').withDescription(
-						"load the named input from file or URL").create(
+						"Load the named input from file or URL.").create(
 						"inputfile");
 
 		Option inputValueOption = OptionBuilder.withArgName("inputname value")
 				.hasArgs(2).withValueSeparator(' ').withDescription(
-						"directly use the value for the named input").create(
+						"Directly use the value for the named input.").create(
 						"inputvalue");
 
 		Option inputDelimiterOption = OptionBuilder
@@ -328,53 +328,53 @@ public class CommandLineOptions {
 				.hasArgs(2)
 				.withValueSeparator(' ')
 				.withDescription(
-						"causes an inputvalue or inputfile to be split into a list according to the delimiter. The associated workflow input must be expected to receive a list")
+						"Cause an inputvalue or inputfile to be split into a list according to the delimiter. The associated workflow input must be expected to receive a list.")
 				.create("inputdelimiter");
 
 		Option dbProperties = OptionBuilder.withArgName("filename").hasArg()
 				.withDescription(
-						"loads a properties file to configure the database")
+						"Load a properties file to configure the database.")
 				.create("dbproperties");
 
 		Option port = OptionBuilder
 				.withArgName("portnumber")
 				.hasArg()
 				.withDescription(
-						"the port that the database is running on. If set requested to start its own internal server, this is the start port that will be used.")
+						"The port that the database is running on. If set requested to start its own internal server, this is the start port that will be used.")
 				.create("port");
 
 		Option embedded = new Option("embedded",
-				"connects to an embedded Derby database. This can prevent mulitple invocations");
+				"Connect to an embedded Derby database. This can prevent mulitple invocations.");
 		Option clientserver = new Option("clientserver",
-				"connects as a client to a derby server instance.");
+				"Connect as a client to a derby server instance.");
 		Option inMemOption = new Option(
 				"inmemory",
-				"runs the workflow with data stored in-memory rather than in a database. This can give performance inprovements, at the cost of overall memory usage");
+				"Run the workflow with data stored in-memory rather than in a database. This can give performance inprovements, at the cost of overall memory usage.");
 		Option startDB = new Option("startdb",
-				"automatically starts an internal Derby database server.");
+				"Automatically start an internal Derby database server.");
 		Option provenance = new Option("provenance",
-				"generates provenance information and stores it in the database.");
+				"Generate provenance information and store it in the database.");
 		
 		
 		Option opm = OptionBuilder
 				.withArgName("file")
 				.hasOptionalArg()
 				.withDescription(
-						"saves Open Provenance Model (OPM) RDF/XML trace of execution to FILE or 'provenance-opm.rdf'")
+						"Save Open Provenance Model (OPM) RDF/XML trace of execution to FILE or 'provenance-opm.rdf'.")
 				.create(OPM);
 
 		Option janus = OptionBuilder
 				.withArgName("file")
 				.hasOptionalArg()
 				.withDescription(
-						"saves Janus RDF/XML trace of execution to FILE or 'provenance-janus.rdf'")
+						"Save Janus RDF/XML trace of execution to FILE or 'provenance-janus.rdf'.")
 				.create(JANUS);		
 		
-		Option credentialManagerDirectory = OptionBuilder.withArgName("Credential Manager's directory path").
+		Option credentialManagerDirectory = OptionBuilder.withArgName("directory path").
 		hasArg().withDescription(
-				"Absolute path to the directory on the disk where Credential Manager's files are located")
+				"Absolute path to a directory where Credential Manager's files (keystore and truststore) are located. ")
 		.create(CREDENTIAL_MANAGER_DIR_OPTION);
-		Option credentialManagerPassword = new Option(CREDENTIAL_MANAGER_PASSWORD_OPTION, "Indicates that the master password for Credential Manager will be provided on standard input"); // optional password option, to be read from standard input
+		Option credentialManagerPassword = new Option(CREDENTIAL_MANAGER_PASSWORD_OPTION, "Indicate that the master password for Credential Manager will be provided on standard input."); // optional password option, to be read from standard input
 		
 		Options options = new Options();
 		options.addOption(helpOption);
