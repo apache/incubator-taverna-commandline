@@ -47,6 +47,7 @@ import net.sf.taverna.t2.reference.T2Reference;
 import net.sf.taverna.t2.reference.T2ReferenceType;
 import net.sf.taverna.t2.workbench.reference.config.DataManagementConfiguration;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -226,33 +227,18 @@ public class SaveResultsHandler {
 			// than an instance of the object in memory						
 			Identified identified = context.getReferenceService().resolveIdentifier(reference, null, context);
 			ReferenceSet referenceSet = (ReferenceSet) identified;
-			
-			if (referenceSet.getExternalReferences().isEmpty()) {
-				data = context.getReferenceService().renderIdentifier(reference,
-						Object.class, context);
-			}
-			else {
 				ExternalReferenceSPI externalReference = referenceSet.getExternalReferences().iterator().next();				
 				stream = externalReference.openStream(context);
-				data = stream;
-			}			
+				data = stream;		
 		}
 
 		FileOutputStream fos = null;
 		try {
 			fos = new FileOutputStream(dataFile);
-			if (data instanceof InputStream) {	
-				byte [] bytes = new byte[500000];
-				while ( ((InputStream)data).read(bytes)  != -1  ) {
-					fos.write(bytes);
-				}
-				stream.close();
-				fos.flush();
+			if (data instanceof InputStream) {
+				IOUtils.copyLarge(stream, fos);
 			}
-			else if (data instanceof byte[]) {				
-				fos.write((byte[]) data);
-				fos.flush();
-			} else {				
+			else {				
 				PrintWriter out = new PrintWriter(new OutputStreamWriter(fos));
 				out.print(data.toString());
 				out.flush();
