@@ -115,7 +115,7 @@
 				<executions>
 					<execution>
 						<id>dependencycopy</id>
-						<phase>package</phase>
+						<phase>generate-sources</phase>
 						<goals>
 							<goal>copy</goal>
 						</goals>
