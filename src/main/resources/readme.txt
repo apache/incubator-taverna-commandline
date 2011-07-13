@@ -1,34 +1,42 @@
 ===============================
-Taverna command line tool 2.2.0
+Taverna command line tool 2.3.0
 ===============================
 http://www.taverna.org.uk/
 http://www.mygrid.org.uk/
 
-Released by myGrid, 2010-07-05
-(c) Copyright 2005-2010 University of Manchester, UK
+Released by myGrid, 2011-07-14
+(c) Copyright 2005-2011 University of Manchester, UK
 
 
 Licence
 =======
 Taverna is licenced under the GNU Lesser General Public Licence. (LGPL) 2.1.
-See the file LICENCE.txt for details.
+See the file LICENCE.txt or http://www.gnu.org/licenses/lgpl-2.1.html for
+details.
 
 If the source code was not included in this download, you can download it from
+http://www.taverna.org.uk/download/workbench/2-3/#download-source or 
 http://www.taverna.org.uk/download/source-code/
 
 Taverna uses various third-party libraries that are included under compatible
-open source licences such as Apache Licence.
+open source licences such as the Apache Licence.
 
 
 Documentation
 =============
 See http://www.taverna.org.uk/documentation/taverna-2-x/ for
-documentation and tutorials on using Taverna, in particular 
+documentation and tutorials on using Taverna.
+
+In particular
 http://www.taverna.org.uk/documentation/taverna-2-x/command-line-tool/
+and http://www.mygrid.org.uk/dev/wiki/display/taverna23/Command+Line+Tool
 will explain how to use the command line tool.
 
-See the file known-issues.txt for known issues with this release, and the file
-release-notes.txt for improvements since the previous version of Taverna.
+See http://www.mygrid.org.uk/dev/wiki/display/taverna23/User+Manual for the
+Taverna 2.3 user manual.
+
+See the file "known-issues.txt" for known issues with this release, and the file
+"release-notes.txt" for improvements since the previous version of Taverna.
 
 
 Usage
@@ -36,7 +44,7 @@ Usage
 In Windows, execute "executeworkflow.bat", while on OSX/Linux/UNIX,
 execute "sh executeworkflow.sh".
 
-On UNIX you may set the executable bit using 
+On Linux/OSX/UNIX you may set the executable bit using 
 "chmod 755 executeworkflow.sh", allowing you to execute ./executeworkflow.sh
 directly. You can make symlinks to this shell script from /usr/local/bin or
 equivalent. 
@@ -91,7 +99,7 @@ usage: executeworkflow [options] [workflow]
 
 For example:
 
-$ taverna-commandline-2.2.0/executeworkflow.sh Retrieve_sequence_in_EMBL_format.t2flow
+$ taverna-commandline-2.3.0/executeworkflow.sh Retrieve_sequence_in_EMBL_format.t2flow
 Outputs will be saved to the directory:
 /home/stain/Desktop/Retrieve_sequence_in_EMBL_format_output
 
@@ -112,18 +120,12 @@ You can use full URLs to workflows and inputs, for instance:
 http://www.myexperiment.org/workflows/1004/download/retrieve_sequence_in_embl_format_873401.t2flow
 
    
-Example workflows
-=================
-Example Taverna 2.2 workflows can be found in the myExperiment starter pack at
-http://www.myexperiment.org/packs/122
-
-You can also access these as the tab 'Starter pack' under the *myExperiment*
-view inside Taverna.
+Examples
+========
+Example Taverna 2.3 workflows can be found in the myExperiment starter pack at
+http://www.myexperiment.org/packs/192
 
 You can share and find other workflows at http://www.myexperiment.org/
-
-You can build your own workflows using the Taverna Workbench. See
-http://www.taverna.org.uk/download/workbench/
 
 
 Support
@@ -157,27 +159,34 @@ where you can also track the latest developments of Taverna.
 
 Requirements
 ============
-Taverna requires the Java Runtime Environment (JRE) version 5 or 6 from Sun.
-No other versions of Java are officially tested with Taverna. 
 
-*Note that future versions of Taverna will require Java 6.*
+Java
+-----
+Taverna requires the Java Runtime Environment (JRE) version 6 or later from
+Oracle.  No other versions of Java are officially tested with Taverna. 
 
-Mac OS X 10.5 (Leopard) and later should come with Java 5 or newer.  
-
-Windows users might need to download Java from http://java.com/
+Windows users might need to download Java from http://java.com/ 
 
 Linux users have different options to install Java depending on their Linux
 distribution. Some distributions, such as Ubuntu, might come with alternative
 open source implementations of Java, like Gnu GCJ and OpenJDK. We've identified
 some issues with these implementations, and recommend using the official Java
-implementation from Sun. 
+implementation from Sun/Oracle. 
 
-To download Sun Java 6 for Ubuntu, start a Terminal, and type the following:
-  sudo aptitude install sun-java6-jre
+To download Oracle Java 6 for Ubuntu, start a Terminal, and type the following:
+  sudo apt-get install sun-java6-jre
 
 and follow the instructions. You might also need to change the default Java
 implementation by running:
   sudo update-alternatives --config java
+
+To check your version of Java on the command line, try:
+
+  $ java -version
+  java version "1.6.0_22"
+  Java(TM) SE Runtime Environment (build 1.6.0_22-b04)
+  Java HotSpot(TM) 64-Bit Server VM (build 17.1-b03, mixed mode)
+
 
 Read http://www.taverna.org.uk/download/workbench/system-requirements/
 for more requirement details.
@@ -219,12 +228,9 @@ you will have to install the policy files again in the appropriate directory of
 your new Java installation.
 
 For Java 6, you can download the unlimited cryptography policy jar files from:
-  http://tinyurl.com/java6sec    -or- 
+  http://tinyurl.com/java6sec    -or-
   https://cds.sun.com/is-bin/INTERSHOP.enfinity/WFS/CDS-CDS_Developer-Site/en_US/-/USD/ViewProductDetail-Start?ProductRef=jce_policy-6-oth-JPR@CDS-CDS_Developer
 
-For Java 5, you can download the unlimited cryptography policy jar files from:
-  http://tinyurl.com/java5sec    -or- 
-  https://cds.sun.com/is-bin/INTERSHOP.enfinity/WFS/CDS-CDS_Developer-Site/en_US/-/USD/ViewProductDetail-Start?ProductRef=jce_policy-1.5.0-oth-JPR@CDS-CDS_Developer
 
 
 Advanced
@@ -240,13 +246,13 @@ Advanced->Show Log Folder in the menu.
 See:
 
     Windows XP: C:\Documents and settings\JohnDoe\
-                   Application Data\taverna-cmd-2.2.0\logs
+                   Application Data\taverna-cmd-2.3.0\logs
 
-    Vista/Windows 7: C:\Users\JohnDoe\AppData\Roaming\taverna-cmd-2.2.0\logs
+    Vista/Windows 7: C:\Users\JohnDoe\AppData\Roaming\taverna-cmd-2.3.0\logs
 
-    OS X: /Users/JohnDoe/Library/Application support/taverna-cmd-2.2.0/logs
+    OS X: /Users/JohnDoe/Library/Application support/taverna-cmd-2.3.0/logs
 
-    Linux: /home/johndoe/.taverna-cmd-2.2.0/logs
+    Linux: /home/johndoe/.taverna-cmd-2.3.0/logs
 
 Note that "Application data" and "AppData" are hidden folders in Windows.
 
@@ -266,3 +272,4 @@ slightly, but should consume less memory.
 If you need to increase the available memory, edit "executeworkflow.sh" or
 "executeworkflow.bat" and replace "-Xmx300m" with say "-Xmx600m" to use
 600 MiB.
+
