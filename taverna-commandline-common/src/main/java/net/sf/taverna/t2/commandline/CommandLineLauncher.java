@@ -20,9 +20,13 @@
  ******************************************************************************/
 package net.sf.taverna.t2.commandline;
 
+import java.io.BufferedReader;
+import java.io.Console;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -43,6 +47,7 @@ import net.sf.taverna.t2.commandline.exceptions.OpenDataflowException;
 import net.sf.taverna.t2.commandline.exceptions.ReadInputException;
 import net.sf.taverna.t2.commandline.options.CommandLineOptions;
 import net.sf.taverna.t2.facade.WorkflowInstanceFacade;
+import net.sf.taverna.t2.facade.WorkflowInstanceFacade.State;
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.invocation.TokenOrderException;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
@@ -50,6 +55,8 @@ import net.sf.taverna.t2.provenance.ProvenanceConnectorFactory;
 import net.sf.taverna.t2.provenance.ProvenanceConnectorFactoryRegistry;
 import net.sf.taverna.t2.provenance.connector.ProvenanceConnector;
 import net.sf.taverna.t2.reference.ReferenceService;
+import net.sf.taverna.t2.security.credentialmanager.CMException;
+import net.sf.taverna.t2.security.credentialmanager.CredentialManager;
 import net.sf.taverna.t2.workbench.reference.config.DataManagementConfiguration;
 import net.sf.taverna.t2.workflowmodel.Dataflow;
 import net.sf.taverna.t2.workflowmodel.DataflowInputPort;
@@ -84,7 +91,7 @@ import org.springframework.context.ApplicationContext;
 public class CommandLineLauncher implements Launchable {
 
 	private static Logger logger = Logger.getLogger(CommandLineLauncher.class);
-
+	
 	/**
 	 * Main method, purely for development and debugging purposes. Full
 	 * execution of workflows will not work through this method.
@@ -101,7 +108,9 @@ public class CommandLineLauncher implements Launchable {
 		try {
 			CommandLineOptions options = new CommandLineOptions(args);
 			initialiseLogging(options);
-			return setupAndExecute(args,options);
+			int result = setupAndExecute(args,options);
+			System.exit(result);
+			return result;
 		} catch (EditException e) {
 			error("There was an error opening the workflow: " + e.getMessage());
 		} catch (DeserializationException e) {
@@ -121,7 +130,12 @@ public class CommandLineLauncher implements Launchable {
 		} catch (DatabaseConfigurationException e) {
 			error(e.getMessage());
 		}
-		return 0;
+		catch (CMException e) {
+			error("There was an error instantiating Credential Manager: " + e.getMessage());
+		}
+		// Should be unreachable
+		System.exit(-1);
+		return -1;
 	}
 
 	private void initialiseLogging(CommandLineOptions options) {
@@ -171,13 +185,53 @@ public class CommandLineLauncher implements Launchable {
 	public int setupAndExecute(String[] args,CommandLineOptions options) throws InvalidOptionException,
 			EditException, DeserializationException, InvalidDataflowException,
 			TokenOrderException, ReadInputException, OpenDataflowException,
-			DatabaseConfigurationException {
+			DatabaseConfigurationException, CMException {
 
 
 		if (!options.askedForHelp()) {
 			setupDatabase(options);
 
 			if (options.getWorkflow() != null) {
+							
+				// Initialise Credential Manager and SSL stuff quite early as parsing and
+				// validating the workflow might require its services
+				String credentialManagerDirPath = options.getCredentialManagerDir();
+				String credentialManagerPassword = null;									
+				if (options.hasOption(CommandLineOptions.CREDENTIAL_MANAGER_PASSWORD_OPTION)){ // if this parameter was used when launching the command line tool
+					// Try to read the password from stdin (terminal or pipe)
+					credentialManagerPassword = getCredentialManagerPasswordFromStdin();
+				}
+				else{ 	
+					// Try to read the password from a special file located in 
+					// Credential Manager directory (if the dir was not null)
+					credentialManagerPassword = getCredentialManagerPasswordFromFile(options.getCredentialManagerDir());
+				}
+				if (credentialManagerPassword != null){
+					// Initialise Credential Manager (Taverna's Keystore and Truststore) and 
+					// SSL stuff - set the SSLSocketFactory to use Taverna's Keystore and Truststore.
+					
+					// If credentialManagerDirPath is null - initialize from the default location in <TAVERNA_HOME>/security somewhere 
+					// inside user's home directory. This should not be used when running command 
+					// line tool on a server and the Credential Manager dir path should always be 
+					// passed in as we do not want to store the security files in user's home directory 
+					// on the server (we do not even know which user the command line tool will be running as).
+
+					//if (credentialManagerDirPath != null){
+						CredentialManager.initialiseSSL(credentialManagerDirPath, credentialManagerPassword); // this can now handle situations when credentialManagerDirPath is null
+					//}
+					//else{
+						// Initialize from the default location in <TAVERNA_HOME>/security somewhere 
+						// inside user's home directory. This should not be used when running command 
+						// line tool on a server and the Credential Manager dir path should always be 
+						// passed in as we do not want to store the security files in user's home directory 
+						// on the server (we do not even know which user the command line tool will be running as).
+					//	CredentialManager.initialiseSSL(credentialManagerPassword);
+					//}
+				}
+				else{
+					logger.warn("No master password provided for Credential Manager.");
+				}
+
 				URL workflowURL = readWorkflowURL(options.getWorkflow());
 
 				Dataflow dataflow = openDataflow(workflowURL);
@@ -241,8 +295,7 @@ public class CommandLineLauncher implements Launchable {
 			WorkflowDataToken token = inputs.get(inputName);
 			facade.pushData(token, inputName);
 		}
-
-		while (!resultListener.isComplete()) {
+		while (facade.getState().compareTo(State.completed) < 0) {			
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
@@ -252,6 +305,8 @@ public class CommandLineLauncher implements Launchable {
 								e);
 			}
 		}
+		resultListener.saveProvenance();
+		resultListener.saveOutputDocument();
 	}
 
 	private void setupDatabase(CommandLineOptions options)
@@ -305,7 +360,9 @@ public class CommandLineLauncher implements Launchable {
 		}
 		InvocationContext context = new CommandLineInvocationContext(
 				referenceService, connector);
-		connector.setInvocationContext(context);
+		if (connector != null){
+			connector.setInvocationContext(context);
+		}
 		return context;
 	}
 
@@ -350,29 +407,142 @@ public class CommandLineLauncher implements Launchable {
 							+ e.getMessage(), e);
 		}
 	}
+	
+	/**
+	 * 
+	 * @param cmDir
+	 * @return Password for Credential Manager.
+	 * @throws CMException
+	 */
+	private String getCredentialManagerPasswordFromFile(String cmDir) throws CMException{
 
+		if (cmDir == null){
+			return null;
+		}
+		File passwordFile = new File(cmDir, "password.txt");
+		String password = null;
+		BufferedReader buffReader = null;
+		try {
+			buffReader = new BufferedReader(new FileReader(passwordFile));
+			password = buffReader.readLine();
+		} catch (IOException ioe) {
+			// For some reason the error of the exception thrown 
+			// does not get printed from the Launcher so print it here as
+			// well as it gives more clue as to what is going wrong.
+			logger.error("There was an error reading the Credential Manager password from "
+					+ passwordFile.toString() + ": " + ioe.getMessage(), ioe); 
+			throw new CMException(
+					"There was an error reading the Credential Manager password from "
+							+ passwordFile.toString() + ": " + ioe.getMessage(), ioe);
+		} finally {
+			try {
+				buffReader.close();
+			} catch (Exception ioe1) {
+				// Ignore
+			}
+		}
+		return password;
+	}
+
+	private String getCredentialManagerPasswordFromStdin() throws CMException{
+		
+		String password = null;
+        
+		Console console = System.console();		
+
+		if (console == null) { // password is being piped in, not entered in the terminal by user
+			BufferedReader buffReader = null;
+    		try {
+    			buffReader = new BufferedReader(new InputStreamReader(System.in));
+    			password = buffReader.readLine();
+    		} 
+    		catch (IOException ex) {
+    			// For some reason the error of the exception thrown 
+    			// does not get printed from the Launcher so print it here as
+    			// well as it gives more clue as to what is going wrong.
+    			logger.error("An error occured while trying to read Credential Manager's password the user piped in: "
+						+ ex.getMessage(), ex); 
+    			throw new CMException(
+						"An error occured while trying to read Credential Manager's password the user piped in: "
+								+ ex.getMessage(), ex);
+				} 
+    		finally {
+    			try {
+    				buffReader.close();
+    			} catch (Exception ioe1) {
+    				// Ignore
+    			}
+    		}	  
+		}
+		else{ // read the password from the terminal as entered by the user
+			try {
+				// Block until user enters password
+				char passwordArray[] = console
+						.readPassword("Password for Credential Manager: ");
+				if (passwordArray != null) { // user did not abort input
+					password = new String(passwordArray);
+				} // else password will be null
+
+			} catch (Exception ex) {
+    			// For some reason the error of the exception thrown 
+    			// does not get printed from the Launcher so print it here as
+    			// well as it gives more clue as to what is going wrong.
+				logger.error("An error occured while trying to read Credential Manager's password from the terminal: "
+								+ ex.getMessage(), ex);
+				throw new CMException(
+						"An error occured while trying to read Credential Manager's password from the terminal: "
+								+ ex.getMessage(), ex);
+			}
+		}
+        return password;
+	}
+	
 	private CommandLineResultListener addResultListener(
 			WorkflowInstanceFacade facade, InvocationContext context,
 			Dataflow dataflow, CommandLineOptions options) {
 		File outputDir = null;
 		File baclavaDoc = null;
-
+		File janus = null;
+		File janusDir = null;
+		File opm = null;
+		
 		if (options.saveResultsToDirectory()) {
 			outputDir = determineOutputDir(options, dataflow.getLocalName());
+			janusDir = outputDir;
 		}
 		if (options.getOutputDocument() != null) {
 			baclavaDoc = new File(options.getOutputDocument());
 		}
-
+		if (options.isJanus()) {
+			if (options.getJanus() == null) {
+				if (janusDir == null) {
+					janusDir = determineOutputDir(options, dataflow.getLocalName());
+				}
+				janus = new File(janusDir, "provenance-janus.rdf");
+			} else {
+				janus = new File(options.getJanus());
+			}
+		}
+		if (options.isOPM()) {
+			if (options.getOPM() == null) {
+				if (janusDir == null) {
+					janusDir = determineOutputDir(options, dataflow.getLocalName());
+				}
+				opm = new File(janusDir, "provenance-opm.rdf");
+			} else {
+				opm = new File(options.getOPM());
+			}
+		}
+		
 		Map<String, Integer> outputPortNamesAndDepth = new HashMap<String, Integer>();
 		for (DataflowOutputPort port : dataflow.getOutputPorts()) {
 			outputPortNamesAndDepth.put(port.getName(), port.getDepth());
 		}
 		SaveResultsHandler resultsHandler = new SaveResultsHandler(
-				outputPortNamesAndDepth, outputDir, baclavaDoc);
+				outputPortNamesAndDepth, outputDir, baclavaDoc, janus, opm);
 		CommandLineResultListener listener = new CommandLineResultListener(
 				outputPortNamesAndDepth.size(), resultsHandler,
-				outputDir != null, baclavaDoc != null);
+				outputDir != null, baclavaDoc != null, opm != null, janus != null, facade.getWorkflowRunId());
 		facade.addResultListener(listener);
 		return listener;
 

@@ -46,20 +46,25 @@ public class CommandLineResultListener implements ResultListener {
 	private final boolean saveIndividualResults;
 	private final boolean saveOutputDocument;
 
-	public CommandLineResultListener(int numberOfOutputs,SaveResultsHandler saveResultsHandler,boolean saveIndividualResults,boolean saveOutputDocument) {		
+	private boolean saveOpm;
+
+	private boolean saveJanus;
+
+	private final String workflowRunId;
+
+	public CommandLineResultListener(int numberOfOutputs,SaveResultsHandler saveResultsHandler,boolean saveIndividualResults,boolean saveOutputDocument, boolean saveOpm, boolean saveJanus, String workflowRunId) {		
 		this.numberOfOutputs = numberOfOutputs;
 		this.saveResultsHandler = saveResultsHandler;
 		this.saveIndividualResults = saveIndividualResults;
-		this.saveOutputDocument = saveOutputDocument;						
+		this.saveOutputDocument = saveOutputDocument;	
+		this.saveOpm = saveOpm;
+		this.saveJanus = saveJanus;
+		this.workflowRunId = workflowRunId;
 	}
 
 	public Map<String, WorkflowDataToken> getOutputMap() {
 		return outputMap;
-	}
-
-	public boolean isComplete() {		
-		return finalTokens.size() == numberOfOutputs;
-	}
+	}	
 
 	public void resultTokenProduced(WorkflowDataToken token, String portName) {		
 		if (saveIndividualResults) {
@@ -67,15 +72,27 @@ public class CommandLineResultListener implements ResultListener {
 		}
 		
 		if (token.isFinal()) {
-			finalTokens.put(portName, token);		
-			if (isComplete() && saveOutputDocument) {
-				try {
-					saveResultsHandler.saveOutputDocument(finalTokens);
-				} catch (Exception e) {
-					logger.error("An error occurred saving the final results to -outputdoc",e);
-				}
+			finalTokens.put(portName, token);			
+		}
+	}
+	
+	public void saveOutputDocument() {
+		if (saveOutputDocument) {
+			try {
+				saveResultsHandler.saveOutputDocument(finalTokens);
+			} catch (Exception e) {
+				logger.error("An error occurred saving the final results to -outputdoc",e);
 			}
 		}
+	}
+
+	public void saveProvenance() {
+		if (saveOpm) {
+			saveResultsHandler.saveOpm(workflowRunId);
+		}
+		if (saveJanus) {
+			saveResultsHandler.saveJanus(workflowRunId);
+		}			
 	}
 
 }

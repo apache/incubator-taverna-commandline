@@ -20,6 +20,7 @@
  ******************************************************************************/
 package net.sf.taverna.t2.commandline.data;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -33,13 +34,18 @@ import java.util.Map;
 import net.sf.taverna.t2.commandline.CommandLineResultListener;
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
+import net.sf.taverna.t2.lang.baclava.BaclavaDocumentHandler;
+import net.sf.taverna.t2.provenance.api.ProvenanceAccess;
+import net.sf.taverna.t2.provenance.client.ProvenanceExporter;
 import net.sf.taverna.t2.reference.ErrorDocument;
 import net.sf.taverna.t2.reference.ExternalReferenceSPI;
 import net.sf.taverna.t2.reference.Identified;
 import net.sf.taverna.t2.reference.IdentifiedList;
+import net.sf.taverna.t2.reference.ReferenceService;
 import net.sf.taverna.t2.reference.ReferenceSet;
 import net.sf.taverna.t2.reference.T2Reference;
 import net.sf.taverna.t2.reference.T2ReferenceType;
+import net.sf.taverna.t2.workbench.reference.config.DataManagementConfiguration;
 
 import org.apache.log4j.Logger;
 
@@ -49,7 +55,8 @@ import org.apache.log4j.Logger;
  * This includes saving as a Baclava Document, or storing individual results.
  * 
  * @author Stuart Owen
- * @see BaclavaDocumentHandler
+ * 
+ * @see BaclavaHandler
  * @see CommandLineResultListener
  *
  */
@@ -60,14 +67,19 @@ public class SaveResultsHandler {
 	private final File rootDirectory;
 	private static Logger logger = Logger
 			.getLogger(CommandLineResultListener.class);
-	private final File outputDocumentFile;	
+	private final File outputDocumentFile;
+	private final File janus;
+	private final File opm;
+	private ProvenanceExporter provExport;	
 
 	public SaveResultsHandler(Map<String, Integer> portsAndDepth,
-			File rootDirectory, File outputDocumentFile) {
+			File rootDirectory, File outputDocumentFile, File janus, File opm) {
 
 		this.portsAndDepth = portsAndDepth;
 		this.rootDirectory = rootDirectory;
 		this.outputDocumentFile = outputDocumentFile;
+		this.janus = janus;
+		this.opm = opm;
 
 		depthSeen = new HashMap<String, Integer>();
 		for (String portName : portsAndDepth.keySet()) {
@@ -93,8 +105,26 @@ public class SaveResultsHandler {
 	}
 	
 	public void saveOutputDocument(Map<String,WorkflowDataToken> allResults) throws Exception {
-		if (outputDocumentFile!=null) {
-			new BaclavaDocumentHandler().storeDocument(allResults, outputDocumentFile);
+		if (outputDocumentFile!=null) {			
+			BaclavaDocumentHandler handler = new BaclavaDocumentHandler();
+			InvocationContext context = null;
+			Map<String,T2Reference> references = new HashMap<String, T2Reference>();			
+			//fetch the references from the tokens, and pick up the context on the way
+			for (String portname : allResults.keySet()) {
+				WorkflowDataToken token = allResults.get(portname);
+				if (context==null) {
+					context=token.getContext();
+				}
+				references.put(portname, token.getData());
+			} 
+			handler.setChosenReferences(references);
+			
+			handler.setInvocationContext(context);
+			ReferenceService referenceService=null;
+			if (context!=null) referenceService = context.getReferenceService();
+			handler.setReferenceService(referenceService);
+			
+			handler.saveData(outputDocumentFile);
 		}
 	}
 
@@ -184,6 +214,8 @@ public class SaveResultsHandler {
 		}
 
 		Object data = null;
+		InputStream stream = null;
+		try {
 		if (reference.containsErrors()) {
 			ErrorDocument errorDoc = context.getReferenceService()
 			.getErrorDocumentService().getError(reference);
@@ -191,8 +223,7 @@ public class SaveResultsHandler {
 			dataFile = new File(dataFile.getAbsolutePath()+".error");
 		} else {
 			// FIXME: this really should be done using a stream rather
-			// than an instance of the object in memory			
-			
+			// than an instance of the object in memory						
 			Identified identified = context.getReferenceService().resolveIdentifier(reference, null, context);
 			ReferenceSet referenceSet = (ReferenceSet) identified;
 			
@@ -202,27 +233,26 @@ public class SaveResultsHandler {
 			}
 			else {
 				ExternalReferenceSPI externalReference = referenceSet.getExternalReferences().iterator().next();				
-				data = externalReference.openStream(context);
+				stream = externalReference.openStream(context);
+				data = stream;
 			}			
 		}
 
-		FileOutputStream fos;
+		FileOutputStream fos = null;
 		try {
 			fos = new FileOutputStream(dataFile);
-			if (data instanceof InputStream) {			
-				InputStream inStream = (InputStream)data;
-				int c;
-				while ( ( c = inStream.read() ) != -1  ) {
-					fos.write( (char) c);
-				}				
+			if (data instanceof InputStream) {	
+				byte [] bytes = new byte[500000];
+				while ( ((InputStream)data).read(bytes)  != -1  ) {
+					fos.write(bytes);
+				}
+				stream.close();
 				fos.flush();
-				fos.close();
 			}
-			if (data instanceof byte[]) {
+			else if (data instanceof byte[]) {				
 				fos.write((byte[]) data);
 				fos.flush();
-				fos.close();
-			} else {
+			} else {				
 				PrintWriter out = new PrintWriter(new OutputStreamWriter(fos));
 				out.print(data.toString());
 				out.flush();
@@ -234,6 +264,79 @@ public class SaveResultsHandler {
 		} catch (IOException e) {
 			logger.error("IO Error writing resuts to: '"
 					+ dataFile.getAbsolutePath(), e);
+		} finally {
+			if (fos != null) {
+				try {
+					fos.close();
+				} catch (IOException e) {
+					logger.error("Cannot close file output stream", e);
+				}
+			}
+		}
+	} finally {
+		if (stream != null) {
+			try {
+				stream.close();
+			} catch (IOException e) {
+				logger.error("Cannot close stream from reference", e);
+			}
+		}
+	}
+	}
+
+	public void saveOpm(String workflowRunId) {
+		if (opm.getParentFile() != null) {
+			opm.getParentFile().mkdirs();
+		}
+		BufferedOutputStream outStream;
+		try {
+			outStream = new BufferedOutputStream(new FileOutputStream(opm));
+		} catch (FileNotFoundException e1) {
+			logger.error("Can't find directory for writing OPM to " + opm, e1);
+			return;
+		}
+		try {
+			getProvenanceExporter().exportAsOPMRDF(workflowRunId, outStream);
+		} catch (Exception e) {
+			logger.error("Can't write OPM to " + opm, e);
+		} finally {
+			try {
+				outStream.close();
+			} catch (IOException e) {
+			}
+		}
+	}
+
+	protected synchronized ProvenanceExporter getProvenanceExporter() {
+		if (provExport == null) {
+			DataManagementConfiguration dbConfig = DataManagementConfiguration.getInstance();
+			String connectorType = dbConfig.getConnectorType();
+			ProvenanceAccess provAccess = new ProvenanceAccess(connectorType);
+			provExport = new ProvenanceExporter(provAccess);
+		}
+		return provExport;
+	}
+
+	public void saveJanus(String workflowRunId) {
+		if (janus.getParentFile() != null) {
+			janus.getParentFile().mkdirs();
+		}
+		BufferedOutputStream outStream;
+		try {
+			outStream = new BufferedOutputStream(new FileOutputStream(janus));
+		} catch (FileNotFoundException e1) {
+			logger.error("Can't find directory for writing Janus to " + janus, e1);
+			return;
+		}
+		try {
+			getProvenanceExporter().exportAsJanusRDF(workflowRunId, outStream);
+		} catch (Exception e) {
+			logger.error("Can't write Janus to " + janus, e);
+		} finally {
+			try {
+				outStream.close();
+			} catch (IOException e) {
+			}
 		}
 	}
 	

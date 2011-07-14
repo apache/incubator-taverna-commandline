@@ -37,12 +37,14 @@ import net.sf.taverna.t2.commandline.exceptions.ReadInputException;
 import net.sf.taverna.t2.commandline.options.CommandLineOptions;
 import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
+import net.sf.taverna.t2.lang.baclava.BaclavaDocumentHandler;
 import net.sf.taverna.t2.reference.T2Reference;
 import net.sf.taverna.t2.workflowmodel.DataflowInputPort;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.embl.ebi.escience.baclava.DataThing;
+import org.jdom.JDOMException;
 
 /**
  * 
@@ -97,91 +99,134 @@ public class InputsHandler {
 		}
 				
 		if (options.hasInputFiles()) {
-			String[] inputParams = options.getInputFiles();
-			for (int i = 0; i < inputParams.length; i = i + 2) {
-				String inputName = inputParams[i];
-				try {					
-					URL inputURL = new URL(url, inputParams[i + 1]);
-					DataflowInputPort port = portMap.get(inputName);
-					
-					if (port==null) {
-						throw new InvalidOptionException("Cannot find an input port named '"+inputName+"'");
-					}
-					
-					T2Reference entityId=null;
-					
-					if (options.hasDelimiterFor(inputName)) {
-						String delimiter=options.inputDelimiter(inputName);
-						Object value = IOUtils.toString(inputURL.openStream()).split(delimiter);
-						
-						value=checkForDepthMismatch(1, port.getDepth(), inputName, value);						
-						entityId=context.getReferenceService().register(value, port.getDepth(), true, context);						
-					}
-					else
-					{
-						Object value = IOUtils.toByteArray(inputURL.openStream());
-						value=checkForDepthMismatch(0, port.getDepth(), inputName, value);
-						entityId=context.getReferenceService().register(value, port.getDepth(), true, context);
-					}
-															
-					WorkflowDataToken token = new WorkflowDataToken("",new int[]{}, entityId, context);
-					inputs.put(inputName, token);
-					
-				} catch (IndexOutOfBoundsException e) {
-					throw new InvalidOptionException("Missing input filename for input "+ inputName);					
-				} catch (IOException e) {
-					throw new InvalidOptionException("Could not read input " + inputName + ": " + e.getMessage());				
-				}
-			}
+			regesterInputsFromFiles(portMap, options, context, inputs, url);
 		}
 		
 		if (options.hasInputValues()) {
-			String[] inputParams = options.getInputValues();
-			for (int i = 0; i < inputParams.length; i = i + 2) {
-				String inputName = inputParams[i];
-				try {					
-					String inputValue = inputParams[i + 1];
-					DataflowInputPort port = portMap.get(inputName);
-					
-					if (port==null) {
-						throw new InvalidOptionException("Cannot find an input port named '"+inputName+"'");
-					}
-										
-					T2Reference entityId=null;
-					if (options.hasDelimiterFor(inputName)) {
-						String delimiter=options.inputDelimiter(inputName);
-						Object value=checkForDepthMismatch(1, port.getDepth(), inputName, inputValue.split(delimiter));
-						entityId=context.getReferenceService().register(value, port.getDepth(), true, context);						
-					}
-					else
-					{
-						Object value=checkForDepthMismatch(0, port.getDepth(), inputName, inputValue);
-						entityId=context.getReferenceService().register(value, port.getDepth(), true, context);
-					}
-										
-					WorkflowDataToken token = new WorkflowDataToken("",new int[]{}, entityId, context);								
-					inputs.put(inputName, token);					
-					
-				} catch (IndexOutOfBoundsException e) {
-					throw new InvalidOptionException("Missing input value for input "+ inputName);					
-				} 
-			}
+			registerInputsFromValues(portMap, options, context, inputs);
 			
 		}
 		
 		if (options.getInputDocument()!=null) {
-			String inputDocPath = options.getInputDocument();
-			Map<String, DataThing> things = new BaclavaDocumentHandler().readInputDocument(inputDocPath);
-			for (String inputName : things.keySet()) {
-				DataThing thing = things.get(inputName);
-				Object object = thing.getDataObject();
-				T2Reference entityId=context.getReferenceService().register(object,getObjectDepth(object), true, context);
-				WorkflowDataToken token = new WorkflowDataToken("",new int[]{}, entityId, context);
-				inputs.put(inputName, token);
-			}
+			registerInputsFromBaclava(options, context, inputs, url);
 		}
 		
 		return inputs;
+	}
+
+
+	private void registerInputsFromBaclava(CommandLineOptions options,
+			InvocationContext context, Map<String, WorkflowDataToken> inputs,
+			URL url) throws ReadInputException {
+		String inputDocPath = options.getInputDocument();
+		
+		URL inputDocURL;
+		try {
+			inputDocURL = new URL(url, inputDocPath);
+		} catch (MalformedURLException e1) {
+			throw new ReadInputException(
+					"The a error reading the input document from : "
+							+ inputDocPath + ", " + e1.getMessage(), e1);
+		}
+		Map<String, DataThing> things;
+		try {
+			things = new BaclavaDocumentHandler().readData(inputDocURL.openStream());
+		} catch (IOException e) {
+			throw new ReadInputException(
+					"There was an error reading the input document file: "
+							+ e.getMessage(), e);
+		} catch (JDOMException e) {
+			throw new ReadInputException(
+					"There was a error processing the input document XML: "
+							+ e.getMessage(), e);
+		}
+		for (String inputName : things.keySet()) {
+			DataThing thing = things.get(inputName);
+			Object object = thing.getDataObject();
+			T2Reference entityId=context.getReferenceService().register(object,getObjectDepth(object), true, context);
+			WorkflowDataToken token = new WorkflowDataToken("",new int[]{}, entityId, context);
+			inputs.put(inputName, token);
+		}
+	}
+
+
+	private void registerInputsFromValues(
+			Map<String, DataflowInputPort> portMap, CommandLineOptions options,
+			InvocationContext context, Map<String, WorkflowDataToken> inputs)
+			throws InvalidOptionException {
+		String[] inputParams = options.getInputValues();
+		for (int i = 0; i < inputParams.length; i = i + 2) {
+			String inputName = inputParams[i];
+			try {					
+				String inputValue = inputParams[i + 1];
+				DataflowInputPort port = portMap.get(inputName);
+				
+				if (port==null) {
+					throw new InvalidOptionException("Cannot find an input port named '"+inputName+"'");
+				}
+									
+				T2Reference entityId=null;
+				if (options.hasDelimiterFor(inputName)) {
+					String delimiter=options.inputDelimiter(inputName);
+					Object value=checkForDepthMismatch(1, port.getDepth(), inputName, inputValue.split(delimiter));
+					entityId=context.getReferenceService().register(value, port.getDepth(), true, context);						
+				}
+				else
+				{
+					Object value=checkForDepthMismatch(0, port.getDepth(), inputName, inputValue);
+					entityId=context.getReferenceService().register(value, port.getDepth(), true, context);
+				}
+									
+				WorkflowDataToken token = new WorkflowDataToken("",new int[]{}, entityId, context);								
+				inputs.put(inputName, token);					
+				
+			} catch (IndexOutOfBoundsException e) {
+				throw new InvalidOptionException("Missing input value for input "+ inputName);					
+			} 
+		}
+	}
+
+
+	private void regesterInputsFromFiles(
+			Map<String, DataflowInputPort> portMap, CommandLineOptions options,
+			InvocationContext context, Map<String, WorkflowDataToken> inputs,
+			URL url) throws InvalidOptionException {
+		String[] inputParams = options.getInputFiles();
+		for (int i = 0; i < inputParams.length; i = i + 2) {
+			String inputName = inputParams[i];
+			try {					
+				URL inputURL = new URL(url, inputParams[i + 1]);
+				DataflowInputPort port = portMap.get(inputName);
+				
+				if (port==null) {
+					throw new InvalidOptionException("Cannot find an input port named '"+inputName+"'");
+				}
+				
+				T2Reference entityId=null;
+				
+				if (options.hasDelimiterFor(inputName)) {
+					String delimiter=options.inputDelimiter(inputName);
+					Object value = IOUtils.toString(inputURL.openStream()).split(delimiter);
+					
+					value=checkForDepthMismatch(1, port.getDepth(), inputName, value);						
+					entityId=context.getReferenceService().register(value, port.getDepth(), true, context);						
+				}
+				else
+				{
+					Object value = IOUtils.toByteArray(inputURL.openStream());
+					value=checkForDepthMismatch(0, port.getDepth(), inputName, value);
+					entityId=context.getReferenceService().register(value, port.getDepth(), true, context);
+				}
+														
+				WorkflowDataToken token = new WorkflowDataToken("",new int[]{}, entityId, context);
+				inputs.put(inputName, token);
+				
+			} catch (IndexOutOfBoundsException e) {
+				throw new InvalidOptionException("Missing input filename for input "+ inputName);					
+			} catch (IOException e) {
+				throw new InvalidOptionException("Could not read input " + inputName + ": " + e.getMessage());				
+			}
+		}
 	}
 	
 	private Object checkForDepthMismatch(int inputDepth,int portDepth,String inputName,Object inputValue) throws InvalidOptionException {
