@@ -5,12 +5,50 @@
 	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
 	<baseDirectory>taverna-commandline-${project.version}</baseDirectory>
 	<formats>
-		<format>zip</format>
+		<format>dir</format>
 	</formats>
-	<componentDescriptors>
-		<componentDescriptor>src/main/assembly/resources-component.xml</componentDescriptor>
-		<componentDescriptor>src/main/assembly/dependencies-component.xml</componentDescriptor>
-		<componentDescriptor>src/main/assembly/repositories-component.xml</componentDescriptor>
-	</componentDescriptors>
 
+	<dependencySets>
+	  <dependencySet>
+	    <useTransitiveDependencies>true</useTransitiveDependencies>
+	    <outputDirectory>/lib</outputDirectory>
+	    <includes>
+	      <include>*:*</include>
+	      <include>org.eclipse.osgi:org.eclipse.equinox.cm</include>
+	    </includes>
+	    <excludes>
+	      <exclude>net.sf.taverna.t2.activities:all-activities</exclude>
+	      <exclude>org.eclipse:*</exclude>
+	      <exclude>org.eclipse.osgi:org.eclipse.osgi</exclude>
+	      <exclude>org.eclipse.osgi:org.eclipse.osgi.services</exclude>
+	      <exclude>org.eclipse.osgi:services</exclude>
+	      <exclude>org.eclipse.osgi:util</exclude>
+	      <exclude>org.ops4j.pax.runner:*</exclude>
+	    </excludes>
+	  </dependencySet>
+	  <dependencySet>
+	    <outputDirectory>/bin</outputDirectory>
+	    <includes>
+	      <include>org.ops4j.pax.runner:*</include>
+	    </includes>
+	  </dependencySet>
+	</dependencySets>
+	
+	<repositories>
+	  <repository>
+	    <outputDirectory>equinox</outputDirectory>
+	    <includes>
+	      <include>org.eclipse:*</include>
+	      <include>org.eclipse.osgi:*</include>
+	    </includes>
+	  </repository>
+	</repositories>
+	
+	<fileSets>
+	  <fileSet>
+	    <directory>src/main/etc</directory>
+	    <fileMode>0755</fileMode>
+	    <outputDirectory></outputDirectory>
+	  </fileSet>
+	</fileSets>
 </assembly>
