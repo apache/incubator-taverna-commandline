@@ -87,15 +87,64 @@
            <artifactId>util</artifactId>
            <version>3.1.300.v20080303</version>
         </dependency>
-      <dependency>
-           <groupId>org.eclipse.osgi</groupId>
-           <artifactId>services</artifactId>
-           <version>3.1.200.v20070605</version>
-        </dependency>
-        <dependency>
+	<dependency>
+		<groupId>org.eclipse.osgi</groupId>
+		<artifactId>services</artifactId>
+		<version>3.1.200.v20070605</version>
+	</dependency>
+
+	<dependency>
+		<groupId>com.sun.xml</groupId>
+		<artifactId>com.springsource.com.sun.xml.bind</artifactId>
+		<version>2.2.0</version>
+	</dependency>
+
+	<dependency>
+		<groupId>javax.jms</groupId>
+		<artifactId>com.springsource.javax.jms</artifactId>
+		<version>1.1.0</version>
+	</dependency>
+
+	<dependency>
+     <groupId>javax.mail</groupId>
+     <artifactId>com.springsource.javax.mail</artifactId>
+     <version>1.4.0</version>
+   </dependency>
+        
+   <dependency>
+     <groupId>javax.servlet</groupId>
+     <artifactId>com.springsource.javax.servlet</artifactId>
+     <version>2.5.0</version>
+   </dependency>
+   
+    <dependency>
+     <groupId>javax.xml.bind</groupId>
+     <artifactId>com.springsource.javax.xml.bind</artifactId>
+     <version>2.2.0</version>
+   </dependency>
+   
+     <dependency>
+     <groupId>javax.xml.rpc</groupId>
+     <artifactId>com.springsource.javax.xml.rpc</artifactId>
+     <version>1.1.0</version>
+   </dependency>
+   
+    <dependency>
+     <groupId>javax.xml.soap</groupId>
+     <artifactId>com.springsource.javax.xml.soap</artifactId>
+     <version>1.3.0</version>
+   </dependency>
+   
+   <dependency>
      <groupId>javax.xml.stream</groupId>
      <artifactId>com.springsource.javax.xml.stream</artifactId>
      <version>1.0.1</version>
+   </dependency>
+   
+    <dependency>
+     <groupId>org.apache.commons</groupId>
+     <artifactId>com.springsource.org.apache.commons.codec</artifactId>
+     <version>1.4.0</version>
    </dependency>
    
    		<dependency>
@@ -109,11 +158,11 @@
 			<artifactId>all-activities</artifactId>
 			<version>${t2.activities.version}</version>
 		</dependency>
-		  	<dependency>
-    <groupId>net.sf.taverna.t2.core</groupId>
-    <artifactId>provenanceconnector</artifactId>
-    <version>${t2.core.version}</version>
-  	</dependency>
+<!--		  	<dependency>-->
+<!--    <groupId>net.sf.taverna.t2.core</groupId>-->
+<!--    <artifactId>provenanceconnector</artifactId>-->
+<!--    <version>${t2.core.version}</version>-->
+<!--  	</dependency>-->
    
 <!--
 		<dependency>
