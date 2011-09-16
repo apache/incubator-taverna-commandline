@@ -64,6 +64,7 @@ import uk.org.taverna.scufl2.api.container.WorkflowBundle;
 import uk.org.taverna.scufl2.api.core.Workflow;
 import uk.org.taverna.scufl2.api.io.ReaderException;
 import uk.org.taverna.scufl2.api.io.WorkflowBundleIO;
+import uk.org.taverna.scufl2.api.io.WorkflowBundleReader;
 import uk.org.taverna.scufl2.api.port.InputWorkflowPort;
 import uk.org.taverna.scufl2.api.port.OutputWorkflowPort;
 import uk.org.taverna.scufl2.validation.ValidationException;
@@ -101,6 +102,8 @@ public class CommandLineTool {
 	private WorkflowBundle workflowBundle;
 
 	private WorkflowBundleIO workflowBundleIO;
+
+	private WorkflowBundleReader workflowBundleReader;
 
 	/**
 	 * Main method, purely for development and debugging purposes. Full
@@ -286,10 +289,16 @@ public class CommandLineTool {
 
 				URL workflowURL = readWorkflowURL(commandLineOptions.getWorkflow());
 						
-				workflowBundle = workflowBundleIO.readBundle(workflowURL, null);
+//				workflowBundle = workflowBundleIO.readBundle(workflowURL, null);
+				
+				workflowBundle = workflowBundleReader.readBundle(workflowURL.openStream(), null);
+				// For testing
+				System.out.println("Read the wf bundle");
 				
 				validateWorkflowBundle(workflowBundle);
-
+				// For testing
+				System.out.println("Validated the wf bundle");
+				
 				//InvocationContext context = createInvocationContext();
 				
 				Set<ExecutionEnvironment> executionEnvironments = runService.getExecutionEnvironments();
@@ -302,8 +311,14 @@ public class CommandLineTool {
 					// TODO
 					// Choose the right one
 					executionEnvironment = executionEnvironments.iterator().next(); // take the fist one for now
+					break;
 				}
+				// For testing
+				System.out.println("Got the execution environment");
+
 				referenceService = executionEnvironment.getReferenceService();
+				// For testing
+				System.out.println("Got the reference service");
 				
 				InputsHandler inputsHandler = new InputsHandler(referenceService);
 				Map<String, InputWorkflowPort> portMap = new HashMap<String, InputWorkflowPort>();
@@ -314,15 +329,21 @@ public class CommandLineTool {
 					portMap.put(port.getName(), port);
 				}
 				inputsHandler.checkProvidedInputs(portMap, commandLineOptions);
+				// For testing
+				System.out.println("Checked inputs");
 				
 				Map<String, T2Reference> inputs = inputsHandler.registerInputs(portMap, commandLineOptions, null);
-
+				// For testing
+				System.out.println("Registered inputs");
+				
 				RunProfile runProfile = new RunProfile(executionEnvironment, workflowBundle, inputs);
 				
 				String runId = runService.createRun(runProfile);
 
 				runService.start(runId);
-
+				// For testing
+				System.out.println("Started wf run");
+				
 				WorkflowReport report = runService.getWorkflowReport(runId);
 
 				Map<String, T2Reference> results = runService.getOutputs(runId);
@@ -620,8 +641,11 @@ public class CommandLineTool {
 		this.credentialManager = credentialManager;
 	}
 	
-	public void setWorkflowBundleIO(WorkflowBundleIO workflowBundleIO){
-		this.workflowBundleIO = workflowBundleIO;
-	}
+//	public void setWorkflowBundleIO(WorkflowBundleIO workflowBundleIO){
+//		this.workflowBundleIO = workflowBundleIO;
+//	}
 
+	public void setWorkflowBundleReader(WorkflowBundleReader workflowBundleReader){
+		this.workflowBundleReader = workflowBundleReader;
+	}
 }
