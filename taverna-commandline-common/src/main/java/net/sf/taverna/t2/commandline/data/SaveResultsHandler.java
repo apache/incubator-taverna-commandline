@@ -137,6 +137,10 @@ public class SaveResultsHandler {
 		
 		if (outputBaclavaDocumentFile != null) {
 			
+			if (outputBaclavaDocumentFile.getParentFile().exists()){
+				outputBaclavaDocumentFile.getParentFile().mkdirs();
+			}
+			
 			BaclavaDocumentHandler handler = new BaclavaDocumentHandler();
 			InvocationContext context = null;
 			handler.setChosenReferences(allResults);
