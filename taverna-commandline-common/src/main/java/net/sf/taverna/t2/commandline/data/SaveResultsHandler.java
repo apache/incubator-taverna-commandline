@@ -206,7 +206,7 @@ public class SaveResultsHandler {
 			if (dataFile.exists()) {
 				System.err.println("There is already data saved to: "
 						+ dataFile.getAbsolutePath());
-				System.exit(-1);
+				//System.exit(-1);
 			}
 			
 			saveIndividualDataFile(t2Reference, dataFile);
@@ -243,7 +243,7 @@ public class SaveResultsHandler {
 		if (dataFile.exists()) {
 			System.err.println("There is already data saved to: "
 					+ dataFile.getAbsolutePath());
-			System.exit(-1);
+			//System.exit(-1);
 		}
 
 		Object data = null;

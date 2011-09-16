@@ -134,7 +134,7 @@ public class CommandLineOptions {
 		} catch (IOException e) {
 			logger.error("Failed to load the help document", e);
 			System.out.println("Failed to load the help document");
-			System.exit(-1);
+			//System.exit(-1);
 		}
 	}
 

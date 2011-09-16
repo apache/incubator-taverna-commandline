@@ -163,8 +163,9 @@ public class CommandLineTool {
 			commandLineOptions = new CommandLineOptions(args);
 			initialiseLogging();
 			int result = setupAndExecute();
-			System.exit(result);
 			return result;
+			//System.exit(result);
+			//return result;
 		} catch (ArgumentsParsingException e) { // thrown by CommandLineOptions
 			error(e.getMessage());
 		} catch (InvalidOptionException e) { // thrown by CommandLineOptions
@@ -194,7 +195,7 @@ public class CommandLineTool {
 			error(e.getMessage());
 		} 
 		// Should be unreachable
-		System.exit(-1);
+		//System.exit(-1);
 		return -1;
 	}
 
@@ -554,7 +555,7 @@ public class CommandLineTool {
 
 	protected void error(String msg) {
 		System.err.println(msg);
-		System.exit(-1);
+		//System.exit(-1);
 	}
 
 	private URL readWorkflowURL(String workflowOption)
