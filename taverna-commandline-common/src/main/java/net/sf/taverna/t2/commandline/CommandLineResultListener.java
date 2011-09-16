@@ -26,6 +26,7 @@ import java.util.Map;
 import net.sf.taverna.t2.commandline.data.SaveResultsHandler;
 import net.sf.taverna.t2.facade.ResultListener;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
+import net.sf.taverna.t2.reference.T2Reference;
 
 import org.apache.log4j.Logger;
 
@@ -76,15 +77,15 @@ public class CommandLineResultListener implements ResultListener {
 		}
 	}
 	
-	public void saveOutputDocument() {
-		if (saveOutputDocument) {
-			try {
-				saveResultsHandler.saveOutputDocument(finalTokens);
-			} catch (Exception e) {
-				logger.error("An error occurred saving the final results to -outputdoc",e);
-			}
-		}
-	}
+//	public void saveOutputDocument() {
+//		if (saveOutputDocument) {
+//			try {
+//				saveResultsHandler.saveOutputBaclavaDocument(finalTokens);
+//			} catch (Exception e) {
+//				logger.error("An error occurred saving the final results to -outputdoc",e);
+//			}
+//		}
+//	}
 
 	public void saveProvenance() {
 		if (saveOpm) {

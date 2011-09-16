@@ -248,6 +248,7 @@ public class TestCommandLineOptionsHandler {
 	}
 	
 	@Test(expected = InvalidOptionException.class)
+	@SuppressWarnings("unused")
 	public void hasLogFileNotValidWithoutWorkflow() throws Exception{
 		CommandLineOptions options = new CommandLineOptions(new String[] {
 				"-logfile","/tmp/logging"});

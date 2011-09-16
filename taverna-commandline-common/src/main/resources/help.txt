@@ -57,8 +57,8 @@ executeworkflow script runs.
 
 More advanced database configurations can be specified using -dbproperties
 option, allowing you to take full control over the database used. This takes a
-second argument, the filename of the propeties file, for which the following
-example contains the default settings used:
+second argument, the filename of the properties file, for which the following
+example contains the default settings:
 
 in_memory = true
 provenance = false

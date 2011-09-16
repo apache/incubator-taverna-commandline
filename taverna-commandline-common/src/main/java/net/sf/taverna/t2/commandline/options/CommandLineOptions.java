@@ -19,10 +19,10 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
  ******************************************************************************/
 package net.sf.taverna.t2.commandline.options;
-
 import java.io.IOException;
 import java.io.InputStream;
 
+import net.sf.taverna.t2.commandline.exceptions.ArgumentsParsingException;
 import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
 
 import org.apache.commons.cli.CommandLine;
@@ -35,6 +35,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+//import org.taverna.launcher.environment.CommandLineArgumentProvider;
 
 /**
  * Handles the processing of command line arguments for enacting a workflow.
@@ -57,11 +58,19 @@ public class CommandLineOptions {
 	public static final String CREDENTIAL_MANAGER_DIR_OPTION = "cmdir";
 	public static final String CREDENTIAL_MANAGER_PASSWORD_OPTION = "cmpassword";
 
-	public CommandLineOptions(String[] args) throws InvalidOptionException {
+	public CommandLineOptions(String[] args) throws ArgumentsParsingException, InvalidOptionException {
 		this.options = intitialiseOptions();
 		this.commandLine = processArgs(args);		
 		checkForInvalid();
 	}
+
+//	public CommandLineOptions(
+//			CommandLineArgumentProvider commandLineArgumentProvider)
+//			throws InvalidOptionException, ArgumentsParsingException {
+//		this.options = intitialiseOptions();
+//		this.commandLine = processArgs((String[])(commandLineArgumentProvider.getRemainingArguments("executeworkflow [options] [workflow]").toArray(new String[0])));		
+//		checkForInvalid();
+//	}
 
 	public boolean askedForHelp() {
 		return hasOption("help") || (getArgs().length==0 && getOptions().length==0);
@@ -123,7 +132,8 @@ public class CommandLineOptions {
 			}
 
 		} catch (IOException e) {
-			logger.error("Error reading the help document", e);
+			logger.error("Failed to load the help document", e);
+			System.out.println("Failed to load the help document");
 			System.exit(-1);
 		}
 	}
@@ -349,7 +359,7 @@ public class CommandLineOptions {
 				"Connect as a client to a derby server instance.");
 		Option inMemOption = new Option(
 				"inmemory",
-				"Run the workflow with data stored in-memory rather than in a database. This can give performance inprovements, at the cost of overall memory usage.");
+				"Run the workflow with data stored in-memory rather than in a database (this is the default option). This can give performance inprovements, at the cost of overall memory usage.");
 		Option startDB = new Option("startdb",
 				"Automatically start an internal Derby database server.");
 		Option provenance = new Option("provenance",
@@ -372,7 +382,7 @@ public class CommandLineOptions {
 		
 		Option credentialManagerDirectory = OptionBuilder.withArgName("directory path").
 		hasArg().withDescription(
-				"Absolute path to a directory where Credential Manager's files (keystore and truststore) are located. ")
+				"Absolute path to a directory where Credential Manager's files (keystore and truststore) are located.")
 		.create(CREDENTIAL_MANAGER_DIR_OPTION);
 		Option credentialManagerPassword = new Option(CREDENTIAL_MANAGER_PASSWORD_OPTION, "Indicate that the master password for Credential Manager will be provided on standard input."); // optional password option, to be read from standard input
 		
@@ -412,7 +422,7 @@ public class CommandLineOptions {
 		return hasOption("inmemory");
 	}
 
-	private CommandLine processArgs(String[] args) {
+	private CommandLine processArgs(String[] args) throws ArgumentsParsingException {
 		CommandLineParser parser = new GnuParser();
 		CommandLine line = null;
 		try {
@@ -420,15 +430,16 @@ public class CommandLineOptions {
 			line = parser.parse(options, args);
 		} catch (ParseException exp) {
 			// oops, something went wrong
-			System.err.println("Parsing failed.  Reason: " + exp.getMessage());
-			System.exit(1);
+//			System.err.println("Taverna command line arguments' parsing failed. Reason: " + exp.getMessage());
+//			System.exit(1);
+			throw new ArgumentsParsingException("Taverna command line arguments' parsing failed. Reason: " + exp.getMessage(), exp);
 		}
 		return line;
 	}
 
 	/**
-	 * Save the results to a directory if -output has been explicitly defined,
-	 * and/or if -outputdoc hasn't been defined
+	 * Save the results to a directory if -outputdir has been explicitly defined,
+	 * or if -outputdoc has not been defined.
 	 * 
 	 * @return boolean
 	 */

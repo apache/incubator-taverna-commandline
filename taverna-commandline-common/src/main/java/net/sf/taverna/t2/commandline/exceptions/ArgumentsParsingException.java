@@ -20,42 +20,15 @@
  ******************************************************************************/
 package net.sf.taverna.t2.commandline.exceptions;
 
-import java.util.Set;
+@SuppressWarnings("serial")
+public class ArgumentsParsingException extends Exception {
 
-public class InputMismatchException extends InvalidOptionException {	
-	
-	private static final long serialVersionUID = -5368068332397293706L;
-	private final Set<String> expectedInputNames;
-	private final Set<String> providedInputNames;
-	
-	public InputMismatchException(String msg, Set<String> expectedInputNames, Set<String> providedInputNames) {
-		super(msg);
-		this.expectedInputNames = expectedInputNames;
-		this.providedInputNames = providedInputNames;				
-	}
-
-	public String getMessage() {
-		String result = super.getMessage();
-		
-		if (expectedInputNames != null){
-			result += "\n" + expectedInputNames.size() + " inputs were expected";
-			if (expectedInputNames.size()>0) result += " which are:\n";
-			for (String name : expectedInputNames) {
-				result += "'"+name+"' ";			
-			}			
-		}
-		
-		if (providedInputNames != null){
-			result += "\n" + providedInputNames.size()
-					+ " inputs were provided";
-			if (providedInputNames.size() > 0)
-				result += " which are:\n";
-			for (String name : providedInputNames) {
-				result += "'" + name + "' ";
-			}
-		}
-		return result;
+	public ArgumentsParsingException(String message) {
+		super(message);
 	}
 	
-
+	public ArgumentsParsingException(String message, Throwable cause) {
+		super(message, cause);
+	}
 }
+

@@ -30,8 +30,8 @@ import javax.naming.NamingException;
 
 import net.sf.taverna.t2.commandline.exceptions.DatabaseConfigurationException;
 import net.sf.taverna.t2.commandline.options.CommandLineOptions;
-import net.sf.taverna.t2.workbench.reference.config.DataManagementConfiguration;
-import net.sf.taverna.t2.workbench.reference.config.DataManagementHelper;
+//import net.sf.taverna.t2.workbench.reference.config.DataManagementConfiguration;
+//import net.sf.taverna.t2.workbench.reference.config.DataManagementHelper;
 
 import org.apache.log4j.Logger;
 
@@ -46,36 +46,36 @@ import org.apache.log4j.Logger;
 public class DatabaseConfigurationHandler {
 
 	private final CommandLineOptions options;
-	private DataManagementConfiguration dbConfig;
+//	private DataManagementConfiguration dbConfig;
 	private static Logger logger = Logger.getLogger(DatabaseConfigurationHandler.class);
 
 	public DatabaseConfigurationHandler(CommandLineOptions options) {
 		this.options = options;
-		dbConfig = DataManagementConfiguration.getInstance();
-		dbConfig.disableAutoSave();
+//		dbConfig = DataManagementConfiguration.getInstance();
+//		dbConfig.disableAutoSave();
 	}
 
 	public void configureDatabase() throws DatabaseConfigurationException {
 		overrideDefaults();
 		useOptions();
-		if (dbConfig.getStartInternalDerbyServer()) {
-			DataManagementHelper.startDerbyNetworkServer();
-			System.out.println("Started Derby Server on Port: "
-					+ dbConfig.getCurrentPort());
-		}
-		DataManagementHelper.setupDataSource();				
+//		if (dbConfig.getStartInternalDerbyServer()) {
+//			DataManagementHelper.startDerbyNetworkServer();
+//			System.out.println("Started Derby Server on Port: "
+//					+ dbConfig.getCurrentPort());
+//		}
+//		DataManagementHelper.setupDataSource();				
 	}
 
-	public DataManagementConfiguration getDBConfig() {
-		return dbConfig;
-	}
+//	public DataManagementConfiguration getDBConfig() {
+//		return dbConfig;
+//	}
 	
 	private void importConfigurationFromStream(InputStream inStr)
 			throws IOException {
 		Properties p = new Properties();
 		p.load(inStr);		
 		for (Object key : p.keySet()) {
-			dbConfig.setProperty((String)key, p.getProperty((String)key).trim());
+			//dbConfig.setProperty((String)key, p.getProperty((String)key).trim());
 		}
 	}
 
@@ -100,7 +100,7 @@ public class DatabaseConfigurationHandler {
 		//try and get a connection
 		Connection con = null;
 		try {
-			con = DataManagementHelper.openConnection();
+			//con = DataManagementHelper.openConnection();
 		} finally {
 			if (con!=null)
 				try {
@@ -114,30 +114,30 @@ public class DatabaseConfigurationHandler {
 	public void useOptions() throws DatabaseConfigurationException {
 		
 		if (options.hasOption("port")) {			
-			dbConfig.setPort(options.getDatabasePort());		
+			//dbConfig.setPort(options.getDatabasePort());		
 		}
 		
 		if (options.hasOption("startdb")) {
-			dbConfig.setStartInternalDerbyServer(true);
+			//dbConfig.setStartInternalDerbyServer(true);
 		}
 		
 		if (options.hasOption("inmemory")) {			
-			dbConfig.setInMemory(true);		
+			//dbConfig.setInMemory(true);		
 		}
 		
 		if (options.hasOption("embedded")) {
-			dbConfig.setInMemory(false);
-			dbConfig.setDriverClassName("org.apache.derby.jdbc.EmbeddedDriver");
+			//dbConfig.setInMemory(false);
+			//dbConfig.setDriverClassName("org.apache.derby.jdbc.EmbeddedDriver");
 		}
 		
 		if (options.isProvenanceEnabled()) {
-			dbConfig.setProvenanceEnabled(true);
+			//dbConfig.setProvenanceEnabled(true);
 		}
 		
 		if (options.hasOption("clientserver")) {
-			dbConfig.setInMemory(false);
-			dbConfig.setDriverClassName("org.apache.derby.jdbc.ClientDriver");
-			dbConfig.setJDBCUri("jdbc:derby://localhost:" + dbConfig.getPort() + "/t2-database;create=true;upgrade=true");			
+			//dbConfig.setInMemory(false);
+			//dbConfig.setDriverClassName("org.apache.derby.jdbc.ClientDriver");
+			//dbConfig.setJDBCUri("jdbc:derby://localhost:" + dbConfig.getPort() + "/t2-database;create=true;upgrade=true");			
 		}		
 		
 		if (options.hasOption("dbproperties")) {
