@@ -7,10 +7,11 @@
                                  http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
     
-<!--     <service ref="commandLineMasterPasswordProvider" interface="net.sf.taverna.t2.security.credentialmanager.MasterPasswordProvider" />
- --><!--     <reference id="commandLineArgumentProvider" interface="org.taverna.launcher.environment.CommandLineArgumentProvider"/> -->
+    <service ref="commandLineMasterPasswordProvider" interface="net.sf.taverna.t2.security.credentialmanager.MasterPasswordProvider" />
+ 	<!--     <reference id="commandLineArgumentProvider" interface="org.taverna.launcher.environment.CommandLineArgumentProvider"/> -->
     <reference id="runService" interface="uk.org.taverna.platform.run.api.RunService"/>
 	<reference id="credentialManager" interface="net.sf.taverna.t2.security.credentialmanager.CredentialManager" />
+	<reference id="workflowBundleIO" interface="uk.org.taverna.scufl2.api.io.WorkflowBundleIO" />
 
 <!-- 	<reference id="workflowModelEdits" interface="net.sf.taverna.t2.workflowmodel.Edits" />
 		<reference id="xmlDeserializer" interface="net.sf.taverna.t2.workflowmodel.serialization.xml.XMLDeserializer" />

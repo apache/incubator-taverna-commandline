@@ -7,13 +7,14 @@
 		<!-- <constructor-arg name="commandLineArgumentProvider" ref="commandLineArgumentProvider"/> -->
  		<property name="runService" ref="runService" />
 		<property name="credentialManager" ref="credentialManager" />
+		<property name="workflowBundleIO" ref="workflowBundleIO"/>
 <!-- 	<property name="executionService" ref="executionService" />			
  		<property name="edits" ref="workflowModelEdits" />
  		<property name="xmlDeserializer" ref="xmlDeserializer" />
  -->		
 	</bean>
 
-<!-- 	<bean id="commandLineMasterPasswordProvider" class="net.sf.taverna.t2.commandline.CommandLineMasterPasswordProvider">
-		<constructor-arg name="commandLineArgumentProvider" ref="commandLineArgumentProvider"/>
-	</bean> -->
+ 	<bean id="commandLineMasterPasswordProvider" class="net.sf.taverna.t2.commandline.CommandLineMasterPasswordProvider">
+<!-- 		<constructor-arg name="commandLineArgumentProvider" ref="commandLineArgumentProvider"/> -->
+	</bean>
 </beans>

@@ -100,6 +100,8 @@ public class CommandLineTool {
 
 	private WorkflowBundle workflowBundle;
 
+	private WorkflowBundleIO workflowBundleIO;
+
 	/**
 	 * Main method, purely for development and debugging purposes. Full
 	 * execution of workflows will not work through this method.
@@ -283,9 +285,8 @@ public class CommandLineTool {
 				credentialManager.initializeSSL();
 
 				URL workflowURL = readWorkflowURL(commandLineOptions.getWorkflow());
-								
-				WorkflowBundleIO wfBundleIO = new WorkflowBundleIO();
-				workflowBundle = wfBundleIO.readBundle(workflowURL.openStream(), null);
+						
+				workflowBundle = workflowBundleIO.readBundle(workflowURL, null);
 				
 				validateWorkflowBundle(workflowBundle);
 
@@ -617,6 +618,10 @@ public class CommandLineTool {
 	
 	public void setCredentialManager(CredentialManager credentialManager){
 		this.credentialManager = credentialManager;
+	}
+	
+	public void setWorkflowBundleIO(WorkflowBundleIO workflowBundleIO){
+		this.workflowBundleIO = workflowBundleIO;
 	}
 
 }
