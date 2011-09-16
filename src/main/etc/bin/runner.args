@@ -1,4 +1,4 @@
 --platform=equinox
 --profile=spring-dm
---repositories=file:../equinox
-scan-dir:../lib
+--console
+--noDownloadFeedback
