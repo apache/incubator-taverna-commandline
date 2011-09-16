@@ -26,6 +26,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -401,9 +402,10 @@ public class CommandLineTool {
 					
 					SaveResultsHandler saveResultsHandler = new SaveResultsHandler(referenceService, outputDir, outputBaclavaDoc, opmFile, janusFile);
 					 
-					while (!workflowFinished && !allResultsSaved){  // while there are still results that have not been saved and workflow has not finished
-						while (workflowOutputPorts.iterator().hasNext()){
-							String workflowOutputPortName = workflowOutputPorts.iterator().next().getName();
+					while (!workflowFinished || !allResultsSaved){  // while there are still results that have not been saved and workflow has not finished
+						Iterator<OutputWorkflowPort> iterator = workflowOutputPorts.iterator();
+						while (iterator.hasNext()){
+							String workflowOutputPortName = iterator.next().getName();
 							if (results.get(workflowOutputPortName) != null && !resultsSaved.get(workflowOutputPortName)){ // are results ready for this output port? have they been saved yet?
 								if (outputDir != null){
 									saveResultsHandler.saveResultsForPort(workflowOutputPortName, results.get(workflowOutputPortName));
