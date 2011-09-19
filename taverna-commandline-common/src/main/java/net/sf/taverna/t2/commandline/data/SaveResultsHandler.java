@@ -282,8 +282,9 @@ public class SaveResultsHandler {
 				fos = new FileOutputStream(dataFile);
 				if (data instanceof InputStream) {
 					byte[] bytes = new byte[500000];
-					while (((InputStream) data).read(bytes) != -1) {
-						fos.write(bytes);
+					int readBytes = 0 ;
+					while ((readBytes = ((InputStream) data).read(bytes)) != -1) {
+						fos.write(bytes, 0, readBytes);
 					}
 					stream.close();
 					fos.flush();

@@ -155,7 +155,6 @@ public class CommandLineTool {
 //			error(e.getMessage());
 //		} 
 //		// Should be unreachable
-//		System.exit(-1);
 //		return -1;
 //	}
 	
@@ -166,7 +165,6 @@ public class CommandLineTool {
 			int result = setupAndExecute();
 			return result;
 			//System.exit(result);
-			//return result;
 		} catch (ArgumentsParsingException e) { // thrown by CommandLineOptions
 			error(e.getMessage());
 		} catch (InvalidOptionException e) { // thrown by CommandLineOptions
@@ -538,7 +536,7 @@ public class CommandLineTool {
 			result = new File(options.getOutputDirectory());
 			if (result.exists()) {
 				error("The specified output directory '"
-						+ options.getOutputDirectory() + "' already exists");
+						+ options.getOutputDirectory() + "' already exists.\n");
 			}
 		} else if (options.getOutputDocument() == null) {
 			result = new File(dataflowName + "_output");
