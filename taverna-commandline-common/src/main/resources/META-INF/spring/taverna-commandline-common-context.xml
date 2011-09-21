@@ -3,16 +3,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="commandLineTool" class="net.sf.taverna.t2.commandline.CommandLineTool">
-		<!-- <constructor-arg name="commandLineArgumentProvider" ref="commandLineArgumentProvider"/> -->
+	<bean id="commandLineTool" class="net.sf.taverna.t2.commandline.CommandLineTool" init-method="run">
  		<property name="runService" ref="runService" />
 		<property name="credentialManager" ref="credentialManager" />
 		<property name="workflowBundleReader" ref="workflowBundleReader"/>
-<!-- 		<property name="workflowBundleIO" ref="workflowBundleIO"/>
- --><!-- 	<property name="executionService" ref="executionService" />			
- 		<property name="edits" ref="workflowModelEdits" />
- 		<property name="xmlDeserializer" ref="xmlDeserializer" />
- -->		
 	</bean>
 
  	<bean id="commandLineMasterPasswordProvider" class="net.sf.taverna.t2.commandline.CommandLineMasterPasswordProvider">

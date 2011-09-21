@@ -75,8 +75,8 @@ import uk.org.taverna.scufl2.validation.structural.ReportStructuralValidationLis
 import uk.org.taverna.scufl2.validation.structural.StructuralValidator;
 
 /**
- * A utility class that wraps the process of executing a workflow, allowing
- * workflows to be easily executed independently of the GUI.
+ * A utility class that wraps the process of executing a workflow, allowing workflows to be easily
+ * executed independently of the GUI.
  *
  * @author Stuart Owen
  * @author Alex Nenadic
@@ -85,16 +85,12 @@ import uk.org.taverna.scufl2.validation.structural.StructuralValidator;
 public class CommandLineTool {
 
 	private static Logger logger = Logger.getLogger(CommandLineTool.class);
-	
-//	private CommandLineArgumentProvider commandLineArgumentProvider;
 
-//	private Edits edits;
+	// private CommandLineArgumentProvider commandLineArgumentProvider;
 
 	private RunService runService;
 
 	private CredentialManager credentialManager;
-
-//	private XMLDeserializer xmlDeserializer;
 
 	private ReferenceService referenceService;
 
@@ -107,15 +103,15 @@ public class CommandLineTool {
 	private WorkflowBundleReader workflowBundleReader;
 
 	/**
-	 * Main method, purely for development and debugging purposes. Full
-	 * execution of workflows will not work through this method.
+	 * Main method, purely for development and debugging purposes. Full execution of workflows will
+	 * not work through this method.
 	 *
 	 * @param args
 	 * @throws Exception
 	 */
-	
-//	public CommandLineTool(CommandLineArgumentProvider commandLineArgumentProvider){
-//		this.commandLineArgumentProvider = commandLineArgumentProvider;		
+
+//	public CommandLineTool(CommandLineArgumentProvider commandLineArgumentProvider) {
+//		this.commandLineArgumentProvider = commandLineArgumentProvider;
 //		run();
 //	}
 
@@ -153,11 +149,25 @@ public class CommandLineTool {
 //			error("There was an error validating the workflow: " + e.getMessage());
 //		} catch (RunProfileException e) {
 //			error(e.getMessage());
-//		} 
+//		}
 //		// Should be unreachable
 //		return -1;
 //	}
-	
+
+	public String[] getArgs() {
+		int argCount = Integer.getInteger("taverna.commandline.args");
+		String[] args = new String[argCount];
+		for (int i = 0; i < argCount; i++) {
+			args[i] = System.getProperty("taverna.commandline.arg." + i);
+			args[i] = args[i].replace('\007', ' ');
+		}
+		return args;
+	}
+
+	public int run() {
+		return run(getArgs());
+	}
+
 	public int run(String[] args) {
 		try {
 			commandLineOptions = new CommandLineOptions(args);
@@ -216,32 +226,25 @@ public class CommandLineTool {
 
 		if (System.getProperty("log4j.configuration") == null) {
 			try {
-				PropertyConfigurator.configure(CommandLineTool.class
-						.getClassLoader().getResource("cl-log4j.properties")
-						.toURI().toURL());
+				PropertyConfigurator.configure(CommandLineTool.class.getClassLoader()
+						.getResource("cl-log4j.properties").toURI().toURL());
 			} catch (MalformedURLException e) {
-				logger
-						.error(
-								"There was a serious error reading the default logging configuration",
-								e);
+				logger.error("There was a serious error reading the default logging configuration",
+						e);
 			} catch (URISyntaxException e) {
-				logger
-						.error(
-								"There was a serious error reading the default logging configuration",
-								e);
+				logger.error("There was a serious error reading the default logging configuration",
+						e);
 			}
 
 		} else {
-			PropertyConfigurator.configure(System
-					.getProperty("log4j.configuration"));
+			PropertyConfigurator.configure(System.getProperty("log4j.configuration"));
 		}
 
 		if (commandLineOptions.hasLogFile()) {
 			RollingFileAppender appender;
 			try {
 
-				PatternLayout layout = new PatternLayout(
-						"%-5p %d{ISO8601} (%c:%L) - %m%n");
+				PatternLayout layout = new PatternLayout("%-5p %d{ISO8601} (%c:%L) - %m%n");
 				appender = new RollingFileAppender(layout, commandLineOptions.getLogFile());
 				appender.setMaxFileSize("1MB");
 				appender.setEncoding("UTF-8");
@@ -255,22 +258,19 @@ public class CommandLineTool {
 		}
 	}
 
-	public int setupAndExecute() throws InputMismatchException,
-			InvalidOptionException, CMException, OpenDataflowException,
-			ReaderException, IOException, ValidationException,
+	public int setupAndExecute() throws InputMismatchException, InvalidOptionException,
+			CMException, OpenDataflowException, ReaderException, IOException, ValidationException,
 			ReadInputException, InvalidWorkflowException, RunProfileException,
-			InvalidRunIdException, RunStateException,
-			InvalidExecutionIdException {
+			InvalidRunIdException, RunStateException, InvalidExecutionIdException {
 
 		if (!commandLineOptions.askedForHelp()) {
-			//setupDatabase(commandLineOptions);
+			// setupDatabase(commandLineOptions);
 
 			if (commandLineOptions.getWorkflow() != null) {
-							
+
 				// Initialise Credential Manager and SSL stuff quite early as parsing and
 				// validating the workflow may require it
-				String credentialManagerDirPath = commandLineOptions
-						.getCredentialManagerDir();
+				String credentialManagerDirPath = commandLineOptions.getCredentialManagerDir();
 
 				// If credentialManagerDirPath is null - Credential Manager will
 				// be initialized from the default location in <TAVERNA_HOME>/security
@@ -279,38 +279,42 @@ public class CommandLineTool {
 				// should always be passed in as we do not want to store the security files in
 				// user's home directory on the server (we do not even know which user the command
 				// line tool will be running as).
-				if (credentialManagerDirPath != null){
-					credentialManager.setConfigurationDirectoryPath(new File(credentialManagerDirPath));					
+				if (credentialManagerDirPath != null) {
+					credentialManager.setConfigurationDirectoryPath(new File(
+							credentialManagerDirPath));
 				}
-				
-				// Initialise the SSL stuff - set the SSLSocketFactory 
+
+				// Initialise the SSL stuff - set the SSLSocketFactory
 				// to use Taverna's Keystore and Truststore.
 				credentialManager.initializeSSL();
 
 				URL workflowURL = readWorkflowURL(commandLineOptions.getWorkflow());
-						
-//				workflowBundle = workflowBundleIO.readBundle(workflowURL, null);
-				
+
+				// workflowBundle = workflowBundleIO.readBundle(workflowURL, null);
+
 				workflowBundle = workflowBundleReader.readBundle(workflowURL.openStream(), null);
 				// For testing
 				System.out.println("Read the wf bundle");
-				
+
 				validateWorkflowBundle(workflowBundle);
 				// For testing
 				System.out.println("Validated the wf bundle");
-				
-				//InvocationContext context = createInvocationContext();
-				
-				Set<ExecutionEnvironment> executionEnvironments = runService.getExecutionEnvironments();
+
+				// InvocationContext context = createInvocationContext();
+
+				Set<ExecutionEnvironment> executionEnvironments = runService
+						.getExecutionEnvironments();
 
 				ExecutionEnvironment executionEnvironment = null;
 
-				// Find the right execution environment, e.g. local execution with the correct reference service 
+				// Find the right execution environment, e.g. local execution with the correct
+				// reference service
 				// based on command line options
-				while (executionEnvironments.iterator().hasNext()){
+				while (executionEnvironments.iterator().hasNext()) {
 					// TODO
 					// Choose the right one
-					executionEnvironment = executionEnvironments.iterator().next(); // take the fist one for now
+					executionEnvironment = executionEnvironments.iterator().next(); // take the fist
+																					// one for now
 					break;
 				}
 				// For testing
@@ -319,7 +323,7 @@ public class CommandLineTool {
 				referenceService = executionEnvironment.getReferenceService();
 				// For testing
 				System.out.println("Got the reference service");
-				
+
 				InputsHandler inputsHandler = new InputsHandler(referenceService);
 				Map<String, InputWorkflowPort> portMap = new HashMap<String, InputWorkflowPort>();
 
@@ -331,34 +335,36 @@ public class CommandLineTool {
 				inputsHandler.checkProvidedInputs(portMap, commandLineOptions);
 				// For testing
 				System.out.println("Checked inputs");
-				
-				Map<String, T2Reference> inputs = inputsHandler.registerInputs(portMap, commandLineOptions, null);
+
+				Map<String, T2Reference> inputs = inputsHandler.registerInputs(portMap,
+						commandLineOptions, null);
 				// For testing
 				System.out.println("Registered inputs");
-				
+
 				RunProfile runProfile = new RunProfile(executionEnvironment, workflowBundle, inputs);
-				
+
 				String runId = runService.createRun(runProfile);
 
 				runService.start(runId);
 				// For testing
 				System.out.println("Started wf run");
-				
+
 				WorkflowReport report = runService.getWorkflowReport(runId);
 
 				Map<String, T2Reference> results = runService.getOutputs(runId);
-				//Map<String, T2Reference> results = report.getOutputs();
-				
-				NamedSet<OutputWorkflowPort> workflowOutputPorts = workflowBundle.getMainWorkflow().getOutputPorts();
-				
-				if (!workflowOutputPorts.isEmpty()){
-										
+				// Map<String, T2Reference> results = report.getOutputs();
+
+				NamedSet<OutputWorkflowPort> workflowOutputPorts = workflowBundle.getMainWorkflow()
+						.getOutputPorts();
+
+				if (!workflowOutputPorts.isEmpty()) {
+
 					File outputDir = null;
 					File outputBaclavaDoc = null;
 					File provenanceDir = null;
 					File janusFile = null;
 					File opmFile = null;
-					
+
 					if (commandLineOptions.saveResultsToDirectory()) {
 						outputDir = determineOutputDir(commandLineOptions, workflowBundle.getName());
 						provenanceDir = outputDir;
@@ -369,7 +375,8 @@ public class CommandLineTool {
 					if (commandLineOptions.isJanus()) {
 						if (commandLineOptions.getJanus() == null) {
 							if (provenanceDir == null) {
-								provenanceDir = determineOutputDir(commandLineOptions, workflowBundle.getName());
+								provenanceDir = determineOutputDir(commandLineOptions,
+										workflowBundle.getName());
 							}
 							janusFile = new File(provenanceDir, "provenance-janus.rdf");
 						} else {
@@ -379,67 +386,80 @@ public class CommandLineTool {
 					if (commandLineOptions.isOPM()) {
 						if (commandLineOptions.getOPM() == null) {
 							if (provenanceDir == null) {
-								provenanceDir = determineOutputDir(commandLineOptions, workflowBundle.getName());
+								provenanceDir = determineOutputDir(commandLineOptions,
+										workflowBundle.getName());
 							}
 							opmFile = new File(provenanceDir, "provenance-opm.rdf");
 						} else {
 							opmFile = new File(commandLineOptions.getOPM());
 						}
-					}				
-					
+					}
+
 					// Indicator if results are saved for a particular port
 					Map<String, Boolean> resultsSaved = new HashMap<String, Boolean>();
-					for (OutputWorkflowPort outputPort : workflowOutputPorts){
+					for (OutputWorkflowPort outputPort : workflowOutputPorts) {
 						resultsSaved.put(outputPort.getName(), false);
 					}
-				
+
 					// Has the workflow finished running?
-					boolean workflowFinished = !report.getState().equals(uk.org.taverna.platform.report.State.RUNNING);
+					boolean workflowFinished = !report.getState().equals(
+							uk.org.taverna.platform.report.State.RUNNING);
 					// Have results been saved for all output ports?
-					boolean allResultsSaved = false; // no point in saving results if they are no output ports
-					
-					SaveResultsHandler saveResultsHandler = new SaveResultsHandler(referenceService, outputDir, outputBaclavaDoc, opmFile, janusFile);
-					 
-					while (!workflowFinished || !allResultsSaved){  // while there are still results that have not been saved and workflow has not finished
+					boolean allResultsSaved = false; // no point in saving results if they are no
+														// output ports
+
+					SaveResultsHandler saveResultsHandler = new SaveResultsHandler(
+							referenceService, outputDir, outputBaclavaDoc, opmFile, janusFile);
+
+					while (!workflowFinished || !allResultsSaved) { // while there are still results
+																	// that have not been saved and
+																	// workflow has not finished
 						Iterator<OutputWorkflowPort> iterator = workflowOutputPorts.iterator();
-						while (iterator.hasNext()){
+						while (iterator.hasNext()) {
 							String workflowOutputPortName = iterator.next().getName();
-							if (results.get(workflowOutputPortName) != null && !resultsSaved.get(workflowOutputPortName)){ // are results ready for this output port? have they been saved yet?
-								if (outputDir != null){
-									saveResultsHandler.saveResultsForPort(workflowOutputPortName, results.get(workflowOutputPortName));
+							if (results.get(workflowOutputPortName) != null
+									&& !resultsSaved.get(workflowOutputPortName)) { // are results
+																					// ready for
+																					// this output
+																					// port? have
+																					// they been
+																					// saved yet?
+								if (outputDir != null) {
+									saveResultsHandler.saveResultsForPort(workflowOutputPortName,
+											results.get(workflowOutputPortName));
 								}
 								resultsSaved.put(workflowOutputPortName, true);
 							}
 						}
-						
-						workflowFinished = !report.getState().equals(uk.org.taverna.platform.report.State.RUNNING); // either completed or failed but finished running
+
+						workflowFinished = !report.getState().equals(
+								uk.org.taverna.platform.report.State.RUNNING); // either completed
+																				// or failed but
+																				// finished running
 						allResultsSaved = !resultsSaved.values().contains(false);
-						if ( !(workflowFinished && allResultsSaved) ){
-							try{
+						if (!(workflowFinished && allResultsSaved)) {
+							try {
 								Thread.sleep(500);
-							}
-							catch (InterruptedException e) {
+							} catch (InterruptedException e) {
 								// Ignore
 							}
-						}
-						else{
+						} else {
 							break;
 						}
 					}
-					
-					if (outputBaclavaDoc != null){
+
+					if (outputBaclavaDoc != null) {
 						saveResultsHandler.saveOutputBaclavaDocument(results);
 					}
 				}
-				
-				if (report.getState().equals(uk.org.taverna.platform.report.State.FAILED)){
+
+				if (report.getState().equals(uk.org.taverna.platform.report.State.FAILED)) {
 					System.out.println("Workflow failed - see report below.");
 					System.out.println(report);
-				}
-				else if (report.getState().equals(uk.org.taverna.platform.report.State.COMPLETED)){
+				} else if (report.getState().equals(uk.org.taverna.platform.report.State.COMPLETED)) {
 					System.out.println("Workflow completed.");
 				}
-				// Save results somehow											
+				// Save results somehow
 
 			}
 		} else {
@@ -461,40 +481,40 @@ public class CommandLineTool {
 		return 0;
 	}
 
-	protected void validateWorkflowBundle(WorkflowBundle workflowBundle) throws ValidationException{
-		
+	protected void validateWorkflowBundle(WorkflowBundle workflowBundle) throws ValidationException {
+
 		CorrectnessValidator cv = new CorrectnessValidator();
 		ReportCorrectnessValidationListener rcvl = new ReportCorrectnessValidationListener();
 		cv.checkCorrectness(workflowBundle, true, rcvl);
-		if (rcvl.detectedProblems()){
+		if (rcvl.detectedProblems()) {
 			throw rcvl.getException();
 		}
-		
+
 		StructuralValidator sv = new StructuralValidator();
 		ReportStructuralValidationListener rsvl = new ReportStructuralValidationListener();
 		sv.checkStructure(workflowBundle, rsvl);
-		if (rsvl.detectedProblems()){
+		if (rsvl.detectedProblems()) {
 			throw rcvl.getException();
 		}
 	}
-	
+
 //	protected void executeWorkflow(WorkflowInstanceFacade facade,
 //			Map<String, WorkflowDataToken> inputs,
 //			CommandLineResultListener resultListener)
-//			throws TokenOrderException, IOException {
+//					throws TokenOrderException, IOException {
 //		facade.fire();
 //		for (String inputName : inputs.keySet()) {
 //			WorkflowDataToken token = inputs.get(inputName);
 //			facade.pushData(token, inputName);
 //		}
-//		while (facade.getState().compareTo(State.completed) < 0) {			
+//		while (facade.getState().compareTo(State.completed) < 0) {
 //			try {
 //				Thread.sleep(100);
 //			} catch (InterruptedException e) {
 //				logger
-//						.warn(
-//								"Thread Interuption Exception whilst waiting for dataflow completion",
-//								e);
+//				.warn(
+//						"Thread Interuption Exception whilst waiting for dataflow completion",
+//						e);
 //			}
 //		}
 //		resultListener.saveProvenance();
@@ -529,8 +549,7 @@ public class CommandLineTool {
 //
 //	}
 
-	private File determineOutputDir(CommandLineOptions options,
-			String dataflowName) {
+	private File determineOutputDir(CommandLineOptions options, String dataflowName) {
 		File result = null;
 		if (options.getOutputDirectory() != null) {
 			result = new File(options.getOutputDirectory());
@@ -555,22 +574,20 @@ public class CommandLineTool {
 
 	protected void error(String msg) {
 		System.err.println(msg);
-		//System.exit(-1);
+		// System.exit(-1);
 	}
 
-	private URL readWorkflowURL(String workflowOption)
-			throws OpenDataflowException {
+	private URL readWorkflowURL(String workflowOption) throws OpenDataflowException {
 		URL url;
 		try {
 			url = new URL("file:");
 			return new URL(url, workflowOption);
 		} catch (MalformedURLException e) {
-			throw new OpenDataflowException(
-					"The was an error processing the URL to the workflow: "
-							+ e.getMessage(), e);
+			throw new OpenDataflowException("The was an error processing the URL to the workflow: "
+					+ e.getMessage(), e);
 		}
 	}
-	
+
 //	private CommandLineResultListener addResultListener(
 //			WorkflowInstanceFacade facade, InvocationContext context,
 //			Dataflow dataflow, CommandLineOptions options) {
@@ -579,7 +596,7 @@ public class CommandLineTool {
 //		File janus = null;
 //		File janusDir = null;
 //		File opm = null;
-//		
+//
 //		if (options.saveResultsToDirectory()) {
 //			outputDir = determineOutputDir(options, dataflow.getLocalName());
 //			janusDir = outputDir;
@@ -607,7 +624,7 @@ public class CommandLineTool {
 //				opm = new File(options.getOPM());
 //			}
 //		}
-//		
+//
 //		Map<String, Integer> outputPortNamesAndDepth = new HashMap<String, Integer>();
 //		for (DataflowOutputPort port : dataflow.getOutputPorts()) {
 //			outputPortNamesAndDepth.put(port.getName(), port.getDepth());
@@ -616,37 +633,39 @@ public class CommandLineTool {
 //				outputPortNamesAndDepth, outputDir, baclavaDoc, janus, opm);
 //		CommandLineResultListener listener = new CommandLineResultListener(
 //				outputPortNamesAndDepth.size(), resultsHandler,
-//				outputDir != null, baclavaDoc != null, opm != null, janus != null, facade.getWorkflowRunId());
+//				outputDir != null, baclavaDoc != null, opm != null, janus != null,
+//				facade.getWorkflowRunId());
 //		facade.addResultListener(listener);
 //		return listener;
 //
 //	}
-	
-	//	public void setCommandLineArgumentProvider(CommandLineArgumentProvider commandLineArgumentProvider){
-//	this.commandLineArgumentProvider = commandLineArgumentProvider;
-//}
-	
-	public void setRunService(RunService runService){
+
+//	public void setCommandLineArgumentProvider(CommandLineArgumentProvider
+//			commandLineArgumentProvider){
+//		this.commandLineArgumentProvider = commandLineArgumentProvider;
+//	}
+
+	public void setRunService(RunService runService) {
 		this.runService = runService;
 	}
 
 //	public void setEdits(Edits edits){
 //		this.edits = edits;
 //	}
-	
+
 //	public void setXmlDeserializer(XMLDeserializer xmlDeserializer){
 //		this.xmlDeserializer = xmlDeserializer;
 //	}
-	
-	public void setCredentialManager(CredentialManager credentialManager){
+
+	public void setCredentialManager(CredentialManager credentialManager) {
 		this.credentialManager = credentialManager;
 	}
-	
+
 //	public void setWorkflowBundleIO(WorkflowBundleIO workflowBundleIO){
 //		this.workflowBundleIO = workflowBundleIO;
 //	}
 
-	public void setWorkflowBundleReader(WorkflowBundleReader workflowBundleReader){
+	public void setWorkflowBundleReader(WorkflowBundleReader workflowBundleReader) {
 		this.workflowBundleReader = workflowBundleReader;
 	}
 }
