@@ -1,4 +1,3 @@
 --platform=equinox
 --profile=spring-dm
---console
 --noDownloadFeedback

@@ -16,4 +16,17 @@ if test -x "$JAVA_HOME/bin/java"; then
     javabin="$JAVA_HOME/bin/java"
 fi
 
-exec "$javabin" -jar $taverna_home/pax-runner-1.7.0.jar --args=file:$taverna_home/runner.args --workingDirectory=$taverna_home/../runner scan-dir:$taverna_home/../lib
+vmargs=''
+i=0
+
+for arg
+do
+	arg=`echo "$arg" | tr '\ ' '\013'`
+	vmargs+="-Dtaverna.commandline.arg.$i=$arg "
+	i=`expr $i + 1`
+done
+
+vmargs+=-Dtaverna.commandline.args=$i
+vmargs+=" -Xmx300m -XX:MaxPermSize=140m"
+
+exec "$javabin" -jar $taverna_home/pax-runner-1.7.0.jar --vmOptions="$args" --args=file:$taverna_home/runner.args --workingDirectory=$taverna_home/../runner scan-dir:$taverna_home/../lib
