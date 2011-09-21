@@ -49,7 +49,6 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.RollingFileAppender;
-//import org.taverna.launcher.environment.CommandLineArgumentProvider;
 
 import uk.org.taverna.commandline.args.CommandLineArguments;
 import uk.org.taverna.platform.execution.api.ExecutionEnvironment;
@@ -65,7 +64,6 @@ import uk.org.taverna.scufl2.api.common.NamedSet;
 import uk.org.taverna.scufl2.api.container.WorkflowBundle;
 import uk.org.taverna.scufl2.api.core.Workflow;
 import uk.org.taverna.scufl2.api.io.ReaderException;
-import uk.org.taverna.scufl2.api.io.WorkflowBundleIO;
 import uk.org.taverna.scufl2.api.io.WorkflowBundleReader;
 import uk.org.taverna.scufl2.api.port.InputWorkflowPort;
 import uk.org.taverna.scufl2.api.port.OutputWorkflowPort;
@@ -99,61 +97,7 @@ public class CommandLineTool {
 
 	private WorkflowBundle workflowBundle;
 
-	private WorkflowBundleIO workflowBundleIO;
-
 	private WorkflowBundleReader workflowBundleReader;
-
-	/**
-	 * Main method, purely for development and debugging purposes. Full execution of workflows will
-	 * not work through this method.
-	 *
-	 * @param args
-	 * @throws Exception
-	 */
-
-//	public CommandLineTool(CommandLineArgumentProvider commandLineArgumentProvider) {
-//		this.commandLineArgumentProvider = commandLineArgumentProvider;
-//		run();
-//	}
-
-//	public int run() {
-//		try {
-//			commandLineOptions = new CommandLineOptions(commandLineArgumentProvider);
-//			initialiseLogging();
-//			int result = setupAndExecute();
-//			System.exit(result);
-//			return result;
-//		} catch (ArgumentsParsingException e) { // thrown by CommandLineOptions
-//			error(e.getMessage());
-//		} catch (InvalidOptionException e) { // thrown by CommandLineOptions
-//			error(e.getMessage());
-//		} catch (IOException e) {
-//			error(e.getMessage());
-//		} catch (ReadInputException e) {
-//			error(e.getMessage());
-//		} catch (InvalidRunIdException e) {
-//			error(e.getMessage());
-//		} catch (RunStateException e) {
-//			error(e.getMessage());
-//		} catch (InvalidExecutionIdException e) {
-//			error(e.getMessage());
-//		} catch (CMException e) {
-//			error("There was an error initializing Taverna's SSLSocketFactory from Credential Manager. "
-//					+ e.getMessage());
-//		} catch (OpenDataflowException e) {
-//			error(e.getMessage());
-//		} catch (ReaderException e) {
-//			error("There was an error reading the workflow: " + e.getMessage());
-//		} catch (ValidationException e) {
-//			error("There was an error validating the workflow: " + e.getMessage());
-//		} catch (InvalidWorkflowException e) {
-//			error("There was an error validating the workflow: " + e.getMessage());
-//		} catch (RunProfileException e) {
-//			error(e.getMessage());
-//		}
-//		// Should be unreachable
-//		return -1;
-//	}
 
 	public int run() {
 		try {
@@ -162,7 +106,6 @@ public class CommandLineTool {
 			initialiseLogging();
 			int result = setupAndExecute();
 			return result;
-			//System.exit(result);
 		} catch (ArgumentsParsingException e) { // thrown by CommandLineOptions
 			error(e.getMessage());
 		} catch (InvalidOptionException e) { // thrown by CommandLineOptions
@@ -190,24 +133,9 @@ public class CommandLineTool {
 			error("There was an error validating the workflow: " + e.getMessage());
 		} catch (RunProfileException e) {
 			error(e.getMessage());
-		} 
-		// Should be unreachable
-		//System.exit(-1);
+		}
 		return -1;
 	}
-
-//	public int launch(String[] args) {
-//		try {
-//			commandLineOptions = new CommandLineOptions(args);
-//			return launch();
-//		} catch (InvalidOptionException ex1) {
-//			System.err.println(ex1.getMessage());
-//			System.exit(-1);
-//		} catch (ArgumentsParsingException ex2) {
-//			System.err.println(ex2.getMessage());
-//			System.exit(-1);
-//		}
-//	}
 
 	private void initialiseLogging() {
 		LogManager.resetConfiguration();
