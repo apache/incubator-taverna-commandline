@@ -29,4 +29,4 @@ done
 vmargs+=-Dtaverna.commandline.args=$i
 vmargs+=" -Xmx300m -XX:MaxPermSize=140m"
 
-exec "$javabin" -jar $taverna_home/pax-runner-1.7.0.jar --vmOptions="$args" --args=file:$taverna_home/runner.args --workingDirectory=$taverna_home/../runner scan-dir:$taverna_home/../lib
+exec "$javabin" -jar $taverna_home/pax-runner-1.7.0.jar --vmOptions="$vmargs" --args=file:$taverna_home/runner.args --workingDirectory=$taverna_home/../runner scan-dir:$taverna_home/../lib

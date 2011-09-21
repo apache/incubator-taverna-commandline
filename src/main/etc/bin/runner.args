@@ -1,3 +1,5 @@
 --platform=equinox
 --profile=spring-dm
 --noDownloadFeedback
+--noConsole
+--log=ERROR
