@@ -20,7 +20,7 @@
 
 		<dependency>
 			<groupId>uk.org.taverna.commandline</groupId>
-			<artifactId>commandline-args</artifactId>
+			<artifactId>arguments</artifactId>
 			<version>0.1-SNAPSHOT</version>
 		</dependency>
 		
