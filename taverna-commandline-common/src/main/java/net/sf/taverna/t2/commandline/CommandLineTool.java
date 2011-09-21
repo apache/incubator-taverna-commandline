@@ -51,6 +51,7 @@ import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.RollingFileAppender;
 //import org.taverna.launcher.environment.CommandLineArgumentProvider;
 
+import uk.org.taverna.commandline.args.CommandLineArguments;
 import uk.org.taverna.platform.execution.api.ExecutionEnvironment;
 import uk.org.taverna.platform.execution.api.InvalidExecutionIdException;
 import uk.org.taverna.platform.execution.api.InvalidWorkflowException;
@@ -86,7 +87,7 @@ public class CommandLineTool {
 
 	private static Logger logger = Logger.getLogger(CommandLineTool.class);
 
-	// private CommandLineArgumentProvider commandLineArgumentProvider;
+	private CommandLineArguments commandLineArgumentsService;
 
 	private RunService runService;
 
@@ -154,22 +155,9 @@ public class CommandLineTool {
 //		return -1;
 //	}
 
-	public String[] getArgs() {
-		int argCount = Integer.getInteger("taverna.commandline.args");
-		String[] args = new String[argCount];
-		for (int i = 0; i < argCount; i++) {
-			args[i] = System.getProperty("taverna.commandline.arg." + i);
-			args[i] = args[i].replace('\007', ' ');
-		}
-		return args;
-	}
-
 	public int run() {
-		return run(getArgs());
-	}
-
-	public int run(String[] args) {
 		try {
+			String[] args = commandLineArgumentsService.getCommandLineArguments();
 			commandLineOptions = new CommandLineOptions(args);
 			initialiseLogging();
 			int result = setupAndExecute();
@@ -294,11 +282,11 @@ public class CommandLineTool {
 
 				workflowBundle = workflowBundleReader.readBundle(workflowURL.openStream(), null);
 				// For testing
-				System.out.println("Read the wf bundle");
+				logger.debug("Read the wf bundle");
 
 				validateWorkflowBundle(workflowBundle);
 				// For testing
-				System.out.println("Validated the wf bundle");
+				logger.debug("Validated the wf bundle");
 
 				// InvocationContext context = createInvocationContext();
 
@@ -318,11 +306,11 @@ public class CommandLineTool {
 					break;
 				}
 				// For testing
-				System.out.println("Got the execution environment");
+				logger.debug("Got the execution environment");
 
 				referenceService = executionEnvironment.getReferenceService();
 				// For testing
-				System.out.println("Got the reference service");
+				logger.debug("Got the reference service");
 
 				InputsHandler inputsHandler = new InputsHandler(referenceService);
 				Map<String, InputWorkflowPort> portMap = new HashMap<String, InputWorkflowPort>();
@@ -334,12 +322,12 @@ public class CommandLineTool {
 				}
 				inputsHandler.checkProvidedInputs(portMap, commandLineOptions);
 				// For testing
-				System.out.println("Checked inputs");
+				logger.debug("Checked inputs");
 
 				Map<String, T2Reference> inputs = inputsHandler.registerInputs(portMap,
 						commandLineOptions, null);
 				// For testing
-				System.out.println("Registered inputs");
+				logger.debug("Registered inputs");
 
 				RunProfile runProfile = new RunProfile(executionEnvironment, workflowBundle, inputs);
 
@@ -347,7 +335,7 @@ public class CommandLineTool {
 
 				runService.start(runId);
 				// For testing
-				System.out.println("Started wf run");
+				logger.debug("Started wf run");
 
 				WorkflowReport report = runService.getWorkflowReport(runId);
 
@@ -640,22 +628,14 @@ public class CommandLineTool {
 //
 //	}
 
-//	public void setCommandLineArgumentProvider(CommandLineArgumentProvider
-//			commandLineArgumentProvider){
-//		this.commandLineArgumentProvider = commandLineArgumentProvider;
-//	}
+	public void setCommandLineArgumentsService(CommandLineArguments
+			commandLineArgumentsService){
+		this.commandLineArgumentsService = commandLineArgumentsService;
+	}
 
 	public void setRunService(RunService runService) {
 		this.runService = runService;
 	}
-
-//	public void setEdits(Edits edits){
-//		this.edits = edits;
-//	}
-
-//	public void setXmlDeserializer(XMLDeserializer xmlDeserializer){
-//		this.xmlDeserializer = xmlDeserializer;
-//	}
 
 	public void setCredentialManager(CredentialManager credentialManager) {
 		this.credentialManager = credentialManager;
