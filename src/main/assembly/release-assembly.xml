@@ -6,6 +6,7 @@
 	<baseDirectory>taverna-commandline-${project.version}</baseDirectory>
 	<formats>
 		<format>dir</format>
+		<format>zip</format>
 	</formats>
 
 	<dependencySets>
@@ -33,7 +34,7 @@
 	    </includes>
 	  </dependencySet>
 	</dependencySets>
-	
+
 	<repositories>
 	  <repository>
 	    <outputDirectory>equinox</outputDirectory>
@@ -43,7 +44,7 @@
 	    </includes>
 	  </repository>
 	</repositories>
-	
+
 	<fileSets>
 	  <fileSet>
 	    <directory>src/main/etc</directory>
