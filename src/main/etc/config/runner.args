@@ -3,3 +3,4 @@
 --noDownloadFeedback
 --noConsole
 --log=ERROR
+--nologo=true
