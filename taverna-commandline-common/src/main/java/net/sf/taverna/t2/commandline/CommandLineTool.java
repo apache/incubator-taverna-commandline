@@ -99,13 +99,13 @@ public class CommandLineTool {
 
 	private WorkflowBundleReader workflowBundleReader;
 
-	public int run() {
+	public void run() {
 		try {
 			String[] args = commandLineArgumentsService.getCommandLineArguments();
 			commandLineOptions = new CommandLineOptions(args);
 			initialiseLogging();
 			int result = setupAndExecute();
-			return result;
+			System.exit(result);
 		} catch (ArgumentsParsingException e) { // thrown by CommandLineOptions
 			error(e.getMessage());
 		} catch (InvalidOptionException e) { // thrown by CommandLineOptions
@@ -134,7 +134,7 @@ public class CommandLineTool {
 		} catch (RunProfileException e) {
 			error(e.getMessage());
 		}
-		return -1;
+		System.exit(1);
 	}
 
 	private void initialiseLogging() {
@@ -490,7 +490,6 @@ public class CommandLineTool {
 
 	protected void error(String msg) {
 		System.err.println(msg);
-		// System.exit(-1);
 	}
 
 	private URL readWorkflowURL(String workflowOption) throws OpenDataflowException {
@@ -576,4 +575,5 @@ public class CommandLineTool {
 	public void setWorkflowBundleReader(WorkflowBundleReader workflowBundleReader) {
 		this.workflowBundleReader = workflowBundleReader;
 	}
+
 }
