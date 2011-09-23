@@ -26,9 +26,8 @@ import java.util.Map;
 import net.sf.taverna.t2.commandline.data.SaveResultsHandler;
 import net.sf.taverna.t2.facade.ResultListener;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
-import net.sf.taverna.t2.reference.T2Reference;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 /**
  * A ResultListener that is using for collecting and storing results when running
@@ -38,7 +37,7 @@ import org.apache.log4j.Logger;
  */
 public class CommandLineResultListener implements ResultListener {
 	
-	private static final Logger logger = Logger.getLogger(CommandLineResultListener.class);
+//	private static final Logger logger = Logger.getLogger(CommandLineResultListener.class);
 	
 	private Map<String, WorkflowDataToken> outputMap = new HashMap<String, WorkflowDataToken>();	
 	private Map<String,WorkflowDataToken> finalTokens = new HashMap<String, WorkflowDataToken>();	

@@ -11,6 +11,6 @@
 	</bean>
 
  	<bean id="commandLineMasterPasswordProvider" class="net.sf.taverna.t2.commandline.CommandLineMasterPasswordProvider">
-<!-- 		<constructor-arg name="commandLineArgumentProvider" ref="commandLineArgumentProvider"/> -->
+		<constructor-arg name="commandLineArgumentsService" ref="commandLineArgumentsService"/>
 	</bean>
 </beans>

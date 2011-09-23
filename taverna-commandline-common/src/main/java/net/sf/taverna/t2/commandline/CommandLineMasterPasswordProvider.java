@@ -26,13 +26,16 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+
+import uk.org.taverna.commandline.args.CommandLineArguments;
 //import org.taverna.launcher.environment.CommandLineArgumentProvider;
 
 import net.sf.taverna.t2.commandline.exceptions.CommandLineMasterPasswordException;
-import net.sf.taverna.t2.commandline.options.CommandLineOptions;
 import net.sf.taverna.t2.security.credentialmanager.MasterPasswordProvider;
 
 /**
@@ -46,160 +49,152 @@ import net.sf.taverna.t2.security.credentialmanager.MasterPasswordProvider;
  */
 public class CommandLineMasterPasswordProvider implements MasterPasswordProvider{
 
+	private static final String CREDENTIAL_MANAGER_MASTER_PASSWORD_OPTION = "-cmpassword";
+	private static final String CREDENTIAL_MANAGER_DIRECTORY_OPTION = "-cmdir";
+			
 	private static Logger logger = Logger.getLogger(CommandLineMasterPasswordProvider.class);
 
-	private String masterPassword = "uber";
+	private String masterPassword = null;
 	private int priority = 200;
-	@Override
-	public String getMasterPassword(boolean firstTime) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public void setMasterPassword(String password) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public int getProviderPriority() {
-		// TODO Auto-generated method stub
-		return 0;
+	private List<String> commandLineArgumentsList;
+	
+	private boolean finishedReadingPassword = false;
+
+	public CommandLineMasterPasswordProvider(CommandLineArguments commandLineArgumentsService){
+		this.commandLineArgumentsList = new ArrayList<String>(Arrays.asList(commandLineArgumentsService.getCommandLineArguments()));
 	}
 
-//	private CommandLineArgumentProvider commandLineArgumentProvider;
-//	
-//
-//	public CommandLineMasterPasswordProvider(CommandLineArgumentProvider commandLineArgumentProvider){
-//		this.commandLineArgumentProvider = commandLineArgumentProvider;		
-//	}
-//
-//	@Override
-//	public String getMasterPassword(boolean firstTime) {
-//		if (masterPassword == null){
-//			List<String> passwordList = commandLineArgumentProvider.consumeArgumentOnce("-" + CommandLineOptions.CREDENTIAL_MANAGER_PASSWORD_OPTION, 0, "Indicate that the master password for Credential Manager will be provided on standard input.");
-//			
-//			// -cmpassword option was not present in the command line arguments
-//			if (passwordList == null){
-//				// Try to read the password from a special file located in 
-//				// Credential Manager directory (if the dir was not null)
-//				try {
-//					masterPassword = getCredentialManagerPasswordFromFile();
-//				} catch (CommandLineMasterPasswordException ex) {
-//					masterPassword = null;
-//				}
-//			}
-//			else{
-//				// Try to read the password from stdin (terminal or pipe)
-//				try {
-//					masterPassword = getCredentialManagerPasswordFromStdin();
-//				} catch (CommandLineMasterPasswordException e) {
-//					masterPassword = null;
-//				}
-//			}
-//		}
-//		return masterPassword;
-//	}
-//	
-//	public void setMasterPassword(String masterPassword){
-//		this.masterPassword = masterPassword;
-//	}
-//
-//	@Override
-//	public int getProviderPriority() {
-//		return priority;
-//	}
-//	
-//	private String getCredentialManagerPasswordFromStdin() throws CommandLineMasterPasswordException{
-//		
-//		String password = null;
-//        
-//		Console console = System.console();		
-//
-//		if (console == null) { // password is being piped in, not entered in the terminal by user
-//			BufferedReader buffReader = null;
-//    		try {
-//    			buffReader = new BufferedReader(new InputStreamReader(System.in));
-//    			password = buffReader.readLine();
-//    		} 
-//    		catch (IOException ex) {
-//    			// For some reason the error of the exception thrown 
-//    			// does not get printed from the Launcher so print it here as
-//    			// well as it gives more clue as to what is going wrong.
-//    			logger.error("An error occured while trying to read Credential Manager's password the user piped in: "
-//						+ ex.getMessage(), ex); 
-//    			throw new CommandLineMasterPasswordException(
-//						"An error occured while trying to read Credential Manager's password the user piped in: "
-//								+ ex.getMessage(), ex);
-//				} 
-//    		finally {
-//    			try {
-//    				buffReader.close();
-//    			} catch (Exception ioe1) {
-//    				// Ignore
-//    			}
-//    		}	  
-//		}
-//		else{ // read the password from the terminal as entered by the user
-//			try {
-//				// Block until user enters password
-//				char passwordArray[] = console
-//						.readPassword("Password for Credential Manager: ");
-//				if (passwordArray != null) { // user did not abort input
-//					password = new String(passwordArray);
-//				} // else password will be null
-//
-//			} catch (Exception ex) {
-//    			// For some reason the error of the exception thrown 
-//    			// does not get printed from the Launcher so print it here as
-//    			// well as it gives more clue as to what is going wrong.
-//				logger.error("An error occured while trying to read Credential Manager's password from the terminal: "
-//								+ ex.getMessage(), ex);
-//				throw new CommandLineMasterPasswordException(
-//						"An error occured while trying to read Credential Manager's password from the terminal: "
-//								+ ex.getMessage(), ex);
-//			}
-//		}
-//        return password;
-//	}
-//
-//	private String getCredentialManagerPasswordFromFile() throws CommandLineMasterPasswordException{
-//
-//		List<String> cmDirList = commandLineArgumentProvider.consumeArgumentOnce("-" + CommandLineOptions.CREDENTIAL_MANAGER_DIR_OPTION, 1 ,"Absolute path to a directory where Credential Manager's files (keystore and truststore) are located.");
-//		
-//		String cmDir;
-//		
-//		if (cmDirList == null){
-//			cmDir = null;
-//		}
-//		else{
-//			cmDir = cmDirList.get(0);
-//		}
-//		
-//		if (cmDir == null){
-//			return null;
-//		}
-//		File passwordFile = new File(cmDir, "password.txt");
-//		String password = null;
-//		BufferedReader buffReader = null;
-//		try {
-//			buffReader = new BufferedReader(new FileReader(passwordFile));
-//			password = buffReader.readLine();
-//		} catch (IOException ioe) {
-//			// For some reason the error of the exception thrown 
-//			// does not get printed from the Launcher so print it here as
-//			// well as it gives more clue as to what is going wrong.
-//			logger.error("There was an error reading the Credential Manager password from "
-//					+ passwordFile.toString() + ": " + ioe.getMessage(), ioe); 
-//			throw new CommandLineMasterPasswordException(
-//					"There was an error reading the Credential Manager password from "
-//							+ passwordFile.toString() + ": " + ioe.getMessage(), ioe);
-//		} finally {
-//			try {
-//				buffReader.close();
-//			} catch (Exception ioe1) {
-//				// Ignore
-//			}
-//		}
-//		return password;
-//	}
+	@Override
+	public String getMasterPassword(boolean firstTime) {
+		if (!finishedReadingPassword){						
+			// -cmpassword option was present in the command line arguments
+			if (commandLineArgumentsList.contains(CREDENTIAL_MANAGER_MASTER_PASSWORD_OPTION)){		
+				// Try to read the password from stdin (terminal or pipe)
+				try {
+					masterPassword = getCredentialManagerPasswordFromStdin();
+				} catch (CommandLineMasterPasswordException e) {
+					masterPassword = null;
+				}
+			}
+			// -cmpassword option was not present in the command line arguments
+			// and -cmdir option was there - try to get the master password from 
+			// the "special" password file password.txt inside the Cred. Manager directory.
+			else{
+				if (commandLineArgumentsList.contains(CREDENTIAL_MANAGER_DIRECTORY_OPTION)){
+					// Try to read the password from a special file located in 
+					// Credential Manager directory (if the dir was not null)
+					try {
+						masterPassword = getCredentialManagerPasswordFromFile();
+					} catch (CommandLineMasterPasswordException ex) {
+						masterPassword = null;
+					}					
+				}
+			}
+			finishedReadingPassword = true; // we do not want to attempt to read from stdin several times
+		}
+		return masterPassword;
+	}
+	
+	public void setMasterPassword(String masterPassword){
+		this.masterPassword = masterPassword;
+		finishedReadingPassword = true;
+	}
+
+	@Override
+	public int getProviderPriority() {
+		return priority;
+	}
+	
+	private String getCredentialManagerPasswordFromStdin() throws CommandLineMasterPasswordException{
+		
+		String password = null;
+        
+		Console console = System.console();		
+
+		if (console == null) { // password is being piped in, not entered in the terminal by user
+			BufferedReader buffReader = null;
+    		try {
+    			buffReader = new BufferedReader(new InputStreamReader(System.in));
+    			password = buffReader.readLine();
+    		} 
+    		catch (IOException ex) {
+    			// For some reason the error of the exception thrown 
+    			// does not get printed from the Launcher so print it here as
+    			// well as it gives more clue as to what is going wrong.
+    			logger.error("An error occured while trying to read Credential Manager's password that was piped in: "
+						+ ex.getMessage(), ex); 
+    			throw new CommandLineMasterPasswordException(
+						"An error occured while trying to read Credential Manager's password that was piped in: "
+								+ ex.getMessage(), ex);
+				} 
+    		finally {
+    			try {
+    				buffReader.close();
+    			} catch (Exception ioe1) {
+    				// Ignore
+    			}
+    		}	  
+		}
+		else{ // read the password from the terminal as entered by the user
+			try {
+				// Block until user enters password
+				char passwordArray[] = console
+						.readPassword("Password for Credential Manager: ");
+				if (passwordArray != null) { // user did not abort input
+					password = new String(passwordArray);
+				} // else password will be null
+
+			} catch (Exception ex) {
+    			// For some reason the error of the exception thrown 
+    			// does not get printed from the Launcher so print it here as
+    			// well as it gives more clue as to what is going wrong.
+				logger.error("An error occured while trying to read Credential Manager's password from the terminal: "
+								+ ex.getMessage(), ex);
+				throw new CommandLineMasterPasswordException(
+						"An error occured while trying to read Credential Manager's password from the terminal: "
+								+ ex.getMessage(), ex);
+			}
+		}
+        return password;
+	}
+
+	private String getCredentialManagerPasswordFromFile() throws CommandLineMasterPasswordException{
+		
+		String cmDir = null;
+		
+		if (commandLineArgumentsList.contains(CREDENTIAL_MANAGER_DIRECTORY_OPTION)){
+			// Get the -cmdir option's parameter value - it is one place after the 
+			// option in the arguments array
+			int cmDirIndex = commandLineArgumentsList.indexOf(CREDENTIAL_MANAGER_DIRECTORY_OPTION) + 1;
+			cmDir = commandLineArgumentsList.get(cmDirIndex);
+		}
+		
+		if (cmDir == null){
+			return null;
+		}
+		
+		File passwordFile = new File(cmDir, "password.txt");
+		String password = null;
+		BufferedReader buffReader = null;
+		try {
+			buffReader = new BufferedReader(new FileReader(passwordFile));
+			password = buffReader.readLine();
+		} catch (IOException ioe) {
+			// For some reason the error of the exception thrown 
+			// does not get printed from the Launcher so print it here as
+			// well as it gives more clue as to what is going wrong.
+			logger.error("There was an error reading the Credential Manager password from "
+					+ passwordFile.toString() + ": " + ioe.getMessage(), ioe); 
+			throw new CommandLineMasterPasswordException(
+					"There was an error reading the Credential Manager password from "
+							+ passwordFile.toString() + ": " + ioe.getMessage(), ioe);
+		} finally {
+			try {
+				buffReader.close();
+			} catch (Exception ioe1) {
+				// Ignore
+			}
+		}
+		return password;
+	}
 }
