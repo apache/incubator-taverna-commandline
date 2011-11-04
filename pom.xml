@@ -209,13 +209,16 @@
 			<groupId>uk.org.taverna.scufl2</groupId>
 			<version>${scufl2.version}</version>
 		</dependency>
-
 		<dependency>
-			<groupId>net.sf.taverna.t2.lang</groupId>
+			<groupId>net.sf.taverna.t2</groupId>
 			<artifactId>results</artifactId>
-			<version>${t2.lang.version}</version>
+			<version>${t2.results.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>net.sf.taverna.t2</groupId>
+			<artifactId>baclava</artifactId>
+			<version>${t2.baclava.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>net.sf.taverna.t2.security</groupId>
 			<artifactId>credential-manager</artifactId>
