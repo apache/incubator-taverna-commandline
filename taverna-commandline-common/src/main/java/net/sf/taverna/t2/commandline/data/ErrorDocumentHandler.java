@@ -50,7 +50,13 @@ public class ErrorDocumentHandler {
 	public static String buildErrorDocumentString(ErrorDocument errDocument,
 			InvocationContext context) {
 
+
 		String errDocumentString = "";
+		
+		String message = errDocument.getMessage();
+		if (message != null && !message.isEmpty()) {
+			errDocumentString = message + "\n";
+		}
 
 		String exceptionMessage = errDocument.getExceptionMessage();
 		if (exceptionMessage != null && !exceptionMessage.equals("")) {
@@ -69,7 +75,7 @@ public class ErrorDocumentHandler {
 
 		Set<T2Reference> errorReferences = errDocument.getErrorReferences();
 		if (!errorReferences.isEmpty()) {
-			errDocumentString += "Set of ErrorDocumentS to follow." + "\n";
+			errDocumentString += "Set of ErrorDocuments to follow." + "\n";
 		}
 		int errorCounter = 1;
 		int listCounter = 0;
