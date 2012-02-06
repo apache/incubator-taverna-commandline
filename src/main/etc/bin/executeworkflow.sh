@@ -10,7 +10,7 @@ real_path() {
 }
 
 realprog=`real_path "$prog"`
-taverna_home=`dirname "$realprog"`
+taverna_startup=`dirname "$realprog"`
 javabin=java
 if test -x "$JAVA_HOME/bin/java"; then
     javabin="$JAVA_HOME/bin/java"
@@ -27,6 +27,7 @@ do
 done
 
 vmargs+=-Dtaverna.commandline.args=$i
+vmargs+=" -Dtaverna.app.startup=$taverna_startup/.."
 vmargs+=" -Xmx300m -XX:MaxPermSize=140m"
 
-exec "$javabin" -jar $taverna_home/pax-runner-1.7.0.jar --vmOptions="$vmargs" --cp=$taverna_home/../config --args=file:$taverna_home/../config/runner.args --workingDirectory=$taverna_home/../runner scan-dir:$taverna_home/../lib
+exec "$javabin" -jar $taverna_startup/pax-runner-1.7.0.jar --vmOptions="$vmargs" --cp=$taverna_startup/../config --args=file:$taverna_startup/../config/runner.args --workingDirectory=$taverna_startup/../runner scan-dir:$taverna_startup/../lib

@@ -154,6 +154,18 @@
 		</dependency>
 
 		<dependency>
+			<groupId>uk.org.taverna.osgi.services</groupId>
+			<artifactId>xml-parser-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>uk.org.taverna.osgi.services</groupId>
+			<artifactId>xml-transformer-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
 			<groupId>net.sf.taverna.t2.activities</groupId>
 			<artifactId>all-activities</artifactId>
 			<version>${t2.activities.version}</version>
@@ -195,20 +207,31 @@
 			<version>${scufl2.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>uk.org.taverna.scufl2</groupId>
+			<artifactId>scufl2-rdfxml</artifactId>
+			<version>${scufl2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.taverna.scufl2</groupId>
+			<artifactId>scufl2-t2flow</artifactId>
+			<version>${scufl2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.taverna.scufl2</groupId>
 			<artifactId>scufl2-validation</artifactId>
-			<groupId>uk.org.taverna.scufl2</groupId>
 			<version>${scufl2.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>uk.org.taverna.scufl2</groupId>
 			<artifactId>scufl2-validation-structural</artifactId>
-			<groupId>uk.org.taverna.scufl2</groupId>
 			<version>${scufl2.version}</version>
 		</dependency>
 		<dependency>
-			<artifactId>scufl2-validation-correctness</artifactId>
 			<groupId>uk.org.taverna.scufl2</groupId>
+			<artifactId>scufl2-validation-correctness</artifactId>
 			<version>${scufl2.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>net.sf.taverna.t2</groupId>
 			<artifactId>results</artifactId>
@@ -219,6 +242,7 @@
 			<artifactId>baclava</artifactId>
 			<version>${t2.baclava.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>net.sf.taverna.t2.security</groupId>
 			<artifactId>credential-manager</artifactId>
