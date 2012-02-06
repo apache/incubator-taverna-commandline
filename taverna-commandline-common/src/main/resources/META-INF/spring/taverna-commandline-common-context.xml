@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<bean id="commandLineTool" class="net.sf.taverna.t2.commandline.CommandLineTool" init-method="run">
- 		<property name="commandLineArgumentsService" ref="commandLineArgumentsService" />
- 		<property name="runService" ref="runService" />
+		<property name="commandLineArgumentsService" ref="commandLineArgumentsService" />
+		<property name="runService" ref="runService" />
+		<property name="dataService" ref="dataService" />
 		<property name="credentialManager" ref="credentialManager" />
-		<property name="workflowBundleReader" ref="workflowBundleReader"/>
+		<property name="workflowBundleIO" ref="workflowBundleIO" />
+		<property name="databaseConfiguration" ref="databaseConfiguration" />
+		<property name="databaseManager" ref="databaseManager" />
+		<property name="provenanceConnectorFactories" ref="provenanceConnectorFactories" />
 	</bean>
 
- 	<bean id="commandLineMasterPasswordProvider" class="net.sf.taverna.t2.commandline.CommandLineMasterPasswordProvider">
-		<constructor-arg name="commandLineArgumentsService" ref="commandLineArgumentsService"/>
+	<bean id="commandLineMasterPasswordProvider"
+		class="net.sf.taverna.t2.commandline.CommandLineMasterPasswordProvider">
+		<constructor-arg name="commandLineArgumentsService"
+			ref="commandLineArgumentsService" />
 	</bean>
 </beans>

@@ -1,19 +1,19 @@
 /*******************************************************************************
- * Copyright (C) 2007 The University of Manchester   
- * 
+ * Copyright (C) 2007 The University of Manchester
+ *
  *  Modifications to the initial code base are copyright of their
  *  respective authors, or their employers as appropriate.
- * 
+ *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public License
  *  as published by the Free Software Foundation; either version 2.1 of
  *  the License, or (at your option) any later version.
- *    
+ *
  *  This program is distributed in the hope that it will be useful, but
  *  WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- *    
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
@@ -30,57 +30,59 @@ import javax.naming.NamingException;
 
 import net.sf.taverna.t2.commandline.exceptions.DatabaseConfigurationException;
 import net.sf.taverna.t2.commandline.options.CommandLineOptions;
-//import net.sf.taverna.t2.workbench.reference.config.DataManagementConfiguration;
-//import net.sf.taverna.t2.workbench.reference.config.DataManagementHelper;
 
 import org.apache.log4j.Logger;
 
+import uk.org.taverna.platform.database.DatabaseConfiguration;
+import uk.org.taverna.platform.database.DatabaseManager;
+
 /**
- * Handles the initialisation and configuration of the data source according to 
- * the command line arguments, or a properties file. 
- * This also handles starting a network based instance of a Derby server, if requested. 
- * 
+ * Handles the initialisation and configuration of the data source according to
+ * the command line arguments, or a properties file.
+ * This also handles starting a network based instance of a Derby server, if requested.
+ *
  * @author Stuart Owen
  *
  */
 public class DatabaseConfigurationHandler {
 
-	private final CommandLineOptions options;
-//	private DataManagementConfiguration dbConfig;
 	private static Logger logger = Logger.getLogger(DatabaseConfigurationHandler.class);
+	private final CommandLineOptions options;
+	private final DatabaseConfiguration dbConfig;
+	private final DatabaseManager databaseManager;
 
-	public DatabaseConfigurationHandler(CommandLineOptions options) {
+	public DatabaseConfigurationHandler(CommandLineOptions options, DatabaseConfiguration databaseConfiguration, DatabaseManager databaseManager) {
 		this.options = options;
-//		dbConfig = DataManagementConfiguration.getInstance();
-//		dbConfig.disableAutoSave();
+		this.dbConfig = databaseConfiguration;
+		this.databaseManager = databaseManager;
+		databaseConfiguration.disableAutoSave();
 	}
 
 	public void configureDatabase() throws DatabaseConfigurationException {
 		overrideDefaults();
 		useOptions();
-//		if (dbConfig.getStartInternalDerbyServer()) {
-//			DataManagementHelper.startDerbyNetworkServer();
-//			System.out.println("Started Derby Server on Port: "
-//					+ dbConfig.getCurrentPort());
-//		}
-//		DataManagementHelper.setupDataSource();				
+		if (dbConfig.getStartInternalDerbyServer()) {
+			databaseManager.startDerbyNetworkServer();
+			System.out.println("Started Derby Server on Port: "
+					+ dbConfig.getCurrentPort());
+		}
 	}
 
-//	public DataManagementConfiguration getDBConfig() {
-//		return dbConfig;
-//	}
-	
+	public DatabaseConfiguration getDBConfig() {
+		return dbConfig;
+	}
+
 	private void importConfigurationFromStream(InputStream inStr)
 			throws IOException {
 		Properties p = new Properties();
-		p.load(inStr);		
+		p.load(inStr);
 		for (Object key : p.keySet()) {
-			//dbConfig.setProperty((String)key, p.getProperty((String)key).trim());
+			dbConfig.setProperty((String)key, p.getProperty((String)key).trim());
 		}
 	}
 
 	protected void overrideDefaults() throws DatabaseConfigurationException {
-		
+
 		InputStream inStr = DatabaseConfigurationHandler.class.getClassLoader().getResourceAsStream("database-defaults.properties");
 		try {
 			importConfigurationFromStream(inStr);
@@ -100,7 +102,7 @@ public class DatabaseConfigurationHandler {
 		//try and get a connection
 		Connection con = null;
 		try {
-			//con = DataManagementHelper.openConnection();
+			con = databaseManager.getConnection();
 		} finally {
 			if (con!=null)
 				try {
@@ -110,36 +112,36 @@ public class DatabaseConfigurationHandler {
 				}
 		}
 	}
-	
+
 	public void useOptions() throws DatabaseConfigurationException {
-		
-		if (options.hasOption("port")) {			
-			//dbConfig.setPort(options.getDatabasePort());		
+
+		if (options.hasOption("port")) {
+			dbConfig.setPort(options.getDatabasePort());
 		}
-		
+
 		if (options.hasOption("startdb")) {
-			//dbConfig.setStartInternalDerbyServer(true);
+			dbConfig.setStartInternalDerbyServer(true);
 		}
-		
-		if (options.hasOption("inmemory")) {			
-			//dbConfig.setInMemory(true);		
+
+		if (options.hasOption("inmemory")) {
+			dbConfig.setInMemory(true);
 		}
-		
+
 		if (options.hasOption("embedded")) {
-			//dbConfig.setInMemory(false);
-			//dbConfig.setDriverClassName("org.apache.derby.jdbc.EmbeddedDriver");
+			dbConfig.setInMemory(false);
+			dbConfig.setDriverClassName("org.apache.derby.jdbc.EmbeddedDriver");
 		}
-		
+
 		if (options.isProvenanceEnabled()) {
-			//dbConfig.setProvenanceEnabled(true);
+			dbConfig.setProvenanceEnabled(true);
 		}
-		
+
 		if (options.hasOption("clientserver")) {
-			//dbConfig.setInMemory(false);
-			//dbConfig.setDriverClassName("org.apache.derby.jdbc.ClientDriver");
-			//dbConfig.setJDBCUri("jdbc:derby://localhost:" + dbConfig.getPort() + "/t2-database;create=true;upgrade=true");			
-		}		
-		
+			dbConfig.setInMemory(false);
+			dbConfig.setDriverClassName("org.apache.derby.jdbc.ClientDriver");
+			dbConfig.setJDBCUri("jdbc:derby://localhost:" + dbConfig.getPort() + "/t2-database;create=true;upgrade=true");
+		}
+
 		if (options.hasOption("dbproperties")) {
 			try {
 				readConfigirationFromFile(options.getDatabaseProperties());

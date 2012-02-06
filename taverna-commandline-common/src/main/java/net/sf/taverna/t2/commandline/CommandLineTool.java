@@ -25,21 +25,26 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.naming.NamingException;
+
+import net.sf.taverna.t2.commandline.data.DatabaseConfigurationHandler;
 import net.sf.taverna.t2.commandline.data.InputsHandler;
 import net.sf.taverna.t2.commandline.data.SaveResultsHandler;
 import net.sf.taverna.t2.commandline.exceptions.ArgumentsParsingException;
+import net.sf.taverna.t2.commandline.exceptions.DatabaseConfigurationException;
 import net.sf.taverna.t2.commandline.exceptions.InputMismatchException;
 import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
 import net.sf.taverna.t2.commandline.exceptions.OpenDataflowException;
 import net.sf.taverna.t2.commandline.exceptions.ReadInputException;
 import net.sf.taverna.t2.commandline.options.CommandLineOptions;
-import net.sf.taverna.t2.reference.ReferenceService;
-import net.sf.taverna.t2.reference.T2Reference;
+import net.sf.taverna.t2.provenance.ProvenanceConnectorFactory;
 import net.sf.taverna.t2.security.credentialmanager.CMException;
 import net.sf.taverna.t2.security.credentialmanager.CredentialManager;
 
@@ -51,6 +56,10 @@ import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.RollingFileAppender;
 
 import uk.org.taverna.commandline.args.CommandLineArguments;
+import uk.org.taverna.platform.data.Data;
+import uk.org.taverna.platform.data.DataService;
+import uk.org.taverna.platform.database.DatabaseConfiguration;
+import uk.org.taverna.platform.database.DatabaseManager;
 import uk.org.taverna.platform.execution.api.ExecutionEnvironment;
 import uk.org.taverna.platform.execution.api.InvalidExecutionIdException;
 import uk.org.taverna.platform.execution.api.InvalidWorkflowException;
@@ -64,7 +73,7 @@ import uk.org.taverna.scufl2.api.common.NamedSet;
 import uk.org.taverna.scufl2.api.container.WorkflowBundle;
 import uk.org.taverna.scufl2.api.core.Workflow;
 import uk.org.taverna.scufl2.api.io.ReaderException;
-import uk.org.taverna.scufl2.api.io.WorkflowBundleReader;
+import uk.org.taverna.scufl2.api.io.WorkflowBundleIO;
 import uk.org.taverna.scufl2.api.port.InputWorkflowPort;
 import uk.org.taverna.scufl2.api.port.OutputWorkflowPort;
 import uk.org.taverna.scufl2.validation.ValidationException;
@@ -91,13 +100,19 @@ public class CommandLineTool {
 
 	private CredentialManager credentialManager;
 
-	private ReferenceService referenceService;
+	private DataService dataService;
 
 	private CommandLineOptions commandLineOptions;
 
 	private WorkflowBundle workflowBundle;
 
-	private WorkflowBundleReader workflowBundleReader;
+	private WorkflowBundleIO workflowBundleIO;
+
+	private DatabaseConfiguration databaseConfiguration;
+
+	private DatabaseManager databaseManager;
+
+	private List<ProvenanceConnectorFactory> provenanceConnectorFactories;
 
 	public void run() {
 		try {
@@ -133,6 +148,8 @@ public class CommandLineTool {
 			error("There was an error validating the workflow: " + e.getMessage());
 		} catch (RunProfileException e) {
 			error(e.getMessage());
+		} catch (DatabaseConfigurationException e) {
+			error("There was an error configuring thre database: " + e.getMessage());
 		}
 		System.exit(1);
 	}
@@ -177,10 +194,10 @@ public class CommandLineTool {
 	public int setupAndExecute() throws InputMismatchException, InvalidOptionException,
 			CMException, OpenDataflowException, ReaderException, IOException, ValidationException,
 			ReadInputException, InvalidWorkflowException, RunProfileException,
-			InvalidRunIdException, RunStateException, InvalidExecutionIdException {
+			InvalidRunIdException, RunStateException, InvalidExecutionIdException, DatabaseConfigurationException {
 
 		if (!commandLineOptions.askedForHelp()) {
-			// setupDatabase(commandLineOptions);
+			 setupDatabase(commandLineOptions);
 
 			if (commandLineOptions.getWorkflow() != null) {
 
@@ -208,7 +225,7 @@ public class CommandLineTool {
 
 				// workflowBundle = workflowBundleIO.readBundle(workflowURL, null);
 
-				workflowBundle = workflowBundleReader.readBundle(workflowURL.openStream(), null);
+				workflowBundle = workflowBundleIO.readBundle(workflowURL.openStream(), null);
 				// For testing
 				logger.debug("Read the wf bundle");
 
@@ -236,11 +253,11 @@ public class CommandLineTool {
 				// For testing
 				logger.debug("Got the execution environment");
 
-				referenceService = executionEnvironment.getReferenceService();
-				// For testing
-				logger.debug("Got the reference service");
+//				referenceService = executionEnvironment.getReferenceService();
+//				// For testing
+//				logger.debug("Got the reference service");
 
-				InputsHandler inputsHandler = new InputsHandler(referenceService);
+				InputsHandler inputsHandler = new InputsHandler(dataService);
 				Map<String, InputWorkflowPort> portMap = new HashMap<String, InputWorkflowPort>();
 
 				Workflow workflow = workflowBundle.getMainWorkflow();
@@ -252,7 +269,7 @@ public class CommandLineTool {
 				// For testing
 				logger.debug("Checked inputs");
 
-				Map<String, T2Reference> inputs = inputsHandler.registerInputs(portMap,
+				Map<String, Data> inputs = inputsHandler.registerInputs(portMap,
 						commandLineOptions, null);
 				// For testing
 				logger.debug("Registered inputs");
@@ -267,8 +284,7 @@ public class CommandLineTool {
 
 				WorkflowReport report = runService.getWorkflowReport(runId);
 
-				Map<String, T2Reference> results = runService.getOutputs(runId);
-				// Map<String, T2Reference> results = report.getOutputs();
+				Map<String, Data> results = runService.getOutputs(runId);
 
 				NamedSet<OutputWorkflowPort> workflowOutputPorts = workflowBundle.getMainWorkflow()
 						.getOutputPorts();
@@ -325,7 +341,7 @@ public class CommandLineTool {
 														// output ports
 
 					SaveResultsHandler saveResultsHandler = new SaveResultsHandler(
-							referenceService, outputDir, outputBaclavaDoc, opmFile, janusFile);
+							dataService, outputDir, outputBaclavaDoc, opmFile, janusFile, databaseConfiguration, provenanceConnectorFactories);
 
 					while (!workflowFinished || !allResultsSaved) { // while there are still results
 																	// that have not been saved and
@@ -365,7 +381,7 @@ public class CommandLineTool {
 					}
 
 					if (outputBaclavaDoc != null) {
-						saveResultsHandler.saveOutputBaclavaDocument(results);
+//						saveResultsHandler.saveOutputBaclavaDocument(results);
 					}
 				}
 
@@ -437,33 +453,33 @@ public class CommandLineTool {
 //		resultListener.saveOutputDocument();
 //	}
 
-//	private void setupDatabase(CommandLineOptions options)
-//			throws DatabaseConfigurationException {
-//		DatabaseConfigurationHandler dbHandler = new DatabaseConfigurationHandler(
-//				options);
-//		dbHandler.configureDatabase();
-//		if (!options.isInMemory()) {
-//			try {
-//				dbHandler.testDatabaseConnection();
-//			} catch (NamingException e) {
-//				throw new DatabaseConfigurationException(
-//						"There was an error trying to setup the database datasource: "
-//								+ e.getMessage(), e);
-//			} catch (SQLException e) {
-//				if (options.isClientServer()) {
-//					throw new DatabaseConfigurationException(
-//							"There was an error whilst making a test database connection. If running with -clientserver you should check that a server is running (check -startdb or -dbproperties)",
-//							e);
-//				}
-//				if (options.isEmbedded()) {
-//					throw new DatabaseConfigurationException(
-//							"There was an error whilst making a test database connection. If running with -embedded you should make sure that another process isn't using the database, or a server running through -startdb",
-//							e);
-//				}
-//			}
-//		}
-//
-//	}
+	private void setupDatabase(CommandLineOptions options)
+			throws DatabaseConfigurationException {
+		DatabaseConfigurationHandler dbHandler = new DatabaseConfigurationHandler(
+				options, databaseConfiguration, databaseManager);
+		dbHandler.configureDatabase();
+		if (!options.isInMemory()) {
+			try {
+				dbHandler.testDatabaseConnection();
+			} catch (NamingException e) {
+				throw new DatabaseConfigurationException(
+						"There was an error trying to setup the database datasource: "
+								+ e.getMessage(), e);
+			} catch (SQLException e) {
+				if (options.isClientServer()) {
+					throw new DatabaseConfigurationException(
+							"There was an error whilst making a test database connection. If running with -clientserver you should check that a server is running (check -startdb or -dbproperties)",
+							e);
+				}
+				if (options.isEmbedded()) {
+					throw new DatabaseConfigurationException(
+							"There was an error whilst making a test database connection. If running with -embedded you should make sure that another process isn't using the database, or a server running through -startdb",
+							e);
+				}
+			}
+		}
+
+	}
 
 	private File determineOutputDir(CommandLineOptions options, String dataflowName) {
 		File result = null;
@@ -568,12 +584,44 @@ public class CommandLineTool {
 		this.credentialManager = credentialManager;
 	}
 
-//	public void setWorkflowBundleIO(WorkflowBundleIO workflowBundleIO){
-//		this.workflowBundleIO = workflowBundleIO;
-//	}
+	public void setWorkflowBundleIO(WorkflowBundleIO workflowBundleIO) {
+		this.workflowBundleIO = workflowBundleIO;
+	}
 
-	public void setWorkflowBundleReader(WorkflowBundleReader workflowBundleReader) {
-		this.workflowBundleReader = workflowBundleReader;
+	/**
+	 * Sets the databaseConfiguration.
+	 *
+	 * @param databaseConfiguration the new value of databaseConfiguration
+	 */
+	public void setDatabaseConfiguration(DatabaseConfiguration databaseConfiguration) {
+		this.databaseConfiguration = databaseConfiguration;
+	}
+
+	/**
+	 * Sets the dataService.
+	 *
+	 * @param dataService the new value of dataService
+	 */
+	public void setDataService(DataService dataService) {
+		this.dataService = dataService;
+	}
+
+	/**
+	 * Sets the provenanceConnectorFactories.
+	 *
+	 * @param provenanceConnectorFactories the new value of provenanceConnectorFactories
+	 */
+	public void setProvenanceConnectorFactories(List<ProvenanceConnectorFactory> provenanceConnectorFactories) {
+		this.provenanceConnectorFactories = provenanceConnectorFactories;
+	}
+
+	/**
+	 * Sets the databaseManager.
+	 *
+	 * @param databaseManager the new value of databaseManager
+	 */
+	public void setDatabaseManager(DatabaseManager databaseManager) {
+		this.databaseManager = databaseManager;
 	}
 
 }
