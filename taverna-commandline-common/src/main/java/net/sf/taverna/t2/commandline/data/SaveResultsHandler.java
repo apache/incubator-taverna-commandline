@@ -38,9 +38,9 @@ import net.sf.taverna.t2.reference.ErrorDocument;
 
 import org.apache.log4j.Logger;
 
+import uk.org.taverna.configuration.database.DatabaseConfiguration;
 import uk.org.taverna.platform.data.Data;
 import uk.org.taverna.platform.data.DataService;
-import uk.org.taverna.platform.database.DatabaseConfiguration;
 
 /**
  * Handles all recording of results as they are received by the {@link CommandLineResultListener}

@@ -56,10 +56,10 @@ import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.RollingFileAppender;
 
 import uk.org.taverna.commandline.args.CommandLineArguments;
+import uk.org.taverna.configuration.database.DatabaseConfiguration;
+import uk.org.taverna.configuration.database.DatabaseManager;
 import uk.org.taverna.platform.data.Data;
 import uk.org.taverna.platform.data.DataService;
-import uk.org.taverna.platform.database.DatabaseConfiguration;
-import uk.org.taverna.platform.database.DatabaseManager;
 import uk.org.taverna.platform.execution.api.ExecutionEnvironment;
 import uk.org.taverna.platform.execution.api.InvalidExecutionIdException;
 import uk.org.taverna.platform.execution.api.InvalidWorkflowException;

@@ -13,8 +13,8 @@
     <reference id="runService" interface="uk.org.taverna.platform.run.api.RunService"/>
 	<reference id="dataService" interface="uk.org.taverna.platform.data.DataService" />
 	<reference id="credentialManager" interface="net.sf.taverna.t2.security.credentialmanager.CredentialManager" />
-	<reference id="databaseConfiguration" interface="uk.org.taverna.platform.database.DatabaseConfiguration" />
-	<reference id="databaseManager" interface="uk.org.taverna.platform.database.DatabaseManager" />
+	<reference id="databaseConfiguration" interface="uk.org.taverna.configuration.database.DatabaseConfiguration" />
+	<reference id="databaseManager" interface="uk.org.taverna.configuration.database.DatabaseManager" />
 
 	<reference id="workflowBundleIO" interface="uk.org.taverna.scufl2.api.io.WorkflowBundleIO" />
 	<reference id="t2flowWorkflowBundleReader" interface="uk.org.taverna.scufl2.api.io.WorkflowBundleReader" filter="(mediaType=application/vnd.taverna.t2flow+xml)"/>

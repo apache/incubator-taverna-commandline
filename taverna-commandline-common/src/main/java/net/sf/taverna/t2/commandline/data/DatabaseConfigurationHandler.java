@@ -33,8 +33,8 @@ import net.sf.taverna.t2.commandline.options.CommandLineOptions;
 
 import org.apache.log4j.Logger;
 
-import uk.org.taverna.platform.database.DatabaseConfiguration;
-import uk.org.taverna.platform.database.DatabaseManager;
+import uk.org.taverna.configuration.database.DatabaseConfiguration;
+import uk.org.taverna.configuration.database.DatabaseManager;
 
 /**
  * Handles the initialisation and configuration of the data source according to
