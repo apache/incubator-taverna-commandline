@@ -4,3 +4,4 @@
 --noConsole
 --log=ERROR
 --nologo=true
+--bootDelegation=sun.*,com.sun.*
