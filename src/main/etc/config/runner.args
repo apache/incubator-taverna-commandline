@@ -1,7 +1,0 @@
---platform=equinox
---profile=spring-dm
---noDownloadFeedback
---noConsole
---log=ERROR
---nologo=true
---bootDelegation=sun.*,com.sun.*
