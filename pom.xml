@@ -9,18 +9,21 @@
 	</parent>
 	<groupId>net.sf.taverna.t2</groupId>
 	<artifactId>taverna-commandline</artifactId>
-	<version>3.0-SNAPSHOT</version>
+	<version>3.0.0-SNAPSHOT</version>
 	<name>Taverna command line utility</name>
 	<packaging>pom</packaging>
 
 	<properties>
-		<platform.version>0.1.1-SNAPSHOT</platform.version>
-		<scufl2.version>0.9-SNAPSHOT</scufl2.version>
+		<platform.version>0.1.2-SNAPSHOT</platform.version>
 	</properties>
 
-
 	<dependencies>
-		<!-- Spring OSGI framework -->
+		<!-- Spring DM -->
+		<dependency>
+			<groupId>net.sourceforge.cglib</groupId>
+			<artifactId>com.springsource.net.sf.cglib</artifactId>
+			<version>2.1.3</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.osgi</groupId>
 			<artifactId>spring-osgi-annotation</artifactId>
@@ -28,14 +31,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.osgi</groupId>
-			<artifactId>spring-osgi-core</artifactId>
-			<version>${spring.dm.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.osgi</groupId>
 			<artifactId>spring-osgi-extender</artifactId>
 			<version>${spring.dm.version}</version>
 		</dependency>
+		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>org.springframework.aop</artifactId>
@@ -77,28 +76,11 @@
 			<version>${spring.version}</version>
 		</dependency>
 
-		<!-- Pax Runner -->
-		<dependency>
-			<groupId>org.ops4j.pax.runner</groupId>
-			<artifactId>pax-runner</artifactId>
-			<version>1.7.0</version>
-		</dependency>
-
-		<!-- OSGi framework -->
-		<dependency>
-			<groupId>org.eclipse</groupId>
-			<artifactId>osgi</artifactId>
-			<version>3.4.2.v20080826-1230</version>
-		</dependency>
+		<!-- OSGi Framework implementation -->
 		<dependency>
 			<groupId>org.eclipse.osgi</groupId>
-			<artifactId>util</artifactId>
-			<version>3.1.300.v20080303</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.osgi</groupId>
-			<artifactId>services</artifactId>
-			<version>3.1.200.v20070605</version>
+			<artifactId>org.eclipse.osgi</artifactId>
+			<version>3.6.0.v20100517</version>
 		</dependency>
 
 		<!-- Java Extension Implementations -->
@@ -115,7 +97,7 @@
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>com.springsource.javax.mail</artifactId>
-			<version>1.4.0</version>
+			<version>${mail.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -145,7 +127,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>com.springsource.org.apache.commons.codec</artifactId>
-			<version>1.4.0</version>
+			<version>${commons.codec.version}</version>
 		</dependency>
 
 		<!-- OSGi Enterprise Services -->
@@ -175,14 +157,34 @@
 		</dependency>
 		<dependency>
 			<groupId>uk.org.taverna.commandline</groupId>
-			<artifactId>arguments-system-properties</artifactId>
-			<version>0.1-SNAPSHOT</version>
+			<artifactId>taverna-command-line</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<!-- Taverna Platform -->
 		<dependency>
 			<groupId>uk.org.taverna.platform</groupId>
-			<artifactId>execution-local</artifactId>
+			<artifactId>taverna-capability-impl</artifactId>
+			<version>${platform.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.taverna.platform</groupId>
+			<artifactId>taverna-data-impl</artifactId>
+			<version>${platform.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.taverna.platform</groupId>
+			<artifactId>taverna-run-impl</artifactId>
+			<version>${platform.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.taverna.platform</groupId>
+			<artifactId>taverna-execution-impl</artifactId>
+			<version>${platform.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.taverna.platform</groupId>
+			<artifactId>taverna-execution-local</artifactId>
 			<version>${platform.version}</version>
 		</dependency>
 
@@ -212,21 +214,6 @@
 		<dependency>
 			<groupId>uk.org.taverna.scufl2</groupId>
 			<artifactId>scufl2-t2flow</artifactId>
-			<version>${scufl2.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>uk.org.taverna.scufl2</groupId>
-			<artifactId>scufl2-validation</artifactId>
-			<version>${scufl2.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>uk.org.taverna.scufl2</groupId>
-			<artifactId>scufl2-validation-structural</artifactId>
-			<version>${scufl2.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>uk.org.taverna.scufl2</groupId>
-			<artifactId>scufl2-validation-correctness</artifactId>
 			<version>${scufl2.version}</version>
 		</dependency>
 

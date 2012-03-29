@@ -12,38 +12,31 @@
 	<dependencySets>
 	  <dependencySet>
 	    <useTransitiveDependencies>true</useTransitiveDependencies>
-	    <outputDirectory>/lib</outputDirectory>
-	    <includes>
-	      <include>*:*</include>
-	      <include>org.eclipse.osgi:org.eclipse.equinox.cm</include>
-	    </includes>
+	    <outputDirectory>/bundles</outputDirectory>
 	    <excludes>
 	      <exclude>net.sf.taverna.t2.activities:all-activities</exclude>
-	      <exclude>org.eclipse:*</exclude>
+	      <exclude>uk.org.taverna.commandline:taverna-command-line</exclude>
+	      <exclude>uk.org.taverna:osgi-starter</exclude>
+	      <exclude>uk.org.taverna.commandline:arguments</exclude>
 	      <exclude>org.eclipse.osgi:org.eclipse.osgi</exclude>
-	      <exclude>org.eclipse.osgi:org.eclipse.osgi.services</exclude>
-	      <exclude>org.eclipse.osgi:services</exclude>
-	      <exclude>org.eclipse.osgi:util</exclude>
-	      <exclude>org.ops4j.pax.runner:*</exclude>
 	    </excludes>
 	  </dependencySet>
 	  <dependencySet>
-	    <outputDirectory>/bin</outputDirectory>
+	    <outputDirectory>/lib</outputDirectory>
 	    <includes>
-	      <include>org.ops4j.pax.runner:*</include>
+	      <include>uk.org.taverna.commandline:taverna-command-line</include>
+	      <include>uk.org.taverna:osgi-starter</include>
+	      <include>net.sf.taverna.t2.taverna-commandline:taverna-commandline-common</include>
+	      <include>org.apache.commons:com.springsource.org.apache.commons.cli</include>
+	      <include>org.apache.log4j:com.springsource.org.apache.log4j</include>
+	      <include>uk.org.taverna.commandline:arguments</include>
+	      <include>uk.org.taverna.configuration:taverna-app-configuration-api</include>
+	      <include>uk.org.taverna.configuration:taverna-app-configuration-impl</include>
+	      <include>org.osgi:org.osgi.core</include>
+	      <include>org.eclipse.osgi:org.eclipse.osgi</include>
 	    </includes>
 	  </dependencySet>
 	</dependencySets>
-
-	<repositories>
-	  <repository>
-	    <outputDirectory>equinox</outputDirectory>
-	    <includes>
-	      <include>org.eclipse:*</include>
-	      <include>org.eclipse.osgi:*</include>
-	    </includes>
-	  </repository>
-	</repositories>
 
 	<fileSets>
 	  <fileSet>
