@@ -58,8 +58,8 @@ import org.apache.log4j.RollingFileAppender;
 import uk.org.taverna.commandline.args.CommandLineArguments;
 import uk.org.taverna.configuration.database.DatabaseConfiguration;
 import uk.org.taverna.configuration.database.DatabaseManager;
-import uk.org.taverna.platform.data.Data;
-import uk.org.taverna.platform.data.DataService;
+import uk.org.taverna.platform.data.api.Data;
+import uk.org.taverna.platform.data.api.DataService;
 import uk.org.taverna.platform.execution.api.ExecutionEnvironment;
 import uk.org.taverna.platform.execution.api.InvalidExecutionIdException;
 import uk.org.taverna.platform.execution.api.InvalidWorkflowException;
@@ -118,7 +118,7 @@ public class CommandLineTool {
 		try {
 			String[] args = commandLineArgumentsService.getCommandLineArguments();
 			commandLineOptions = new CommandLineOptions(args);
-			initialiseLogging();
+//			initialiseLogging();
 			int result = setupAndExecute();
 			System.exit(result);
 		} catch (ArgumentsParsingException e) { // thrown by CommandLineOptions
@@ -381,7 +381,7 @@ public class CommandLineTool {
 					}
 
 					if (outputBaclavaDoc != null) {
-//						saveResultsHandler.saveOutputBaclavaDocument(results);
+						saveResultsHandler.saveOutputBaclavaDocument(results);
 					}
 				}
 
