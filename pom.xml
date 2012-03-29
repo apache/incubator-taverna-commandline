@@ -32,7 +32,7 @@
 			<version>${t2.taverna-commandline.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>uk.org.taverna</groupId>
+			<groupId>uk.org.taverna.osgi</groupId>
 			<artifactId>osgi-launcher</artifactId>
 			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
