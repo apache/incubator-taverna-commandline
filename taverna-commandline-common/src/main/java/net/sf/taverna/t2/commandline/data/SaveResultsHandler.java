@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sf.taverna.t2.commandline.CommandLineResultListener;
+import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
 import net.sf.taverna.t2.provenance.ProvenanceConnectorFactory;
 import net.sf.taverna.t2.reference.ErrorDocument;
@@ -39,8 +40,8 @@ import net.sf.taverna.t2.reference.ErrorDocument;
 import org.apache.log4j.Logger;
 
 import uk.org.taverna.configuration.database.DatabaseConfiguration;
-import uk.org.taverna.platform.data.Data;
-import uk.org.taverna.platform.data.DataService;
+import uk.org.taverna.platform.data.api.Data;
+import uk.org.taverna.platform.data.api.DataService;
 
 /**
  * Handles all recording of results as they are received by the {@link CommandLineResultListener}
@@ -130,24 +131,20 @@ public class SaveResultsHandler {
 //		}
 //	}
 
-//	public void saveOutputBaclavaDocument(Map<String,T2Reference> allResults) throws IOException {
-//
-//		if (outputBaclavaDocumentFile != null) {
-//
-//			if (outputBaclavaDocumentFile.getParentFile().exists()){
-//				outputBaclavaDocumentFile.getParentFile().mkdirs();
-//			}
-//
-//			BaclavaDocumentHandler handler = new BaclavaDocumentHandler();
-//			InvocationContext context = null;
-//			handler.setChosenReferences(allResults);
-//
-//			handler.setInvocationContext(context);
-//			handler.setReferenceService(referenceService);
-//
-//			handler.saveData(outputBaclavaDocumentFile);
-//		}
-//	}
+	public void saveOutputBaclavaDocument(Map<String, Data> allResults) throws IOException {
+
+		if (outputBaclavaDocumentFile != null) {
+
+			if (outputBaclavaDocumentFile.getParentFile().exists()){
+				outputBaclavaDocumentFile.getParentFile().mkdirs();
+			}
+
+			BaclavaDocumentHandler handler = new BaclavaDocumentHandler();
+			handler.setChosenReferences(allResults);
+
+			handler.saveData(outputBaclavaDocumentFile);
+		}
+	}
 
 //	protected void storeToken(WorkflowDataToken token, String portName) {
 //
@@ -185,35 +182,11 @@ public class SaveResultsHandler {
 //	}
 
 	/**
-	 * Given the T2Reference to the data on an output port, saves the data on a disk in the
+	 * Given the Data on an output port, saves the data on a disk in the
 	 * output directory.
 	 * @param workflowOutputPortName
 	 * @param data
 	 */
-//	public void saveResultsForPort(String workflowOutputPortName, T2Reference t2Reference) {
-//
-//		if (t2Reference.getReferenceType() == T2ReferenceType.IdentifiedList) {
-//			saveList(t2Reference, workflowOutputPortName);
-//		} else {
-//			File dataDirectory = rootOutputDirectory;
-//			File dataFile = null;
-//
-//			dataFile = new File(dataDirectory, workflowOutputPortName);
-//
-//			if (!dataDirectory.exists()) {
-//				dataDirectory.mkdirs();
-//			}
-//
-//			if (dataFile.exists()) {
-//				System.err.println("There is already data saved to: "
-//						+ dataFile.getAbsolutePath());
-//				//System.exit(-1);
-//			}
-//
-//			saveIndividualDataFile(t2Reference, dataFile);
-//		}
-//	}
-
 	public void saveResultsForPort(String workflowOutputPortName, Data data) {
 
 		if (data.getDepth() > 0) {
@@ -238,36 +211,11 @@ public class SaveResultsHandler {
 		}
 	}
 
-//	private void saveList(T2Reference t2Reference, String portName) {
-//
-//		File dataDirectory = new File(rootOutputDirectory, portName);
-//		IdentifiedList<T2Reference> list = referenceService.getListService().getList(t2Reference);
-//		saveListItems(list, dataDirectory);
-//	}
-
 	private void saveList(Data data, String portName) {
 		File dataDirectory = new File(rootOutputDirectory, portName);
 		List<Data> list = data.getElements();
 		saveListItems(list, dataDirectory);
 	}
-
-//	private void saveListItems(IdentifiedList<T2Reference> list, File dataDirectory) {
-//		int c = 0;
-//		if (!dataDirectory.exists()) {
-//			dataDirectory.mkdirs();
-//		}
-//		for (T2Reference id : list) {
-//			File dataFile = new File(dataDirectory, String.valueOf(c+1));
-//			if (id.getReferenceType() ==  T2ReferenceType.IdentifiedList) {
-//				IdentifiedList<T2Reference> innerList = referenceService.getListService().getList(id);
-//				saveListItems(innerList, dataFile);
-//			}
-//			else {
-//				saveIndividualDataFile(id, dataFile);
-//			}
-//			c++;
-//		}
-//	}
 
 	private void saveListItems(List<Data> list, File dataDirectory) {
 		int c = 0;
@@ -286,91 +234,6 @@ public class SaveResultsHandler {
 			c++;
 		}
 	}
-
-//	protected void saveIndividualDataFile(T2Reference reference, File dataFile) {
-//
-//		if (dataFile.exists()) {
-//			System.err.println("There is already data saved to: "
-//					+ dataFile.getAbsolutePath());
-//			//System.exit(-1);
-//		}
-//
-//		Object data = null;
-//		InputStream stream = null;
-//		try {
-//			if (reference.containsErrors()) {
-//				ErrorDocument errorDoc = referenceService
-//						.getErrorDocumentService().getError(reference);
-//				data = ErrorDocumentHandler.buildErrorDocumentString(errorDoc,
-//						null);
-//				dataFile = new File(dataFile.getAbsolutePath() + ".error");
-//			} else {
-//				// FIXME: this really should be done using a stream rather
-//				// than an instance of the object in memory
-//				Identified identified = referenceService.resolveIdentifier(
-//						reference, null, null);
-//				ReferenceSet referenceSet = (ReferenceSet) identified;
-//
-//				if (referenceSet.getExternalReferences().isEmpty()) {
-//					data = referenceService.renderIdentifier(reference,
-//							Object.class, null);
-//				} else {
-//					ExternalReferenceSPI externalReference = referenceSet
-//							.getExternalReferences().iterator().next();
-//					stream = externalReference.openStream(null);
-//					data = stream;
-//				}
-//			}
-//
-//			FileOutputStream fos = null;
-//			try {
-//				fos = new FileOutputStream(dataFile);
-//				if (data instanceof InputStream) {
-//					byte[] bytes = new byte[500000];
-//					int readBytes = 0 ;
-//					while ((readBytes = ((InputStream) data).read(bytes)) != -1) {
-//						fos.write(bytes, 0, readBytes);
-//					}
-//					stream.close();
-//					fos.flush();
-//				} else if (data instanceof byte[]) {
-//					fos.write((byte[]) data);
-//					fos.flush();
-//				} else {
-//					PrintWriter out = new PrintWriter(new OutputStreamWriter(
-//							fos));
-//					out.print(data.toString());
-//					out.flush();
-//					out.close();
-//				}
-//			} catch (FileNotFoundException e) {
-//				logger.error(
-//						"Unable to find the file: '"
-//								+ dataFile.getAbsolutePath()
-//								+ "' for writing results", e);
-//			} catch (IOException e) {
-//				logger.error(
-//						"IO Error writing resuts to: '"
-//								+ dataFile.getAbsolutePath(), e);
-//			} finally {
-//				if (fos != null) {
-//					try {
-//						fos.close();
-//					} catch (IOException e) {
-//						logger.error("Cannot close file output stream", e);
-//					}
-//				}
-//			}
-//		} finally {
-//			if (stream != null) {
-//				try {
-//					stream.close();
-//				} catch (IOException e) {
-//					logger.error("Cannot close stream from reference", e);
-//				}
-//			}
-//		}
-//	}
 
 	protected void saveIndividualDataFile(Data reference, File dataFile) {
 
