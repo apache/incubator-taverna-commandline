@@ -36,15 +36,14 @@ import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
 import net.sf.taverna.t2.commandline.exceptions.ReadInputException;
 import net.sf.taverna.t2.commandline.options.CommandLineOptions;
 import net.sf.taverna.t2.invocation.InvocationContext;
-import net.sf.taverna.t2.results.BaclavaDocumentHandler;
 import net.sf.taverna.t2.baclava.DataThing;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.jdom.JDOMException;
 
-import uk.org.taverna.platform.data.Data;
-import uk.org.taverna.platform.data.DataService;
+import uk.org.taverna.platform.data.api.Data;
+import uk.org.taverna.platform.data.api.DataService;
 import uk.org.taverna.scufl2.api.port.InputWorkflowPort;
 
 /**
