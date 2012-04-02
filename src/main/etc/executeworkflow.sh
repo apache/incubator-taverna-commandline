@@ -21,5 +21,5 @@ exec "$javabin" -Xmx300m -XX:MaxPermSize=140m \
   "-Dlog4j.configuration=file://$taverna_home/conf/log4j.properties " \
   "-Djava.util.logging.config.file=$taverna_home/conf/logging.properties " \
   "-Dtaverna.app.startup=$taverna_home" \
-  -jar "$taverna_home/lib/taverna-command-line-0.0.1-SNAPSHOT.jar" \
+  -jar "$taverna_home/lib/taverna-command-line-0.1.0-SNAPSHOT.jar" \
   ${1+"$@"}
