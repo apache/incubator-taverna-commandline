@@ -16,7 +16,7 @@
 	    <excludes>
 	      <exclude>net.sf.taverna.t2.activities:all-activities</exclude>
 	      <exclude>uk.org.taverna.commandline:taverna-command-line</exclude>
-	      <exclude>uk.org.taverna:osgi-starter</exclude>
+	      <exclude>uk.org.taverna.osgi:osgi-launcher</exclude>
 	      <exclude>uk.org.taverna.commandline:arguments</exclude>
 	      <exclude>org.eclipse.osgi:org.eclipse.osgi</exclude>
 	    </excludes>
@@ -25,7 +25,7 @@
 	    <outputDirectory>/lib</outputDirectory>
 	    <includes>
 	      <include>uk.org.taverna.commandline:taverna-command-line</include>
-	      <include>uk.org.taverna:osgi-starter</include>
+	      <include>uk.org.taverna.osgi:osgi-launcher</include>
 	      <include>net.sf.taverna.t2.taverna-commandline:taverna-commandline-common</include>
 	      <include>org.apache.commons:com.springsource.org.apache.commons.cli</include>
 	      <include>org.apache.log4j:com.springsource.org.apache.log4j</include>
