@@ -32,7 +32,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.sf.taverna.t2.commandline.CommandLineResultListener;
-import net.sf.taverna.t2.invocation.InvocationContext;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
 import net.sf.taverna.t2.provenance.ProvenanceConnectorFactory;
 import net.sf.taverna.t2.reference.ErrorDocument;
@@ -61,12 +60,12 @@ public class SaveResultsHandler {
 	private final File rootOutputDirectory;
 	private static Logger logger = Logger
 			.getLogger(CommandLineResultListener.class);
-	private final File outputBaclavaDocumentFile;
+	private final File baclavaFile;
 	private final File janusFile;
 	private final File opmFile;
 	private final DataService dataService;
 	private final DatabaseConfiguration dbConfig;
-	//private ProvenanceExporter provExport;
+//	private ProvenanceExporter provExport;
 	private List<ProvenanceConnectorFactory> provenanceConnectorFactories;
 
 //	public SaveResultsHandler(Map<String, Integer> portsAndDepth,
@@ -88,7 +87,7 @@ public class SaveResultsHandler {
 			File janusFile, DatabaseConfiguration databaseConfiguration, List<ProvenanceConnectorFactory> provenanceConnectorFactories) {
 		this.dataService = dataService;
 		this.rootOutputDirectory = rootOutputDir;
-		this.outputBaclavaDocumentFile = outputBaclavaDocumentFile;
+		this.baclavaFile = outputBaclavaDocumentFile;
 		this.janusFile = janusFile;
 		this.opmFile = opmFile;
 		dbConfig = databaseConfiguration;
@@ -114,35 +113,14 @@ public class SaveResultsHandler {
 		}
 	}
 
-//	public void saveOutputBaclavaDocument(Map<String,WorkflowDataToken> allResults) throws Exception {
-//		if (outputBaclavaDocumentFile!=null) {
-//			BaclavaDocumentHandler handler = new BaclavaDocumentHandler();
-//			InvocationContext context = null;
-//			Map<String,T2Reference> references = new HashMap<String, T2Reference>();
-//			//fetch the references from the tokens, and pick up the context on the way
-//			for (String portname : allResults.keySet()) {
-//				WorkflowDataToken token = allResults.get(portname);
-//				if (context==null) {
-//					context=token.getContext();
-//				}
-//				references.put(portname, token.getData());
-//			}
-//			saveOutputBaclavaDocument(references);
-//		}
-//	}
-
 	public void saveOutputBaclavaDocument(Map<String, Data> allResults) throws IOException {
-
-		if (outputBaclavaDocumentFile != null) {
-
-			if (outputBaclavaDocumentFile.getParentFile().exists()){
-				outputBaclavaDocumentFile.getParentFile().mkdirs();
+		if (baclavaFile != null) {
+			if (baclavaFile.getParentFile() != null){
+				baclavaFile.getParentFile().mkdirs();
 			}
-
 			BaclavaDocumentHandler handler = new BaclavaDocumentHandler();
 			handler.setChosenReferences(allResults);
-
-			handler.saveData(outputBaclavaDocumentFile);
+			handler.saveData(baclavaFile);
 		}
 	}
 
@@ -188,7 +166,6 @@ public class SaveResultsHandler {
 	 * @param data
 	 */
 	public void saveResultsForPort(String workflowOutputPortName, Data data) {
-
 		if (data.getDepth() > 0) {
 			saveList(data, workflowOutputPortName);
 		} else {
@@ -236,7 +213,6 @@ public class SaveResultsHandler {
 	}
 
 	protected void saveIndividualDataFile(Data reference, File dataFile) {
-
 		if (dataFile.exists()) {
 			System.err.println("There is already data saved to: "
 					+ dataFile.getAbsolutePath());
