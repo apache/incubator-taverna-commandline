@@ -12,7 +12,6 @@ import java.util.Map;
 import net.sf.taverna.t2.baclava.DataThing;
 import net.sf.taverna.t2.baclava.factory.DataThingFactory;
 import net.sf.taverna.t2.baclava.factory.DataThingXMLFactory;
-import net.sf.taverna.t2.reference.ErrorDocument;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -23,6 +22,7 @@ import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 import uk.org.taverna.platform.data.api.Data;
+import uk.org.taverna.platform.data.api.ErrorValue;
 
 /**
  * Handles the loading and saving of T2Reference data as Baclava documents
@@ -106,7 +106,7 @@ public class BaclavaDocumentHandler {
 			}
 			return objectList;
 		} else if (data.isError()) {
-			return ErrorDocumentHandler.buildErrorDocumentString((ErrorDocument) data.getValue(), null);
+			return ErrorValueHandler.buildErrorValueString((ErrorValue) data.getValue());
 		} else {
 			return data.getValue();
 		}

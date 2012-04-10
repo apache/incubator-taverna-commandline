@@ -34,13 +34,13 @@ import java.util.Map;
 import net.sf.taverna.t2.commandline.CommandLineResultListener;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
 import net.sf.taverna.t2.provenance.ProvenanceConnectorFactory;
-import net.sf.taverna.t2.reference.ErrorDocument;
 
 import org.apache.log4j.Logger;
 
 import uk.org.taverna.configuration.database.DatabaseConfiguration;
 import uk.org.taverna.platform.data.api.Data;
 import uk.org.taverna.platform.data.api.DataService;
+import uk.org.taverna.platform.data.api.ErrorValue;
 
 /**
  * Handles all recording of results as they are received by the {@link CommandLineResultListener}
@@ -221,8 +221,7 @@ public class SaveResultsHandler {
 
 		Object value = null;
 		if (reference.isError()) {
-			value = ErrorDocumentHandler.buildErrorDocumentString((ErrorDocument) reference.getValue(),
-					null);
+			value = ErrorValueHandler.buildErrorValueString((ErrorValue) reference.getValue());
 			dataFile = new File(dataFile.getAbsolutePath() + ".error");
 		} else {
 			value = reference.getValue();
