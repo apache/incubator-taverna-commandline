@@ -1,5 +1,5 @@
 ===============================
-Taverna command line tool 2.3.0
+Taverna command line tool 2.4.0
 ===============================
 http://www.taverna.org.uk/
 http://www.mygrid.org.uk/
@@ -32,8 +32,8 @@ http://www.taverna.org.uk/documentation/taverna-2-x/command-line-tool/
 and http://www.mygrid.org.uk/dev/wiki/display/taverna23/Command+Line+Tool
 will explain how to use the command line tool.
 
-See http://www.mygrid.org.uk/dev/wiki/display/taverna23/User+Manual for the
-Taverna 2.3 user manual.
+See http://www.mygrid.org.uk/dev/wiki/display/taverna/User+Manual for the
+Taverna 2.4 user manual.
 
 See the file "known-issues.txt" for known issues with this release, and the file
 "release-notes.txt" for improvements since the previous version of Taverna.
@@ -99,7 +99,7 @@ usage: executeworkflow [options] [workflow]
 
 For example:
 
-$ taverna-commandline-2.3.0/executeworkflow.sh Retrieve_sequence_in_EMBL_format.t2flow
+$ taverna-commandline-2.4.0/executeworkflow.sh Retrieve_sequence_in_EMBL_format.t2flow
 Outputs will be saved to the directory:
 /home/stain/Desktop/Retrieve_sequence_in_EMBL_format_output
 
@@ -122,8 +122,8 @@ http://www.myexperiment.org/workflows/1004/download/retrieve_sequence_in_embl_fo
    
 Examples
 ========
-Example Taverna 2.3 workflows can be found in the myExperiment starter pack at
-http://www.myexperiment.org/packs/192
+Example Taverna 2.4 workflows can be found in the myExperiment starter pack at
+http://www.myexperiment.org/packs/254
 
 You can share and find other workflows at http://www.myexperiment.org/
 
@@ -228,10 +228,7 @@ you will have to install the policy files again in the appropriate directory of
 your new Java installation.
 
 For Java 6, you can download the unlimited cryptography policy jar files from:
-  http://tinyurl.com/java6sec    -or-
-  https://cds.sun.com/is-bin/INTERSHOP.enfinity/WFS/CDS-CDS_Developer-Site/en_US/-/USD/ViewProductDetail-Start?ProductRef=jce_policy-6-oth-JPR@CDS-CDS_Developer
-
-
+http://www.oracle.com/technetwork/java/javase/downloads/index.html
 
 Advanced
 ========
@@ -246,13 +243,13 @@ Advanced->Show Log Folder in the menu.
 See:
 
     Windows XP: C:\Documents and settings\JohnDoe\
-                   Application Data\taverna-cmd-2.3.0\logs
+                   Application Data\taverna-cmd-2.4.0\logs
 
-    Vista/Windows 7: C:\Users\JohnDoe\AppData\Roaming\taverna-cmd-2.3.0\logs
+    Vista/Windows 7: C:\Users\JohnDoe\AppData\Roaming\taverna-cmd-2.4.0\logs
 
-    OS X: /Users/JohnDoe/Library/Application support/taverna-cmd-2.3.0/logs
+    OS X: /Users/JohnDoe/Library/Application support/taverna-cmd-2.4.0/logs
 
-    Linux: /home/johndoe/.taverna-cmd-2.3.0/logs
+    Linux: /home/johndoe/.taverna-cmd-2.4.0/logs
 
 Note that "Application data" and "AppData" are hidden folders in Windows.
 
