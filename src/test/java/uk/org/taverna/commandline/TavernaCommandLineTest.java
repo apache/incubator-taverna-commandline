@@ -78,8 +78,7 @@ public class TavernaCommandLineTest {
 	private static String releasedLocation = "https://launchpad.net/taverna/t2/";
 	private static String unreleasedLocation = "http://www.mygrid.org.uk/jenkins/job/net.sf.taverna.t2.products.taverna-commandline/lastSuccessfulBuild/net.sf.taverna.t2$taverna-commandline/artifact/net.sf.taverna.t2/taverna-commandline/";
 
-	//	private String baseVersionLocation =  (baseVersionReleased ? releasedLocation : unreleasedLocation) + baseVersion + "/+download/" + baseName + ".zip";
-	private static String baseVersionLocation = "http://www.mygrid.org.uk/taverna/internal/2.4.0/taverna-commandline-2.4.0.zip";
+	private static String baseVersionLocation =  (baseVersionReleased ? releasedLocation : unreleasedLocation) + baseVersion + "/+download/" + baseName + ".zip";
 	private static String testVersionLocation = (testVersionReleased ? releasedLocation : unreleasedLocation) + testVersion + "/" + testName + ".zip";
 
 	private static String baseCommand;
