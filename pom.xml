@@ -22,13 +22,13 @@
 		<dependency>
 			<groupId>uk.org.taverna.scufl2</groupId>
 			<artifactId>scufl2-t2flow</artifactId>
-			<version>0.9.3-SNAPSHOT</version>
+			<version>0.9.2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>uk.org.taverna.scufl2</groupId>
 			<artifactId>scufl2-rdfxml</artifactId>
-			<version>0.9.3-SNAPSHOT</version>
+			<version>0.9.2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
