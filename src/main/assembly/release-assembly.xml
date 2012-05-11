@@ -3,47 +3,46 @@
 	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
-	<id>${project.version}</id>
-	<baseDirectory>taverna-commandline-${project.version}</baseDirectory>
+	<id>bin</id>
 	<formats>
 		<format>dir</format>
 		<format>zip</format>
 	</formats>
 
 	<dependencySets>
-	  <dependencySet>
-	    <useTransitiveDependencies>true</useTransitiveDependencies>
-	    <outputDirectory>/bundles</outputDirectory>
-	    <excludes>
-	      <exclude>net.sf.taverna.t2.activities:all-activities</exclude>
-	      <exclude>uk.org.taverna.commandline:taverna-command-line</exclude>
-	      <exclude>uk.org.taverna.osgi:osgi-launcher</exclude>
-	      <exclude>uk.org.taverna.commandline:arguments</exclude>
-	      <exclude>org.eclipse.osgi:org.eclipse.osgi</exclude>
-	    </excludes>
-	  </dependencySet>
-	  <dependencySet>
-	    <outputDirectory>/lib</outputDirectory>
-	    <includes>
-	      <include>uk.org.taverna.commandline:taverna-command-line</include>
-	      <include>uk.org.taverna.osgi:osgi-launcher</include>
-	      <include>net.sf.taverna.t2.taverna-commandline:taverna-commandline-common</include>
-	      <include>org.apache.commons:com.springsource.org.apache.commons.cli</include>
-	      <include>org.apache.log4j:com.springsource.org.apache.log4j</include>
-	      <include>uk.org.taverna.commandline:arguments</include>
-	      <include>uk.org.taverna.configuration:taverna-app-configuration-api</include>
-	      <include>uk.org.taverna.configuration:taverna-app-configuration-impl</include>
-	      <include>org.osgi:org.osgi.core</include>
-	      <include>org.eclipse.osgi:org.eclipse.osgi</include>
-	    </includes>
-	  </dependencySet>
+		<dependencySet>
+			<useTransitiveDependencies>true</useTransitiveDependencies>
+			<outputDirectory>/bundles</outputDirectory>
+			<excludes>
+				<exclude>net.sf.taverna.t2.activities:all-activities</exclude>
+				<exclude>uk.org.taverna.commandline:taverna-command-line</exclude>
+				<exclude>uk.org.taverna.osgi:osgi-launcher</exclude>
+				<exclude>uk.org.taverna.commandline:arguments</exclude>
+				<exclude>org.eclipse.osgi:org.eclipse.osgi</exclude>
+			</excludes>
+		</dependencySet>
+		<dependencySet>
+			<outputDirectory>/lib</outputDirectory>
+			<includes>
+				<include>uk.org.taverna.commandline:taverna-command-line</include>
+				<include>uk.org.taverna.osgi:osgi-launcher</include>
+				<include>net.sf.taverna.t2.taverna-commandline:taverna-commandline-common</include>
+				<include>org.apache.commons:com.springsource.org.apache.commons.cli</include>
+				<include>org.apache.log4j:com.springsource.org.apache.log4j</include>
+				<include>uk.org.taverna.commandline:arguments</include>
+				<include>uk.org.taverna.configuration:taverna-app-configuration-api</include>
+				<include>uk.org.taverna.configuration:taverna-app-configuration-impl</include>
+				<include>org.osgi:org.osgi.core</include>
+				<include>org.eclipse.osgi:org.eclipse.osgi</include>
+			</includes>
+		</dependencySet>
 	</dependencySets>
 
 	<fileSets>
-	  <fileSet>
-	    <directory>src/main/etc</directory>
-	    <fileMode>0755</fileMode>
-	    <outputDirectory></outputDirectory>
-	  </fileSet>
+		<fileSet>
+			<directory>src/main/etc</directory>
+			<fileMode>0755</fileMode>
+			<outputDirectory></outputDirectory>
+		</fileSet>
 	</fileSets>
 </assembly>
