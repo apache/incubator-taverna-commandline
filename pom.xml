@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>taverna-parent</artifactId>
 		<groupId>net.sf.taverna</groupId>
-		<version>3.0.0</version>
+		<version>3.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>net.sf.taverna.t2.taverna-commandline</groupId>
 	<artifactId>taverna-commandline</artifactId>
