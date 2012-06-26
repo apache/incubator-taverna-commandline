@@ -112,7 +112,7 @@
 		<dependency>
 			<groupId>uk.org.taverna.commandline</groupId>
 			<artifactId>taverna-command-line</artifactId>
-			<version>0.1.1</version>
+			<version>0.1.2-SNAPSHOT</version>
 		</dependency>
 
 		<!-- Taverna Platform -->
