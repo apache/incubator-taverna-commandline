@@ -94,6 +94,49 @@
         </compatibility>
     </plugin>
     <plugin>
+        <provider>biovel.eu</provider>
+        <identifier>eu.biovel.taverna.interactionplugin</identifier>
+        <version>0.1.11</version>
+        <name>Interaction Service plugin</name>
+        <description/>
+        <enabled>false</enabled>
+        <repositories>
+            <repository>http://www.mygrid.org.uk/maven/repository/</repository>
+            <repository>http://repo1.maven.org/maven2/</repository>
+            <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
+            <repository>http://uk.maven.org/maven2/</repository>
+            <repository>http://download.java.net/maven/2/</repository>
+            <repository>http://www.mygrid.org.uk/maven/biomoby/biomoby.org/m2repo/</repository>
+            <repository>http://openprovenance.org/java/maven-releases/</repository>
+            <repository>http://people.apache.org/repo/m2-snapshot-repository/</repository>
+            <repository>http://repository.apache.org/snapshots/</repository>
+        </repositories>
+        <profile>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.8.2</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>2.4</version>
+                <system>true</system>
+            </dependency>
+            <dependency>
+                <groupId>net.sf.taverna.t2.activities</groupId>
+                <artifactId>interaction-activity</artifactId>
+                <version>${t2.taverna.interaction.version}</version>
+            </dependency>
+        </profile>
+        <compatibility>
+            <application>
+                <version>${project.version}</version>
+            </application>
+        </compatibility>
+    </plugin>
+
+    <plugin>
         <provider>taverna.sf.net</provider>
         <identifier>net.sf.taverna.t2.commandline</identifier>
 		<version>${t2.taverna.workbench.version}</version>
