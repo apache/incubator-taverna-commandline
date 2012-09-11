@@ -1924,15 +1924,6 @@
 
 	<repositories>
 		<repository>
-			<id>me</id>
-			<name>me</name>
-			<url>file:///Users/alanrw/.m2/repository</url>
-			<releases />
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
 			<id>mygrid-repository</id>
 			<name>myGrid Repository</name>
 			<url>http://www.mygrid.org.uk/maven/repository</url>
