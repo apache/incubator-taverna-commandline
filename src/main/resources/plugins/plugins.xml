@@ -96,7 +96,7 @@
     <plugin>
         <provider>biovel.eu</provider>
         <identifier>eu.biovel.taverna.interactionplugin</identifier>
-        <version>0.1.11</version>
+        <version>1.0.0</version>
         <name>Interaction Service plugin</name>
         <description/>
         <enabled>false</enabled>
