@@ -76,7 +76,7 @@ public class TavernaCommandLineTest {
 	private static String baseName = "taverna-commandline-" + baseVersion;
 	private static String testName = "taverna-commandline-" + testVersion;
 	private static String releasedLocation = "https://launchpad.net/taverna/t2/";
-	private static String unreleasedLocation = "http://www.mygrid.org.uk/jenkins/job/net.sf.taverna.t2.products.taverna-commandline/lastSuccessfulBuild/net.sf.taverna.t2$taverna-commandline/artifact/net.sf.taverna.t2/taverna-commandline/";
+	private static String unreleasedLocation = "http://build.mygrid.org.uk/ci/job/t3-taverna-commandline-product/lastSuccessfulBuild/net.sf.taverna.t2$taverna-commandline/artifact/net.sf.taverna.t2/taverna-commandline/";
 
 	private static String baseVersionLocation =  (baseVersionReleased ? releasedLocation : unreleasedLocation) + baseVersion + "/+download/" + baseName + ".zip";
 	private static String testVersionLocation = (testVersionReleased ? releasedLocation : unreleasedLocation) + testVersion + "/" + testName + (testVersionReleased ? ".zip" : "-bin.zip");
@@ -147,7 +147,7 @@ public class TavernaCommandLineTest {
     		if (baseVersion.equals("2.3.0") && workflowDirectory.getName().equals("tool")) return;//version 2.3.0 is missing tool plugin
     		String workflow = getWorkflow().toASCIIString();
     		System.out.println(MessageFormat.format(message, workflow, baseVersion) + (inputs.size() > 0 ? " using input values" : ""));
-    		runWorkflow(baseCommand, workflow, baseOutput, true, secure);
+    		runWorkflow(baseCommand, workflow, baseOutput, true, secure, false);
     		assertTrue(String.format("No output produced for %s", workflowDirectory.getName()), baseOutput.exists());
     	}
     }
@@ -157,6 +157,7 @@ public class TavernaCommandLineTest {
 		if (testVersion.startsWith("3.0.0") && workflowDirectory.getName().contains("biomoby")) return true;
     	//version 3.0.0 is missing looping configuration
 		if (testVersion.startsWith("3.0.0") && workflowDirectory.getName().equals("ebi_interproscan_newservices")) return true;
+		if (testVersion.startsWith("3.0.0") && workflowDirectory.getName().equals("biomartandembossanalysis")) return true;
 		return false;
     }
 
@@ -168,7 +169,7 @@ public class TavernaCommandLineTest {
 		FileUtils.deleteDirectory(testOutput);
 		String workflow = getWorkflow().toASCIIString();
 		System.out.println(MessageFormat.format(message, workflow, testVersion));
-		runWorkflow(testCommand, workflow, testOutput, true, secure);
+		runWorkflow(testCommand, workflow, testOutput, true, secure, false);
 		assertTrue(String.format("No output produced for %s", workflowDirectory.getName()), testOutput.exists());
 		assertOutputsEquals(baseOutput, testOutput);
 	}
@@ -181,12 +182,12 @@ public class TavernaCommandLineTest {
 		FileUtils.deleteDirectory(testOutput);
 		String workflow = getWorkflow().toASCIIString();
 		System.out.println(MessageFormat.format(message, workflow, testVersion) + " using input values");
-		runWorkflow(testCommand, workflow, testOutput, true, secure);
+		runWorkflow(testCommand, workflow, testOutput, true, secure, false);
 		assertTrue(String.format("No output produced for %s", workflowDirectory.getName()), testOutput.exists());
 		assertOutputsEquals(baseOutput, testOutput);
 	}
 
-	@Test
+	@Test@Ignore
 	public void testWorkflowWithInputFiles() throws Exception {
 		assumeTrue(!testExcluded());
 		assumeTrue(baseOutput.exists());
@@ -194,7 +195,20 @@ public class TavernaCommandLineTest {
 		FileUtils.deleteDirectory(testOutput);
 		String workflow = getWorkflow().toASCIIString();
 		System.out.println(MessageFormat.format(message, workflow, testVersion) + " using input files");
-		runWorkflow(testCommand, workflow, testOutput, false, secure);
+		runWorkflow(testCommand, workflow, testOutput, false, secure, false);
+		assertTrue(String.format("No output produced for %s", workflowDirectory.getName()), testOutput.exists());
+		assertOutputsEquals(baseOutput, testOutput);
+	}
+
+	@Test@Ignore
+	public void testWorkflowWithDatabase() throws Exception {
+		assumeTrue(!testExcluded());
+		assumeTrue(baseOutput.exists());
+		assumeTrue(inputs.size() > 0);
+		FileUtils.deleteDirectory(testOutput);
+		String workflow = getWorkflow().toASCIIString();
+		System.out.println(MessageFormat.format(message, workflow, testVersion) + " using database");
+		runWorkflow(testCommand, workflow, testOutput, true, secure, true);
 		assertTrue(String.format("No output produced for %s", workflowDirectory.getName()), testOutput.exists());
 		assertOutputsEquals(baseOutput, testOutput);
 	}
@@ -205,21 +219,20 @@ public class TavernaCommandLineTest {
 		assumeTrue(baseOutput.exists());
 		assumeTrue(testVersionSupportsScufl2);
 
-		assumeTrue(!workflowDirectory.getName().equals("apiconsumer"));//skip apiconsumer due bug writing lists of literals
-		assumeTrue(!workflowDirectory.getName().contains("rest"));//skip rest due to SCUFL2-121
-		assumeTrue(!workflowDirectory.getName().startsWith("secure-basic"));//skip rest due to SCUFL2-121
-		assumeTrue(!workflowDirectory.getName().startsWith("secure-client"));//skip rest due to SCUFL2-121
-		assumeTrue(!workflowDirectory.getName().startsWith("secure-digest"));//skip rest due to SCUFL2-121
+		//assumeTrue(workflowDirectory.getName().contains("rest"));//skip rest due to SCUFL2-121
+		//assumeTrue(!workflowDirectory.getName().startsWith("secure-basic"));//skip rest due to SCUFL2-121
+		//assumeTrue(!workflowDirectory.getName().startsWith("secure-client"));//skip rest due to SCUFL2-121
+		//assumeTrue(!workflowDirectory.getName().startsWith("secure-digest"));//skip rest due to SCUFL2-121
 
 		FileUtils.deleteDirectory(testOutput);
 		String workflow = getScufl2Workflow().toASCIIString();
 		System.out.println(MessageFormat.format(message, workflow, testVersion) + (inputs.size() > 0 ? " using input values" : ""));
-		runWorkflow(testCommand, workflow, testOutput, true, secure);
+		runWorkflow(testCommand, workflow, testOutput, true, secure, true);
 		assertTrue(String.format("No output produced for %s", workflowDirectory.getName()), testOutput.exists());
 		assertOutputsEquals(baseOutput, testOutput);
 	}
 
-	private synchronized void runWorkflow(String command, String workflow, File outputsDirectory, boolean inputValues, boolean secure)
+	private synchronized void runWorkflow(String command, String workflow, File outputsDirectory, boolean inputValues, boolean secure, boolean database)
 			throws Exception {
 		ProcessBuilder processBuilder = new ProcessBuilder("sh", command);
 		processBuilder.redirectErrorStream(true);
@@ -243,6 +256,9 @@ public class TavernaCommandLineTest {
 			args.add(getClass().getResource("/security").getFile());
 			args.add("-cmpassword");
 		}
+		if (database) {
+			args.add("-embedded");
+		}
 		args.add(workflow);
 		Process process = processBuilder.start();
 		if (secure) {
@@ -264,11 +280,11 @@ public class TavernaCommandLineTest {
 
 	private URI getScufl2Workflow() throws Exception {
 		File workflow = new File(buildDirectory, workflowDirectory.getName() + ".scufl2");
-		if (!workflow.exists()) {
+//		if (!workflow.exists()) {
 			WorkflowBundleIO workflowBundleIO = new WorkflowBundleIO();
 			WorkflowBundle bundle = workflowBundleIO.readBundle(getWorkflow().toURL(), null);
 			workflowBundleIO.writeBundle(bundle, workflow, RDFXMLReader.APPLICATION_VND_TAVERNA_SCUFL2_WORKFLOW_BUNDLE);
-		}
+//		}
 		return workflow.toURI();
 	}
 

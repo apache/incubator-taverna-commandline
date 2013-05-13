@@ -1,10 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
+	<!-- <parent>
 		<groupId>net.sf.taverna</groupId>
 		<artifactId>parent</artifactId>
 		<version>0.2.2011-02-17</version>
+	</parent> -->
+	<parent>
+		<groupId>net.sf.taverna</groupId>
+		<artifactId>taverna-parent</artifactId>
+		<version>3.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>uk.org.taverna.commandline</groupId>
 	<artifactId>taverna-command-line-tests</artifactId>
@@ -27,13 +32,13 @@
 		<dependency>
 			<groupId>uk.org.taverna.scufl2</groupId>
 			<artifactId>scufl2-t2flow</artifactId>
-			<version>0.9.2</version>
+			<version>0.9.3-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>uk.org.taverna.scufl2</groupId>
 			<artifactId>scufl2-rdfxml</artifactId>
-			<version>0.9.2</version>
+			<version>0.9.3-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -48,6 +53,26 @@
 			<version>2.2</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- Optional for scufl2-xdfxml -->
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>2.2.4-1</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Required by scufl2-xdfxml, see SCUFL2-122 -->
+		<dependency>
+			<groupId>org.jdom</groupId>
+			<artifactId>com.springsource.org.jdom</artifactId>
+			<version>1.1.0</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- <dependency>
+			<groupId>org.jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>1.1.2</version>
+			<scope>test</scope>
+		</dependency> -->
 	</dependencies>
 	<repositories>
 		<repository>
@@ -58,6 +83,15 @@
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
+		</repository>
+		<repository>
+			<id>mygrid-snapshot-repository</id>
+			<name>myGrid Snapshot Repository</name>
+			<url>http://www.mygrid.org.uk/maven/snapshot-repository</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots />
 		</repository>
 	</repositories>
 </project>
