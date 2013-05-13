@@ -28,6 +28,7 @@
 				<include>uk.org.taverna.osgi:osgi-launcher</include>
 				<include>net.sf.taverna.t2.taverna-commandline:taverna-commandline-common</include>
 				<include>org.apache.commons:com.springsource.org.apache.commons.cli</include>
+				<include>org.apache.commons:com.springsource.org.apache.commons.io</include>
 				<include>org.apache.log4j:com.springsource.org.apache.log4j</include>
 				<include>uk.org.taverna.commandline:arguments</include>
 				<include>uk.org.taverna.configuration:taverna-app-configuration-api</include>
