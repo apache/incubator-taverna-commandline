@@ -8,10 +8,10 @@
 	</parent>
 	<groupId>net.sf.taverna.t2</groupId>
 	<artifactId>taverna-commandline</artifactId>
-	<version>2.4.1i-1.0.2</version>
+	<version>2.4.1i-1.0.3</version>
 	<name>Taverna command line utillity</name>
 	<properties>
-	  <t2.taverna.interaction.version>1.0.2</t2.taverna.interaction.version>
+	  <t2.taverna.interaction.version>1.0.3</t2.taverna.interaction.version>
           <t2.taverna.workbench.version>2.4.1</t2.taverna.workbench.version>
 	</properties>
 
