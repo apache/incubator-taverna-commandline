@@ -7,7 +7,6 @@
 	<bean id="commandLineTool" class="net.sf.taverna.t2.commandline.CommandLineTool" init-method="run">
 		<property name="commandLineArgumentsService" ref="commandLineArgumentsService" />
 		<property name="runService" ref="runService" />
-		<property name="dataService" ref="dataService" />
 		<property name="credentialManager" ref="credentialManager" />
 		<property name="workflowBundleIO" ref="workflowBundleIO" />
 		<property name="databaseConfiguration" ref="databaseConfiguration" />

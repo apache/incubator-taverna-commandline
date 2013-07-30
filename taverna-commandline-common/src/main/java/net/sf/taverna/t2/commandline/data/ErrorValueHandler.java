@@ -20,14 +20,14 @@
  ******************************************************************************/
 package net.sf.taverna.t2.commandline.data;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import uk.org.taverna.platform.data.api.Data;
-import uk.org.taverna.platform.data.api.ErrorValue;
+import uk.org.taverna.databundle.DataBundles;
+import uk.org.taverna.databundle.ErrorDocument;
 
 /**
  * Handles ErrorValues and transforming them into String representations
@@ -40,111 +40,33 @@ public class ErrorValueHandler {
 
 	/**
 	 * Creates a string representation of the ErrorValue.
+	 * @throws IOException
 	 */
-	public static String buildErrorValueString(ErrorValue errorValue) {
+	public static String buildErrorValueString(ErrorDocument errorValue) throws IOException {
 
 		String errDocumentString = errorValue.getMessage() + "\n";
 
-		String exceptionMessage = errorValue.getExceptionMessage();
+		String exceptionMessage = errorValue.getMessage();
 		if (exceptionMessage != null && !exceptionMessage.equals("")) {
 			DefaultMutableTreeNode exceptionMessageNode = new DefaultMutableTreeNode(
 					exceptionMessage);
 			errDocumentString += exceptionMessageNode + "\n";
-			List<StackTraceElement> stackTrace = errorValue
-					.getStackTrace();
-			for (StackTraceElement stackTraceElement : stackTrace) {
-				errDocumentString += getStackTraceElementString(stackTraceElement)
-						+ "\n";
-			}
+			errDocumentString += errorValue.getTrace();
 		}
 
-		Set<ErrorValue> errorReferences = errorValue.getCauses();
+		List<Path> errorReferences = errorValue.getCausedBy();
 		if (!errorReferences.isEmpty()) {
 			errDocumentString += "Set of cause errors to follow." + "\n";
 		}
 		int errorCounter = 1;
-		for (ErrorValue cause : errorReferences) {
+		for (Path cause : errorReferences) {
+			if (DataBundles.isError(cause)) {
 			errDocumentString += "ErrorValue " + (errorCounter++) + "\n";
-			errDocumentString += buildErrorValueString(cause) + "\n";
+			errDocumentString += buildErrorValueString(DataBundles.getError(cause)) + "\n";
+			}
 		}
 
 		return errDocumentString;
 	}
 
-//	public static void buildErrorDocumentTree(DefaultMutableTreeNode node,
-//			ErrorValue errorDocument, InvocationContext context) {
-//		DefaultMutableTreeNode child = new DefaultMutableTreeNode(errorDocument);
-//		String exceptionMessage = errorDocument.getExceptionMessage();
-//		if (exceptionMessage != null && !exceptionMessage.equals("")) {
-//			DefaultMutableTreeNode exceptionMessageNode = new DefaultMutableTreeNode(
-//					exceptionMessage);
-//			child.add(exceptionMessageNode);
-//			List<StackTraceElement> stackTrace = errorDocument.getStackTrace();
-//			if (stackTrace.size() > 0) {
-//				for (StackTraceElement stackTraceElement : stackTrace) {
-//					exceptionMessageNode.add(new DefaultMutableTreeNode(
-//							getStackTraceElementString(stackTraceElement)));
-//				}
-//			}
-//
-//		}
-//		node.add(child);
-//
-//		Set<T2Reference> errorReferences = errorDocument.getErrorReferences();
-//		for (T2Reference reference : errorReferences) {
-//			if (reference.getReferenceType().equals(
-//					T2ReferenceType.ErrorDocument)) {
-//				ErrorDocumentService errorDocumentService = context
-//						.getReferenceService().getErrorDocumentService();
-//				ErrorDocument causeErrorDocument = errorDocumentService
-//						.getError(reference);
-//				if (errorReferences.size() == 1) {
-//					buildErrorDocumentTree(node, causeErrorDocument, context);
-//				} else {
-//					buildErrorDocumentTree(child, causeErrorDocument, context);
-//				}
-//			} else if (reference.getReferenceType().equals(
-//					T2ReferenceType.IdentifiedList)) {
-//				List<ErrorDocument> errorDocuments = getErrorDocuments(
-//						reference, context);
-//				if (errorDocuments.size() == 1) {
-//					buildErrorDocumentTree(node, errorDocuments.get(0), context);
-//				} else {
-//					for (ErrorDocument errorDocument2 : errorDocuments) {
-//						buildErrorDocumentTree(child, errorDocument2, context);
-//					}
-//				}
-//			}
-//		}
-//	}
-
-	private static String getStackTraceElementString(
-			StackTraceElement stackTraceElement) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(stackTraceElement.getClassName());
-		sb.append('.');
-		sb.append(stackTraceElement.getMethodName());
-		if (stackTraceElement.getFileName() == null) {
-			sb.append("(unknown file)");
-		} else {
-			sb.append('(');
-			sb.append(stackTraceElement.getFileName());
-			sb.append(':');
-			sb.append(stackTraceElement.getLineNumber());
-			sb.append(')');
-		}
-		return sb.toString();
-	}
-
-	public static List<ErrorValue> getErrorValues(Data data) {
-		List<ErrorValue> errorValues = new ArrayList<ErrorValue>();
-		if (data.isError()) {
-			errorValues.add((ErrorValue) data.getValue());
-		} else if (data.getDepth() > 0) {
-			for (Data dataElement : data.getElements()) {
-				errorValues.addAll(getErrorValues(dataElement));
-			}
-		}
-		return errorValues;
-	}
 }

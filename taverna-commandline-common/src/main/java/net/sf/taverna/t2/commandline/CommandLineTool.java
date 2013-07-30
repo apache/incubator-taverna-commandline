@@ -25,11 +25,13 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Set;
 
 import javax.naming.NamingException;
@@ -54,12 +56,12 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.RollingFileAppender;
+import org.purl.wf4ever.robundle.Bundle;
 
 import uk.org.taverna.commandline.args.CommandLineArguments;
 import uk.org.taverna.configuration.database.DatabaseConfiguration;
 import uk.org.taverna.configuration.database.DatabaseManager;
-import uk.org.taverna.platform.data.api.Data;
-import uk.org.taverna.platform.data.api.DataService;
+import uk.org.taverna.databundle.DataBundles;
 import uk.org.taverna.platform.execution.api.ExecutionEnvironment;
 import uk.org.taverna.platform.execution.api.InvalidExecutionIdException;
 import uk.org.taverna.platform.execution.api.InvalidWorkflowException;
@@ -89,7 +91,6 @@ import uk.org.taverna.scufl2.validation.structural.StructuralValidator;
  * @author Stuart Owen
  * @author Alex Nenadic
  */
-
 public class CommandLineTool {
 
 	private static Logger logger = Logger.getLogger(CommandLineTool.class);
@@ -99,8 +100,6 @@ public class CommandLineTool {
 	private RunService runService;
 
 	private CredentialManager credentialManager;
-
-	private DataService dataService;
 
 	private CommandLineOptions commandLineOptions;
 
@@ -223,17 +222,14 @@ public class CommandLineTool {
 
 				URL workflowURL = readWorkflowURL(commandLineOptions.getWorkflow());
 
-				// workflowBundle = workflowBundleIO.readBundle(workflowURL, null);
+				workflowBundle = workflowBundleIO.readBundle(workflowURL, null);
 
-				workflowBundle = workflowBundleIO.readBundle(workflowURL.openStream(), null);
-				// For testing
+//				workflowBundle = workflowBundleIO.readBundle(workflowURL.openStream(), null);
 				logger.debug("Read the wf bundle");
 
 				validateWorkflowBundle(workflowBundle);
-				// For testing
 				logger.debug("Validated the wf bundle");
 
-				// InvocationContext context = createInvocationContext();
 
 				Set<ExecutionEnvironment> executionEnvironments = runService
 						.getExecutionEnvironments();
@@ -241,23 +237,17 @@ public class CommandLineTool {
 				ExecutionEnvironment executionEnvironment = null;
 
 				// Find the right execution environment, e.g. local execution with the correct
-				// reference service
-				// based on command line options
+				// reference service based on command line options
 				while (executionEnvironments.iterator().hasNext()) {
-					// TODO
-					// Choose the right one
-					executionEnvironment = executionEnvironments.iterator().next(); // take the fist
-																					// one for now
+					// TODO Choose the right one
+					// take the fist one for now
+					executionEnvironment = executionEnvironments.iterator().next();
 					break;
 				}
-				// For testing
+
 				logger.debug("Got the execution environment");
 
-//				referenceService = executionEnvironment.getReferenceService();
-//				// For testing
-//				logger.debug("Got the reference service");
-
-				InputsHandler inputsHandler = new InputsHandler(dataService);
+				InputsHandler inputsHandler = new InputsHandler();
 				Map<String, InputWorkflowPort> portMap = new HashMap<String, InputWorkflowPort>();
 
 				Workflow workflow = workflowBundle.getMainWorkflow();
@@ -266,12 +256,10 @@ public class CommandLineTool {
 					portMap.put(port.getName(), port);
 				}
 				inputsHandler.checkProvidedInputs(portMap, commandLineOptions);
-				// For testing
 				logger.debug("Checked inputs");
 
-				Map<String, Data> inputs = inputsHandler.registerInputs(portMap,
+				Bundle inputs = inputsHandler.registerInputs(portMap,
 						commandLineOptions, null);
-				// For testing
 				logger.debug("Registered inputs");
 
 				RunProfile runProfile = new RunProfile(executionEnvironment, workflowBundle, inputs);
@@ -279,12 +267,12 @@ public class CommandLineTool {
 				String runId = runService.createRun(runProfile);
 
 				runService.start(runId);
-				// For testing
 				logger.debug("Started wf run");
 
 				WorkflowReport report = runService.getWorkflowReport(runId);
 
-				Map<String, Data> results = runService.getOutputs(runId);
+				Path outputs = DataBundles.getOutputs(runService.getOutputs(runId));
+				NavigableMap<String, Path> results = DataBundles.getPorts(outputs);
 
 				NamedSet<OutputWorkflowPort> workflowOutputPorts = workflowBundle.getMainWorkflow()
 						.getOutputPorts();
@@ -341,7 +329,7 @@ public class CommandLineTool {
 														// output ports
 
 					SaveResultsHandler saveResultsHandler = new SaveResultsHandler(
-							dataService, outputDir, outputBaclavaDoc, opmFile, janusFile, databaseConfiguration, provenanceConnectorFactories);
+							outputDir, outputBaclavaDoc, opmFile, janusFile, databaseConfiguration, provenanceConnectorFactories);
 
 					while (!workflowFinished || !allResultsSaved) { // while there are still results
 																	// that have not been saved and
@@ -350,12 +338,8 @@ public class CommandLineTool {
 						while (iterator.hasNext()) {
 							String workflowOutputPortName = iterator.next().getName();
 							if (results.get(workflowOutputPortName) != null
-									&& !resultsSaved.get(workflowOutputPortName)) { // are results
-																					// ready for
-																					// this output
-																					// port? have
-																					// they been
-																					// saved yet?
+									&& !resultsSaved.get(workflowOutputPortName)) {
+								// are results ready for this output port? have they been saved yet?
 								if (outputDir != null) {
 									saveResultsHandler.saveResultsForPort(workflowOutputPortName,
 											results.get(workflowOutputPortName));
@@ -364,10 +348,8 @@ public class CommandLineTool {
 							}
 						}
 
-						workflowFinished = !report.getState().equals(
-								uk.org.taverna.platform.report.State.RUNNING); // either completed
-																				// or failed but
-																				// finished running
+						workflowFinished = !report.getState().equals(uk.org.taverna.platform.report.State.RUNNING);
+						// either completed or failed but finished running
 						allResultsSaved = !resultsSaved.values().contains(false);
 						if (!(workflowFinished && allResultsSaved)) {
 							try {
@@ -429,29 +411,6 @@ public class CommandLineTool {
 			throw rcvl.getException();
 		}
 	}
-
-//	protected void executeWorkflow(WorkflowInstanceFacade facade,
-//			Map<String, WorkflowDataToken> inputs,
-//			CommandLineResultListener resultListener)
-//					throws TokenOrderException, IOException {
-//		facade.fire();
-//		for (String inputName : inputs.keySet()) {
-//			WorkflowDataToken token = inputs.get(inputName);
-//			facade.pushData(token, inputName);
-//		}
-//		while (facade.getState().compareTo(State.completed) < 0) {
-//			try {
-//				Thread.sleep(100);
-//			} catch (InterruptedException e) {
-//				logger
-//				.warn(
-//						"Thread Interuption Exception whilst waiting for dataflow completion",
-//						e);
-//			}
-//		}
-//		resultListener.saveProvenance();
-//		resultListener.saveOutputDocument();
-//	}
 
 	private void setupDatabase(CommandLineOptions options)
 			throws DatabaseConfigurationException {
@@ -519,58 +478,6 @@ public class CommandLineTool {
 		}
 	}
 
-//	private CommandLineResultListener addResultListener(
-//			WorkflowInstanceFacade facade, InvocationContext context,
-//			Dataflow dataflow, CommandLineOptions options) {
-//		File outputDir = null;
-//		File baclavaDoc = null;
-//		File janus = null;
-//		File janusDir = null;
-//		File opm = null;
-//
-//		if (options.saveResultsToDirectory()) {
-//			outputDir = determineOutputDir(options, dataflow.getLocalName());
-//			janusDir = outputDir;
-//		}
-//		if (options.getOutputDocument() != null) {
-//			baclavaDoc = new File(options.getOutputDocument());
-//		}
-//		if (options.isJanus()) {
-//			if (options.getJanus() == null) {
-//				if (janusDir == null) {
-//					janusDir = determineOutputDir(options, dataflow.getLocalName());
-//				}
-//				janus = new File(janusDir, "provenance-janus.rdf");
-//			} else {
-//				janus = new File(options.getJanus());
-//			}
-//		}
-//		if (options.isOPM()) {
-//			if (options.getOPM() == null) {
-//				if (janusDir == null) {
-//					janusDir = determineOutputDir(options, dataflow.getLocalName());
-//				}
-//				opm = new File(janusDir, "provenance-opm.rdf");
-//			} else {
-//				opm = new File(options.getOPM());
-//			}
-//		}
-//
-//		Map<String, Integer> outputPortNamesAndDepth = new HashMap<String, Integer>();
-//		for (DataflowOutputPort port : dataflow.getOutputPorts()) {
-//			outputPortNamesAndDepth.put(port.getName(), port.getDepth());
-//		}
-//		SaveResultsHandler resultsHandler = new SaveResultsHandler(
-//				outputPortNamesAndDepth, outputDir, baclavaDoc, janus, opm);
-//		CommandLineResultListener listener = new CommandLineResultListener(
-//				outputPortNamesAndDepth.size(), resultsHandler,
-//				outputDir != null, baclavaDoc != null, opm != null, janus != null,
-//				facade.getWorkflowRunId());
-//		facade.addResultListener(listener);
-//		return listener;
-//
-//	}
-
 	public void setCommandLineArgumentsService(CommandLineArguments
 			commandLineArgumentsService){
 		this.commandLineArgumentsService = commandLineArgumentsService;
@@ -595,15 +502,6 @@ public class CommandLineTool {
 	 */
 	public void setDatabaseConfiguration(DatabaseConfiguration databaseConfiguration) {
 		this.databaseConfiguration = databaseConfiguration;
-	}
-
-	/**
-	 * Sets the dataService.
-	 *
-	 * @param dataService the new value of dataService
-	 */
-	public void setDataService(DataService dataService) {
-		this.dataService = dataService;
 	}
 
 	/**

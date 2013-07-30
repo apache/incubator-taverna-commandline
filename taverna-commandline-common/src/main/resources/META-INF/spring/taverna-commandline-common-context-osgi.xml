@@ -11,7 +11,6 @@
 
  	<reference id="commandLineArgumentsService" interface="uk.org.taverna.commandline.args.CommandLineArguments"/>
     <reference id="runService" interface="uk.org.taverna.platform.run.api.RunService"/>
-	<reference id="dataService" interface="uk.org.taverna.platform.data.api.DataService" />
 	<reference id="credentialManager" interface="net.sf.taverna.t2.security.credentialmanager.CredentialManager" />
 	<reference id="databaseConfiguration" interface="uk.org.taverna.configuration.database.DatabaseConfiguration" />
 	<reference id="databaseManager" interface="uk.org.taverna.configuration.database.DatabaseManager" />

@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +22,7 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
-import uk.org.taverna.platform.data.api.Data;
-import uk.org.taverna.platform.data.api.ErrorValue;
+import uk.org.taverna.databundle.DataBundles;
 
 /**
  * Handles the loading and saving of T2Reference data as Baclava documents
@@ -32,7 +32,7 @@ import uk.org.taverna.platform.data.api.ErrorValue;
  */
 public class BaclavaDocumentHandler {
 
-	private Map<String, Data> chosenReferences;
+	private Map<String, Path> chosenReferences;
 
 	private static Namespace namespace = Namespace.getNamespace("b",
 			"http://org.embl.ebi.escience/baclava/0.1alpha");
@@ -41,8 +41,7 @@ public class BaclavaDocumentHandler {
 	 * Reads a baclava document from an InputStream and returns a map of DataThings mapped to the
 	 * portName
 	 *
-	 * @throws IOException
-	 *             , JDOMException
+	 * @throws IOException, JDOMException
 	 */
 	public Map<String, DataThing> readData(InputStream inputStream) throws IOException,
 			JDOMException {
@@ -70,8 +69,9 @@ public class BaclavaDocumentHandler {
 	/**
 	 * Returns a org.jdom.Document from a map of port named to DataThingS containing the port's
 	 * results.
+	 * @throws IOException
 	 */
-	public Document getDataDocument() {
+	public Document getDataDocument() throws IOException {
 		Element rootElement = new Element("dataThingMap", namespace);
 		Document theDocument = new Document(rootElement);
 		// Build the DataThing map from the chosenReferences
@@ -87,7 +87,7 @@ public class BaclavaDocumentHandler {
 		return theDocument;
 	}
 
-	protected Object getObjectForName(String name) {
+	protected Object getObjectForName(String name) throws IOException {
 		Object result = null;
 		if (getChosenReferences().containsKey(name)) {
 			result = convertToObject(getChosenReferences().get(name));
@@ -98,25 +98,25 @@ public class BaclavaDocumentHandler {
 		return result;
 	}
 
-	private Object convertToObject(Data data) {
-		if (data.getDepth() > 0) {
+	private Object convertToObject(Path data) throws IOException {
+		if (DataBundles.isList(data)) {
 			List<Object> objectList = new ArrayList<Object>();
-			for (Data dataElement : data.getElements()) {
+			for (Path dataElement : DataBundles.getList(data)) {
 				objectList.add(convertToObject(dataElement));
 			}
 			return objectList;
-		} else if (data.isError()) {
-			return ErrorValueHandler.buildErrorValueString((ErrorValue) data.getValue());
+		} else if (DataBundles.isError(data)) {
+			return ErrorValueHandler.buildErrorValueString(DataBundles.getError(data));
 		} else {
-			return data.getValue();
+			return DataBundles.getStringValue(data);
 		}
 	}
 
-	private Map<String, Data> getChosenReferences() {
+	private Map<String, Path> getChosenReferences() {
 		return chosenReferences;
 	}
 
-	public void setChosenReferences(Map<String, Data> chosenReferences) {
+	public void setChosenReferences(Map<String, Path> chosenReferences) {
 		this.chosenReferences = chosenReferences;
 	}
 }
