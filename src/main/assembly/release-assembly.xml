@@ -18,7 +18,7 @@
 				<exclude>uk.org.taverna.commandline:taverna-command-line</exclude>
 				<exclude>uk.org.taverna.osgi:osgi-launcher</exclude>
 				<exclude>uk.org.taverna.commandline:arguments</exclude>
-				<exclude>org.eclipse.osgi:org.eclipse.osgi</exclude>
+				<exclude>org.eclipse:org.eclipse.osgi</exclude>
 			</excludes>
 		</dependencySet>
 		<dependencySet>
@@ -34,7 +34,7 @@
 				<include>uk.org.taverna.configuration:taverna-app-configuration-api</include>
 				<include>uk.org.taverna.configuration:taverna-app-configuration-impl</include>
 				<include>org.osgi:org.osgi.core</include>
-				<include>org.eclipse.osgi:org.eclipse.osgi</include>
+				<include>org.eclipse:org.eclipse.osgi</include>
 			</includes>
 		</dependencySet>
 	</dependencySets>
