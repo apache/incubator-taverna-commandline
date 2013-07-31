@@ -88,9 +88,9 @@ public class SaveResultsHandler {
 					Files.createDirectories(outputPath);
 					saveList(DataBundles.getList(data), outputPath);
 				} else if (DataBundles.isError(data)) {
-					Files.copy(data, outputDirectory.toPath().resolve(String.valueOf(index) + ".error"));
+					Files.copy(data, destination.resolve(String.valueOf(index) + ".error"));
 				} else {
-					Files.copy(data, outputDirectory.toPath().resolve(String.valueOf(index)));
+					Files.copy(data, destination.resolve(String.valueOf(index)));
 				}
 			}
 			index++;
