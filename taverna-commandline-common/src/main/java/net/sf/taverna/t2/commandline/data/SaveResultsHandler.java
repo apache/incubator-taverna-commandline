@@ -20,61 +20,37 @@
  ******************************************************************************/
 package net.sf.taverna.t2.commandline.data;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.taverna.t2.commandline.CommandLineResultListener;
-import net.sf.taverna.t2.provenance.ProvenanceConnectorFactory;
-
-import org.apache.log4j.Logger;
-
-import uk.org.taverna.configuration.database.DatabaseConfiguration;
 import uk.org.taverna.databundle.DataBundles;
 
 /**
- * Handles all recording of results as they are received by the {@link CommandLineResultListener}
- * or when the workflow enactment has completed.
+ * Handles all recording of results as they are received by the {@link CommandLineResultListener} or
+ * when the workflow enactment has completed.
  * This includes saving as a Baclava Document, or storing individual results.
  *
  * @author Stuart Owen
- *
  * @see BaclavaHandler
  * @see CommandLineResultListener
- *
  */
 public class SaveResultsHandler {
 
-	private static Logger logger = Logger.getLogger(CommandLineResultListener.class);
-
 	private final File outputDirectory;
 	private final File baclavaFile;
-	private final File janusFile;
-	private final File opmFile;
-	private final DatabaseConfiguration dbConfig;
-//	private ProvenanceExporter provExport;
-	private List<ProvenanceConnectorFactory> provenanceConnectorFactories;
 
-	public SaveResultsHandler(File rootOutputDir, File outputBaclavaDocumentFile, File opmFile,
-			File janusFile, DatabaseConfiguration databaseConfiguration, List<ProvenanceConnectorFactory> provenanceConnectorFactories) {
+	public SaveResultsHandler(File rootOutputDir, File outputBaclavaDocumentFile) {
 		this.outputDirectory = rootOutputDir;
 		this.baclavaFile = outputBaclavaDocumentFile;
-		this.janusFile = janusFile;
-		this.opmFile = opmFile;
-		dbConfig = databaseConfiguration;
-		this.provenanceConnectorFactories = provenanceConnectorFactories;
 	}
-
 
 	public void saveOutputBaclavaDocument(Map<String, Path> allResults) throws IOException {
 		if (baclavaFile != null) {
-			if (baclavaFile.getParentFile() != null){
+			if (baclavaFile.getParentFile() != null) {
 				baclavaFile.getParentFile().mkdirs();
 			}
 			BaclavaDocumentHandler handler = new BaclavaDocumentHandler();
@@ -86,70 +62,38 @@ public class SaveResultsHandler {
 	/**
 	 * Given the Data on an output port, saves the data on a disk in the
 	 * output directory.
-	 * @param workflowOutputPortName
+	 *
+	 * @param portName
 	 * @param data
 	 * @throws IOException
 	 */
-	public void saveResultsForPort(String workflowOutputPortName, Path data) throws IOException {
+	public void saveResultsForPort(String portName, Path data) throws IOException {
 		if (DataBundles.isList(data)) {
-			DataBundles.copyRecursively(data, outputDirectory.toPath().resolve(workflowOutputPortName));
+			Path outputPath = outputDirectory.toPath().resolve(portName);
+			Files.createDirectories(outputPath);
+			saveList(DataBundles.getList(data), outputPath);
+		} else if (DataBundles.isError(data)) {
+			Files.copy(data, outputDirectory.toPath().resolve(portName + ".error"));
 		} else {
-	        Files.copy(data, outputDirectory.toPath().resolve(workflowOutputPortName));
+			Files.copy(data, outputDirectory.toPath().resolve(portName));
 		}
 	}
 
-	public void saveOpm(String workflowRunId) {
-		if (opmFile.getParentFile() != null) {
-			opmFile.getParentFile().mkdirs();
-		}
-		BufferedOutputStream outStream;
-		try {
-			outStream = new BufferedOutputStream(new FileOutputStream(opmFile));
-		} catch (FileNotFoundException e1) {
-			logger.error("Can't find directory for writing OPM to " + opmFile, e1);
-			return;
-		}
-		try {
-			//getProvenanceExporter().exportAsOPMRDF(workflowRunId, outStream);
-		} catch (Exception e) {
-			logger.error("Can't write OPM to " + opmFile, e);
-		} finally {
-			try {
-				outStream.close();
-			} catch (IOException e) {
+	private void saveList(List<Path> list, Path destination) throws IOException {
+		int index = 1;
+		for (Path data : list) {
+			if (data != null) {
+				if (DataBundles.isList(data)) {
+					Path outputPath = destination.resolve(String.valueOf(index));
+					Files.createDirectories(outputPath);
+					saveList(DataBundles.getList(data), outputPath);
+				} else if (DataBundles.isError(data)) {
+					Files.copy(data, outputDirectory.toPath().resolve(String.valueOf(index) + ".error"));
+				} else {
+					Files.copy(data, outputDirectory.toPath().resolve(String.valueOf(index)));
+				}
 			}
-		}
-	}
-
-//	protected synchronized ProvenanceExporter getProvenanceExporter() {
-//		if (provExport == null) {
-//			String connectorType = dbConfig.getConnectorType();
-//			ProvenanceAccess provAccess = new ProvenanceAccess(connectorType, provenanceConnectorFactories);
-//			provExport = new ProvenanceExporter(provAccess);
-//		}
-//		return provExport;
-//	}
-
-	public void saveJanus(String workflowRunId) {
-		if (janusFile.getParentFile() != null) {
-			janusFile.getParentFile().mkdirs();
-		}
-		BufferedOutputStream outStream;
-		try {
-			outStream = new BufferedOutputStream(new FileOutputStream(janusFile));
-		} catch (FileNotFoundException e1) {
-			logger.error("Can't find directory for writing Janus to " + janusFile, e1);
-			return;
-		}
-		try {
-			//getProvenanceExporter().exportAsJanusRDF(workflowRunId, outStream);
-		} catch (Exception e) {
-			logger.error("Can't write Janus to " + janusFile, e);
-		} finally {
-			try {
-				outStream.close();
-			} catch (IOException e) {
-			}
+			index++;
 		}
 	}
 

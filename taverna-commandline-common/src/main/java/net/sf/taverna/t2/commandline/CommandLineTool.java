@@ -65,6 +65,7 @@ import uk.org.taverna.databundle.DataBundles;
 import uk.org.taverna.platform.execution.api.ExecutionEnvironment;
 import uk.org.taverna.platform.execution.api.InvalidExecutionIdException;
 import uk.org.taverna.platform.execution.api.InvalidWorkflowException;
+import uk.org.taverna.platform.report.State;
 import uk.org.taverna.platform.report.WorkflowReport;
 import uk.org.taverna.platform.run.api.InvalidRunIdException;
 import uk.org.taverna.platform.run.api.RunProfile;
@@ -257,8 +258,7 @@ public class CommandLineTool {
 				inputsHandler.checkProvidedInputs(portMap, commandLineOptions);
 				logger.debug("Checked inputs");
 
-				Bundle inputs = inputsHandler.registerInputs(portMap,
-						commandLineOptions, null);
+				Bundle inputs = inputsHandler.registerInputs(portMap, commandLineOptions, null);
 				logger.debug("Registered inputs");
 
 				RunProfile runProfile = new RunProfile(executionEnvironment, workflowBundle, inputs);
@@ -270,93 +270,38 @@ public class CommandLineTool {
 
 				WorkflowReport report = runService.getWorkflowReport(runId);
 
-				Path outputs = DataBundles.getOutputs(runService.getOutputs(runId));
+				while (!workflowFinished(report)) {
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// Ignore
+					}
+				}
 
-				NamedSet<OutputWorkflowPort> workflowOutputPorts = workflowBundle.getMainWorkflow()
-						.getOutputPorts();
-
+				NamedSet<OutputWorkflowPort> workflowOutputPorts = workflow.getOutputPorts();
 				if (!workflowOutputPorts.isEmpty()) {
-
 					File outputDir = null;
 					File outputBaclavaDoc = null;
-					File provenanceDir = null;
-					File janusFile = null;
-					File opmFile = null;
 
 					if (commandLineOptions.saveResultsToDirectory()) {
 						outputDir = determineOutputDir(commandLineOptions, workflowBundle.getName());
 						outputDir.mkdirs();
-						provenanceDir = outputDir;
 					}
 					if (commandLineOptions.getOutputDocument() != null) {
 						outputBaclavaDoc = new File(commandLineOptions.getOutputDocument());
 					}
-					if (commandLineOptions.isJanus()) {
-						if (commandLineOptions.getJanus() == null) {
-							if (provenanceDir == null) {
-								provenanceDir = determineOutputDir(commandLineOptions,
-										workflowBundle.getName());
-							}
-							janusFile = new File(provenanceDir, "provenance-janus.rdf");
-						} else {
-							janusFile = new File(commandLineOptions.getJanus());
-						}
-					}
-					if (commandLineOptions.isOPM()) {
-						if (commandLineOptions.getOPM() == null) {
-							if (provenanceDir == null) {
-								provenanceDir = determineOutputDir(commandLineOptions,
-										workflowBundle.getName());
-							}
-							opmFile = new File(provenanceDir, "provenance-opm.rdf");
-						} else {
-							opmFile = new File(commandLineOptions.getOPM());
-						}
-					}
 
-					// Indicator if results are saved for a particular port
-					Map<String, Boolean> resultsSaved = new HashMap<String, Boolean>();
-					for (OutputWorkflowPort outputPort : workflowOutputPorts) {
-						resultsSaved.put(outputPort.getName(), false);
-					}
+					Path outputs = DataBundles.getOutputs(runService.getOutputs(runId));
 
-					// Has the workflow finished running?
-					boolean workflowFinished = !report.getState().equals(
-							uk.org.taverna.platform.report.State.RUNNING);
-					// Have results been saved for all output ports?
-					boolean allResultsSaved = false; // no point in saving results if they are no
-														// output ports
+					SaveResultsHandler saveResultsHandler = new SaveResultsHandler(outputDir, outputBaclavaDoc);
 
-					SaveResultsHandler saveResultsHandler = new SaveResultsHandler(
-							outputDir, outputBaclavaDoc, opmFile, janusFile, databaseConfiguration, provenanceConnectorFactories);
-
-					while (!workflowFinished || !allResultsSaved) { // while there are still results
-																	// that have not been saved and
-																	// workflow has not finished
-						Iterator<OutputWorkflowPort> iterator = workflowOutputPorts.iterator();
-						while (iterator.hasNext()) {
-							String workflowOutputPortName = iterator.next().getName();
+					if (outputDir != null) {
+						for (OutputWorkflowPort outputWorkflowPort : workflowOutputPorts) {
+							String workflowOutputPortName = outputWorkflowPort.getName();
 							Path output = DataBundles.getPort(outputs, workflowOutputPortName);
-							if (!DataBundles.isMissing(output) && !resultsSaved.get(workflowOutputPortName)) {
-								// are results ready for this output port? have they been saved yet?
-								if (outputDir != null) {
-									saveResultsHandler.saveResultsForPort(workflowOutputPortName, output);
-								}
-								resultsSaved.put(workflowOutputPortName, true);
+							if (!DataBundles.isMissing(output)) {
+								saveResultsHandler.saveResultsForPort(workflowOutputPortName, output);
 							}
-						}
-
-						workflowFinished = !report.getState().equals(uk.org.taverna.platform.report.State.RUNNING);
-						// either completed or failed but finished running
-						allResultsSaved = !resultsSaved.values().contains(false);
-						if (!(workflowFinished && allResultsSaved)) {
-							try {
-								Thread.sleep(500);
-							} catch (InterruptedException e) {
-								// Ignore
-							}
-						} else {
-							break;
 						}
 					}
 
@@ -365,13 +310,12 @@ public class CommandLineTool {
 					}
 				}
 
-				if (report.getState().equals(uk.org.taverna.platform.report.State.FAILED)) {
+				if (report.getState().equals(State.FAILED)) {
 					System.out.println("Workflow failed - see report below.");
 					System.out.println(report);
-				} else if (report.getState().equals(uk.org.taverna.platform.report.State.COMPLETED)) {
+				} else if (report.getState().equals(State.COMPLETED)) {
 					System.out.println("Workflow completed.");
 				}
-				// Save results somehow
 
 			}
 		} else {
@@ -391,6 +335,14 @@ public class CommandLineTool {
 		}
 
 		return 0;
+	}
+
+	private boolean workflowFinished(WorkflowReport report) {
+		State state = report.getState();
+		if (state == State.CANCELLED || state == State.COMPLETED || state == State.FAILED) {
+			return true;
+		}
+		return false;
 	}
 
 	protected void validateWorkflowBundle(WorkflowBundle workflowBundle) throws ValidationException {

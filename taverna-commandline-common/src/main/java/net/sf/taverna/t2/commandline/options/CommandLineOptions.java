@@ -1,19 +1,19 @@
 /*******************************************************************************
- * Copyright (C) 2007 The University of Manchester   
- * 
+ * Copyright (C) 2007 The University of Manchester
+ *
  *  Modifications to the initial code base are copyright of their
  *  respective authors, or their employers as appropriate.
- * 
+ *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public License
  *  as published by the Free Software Foundation; either version 2.1 of
  *  the License, or (at your option) any later version.
- *    
+ *
  *  This program is distributed in the hope that it will be useful, but
  *  WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- *    
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
@@ -42,7 +42,7 @@ import org.apache.log4j.Logger;
  * This class encapsulates all command line options, and exposes them through higher-level
  * accessors. Upon creation it checks the validity of the command line options and raises an
  * {@link InvalidOptionException} if they are invalid.
- * 
+ *
  * @author Stuart Owen
  *
  */
@@ -52,34 +52,24 @@ public class CommandLineOptions {
 			.getLogger(CommandLineOptions.class);
 	private Options options;
 	private CommandLine commandLine;
-	
-	private static final String JANUS = "janus";
-	private static final String OPM = "opm";
+
 	public static final String CREDENTIAL_MANAGER_DIR_OPTION = "cmdir";
 	public static final String CREDENTIAL_MANAGER_PASSWORD_OPTION = "cmpassword";
 
 	public CommandLineOptions(String[] args) throws ArgumentsParsingException, InvalidOptionException {
 		this.options = intitialiseOptions();
-		this.commandLine = processArgs(args);		
+		this.commandLine = processArgs(args);
 		checkForInvalid();
 	}
-
-//	public CommandLineOptions(
-//			CommandLineArgumentProvider commandLineArgumentProvider)
-//			throws InvalidOptionException, ArgumentsParsingException {
-//		this.options = intitialiseOptions();
-//		this.commandLine = processArgs((String[])(commandLineArgumentProvider.getRemainingArguments("executeworkflow [options] [workflow]").toArray(new String[0])));		
-//		checkForInvalid();
-//	}
 
 	public boolean askedForHelp() {
 		return hasOption("help") || (getArgs().length==0 && getOptions().length==0);
 	}
-	
+
 	public boolean isProvenanceEnabled() {
-		return hasOption("provenance") || hasOption(OPM) || hasOption(JANUS);
+		return hasOption("provenance");
 	}
-	
+
 	protected void checkForInvalid() throws InvalidOptionException {
 		if (askedForHelp()) return;
 		if (isProvenanceEnabled()
@@ -93,14 +83,14 @@ public class CommandLineOptions {
 				&& hasOption("inputdoc"))
 			throw new InvalidOptionException(
 					"You can't provide both -input and -inputdoc arguments");
-		
+
 		if (hasOption("inputdelimiter") && hasOption("inputdoc"))
 			throw new InvalidOptionException("You cannot combine the -inputdelimiter and -inputdoc arguments");
 
 		if (getArgs().length == 0
 				&& !(hasOption("help") || hasOption("startdb")))
 			throw new InvalidOptionException("You must specify a workflow");
-		
+
 		if (hasOption("inmemory") && hasOption("embedded"))
 			throw new InvalidOptionException(
 					"The options -embedded, -clientserver and -inmemory cannot be used together");
@@ -140,10 +130,10 @@ public class CommandLineOptions {
 
 	public String[] getArgs() {
 		return commandLine.getArgs();
-	}		
-	
+	}
+
 	/**
-	 * 
+	 *
 	 * @return the port that the database should run on
 	 */
 	public String getDatabasePort() {
@@ -151,7 +141,7 @@ public class CommandLineOptions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return a path to a properties file that contains database configuration
 	 *         settings
 	 */
@@ -160,7 +150,7 @@ public class CommandLineOptions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return the path to the input document
 	 */
 	public String getInputDocument() {
@@ -171,7 +161,7 @@ public class CommandLineOptions {
 	 * Returns an array that alternates between a portname and path to a file
 	 * containing the input values. Therefore the array will always contain an
 	 * even number of elements
-	 * 
+	 *
 	 * @return an array of portname and path to files containing individual
 	 *         inputs.
 	 */
@@ -208,7 +198,7 @@ public class CommandLineOptions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return the directory to write the results to
 	 */
 	public String getOutputDirectory() {
@@ -216,7 +206,7 @@ public class CommandLineOptions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return the path to the output document
 	 */
 	public String getOutputDocument() {
@@ -226,7 +216,7 @@ public class CommandLineOptions {
 	public boolean getStartDatabase() {
 		return hasOption("startdb");
 	}
-	
+
 	/**
 	 * @return the directory with Credential Manager's files
 	 */
@@ -364,28 +354,14 @@ public class CommandLineOptions {
 				"Automatically start an internal Derby database server.");
 		Option provenance = new Option("provenance",
 				"Generate provenance information and store it in the database.");
-		
-		
-		Option opm = OptionBuilder
-				.withArgName("file")
-				.hasOptionalArg()
-				.withDescription(
-						"Save Open Provenance Model (OPM) RDF/XML trace of execution to FILE or 'provenance-opm.rdf'.")
-				.create(OPM);
 
-		Option janus = OptionBuilder
-				.withArgName("file")
-				.hasOptionalArg()
-				.withDescription(
-						"Save Janus RDF/XML trace of execution to FILE or 'provenance-janus.rdf'.")
-				.create(JANUS);		
-		
+
 		Option credentialManagerDirectory = OptionBuilder.withArgName("directory path").
 		hasArg().withDescription(
 				"Absolute path to a directory where Credential Manager's files (keystore and truststore) are located.")
 		.create(CREDENTIAL_MANAGER_DIR_OPTION);
 		Option credentialManagerPassword = new Option(CREDENTIAL_MANAGER_PASSWORD_OPTION, "Indicate that the master password for Credential Manager will be provided on standard input."); // optional password option, to be read from standard input
-		
+
 		Options options = new Options();
 		options.addOption(helpOption);
 		options.addOption(inputFileOption);
@@ -401,8 +377,6 @@ public class CommandLineOptions {
 		options.addOption(port);
 		options.addOption(startDB);
 		options.addOption(provenance);
-		options.addOption(opm);
-		options.addOption(janus);
 		options.addOption(logFileOption);
 		options.addOption(credentialManagerDirectory);
 		options.addOption(credentialManagerPassword);
@@ -440,26 +414,12 @@ public class CommandLineOptions {
 	/**
 	 * Save the results to a directory if -outputdir has been explicitly defined,
 	 * or if -outputdoc has not been defined.
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public boolean saveResultsToDirectory() {
 		return (options.hasOption("outputdir") || !options
 				.hasOption("outputdoc"));
-	}
-
-	public String getJanus() {
-		return getOptionValue(JANUS);
-	}
-	public String getOPM() {
-		return getOptionValue(OPM);
-	}
-	
-	public boolean isOPM() {
-		return hasOption(OPM);
-	}
-	public boolean isJanus() {
-		return hasOption(JANUS);
 	}
 
 }
