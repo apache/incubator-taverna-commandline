@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
@@ -90,7 +91,11 @@ public class SaveResultsHandler {
 	 * @throws IOException
 	 */
 	public void saveResultsForPort(String workflowOutputPortName, Path data) throws IOException {
-		DataBundles.copyRecursively(data, outputDirectory.toPath());
+		if (DataBundles.isList(data)) {
+			DataBundles.copyRecursively(data, outputDirectory.toPath().resolve(workflowOutputPortName));
+		} else {
+	        Files.copy(data, outputDirectory.toPath().resolve(workflowOutputPortName));
+		}
 	}
 
 	public void saveOpm(String workflowRunId) {

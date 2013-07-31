@@ -224,7 +224,6 @@ public class CommandLineTool {
 
 				workflowBundle = workflowBundleIO.readBundle(workflowURL, null);
 
-//				workflowBundle = workflowBundleIO.readBundle(workflowURL.openStream(), null);
 				logger.debug("Read the wf bundle");
 
 				validateWorkflowBundle(workflowBundle);
@@ -272,7 +271,6 @@ public class CommandLineTool {
 				WorkflowReport report = runService.getWorkflowReport(runId);
 
 				Path outputs = DataBundles.getOutputs(runService.getOutputs(runId));
-				NavigableMap<String, Path> results = DataBundles.getPorts(outputs);
 
 				NamedSet<OutputWorkflowPort> workflowOutputPorts = workflowBundle.getMainWorkflow()
 						.getOutputPorts();
@@ -287,6 +285,7 @@ public class CommandLineTool {
 
 					if (commandLineOptions.saveResultsToDirectory()) {
 						outputDir = determineOutputDir(commandLineOptions, workflowBundle.getName());
+						outputDir.mkdirs();
 						provenanceDir = outputDir;
 					}
 					if (commandLineOptions.getOutputDocument() != null) {
@@ -337,12 +336,11 @@ public class CommandLineTool {
 						Iterator<OutputWorkflowPort> iterator = workflowOutputPorts.iterator();
 						while (iterator.hasNext()) {
 							String workflowOutputPortName = iterator.next().getName();
-							if (results.get(workflowOutputPortName) != null
-									&& !resultsSaved.get(workflowOutputPortName)) {
+							Path output = DataBundles.getPort(outputs, workflowOutputPortName);
+							if (!DataBundles.isMissing(output) && !resultsSaved.get(workflowOutputPortName)) {
 								// are results ready for this output port? have they been saved yet?
 								if (outputDir != null) {
-									saveResultsHandler.saveResultsForPort(workflowOutputPortName,
-											results.get(workflowOutputPortName));
+									saveResultsHandler.saveResultsForPort(workflowOutputPortName, output);
 								}
 								resultsSaved.put(workflowOutputPortName, true);
 							}
@@ -363,7 +361,7 @@ public class CommandLineTool {
 					}
 
 					if (outputBaclavaDoc != null) {
-						saveResultsHandler.saveOutputBaclavaDocument(results);
+						saveResultsHandler.saveOutputBaclavaDocument(DataBundles.getPorts(outputs));
 					}
 				}
 
