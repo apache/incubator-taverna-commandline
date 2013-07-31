@@ -40,12 +40,17 @@
 			<groupId>com.sun.xml</groupId>
 			<artifactId>com.springsource.com.sun.xml.bind</artifactId>
 			<version>2.2.0</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>com.springsource.javax.xml.bind</artifactId>
 			<version>2.2.0</version>
-		</dependency> -->
+		</dependency>
+		<dependency>
+			<groupId>javax.activation</groupId>
+			<artifactId>com.springsource.javax.activation</artifactId>
+			<version>1.1.1</version>
+		</dependency>
 		<dependency> <!-- required by bsh -->
 			<groupId>javax.servlet</groupId>
 			<artifactId>com.springsource.javax.servlet</artifactId>
@@ -88,6 +93,16 @@
 			<artifactId>xml-transformer-service</artifactId>
 			<version>${osgi.services.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.eventadmin</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.configadmin</artifactId>
+			<version>1.6.0</version>
+		</dependency>
 
 		<!-- Taverna Activities -->
 		<dependency>
@@ -118,11 +133,6 @@
 		<dependency>
 			<groupId>uk.org.taverna.platform</groupId>
 			<artifactId>taverna-capability-impl</artifactId>
-			<version>${platform.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>uk.org.taverna.platform</groupId>
-			<artifactId>taverna-data-impl</artifactId>
 			<version>${platform.version}</version>
 		</dependency>
 		<dependency>
@@ -158,6 +168,13 @@
 			<version>${taverna.configuration.version}</version>
 		</dependency>
 
+		<!-- Taverna Commons -->
+		<dependency>
+			<groupId>uk.org.taverna.commons</groupId>
+			<artifactId>taverna-services-impl</artifactId>
+			<version>0.1.0-SNAPSHOT</version>
+		</dependency>
+
 		<!-- Scufl2 -->
 		<dependency>
 			<groupId>uk.org.taverna.scufl2</groupId>
@@ -178,6 +195,13 @@
 			<groupId>uk.org.taverna.scufl2</groupId>
 			<artifactId>scufl2-validation-correctness</artifactId>
 			<version>${scufl2.version}</version>
+		</dependency>
+
+		<!-- Data bundle -->
+		<dependency>
+			<groupId>uk.org.taverna.databundle</groupId>
+    		<artifactId>databundle</artifactId>
+    		<version>0.1.0-SNAPSHOT</version>
 		</dependency>
 
 		<!-- Taverna Security -->
