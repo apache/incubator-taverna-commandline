@@ -54,7 +54,7 @@ public class TavernaCommandLine {
 
 	private static Log4JConfiguration log4jConfiguration = new Log4JConfiguration();
 
-	private static final String extraSystemPackages = "org.apache.log4j;version=1.2.16,uk.org.taverna.commandline.args;version=0.1.0";
+	private static final String extraSystemPackages = "org.apache.log4j;version=1.2.16,uk.org.taverna.commandline.args;version=0.1.1";
 
 	/**
 	 * Starts the Taverna Command Line Tool.
