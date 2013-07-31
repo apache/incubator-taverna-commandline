@@ -68,7 +68,7 @@ public class TavernaCommandLineTest {
 	private static String baseVersion = "2.4.0";
 	private static boolean baseVersionReleased = true;
 
-	private static String testVersion = "3.0.0-SNAPSHOT";
+	private static String testVersion = "3.0.1-SNAPSHOT";
 	private static boolean testVersionReleased = false;
 	private static boolean testVersionSupportsScufl2 = true;
 
@@ -154,10 +154,10 @@ public class TavernaCommandLineTest {
 
     public boolean testExcluded() {
     	//version 3.0.0 is missing biomoby activity
-		if (testVersion.startsWith("3.0.0") && workflowDirectory.getName().contains("biomoby")) return true;
+		if (testVersion.startsWith("3.") && workflowDirectory.getName().contains("biomoby")) return true;
     	//version 3.0.0 is missing looping configuration
-		if (testVersion.startsWith("3.0.0") && workflowDirectory.getName().equals("ebi_interproscan_newservices")) return true;
-		if (testVersion.startsWith("3.0.0") && workflowDirectory.getName().equals("biomartandembossanalysis")) return true;
+		if (testVersion.startsWith("3.") && workflowDirectory.getName().equals("ebi_interproscan_newservices")) return true;
+		if (testVersion.startsWith("3.") && workflowDirectory.getName().equals("biomartandembossanalysis")) return true;
 		return false;
     }
 
@@ -187,7 +187,7 @@ public class TavernaCommandLineTest {
 		assertOutputsEquals(baseOutput, testOutput);
 	}
 
-	@Test@Ignore
+	@Test
 	public void testWorkflowWithInputFiles() throws Exception {
 		assumeTrue(!testExcluded());
 		assumeTrue(baseOutput.exists());
@@ -218,11 +218,6 @@ public class TavernaCommandLineTest {
 		assumeTrue(!testExcluded());
 		assumeTrue(baseOutput.exists());
 		assumeTrue(testVersionSupportsScufl2);
-
-		//assumeTrue(workflowDirectory.getName().contains("rest"));//skip rest due to SCUFL2-121
-		//assumeTrue(!workflowDirectory.getName().startsWith("secure-basic"));//skip rest due to SCUFL2-121
-		//assumeTrue(!workflowDirectory.getName().startsWith("secure-client"));//skip rest due to SCUFL2-121
-		//assumeTrue(!workflowDirectory.getName().startsWith("secure-digest"));//skip rest due to SCUFL2-121
 
 		FileUtils.deleteDirectory(testOutput);
 		String workflow = getScufl2Workflow().toASCIIString();
@@ -279,7 +274,7 @@ public class TavernaCommandLineTest {
 	}
 
 	private URI getScufl2Workflow() throws Exception {
-		File workflow = new File(buildDirectory, workflowDirectory.getName() + ".scufl2");
+		File workflow = new File(buildDirectory, workflowDirectory.getName() + ".wfbundle");
 //		if (!workflow.exists()) {
 			WorkflowBundleIO workflowBundleIO = new WorkflowBundleIO();
 			WorkflowBundle bundle = workflowBundleIO.readBundle(getWorkflow().toURL(), null);
