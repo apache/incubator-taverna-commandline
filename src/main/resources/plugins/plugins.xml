@@ -11,14 +11,14 @@
         <enabled>true</enabled>
         <repositories>
             <repository>http://www.mygrid.org.uk/maven/repository/</repository>
-            <repository>http://uk.maven.org/maven2/</repository>
+            <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
+                        <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
             <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
             <repository>http://ws.zones.apache.org/repository2/</repository>
             <repository>http://www.eviware.com/repository/maven2/</repository>
-                        <repository>http://www.mygrid.org.uk/maven/repository/</repository>
             <repository>http://repo1.maven.org/maven2/</repository>
-            <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
+
             <repository>http://openprovenance.org/java/maven-releases/</repository>
             <repository>http://people.apache.org/repo/m2-snapshot-repository/</repository>
             <repository>http://repository.apache.org/snapshots/</repository>
@@ -51,6 +51,7 @@
         <enabled>true</enabled>
         <repositories>
            <repository>http://www.mygrid.org.uk/maven/repository/</repository>
+            <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
             <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
             <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
@@ -81,6 +82,7 @@
         <enabled>true</enabled>
         <repositories>
             <repository>http://www.mygrid.org.uk/maven/repository/</repository>
+             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
             <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
             <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
@@ -114,6 +116,7 @@
         <enabled>true</enabled>
         <repositories>            
            <repository>http://www.mygrid.org.uk/maven/repository/</repository>
+            <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
             <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
             <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
