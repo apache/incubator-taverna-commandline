@@ -28,10 +28,8 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.NavigableMap;
 import java.util.Set;
 
 import javax.naming.NamingException;
@@ -39,7 +37,6 @@ import javax.naming.NamingException;
 import net.sf.taverna.t2.commandline.data.DatabaseConfigurationHandler;
 import net.sf.taverna.t2.commandline.data.InputsHandler;
 import net.sf.taverna.t2.commandline.data.SaveResultsHandler;
-import net.sf.taverna.t2.commandline.exceptions.ArgumentsParsingException;
 import net.sf.taverna.t2.commandline.exceptions.DatabaseConfigurationException;
 import net.sf.taverna.t2.commandline.exceptions.InputMismatchException;
 import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
@@ -58,7 +55,6 @@ import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.RollingFileAppender;
 import org.purl.wf4ever.robundle.Bundle;
 
-import uk.org.taverna.commandline.args.CommandLineArguments;
 import uk.org.taverna.configuration.database.DatabaseConfiguration;
 import uk.org.taverna.configuration.database.DatabaseManager;
 import uk.org.taverna.databundle.DataBundles;
@@ -96,8 +92,6 @@ public class CommandLineTool {
 
 	private static Logger logger = Logger.getLogger(CommandLineTool.class);
 
-	private CommandLineArguments commandLineArgumentsService;
-
 	private RunService runService;
 
 	private CredentialManager credentialManager;
@@ -116,13 +110,9 @@ public class CommandLineTool {
 
 	public void run() {
 		try {
-			String[] args = commandLineArgumentsService.getCommandLineArguments();
-			commandLineOptions = new CommandLineOptions(args);
 //			initialiseLogging();
 			int result = setupAndExecute();
 			System.exit(result);
-		} catch (ArgumentsParsingException e) { // thrown by CommandLineOptions
-			error(e.getMessage());
 		} catch (InvalidOptionException e) { // thrown by CommandLineOptions
 			error(e.getMessage());
 		} catch (IOException e) {
@@ -428,9 +418,8 @@ public class CommandLineTool {
 		}
 	}
 
-	public void setCommandLineArgumentsService(CommandLineArguments
-			commandLineArgumentsService){
-		this.commandLineArgumentsService = commandLineArgumentsService;
+	public void setCommandLineOptions(CommandLineOptions commandLineOptions){
+		this.commandLineOptions = commandLineOptions;
 	}
 
 	public void setRunService(RunService runService) {

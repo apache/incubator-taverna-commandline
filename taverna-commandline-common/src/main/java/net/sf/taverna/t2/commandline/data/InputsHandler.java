@@ -251,9 +251,7 @@ public class InputsHandler {
 		} else if (userInput instanceof String) {
 			DataBundles.setStringValue(port, (String) userInput);
 		} else if (userInput instanceof byte[]) {
-			try (OutputStream out = Files.newOutputStream(port, StandardOpenOption.WRITE)) {
-				out.write((byte[]) userInput);
-			}
+			Files.write(port, (byte[]) userInput, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE);
 		} else if (userInput instanceof List<?>) {
 			DataBundles.createList(port);
 			List<?> list = (List<?>) userInput;

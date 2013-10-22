@@ -9,7 +9,7 @@
 
     <service ref="commandLineMasterPasswordProvider" interface="net.sf.taverna.t2.security.credentialmanager.MasterPasswordProvider" />
 
- 	<reference id="commandLineArgumentsService" interface="uk.org.taverna.commandline.args.CommandLineArguments"/>
+ 	<reference id="commandLineOptions" interface="net.sf.taverna.t2.commandline.options.CommandLineOptions"/>
     <reference id="runService" interface="uk.org.taverna.platform.run.api.RunService"/>
 	<reference id="credentialManager" interface="net.sf.taverna.t2.security.credentialmanager.CredentialManager" />
 	<reference id="databaseConfiguration" interface="uk.org.taverna.configuration.database.DatabaseConfiguration" />

@@ -5,7 +5,7 @@
                            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<bean id="commandLineTool" class="net.sf.taverna.t2.commandline.CommandLineTool" init-method="run">
-		<property name="commandLineArgumentsService" ref="commandLineArgumentsService" />
+		<property name="commandLineOptions" ref="commandLineOptions" />
 		<property name="runService" ref="runService" />
 		<property name="credentialManager" ref="credentialManager" />
 		<property name="workflowBundleIO" ref="workflowBundleIO" />
@@ -16,7 +16,7 @@
 
 	<bean id="commandLineMasterPasswordProvider"
 		class="net.sf.taverna.t2.commandline.CommandLineMasterPasswordProvider">
-		<constructor-arg name="commandLineArgumentsService"
-			ref="commandLineArgumentsService" />
+		<constructor-arg name="commandLineOptions"
+			ref="commandLineOptions" />
 	</bean>
 </beans>

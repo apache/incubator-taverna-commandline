@@ -11,9 +11,9 @@
 	<name>Taverna Commandline Common</name>
 	<dependencies>
 		<dependency>
-			<groupId>uk.org.taverna.commandline</groupId>
-			<artifactId>arguments</artifactId>
-			<version>${taverna.commandline-arguments.version}</version>
+			<groupId>net.sf.taverna.t2.taverna-commandline</groupId>
+			<artifactId>taverna-commandline-api</artifactId>
+			<version>2.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -67,12 +67,6 @@
 			<groupId>net.sf.taverna.t2.security</groupId>
 			<artifactId>credential-manager</artifactId>
 			<version>${t2.security.version}</version>
-		</dependency>
-
- 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>com.springsource.org.apache.commons.cli</artifactId>
-			<version>${commons.cli.version}</version>
 		</dependency>
 
 		<dependency>

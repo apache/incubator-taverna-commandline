@@ -20,6 +20,7 @@
 
 	<modules>
 		<module>taverna-commandline-common</module>
+		<module>taverna-commandline-api</module>
 	</modules>
 
 	<repositories>
