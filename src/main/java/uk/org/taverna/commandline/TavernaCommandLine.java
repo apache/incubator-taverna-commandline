@@ -21,10 +21,11 @@
 package uk.org.taverna.commandline;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sf.taverna.t2.commandline.exceptions.ArgumentsParsingException;
 import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
@@ -33,7 +34,9 @@ import net.sf.taverna.t2.commandline.options.CommandLineOptions;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 
-import uk.org.taverna.commandline.args.CommandLineArguments;
+import uk.org.taverna.commons.profile.xml.jaxb.ApplicationProfile;
+import uk.org.taverna.commons.profile.xml.jaxb.BundleInfo;
+import uk.org.taverna.commons.profile.xml.jaxb.FrameworkConfiguration;
 import uk.org.taverna.configuration.app.ApplicationConfiguration;
 import uk.org.taverna.configuration.app.impl.ApplicationConfigurationImpl;
 import uk.org.taverna.configuration.app.impl.Log4JConfiguration;
@@ -46,45 +49,37 @@ import uk.org.taverna.osgi.OsgiLauncher;
  */
 public class TavernaCommandLine {
 
-	private static final String BUNDLE_DIRECTORY = "bundles";
+	private static final String COMMANDLINE_BUNDLE_NAME = "net.sf.taverna.t2.taverna-commandline.common";
 
-	private static File tavernaCommandlineCommon;
+	private static File commandlineBundle;
 
 	private static ApplicationConfiguration applicationConfiguration = new ApplicationConfigurationImpl();
 
 	private static Log4JConfiguration log4jConfiguration = new Log4JConfiguration();
 
-	private static final String extraSystemPackages = "org.apache.log4j;version=1.2.16,uk.org.taverna.commandline.args;version=0.1.1";
-
 	/**
 	 * Starts the Taverna Command Line Tool.
 	 *
-	 * @param args Taverna Command Line arguments
+	 * @param args
+	 *            Taverna Command Line arguments
 	 */
 	public static void main(final String[] args) {
-		CommandLineOptions commandLineOptions = null;
 		try {
-			commandLineOptions = new CommandLineOptions(args);
+			CommandLineOptions commandLineOptions = new CommandLineOptionsImpl(args);
 			if (commandLineOptions.askedForHelp()) {
 				commandLineOptions.displayHelp();
 			} else {
 				log4jConfiguration.setApplicationConfiguration(applicationConfiguration);
 				log4jConfiguration.prepareLog4J();
 				setDerbyPaths();
-				OsgiLauncher osgiStarter = new OsgiLauncher(getAppDirectory(), getBundleURIs());
-				osgiStarter.setCleanStorageDirectory(true);
-				osgiStarter.addSystemPackages(extraSystemPackages);
-				osgiStarter.start();
-				osgiStarter.startServices(true);
-				BundleContext context = osgiStarter.getContext();
-				context.registerService("uk.org.taverna.commandline.args.CommandLineArguments",
-						new CommandLineArguments() {
-							public String[] getCommandLineArguments() {
-								return args;
-							}
-						}, null);
-				osgiStarter
-						.startBundle(osgiStarter.installBundle(tavernaCommandlineCommon.toURI()));
+				OsgiLauncher osgilauncher = new OsgiLauncher(getAppDirectory(), getBundleURIs());
+				setFrameworkConfiguration(osgilauncher);
+				osgilauncher.start();
+				BundleContext context = osgilauncher.getContext();
+				context.registerService("net.sf.taverna.t2.commandline.options.CommandLineOptions",
+						commandLineOptions, null);
+				osgilauncher.startServices(true);
+				osgilauncher.startBundle(osgilauncher.installBundle(commandlineBundle.toURI()));
 			}
 		} catch (ArgumentsParsingException e) {
 			System.out.println(e.getMessage());
@@ -95,25 +90,40 @@ public class TavernaCommandLine {
 		}
 	}
 
+	/**
+	 * Sets the OSGi Framework configuration.
+	 *
+	 * @param osgilauncher
+	 */
+	private static void setFrameworkConfiguration(OsgiLauncher osgilauncher) {
+		ApplicationProfile applicationProfile = applicationConfiguration.getApplicationProfile();
+		List<FrameworkConfiguration> frameworkConfigurations = applicationProfile
+				.getFrameworkConfiguration();
+		if (!frameworkConfigurations.isEmpty()) {
+			Map<String, String> configurationMap = new HashMap<String, String>();
+			for (FrameworkConfiguration frameworkConfiguration : frameworkConfigurations) {
+				configurationMap.put(frameworkConfiguration.getName(),
+						frameworkConfiguration.getValue());
+			}
+			osgilauncher.setFrameworkConfiguration(configurationMap);
+		}
+	}
+
 	private static List<URI> getBundleURIs() {
 		List<URI> bundleURIs = new ArrayList<URI>();
-		File[] files = getBundleDirectory().listFiles(new FilenameFilter() {
-			public boolean accept(File dir, String name) {
-				return name.endsWith(".jar");
-			}
-		});
-		for (File file : files) {
-			if (file.getName().startsWith("taverna-commandline-common")) {
-				tavernaCommandlineCommon = file;
-			} else {
-				bundleURIs.add(file.toURI());
+		ApplicationProfile applicationProfile = applicationConfiguration.getApplicationProfile();
+		File libDir = new File(applicationConfiguration.getStartupDir(), "lib");
+		if (applicationProfile != null) {
+			for (BundleInfo bundle : applicationProfile.getBundle()) {
+				File bundleFile = new File(libDir, bundle.getFileName());
+				if (bundle.getSymbolicName().equals(COMMANDLINE_BUNDLE_NAME)) {
+					commandlineBundle = bundleFile;
+				} else {
+					bundleURIs.add(bundleFile.toURI());
+				}
 			}
 		}
 		return bundleURIs;
-	}
-
-	private static File getBundleDirectory() {
-		return new File(System.getProperty("taverna.app.startup"), BUNDLE_DIRECTORY);
 	}
 
 	private static File getAppDirectory() {
