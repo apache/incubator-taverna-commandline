@@ -74,12 +74,18 @@ public class TavernaCommandLineTest {
 
 	private static String script = "executeworkflow.sh";
 	private static String baseName = "taverna-commandline-" + baseVersion;
-	private static String testName = "taverna-commandline-" + testVersion;
+	private static String testName = "taverna-command-line-" + testVersion;
 	private static String releasedLocation = "https://launchpad.net/taverna/t2/";
 	private static String unreleasedLocation = "http://build.mygrid.org.uk/ci/job/t3-taverna-commandline-product/lastSuccessfulBuild/net.sf.taverna.t2$taverna-commandline/artifact/net.sf.taverna.t2/taverna-commandline/";
 
-	private static String baseVersionLocation =  (baseVersionReleased ? releasedLocation : unreleasedLocation) + baseVersion + "/+download/" + baseName + ".zip";
-	private static String testVersionLocation = (testVersionReleased ? releasedLocation : unreleasedLocation) + testVersion + "/" + testName + (testVersionReleased ? ".zip" : "-bin.zip");
+	private static String baseVersionLocation = (baseVersionReleased ? releasedLocation
+			: unreleasedLocation) + baseVersion + "/+download/" + baseName + ".zip";
+	private static String testVersionLocation = (testVersionReleased ? releasedLocation
+			: unreleasedLocation)
+			+ testVersion
+			+ "/"
+			+ testName
+			+ (testVersionReleased ? ".zip" : "-bin.zip");
 
 	private static String baseCommand;
 	private static String testCommand;
@@ -99,7 +105,8 @@ public class TavernaCommandLineTest {
 		if (buildDirectory == null) {
 			String buildDirectoryLocation = System.getProperty("buildDirectory");
 			if (buildDirectoryLocation == null) {
-				buildDirectoryLocation = "/Users/david/Documents/workspace-trunk/taverna-command-line-tests/target";
+				buildDirectoryLocation = System.getProperty("user.dir")
+						+ System.getProperty("file.separator") + "target";
 			}
 			buildDirectory = new File(buildDirectoryLocation);
 			buildDirectory.mkdirs();
@@ -129,37 +136,55 @@ public class TavernaCommandLineTest {
 		message = "Running {0} with version {1}";
 	}
 
-    @Workflows
-    public static List<File> workflows() {
-    	List<File> workflows = new ArrayList<File>();
+	@Workflows
+	public static List<File> workflows() {
+		List<File> workflows = new ArrayList<File>();
 		for (File workflowDirectory : getResources("workflows")) {
 			workflows.add(workflowDirectory);
 		}
 		for (File workflowDirectory : getResources("myexperiment")) {
 			workflows.add(workflowDirectory);
 		}
-    	return workflows;
-    }
+		return workflows;
+	}
 
-    @Before
-    public void setup() throws Exception {
-    	if (!baseOutput.exists()) {
-    		if (baseVersion.equals("2.3.0") && workflowDirectory.getName().equals("tool")) return;//version 2.3.0 is missing tool plugin
-    		String workflow = getWorkflow().toASCIIString();
-    		System.out.println(MessageFormat.format(message, workflow, baseVersion) + (inputs.size() > 0 ? " using input values" : ""));
-    		runWorkflow(baseCommand, workflow, baseOutput, true, secure, false);
-    		assertTrue(String.format("No output produced for %s", workflowDirectory.getName()), baseOutput.exists());
-    	}
-    }
+	@Before
+	public void setup() throws Exception {
+		if (!baseOutput.exists()) {
+			if (baseVersion.equals("2.3.0") && workflowDirectory.getName().equals("tool"))
+				return;// version 2.3.0 is missing tool plugin
+			String workflow = getWorkflow().toASCIIString();
+			System.out.println(MessageFormat.format(message, workflow, baseVersion)
+					+ (inputs.size() > 0 ? " using input values" : ""));
+			runWorkflow(baseCommand, workflow, baseOutput, true, secure, false);
+			assertTrue(String.format("No output produced for %s", workflowDirectory.getName()),
+					baseOutput.exists());
+		}
+	}
 
-    public boolean testExcluded() {
-    	//version 3.0.0 is missing biomoby activity
-		if (testVersion.startsWith("3.") && workflowDirectory.getName().contains("biomoby")) return true;
-    	//version 3.0.0 is missing looping configuration
-		if (testVersion.startsWith("3.") && workflowDirectory.getName().equals("ebi_interproscan_newservices")) return true;
-		if (testVersion.startsWith("3.") && workflowDirectory.getName().equals("biomartandembossanalysis")) return true;
+	public boolean testExcluded() {
+		// version 3.0.0 is missing biomoby activity
+		if (testVersion.startsWith("3.") && workflowDirectory.getName().contains("biomoby"))
+			return true;
+		// version 3.0.0 is missing tool activity
+		if (testVersion.startsWith("3.")
+				&& workflowDirectory.getName().equals("unix_external_tools_with_zip_and_unzip"))
+			return true;
+		if (testVersion.startsWith("3.")
+				&& workflowDirectory.getName().equals("unix_numerically_adding_two_values"))
+			return true;
+		if (testVersion.startsWith("3.")
+				&& workflowDirectory.getName().equals("unix_tool_service_using_string_replacement"))
+			return true;
+		// version 3.0.0 is missing looping configuration
+		if (testVersion.startsWith("3.")
+				&& workflowDirectory.getName().equals("ebi_interproscan_newservices"))
+			return true;
+		if (testVersion.startsWith("3.")
+				&& workflowDirectory.getName().equals("biomartandembossanalysis"))
+			return true;
 		return false;
-    }
+	}
 
 	@Test
 	public void testWorkflowWithoutInputs() throws Exception {
@@ -170,7 +195,8 @@ public class TavernaCommandLineTest {
 		String workflow = getWorkflow().toASCIIString();
 		System.out.println(MessageFormat.format(message, workflow, testVersion));
 		runWorkflow(testCommand, workflow, testOutput, true, secure, false);
-		assertTrue(String.format("No output produced for %s", workflowDirectory.getName()), testOutput.exists());
+		assertTrue(String.format("No output produced for %s", workflowDirectory.getName()),
+				testOutput.exists());
 		assertOutputsEquals(baseOutput, testOutput);
 	}
 
@@ -181,9 +207,11 @@ public class TavernaCommandLineTest {
 		assumeTrue(inputs.size() > 0);
 		FileUtils.deleteDirectory(testOutput);
 		String workflow = getWorkflow().toASCIIString();
-		System.out.println(MessageFormat.format(message, workflow, testVersion) + " using input values");
+		System.out.println(MessageFormat.format(message, workflow, testVersion)
+				+ " using input values");
 		runWorkflow(testCommand, workflow, testOutput, true, secure, false);
-		assertTrue(String.format("No output produced for %s", workflowDirectory.getName()), testOutput.exists());
+		assertTrue(String.format("No output produced for %s", workflowDirectory.getName()),
+				testOutput.exists());
 		assertOutputsEquals(baseOutput, testOutput);
 	}
 
@@ -194,22 +222,27 @@ public class TavernaCommandLineTest {
 		assumeTrue(inputs.size() > 0);
 		FileUtils.deleteDirectory(testOutput);
 		String workflow = getWorkflow().toASCIIString();
-		System.out.println(MessageFormat.format(message, workflow, testVersion) + " using input files");
+		System.out.println(MessageFormat.format(message, workflow, testVersion)
+				+ " using input files");
 		runWorkflow(testCommand, workflow, testOutput, false, secure, false);
-		assertTrue(String.format("No output produced for %s", workflowDirectory.getName()), testOutput.exists());
+		assertTrue(String.format("No output produced for %s", workflowDirectory.getName()),
+				testOutput.exists());
 		assertOutputsEquals(baseOutput, testOutput);
 	}
 
-	@Test@Ignore
+	@Test
+	@Ignore
 	public void testWorkflowWithDatabase() throws Exception {
 		assumeTrue(!testExcluded());
 		assumeTrue(baseOutput.exists());
 		assumeTrue(inputs.size() > 0);
 		FileUtils.deleteDirectory(testOutput);
 		String workflow = getWorkflow().toASCIIString();
-		System.out.println(MessageFormat.format(message, workflow, testVersion) + " using database");
+		System.out
+				.println(MessageFormat.format(message, workflow, testVersion) + " using database");
 		runWorkflow(testCommand, workflow, testOutput, true, secure, true);
-		assertTrue(String.format("No output produced for %s", workflowDirectory.getName()), testOutput.exists());
+		assertTrue(String.format("No output produced for %s", workflowDirectory.getName()),
+				testOutput.exists());
 		assertOutputsEquals(baseOutput, testOutput);
 	}
 
@@ -221,14 +254,16 @@ public class TavernaCommandLineTest {
 
 		FileUtils.deleteDirectory(testOutput);
 		String workflow = getScufl2Workflow().toASCIIString();
-		System.out.println(MessageFormat.format(message, workflow, testVersion) + (inputs.size() > 0 ? " using input values" : ""));
+		System.out.println(MessageFormat.format(message, workflow, testVersion)
+				+ (inputs.size() > 0 ? " using input values" : ""));
 		runWorkflow(testCommand, workflow, testOutput, true, secure, true);
-		assertTrue(String.format("No output produced for %s", workflowDirectory.getName()), testOutput.exists());
+		assertTrue(String.format("No output produced for %s", workflowDirectory.getName()),
+				testOutput.exists());
 		assertOutputsEquals(baseOutput, testOutput);
 	}
 
-	private synchronized void runWorkflow(String command, String workflow, File outputsDirectory, boolean inputValues, boolean secure, boolean database)
-			throws Exception {
+	private synchronized void runWorkflow(String command, String workflow, File outputsDirectory,
+			boolean inputValues, boolean secure, boolean database) throws Exception {
 		ProcessBuilder processBuilder = new ProcessBuilder("sh", command);
 		processBuilder.redirectErrorStream(true);
 		processBuilder.directory(buildDirectory);
@@ -275,11 +310,12 @@ public class TavernaCommandLineTest {
 
 	private URI getScufl2Workflow() throws Exception {
 		File workflow = new File(buildDirectory, workflowDirectory.getName() + ".wfbundle");
-//		if (!workflow.exists()) {
-			WorkflowBundleIO workflowBundleIO = new WorkflowBundleIO();
-			WorkflowBundle bundle = workflowBundleIO.readBundle(getWorkflow().toURL(), null);
-			workflowBundleIO.writeBundle(bundle, workflow, RDFXMLReader.APPLICATION_VND_TAVERNA_SCUFL2_WORKFLOW_BUNDLE);
-//		}
+		// if (!workflow.exists()) {
+		WorkflowBundleIO workflowBundleIO = new WorkflowBundleIO();
+		WorkflowBundle bundle = workflowBundleIO.readBundle(getWorkflow().toURL(), null);
+		workflowBundleIO.writeBundle(bundle, workflow,
+				RDFXMLReader.APPLICATION_VND_TAVERNA_SCUFL2_WORKFLOW_BUNDLE);
+		// }
 		return workflow.toURI();
 	}
 
@@ -297,35 +333,36 @@ public class TavernaCommandLineTest {
 		}
 	}
 
-	private void assertOutputsEquals(File directory1, File directory2)  {
+	private void assertOutputsEquals(File directory1, File directory2) {
 		File[] directory1Files = directory1.listFiles();
 		File[] directory2Files = directory2.listFiles();
 		// assert directories contain same number of files
-		assertEquals(
-				String.format("%s has %s files but %s has %s files",
-						directory1.getName(), directory1Files.length, directory2.getName(),
-						directory2Files.length), directory1Files.length, directory2Files.length);
+		assertEquals(String.format("%s has %s files but %s has %s files", directory1.getName(),
+				directory1Files.length, directory2.getName(), directory2Files.length),
+				directory1Files.length, directory2Files.length);
 		// sort files in directory
 		Arrays.sort(directory1Files, NameFileComparator.NAME_SYSTEM_COMPARATOR);
 		Arrays.sort(directory2Files, NameFileComparator.NAME_SYSTEM_COMPARATOR);
 		for (int i = 0; i < directory1Files.length; i++) {
-			assertFilesEqual(directory1Files[i], directory2Files[i], !directory1Files[i].getName().equals(ignorePort));
+			assertFilesEqual(directory1Files[i], directory2Files[i], !directory1Files[i].getName()
+					.equals(ignorePort));
 		}
 	}
 
-	private void assertDirectoriesEquals(File directory1, File directory2, boolean checkFileContents)  {
+	private void assertDirectoriesEquals(File directory1, File directory2, boolean checkFileContents) {
 		if (directory1.exists()) {
-			assertTrue(String.format("%s exists but %s does not", directory1, directory2), directory2.exists());
+			assertTrue(String.format("%s exists but %s does not", directory1, directory2),
+					directory2.exists());
 		} else {
-			assertFalse(String.format("%s does not exists but %s does", directory1, directory2), directory2.exists());
+			assertFalse(String.format("%s does not exists but %s does", directory1, directory2),
+					directory2.exists());
 		}
 		File[] directory1Files = directory1.listFiles();
 		File[] directory2Files = directory2.listFiles();
 		// assert directories contain same number of files
-		assertEquals(
-				String.format("%s has %s files but %s has %s files",
-						directory1.getName(), directory1Files.length, directory2.getName(),
-						directory2Files.length), directory1Files.length, directory2Files.length);
+		assertEquals(String.format("%s has %s files but %s has %s files", directory1.getName(),
+				directory1Files.length, directory2.getName(), directory2Files.length),
+				directory1Files.length, directory2Files.length);
 		// sort files in directory
 		Arrays.sort(directory1Files, NameFileComparator.NAME_SYSTEM_COMPARATOR);
 		Arrays.sort(directory2Files, NameFileComparator.NAME_SYSTEM_COMPARATOR);
@@ -334,25 +371,29 @@ public class TavernaCommandLineTest {
 		}
 	}
 
-	private void assertFilesEqual(File file1, File file2, boolean checkFileContents)  {
+	private void assertFilesEqual(File file1, File file2, boolean checkFileContents) {
 		if (file1.isHidden()) {
 			assertTrue(String.format("%s is hidden but %s is not", file1, file2), file2.isHidden());
 		} else {
 			assertFalse(String.format("%s is not hidden but %s is", file1, file2), file2.isHidden());
 			assertEquals(file1.getName(), file2.getName());
 			if (file1.isDirectory()) {
-				assertTrue(String.format("%s is a directory but %s is not", file1, file2), file2.isDirectory());
+				assertTrue(String.format("%s is a directory but %s is not", file1, file2),
+						file2.isDirectory());
 				assertDirectoriesEquals(file1, file2, checkFileContents);
 			} else {
-				assertFalse(String.format("%s is not a directory but %s is", file1, file2), file2.isDirectory());
+				assertFalse(String.format("%s is not a directory but %s is", file1, file2),
+						file2.isDirectory());
 				if (isZipFile(file1)) {
 					assertZipFilesEqual(file1, file2);
 				} else if (checkFileContents) {
-					assertEquals(String.format("%s is a different length to %s", file1, file2), file1.length(), file2.length());
+					assertEquals(String.format("%s is a different length to %s", file1, file2),
+							file1.length(), file2.length());
 					try {
 						byte[] byteArray1 = IOUtils.toByteArray(new FileReader(file1));
 						byte[] byteArray2 = IOUtils.toByteArray(new FileReader(file2));
-						assertArrayEquals(String.format("%s != %s", file1, file2), byteArray1, byteArray2);
+						assertArrayEquals(String.format("%s != %s", file1, file2), byteArray1,
+								byteArray2);
 					} catch (FileNotFoundException e) {
 						fail(e.getMessage());
 					} catch (IOException e) {
@@ -379,13 +420,18 @@ public class TavernaCommandLineTest {
 				assertTrue(entries2.hasMoreElements());
 				ZipEntry zipEntry1 = entries1.nextElement();
 				ZipEntry zipEntry2 = entries2.nextElement();
-				assertEquals(String.format("%s and %s are not both directories", zipEntry1, zipEntry2), zipEntry1.isDirectory(), zipEntry2.isDirectory());
-				assertEquals(String.format("%s and %s have different names", zipEntry1, zipEntry2), zipEntry1.getName(), zipEntry2.getName());
-				assertEquals(String.format("%s and %s have different sizes", zipEntry1, zipEntry2), zipEntry1.getSize(), zipEntry2.getSize());
+				assertEquals(
+						String.format("%s and %s are not both directories", zipEntry1, zipEntry2),
+						zipEntry1.isDirectory(), zipEntry2.isDirectory());
+				assertEquals(String.format("%s and %s have different names", zipEntry1, zipEntry2),
+						zipEntry1.getName(), zipEntry2.getName());
+				assertEquals(String.format("%s and %s have different sizes", zipEntry1, zipEntry2),
+						zipEntry1.getSize(), zipEntry2.getSize());
 				try {
 					byte[] byteArray1 = IOUtils.toByteArray(zipFile1.getInputStream(zipEntry1));
 					byte[] byteArray2 = IOUtils.toByteArray(zipFile2.getInputStream(zipEntry2));
-					assertArrayEquals(String.format("%s != %s", zipEntry1, zipEntry2), byteArray1, byteArray2);
+					assertArrayEquals(String.format("%s != %s", zipEntry1, zipEntry2), byteArray1,
+							byteArray2);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -405,7 +451,8 @@ public class TavernaCommandLineTest {
 	}
 
 	private static File[] getResources(String directory) {
-		return new File(TavernaCommandLineTest.class.getResource("/" + directory).getFile()).listFiles();
+		return new File(TavernaCommandLineTest.class.getResource("/" + directory).getFile())
+				.listFiles();
 	}
 
 	private List<File> getInputs() {
