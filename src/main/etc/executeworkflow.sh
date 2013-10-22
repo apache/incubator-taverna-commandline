@@ -16,10 +16,10 @@ if test -x "$JAVA_HOME/bin/java"; then
     javabin="$JAVA_HOME/bin/java"
 fi
 
-# 300 MB memory, 140 MB for classes
-exec "$javabin" -Xmx300m -XX:MaxPermSize=140m \
+# 1 GB memory, 400 MB for classes
+exec "$javabin" -Xmx1g -XX:MaxPermSize=400m \
   "-Dlog4j.configuration=file://$taverna_home/conf/log4j.properties " \
   "-Djava.util.logging.config.file=$taverna_home/conf/logging.properties " \
   "-Dtaverna.app.startup=$taverna_home" \
-  -jar "$taverna_home/lib/taverna-command-line-0.1.2-SNAPSHOT.jar" \
+  -jar "$taverna_home/lib/uk.org.taverna.commandline/taverna-command-line-0.1.2-SNAPSHOT.jar" \
   ${1+"$@"}
