@@ -281,7 +281,7 @@ public class CommandLineTool {
 						outputBaclavaDoc = new File(commandLineOptions.getOutputDocument());
 					}
 
-					Path outputs = DataBundles.getOutputs(runService.getOutputs(runId));
+					Path outputs = DataBundles.getOutputs(runService.getDataBundle(runId));
 
 					SaveResultsHandler saveResultsHandler = new SaveResultsHandler(outputDir, outputBaclavaDoc);
 
