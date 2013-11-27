@@ -45,11 +45,6 @@
 			<version>${t2.activities.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.taverna.t2.component</groupId>
-			<artifactId>component-activity</artifactId>
-			<version>${t2.activities.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>net.sf.taverna.t2.activities</groupId>
 			<artifactId>dataflow-activity</artifactId>
 			<version>${t2.activities.version}</version>
@@ -60,11 +55,6 @@
 			<version>${project.version}</version>
 		</dependency>
 		-->
-		<dependency>
-			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>interaction-activity</artifactId>
-			<version>${t2.activities.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>net.sf.taverna.t2.activities</groupId>
 			<artifactId>localworker-activity</artifactId>
@@ -78,11 +68,6 @@
 		<dependency>
 			<groupId>net.sf.taverna.t2.activities</groupId>
 			<artifactId>rshell-activity</artifactId>
-			<version>${t2.activities.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>sardine-activity</artifactId>
 			<version>${t2.activities.version}</version>
 		</dependency>
 		<dependency>
@@ -110,12 +95,105 @@
 			<artifactId>xpath-activity</artifactId>
 			<version>${t2.activities.version}</version>
 		</dependency>
-           	<dependency>
+        </profile>
+        <compatibility>
+            <application>
+                <version>${project.version}</version>
+            </application>
+        </compatibility>
+    </plugin>
+    <plugin>
+        <provider>taverna.sf.net</provider>
+        <identifier>net.sf.taverna.t2.component-activity-no-ui-biovel</identifier>
+		<version>${t2.taverna.workbench.version}</version>
+        <name>Component Service (required)</name>
+        <description>Component service developed by BioVeL, SCAPE and wf4ever</description>
+        <enabled>true</enabled>
+        <repositories>
+            ${m2Repository}
+            <repository>http://www.mygrid.org.uk/maven/repository/</repository>
+            <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
+             <repository>http://uk.maven.org/maven2/</repository>
+            <repository>http://download.java.net/maven/2/</repository>
+            <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
+            <repository>http://ws.zones.apache.org/repository2/</repository>
+            <repository>http://www.eviware.com/repository/maven2/</repository>
+            <repository>http://www.mygrid.org.uk/maven/biomoby/moby-dev.inab.org/m2/</repository>
+        </repositories>
+        <profile>
+ 		<dependency>
+			<groupId>net.sf.taverna.t2.component</groupId>
+			<artifactId>component-activity</artifactId>
+			<version>${t2.activities.version}</version>
+		</dependency>
+        </profile>
+        <compatibility>
+            <application>
+                <version>${project.version}</version>
+            </application>
+        </compatibility>
+    </plugin>
+    <plugin>
+        <provider>taverna.sf.net</provider>
+        <identifier>net.sf.taverna.t2.interaction-activity-no-ui-biovel</identifier>
+		<version>${t2.taverna.workbench.version}</version>
+        <name>Interaction Service (required)</name>
+        <description>Interacton service developed by BioVeL</description>
+        <enabled>true</enabled>
+        <repositories>
+            ${m2Repository}
+            <repository>http://www.mygrid.org.uk/maven/repository/</repository>
+            <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
+             <repository>http://uk.maven.org/maven2/</repository>
+            <repository>http://download.java.net/maven/2/</repository>
+            <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
+            <repository>http://ws.zones.apache.org/repository2/</repository>
+            <repository>http://www.eviware.com/repository/maven2/</repository>
+            <repository>http://www.mygrid.org.uk/maven/biomoby/moby-dev.inab.org/m2/</repository>
+        </repositories>
+        <profile>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>interaction-activity</artifactId>
+			<version>${t2.activities.version}</version>
+		</dependency>
+           <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>servlet-api</artifactId>
                 <version>2.4</version>
                 <system>true</system>
             </dependency>
+        </profile>
+        <compatibility>
+            <application>
+                <version>${project.version}</version>
+            </application>
+        </compatibility>
+    </plugin>
+    <plugin>
+        <provider>taverna.sf.net</provider>
+        <identifier>net.sf.taverna.t2.webdav-activity-no-ui-biovel</identifier>
+		<version>${t2.taverna.workbench.version}</version>
+        <name>WebDAV Service (required)</name>
+        <description>WebDAV service developed by BioVeL</description>
+        <enabled>true</enabled>
+        <repositories>
+            ${m2Repository}
+            <repository>http://www.mygrid.org.uk/maven/repository/</repository>
+            <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
+             <repository>http://uk.maven.org/maven2/</repository>
+            <repository>http://download.java.net/maven/2/</repository>
+            <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
+            <repository>http://ws.zones.apache.org/repository2/</repository>
+            <repository>http://www.eviware.com/repository/maven2/</repository>
+            <repository>http://www.mygrid.org.uk/maven/biomoby/moby-dev.inab.org/m2/</repository>
+        </repositories>
+        <profile>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>sardine-activity</artifactId>
+			<version>${t2.activities.version}</version>
+		</dependency>
         </profile>
         <compatibility>
             <application>
