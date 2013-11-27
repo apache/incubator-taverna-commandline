@@ -24,7 +24,6 @@
             <repository>http://repository.apache.org/snapshots/</repository>
         </repositories>
         <profile>
-      <profile>
  			<dependency>
 			<groupId>net.sf.taverna.t2.activities</groupId>
 			<artifactId>apiconsumer-activity</artifactId>
