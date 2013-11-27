@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://taverna.sf.net/2008/xml/plugins http://taverna.sourceforge.net/2008/xml/plugins/plugins-2008-10-16.xsd ">    
     <plugin>
         <provider>taverna.sf.net</provider>
-        <identifier>net.sf.taverna.t2.activities-no-ui</identifier>
+        <identifier>net.sf.taverna.t2.activities-no-ui-biovel</identifier>
 		<version>${t2.taverna.workbench.version}</version>
         <name>Services</name>
         <description>Taverna 2 services (WSDL, SoapLab, etc)</description>
@@ -24,11 +24,93 @@
             <repository>http://repository.apache.org/snapshots/</repository>
         </repositories>
         <profile>
-            <dependency>
-				<groupId>net.sf.taverna.t2.activities</groupId>
-				<artifactId>all-activities</artifactId>
-				<version>${t2.activities.version}</version>
-           	</dependency>
+      <profile>
+ 			<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>apiconsumer-activity</artifactId>
+			<version>${t2.activities.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>beanshell-activity</artifactId>
+			<version>${t2.activities.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>biomart-activity</artifactId>
+			<version>${t2.activities.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>biomoby-activity</artifactId>
+			<version>${t2.activities.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.component</groupId>
+			<artifactId>component-activity</artifactId>
+			<version>${t2.activities.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>dataflow-activity</artifactId>
+			<version>${t2.activities.version}</version>
+		</dependency>
+<!--		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>external-tool-activity</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		-->
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>interaction-activity</artifactId>
+			<version>${t2.activities.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>localworker-activity</artifactId>
+			<version>${t2.activities.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>rest-activity</artifactId>
+			<version>${t2.activities.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>rshell-activity</artifactId>
+			<version>${t2.activities.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>sardine-activity</artifactId>
+			<version>${t2.activities.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>soaplab-activity</artifactId>
+			<version>${t2.activities.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>spreadsheet-import-activity</artifactId>
+			<version>${t2.activities.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>stringconstant-activity</artifactId>
+			<version>${t2.activities.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>wsdl-activity</artifactId>
+			<version>${t2.activities.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>xpath-activity</artifactId>
+			<version>${t2.activities.version}</version>
+		</dependency>
            	<dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>servlet-api</artifactId>
