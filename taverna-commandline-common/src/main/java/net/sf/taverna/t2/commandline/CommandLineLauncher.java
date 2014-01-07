@@ -402,9 +402,20 @@ public class CommandLineLauncher implements Launchable {
 			throws OpenDataflowException {
 		URL url;
 		try {
-			url = new URL("file:");
-			return new URL(url, workflowOption);
+			// Try it as a file path
+			File f = new File(workflowOption);
+			if (f.exists()) {
+				url = f.toURI().toURL();
+				return url;
+			}
 		} catch (MalformedURLException e) {
+			// This may be OK and we will fall through to trying it as a URL
+		}
+		
+		try {
+			url = new URL(workflowOption);
+			return url;
+		}  catch (MalformedURLException e) {
 			throw new OpenDataflowException(
 					"The was an error processing the URL to the workflow: "
 							+ e.getMessage(), e);
