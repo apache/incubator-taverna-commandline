@@ -20,6 +20,7 @@
  ******************************************************************************/
 package net.sf.taverna.t2.commandline.options;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -220,8 +221,8 @@ public class CommandLineOptions {
 	/**
 	 * @return the directory with Credential Manager's files
 	 */
-	public String getCredentialManagerDir() {
-		return getOptionValue(CREDENTIAL_MANAGER_DIR_OPTION);
+	public File getCredentialManagerDir() {
+		return getOptionValue(CREDENTIAL_MANAGER_DIR_OPTION) == null? null : new File(getOptionValue(CREDENTIAL_MANAGER_DIR_OPTION));
 	}
 
 	public boolean getStartDatabaseOnly() throws InvalidOptionException {

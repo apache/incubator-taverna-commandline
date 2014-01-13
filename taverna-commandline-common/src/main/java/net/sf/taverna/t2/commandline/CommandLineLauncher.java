@@ -198,7 +198,7 @@ public class CommandLineLauncher implements Launchable {
 							
 				// Initialise Credential Manager and SSL stuff quite early as parsing and
 				// validating the workflow might require its services
-				String credentialManagerDirPath = options.getCredentialManagerDir();
+				File credentialManagerDir = options.getCredentialManagerDir();
 				String credentialManagerPassword = null;									
 				if (options.hasOption(CommandLineOptions.CREDENTIAL_MANAGER_PASSWORD_OPTION)){ // if this parameter was used when launching the command line tool
 					// Try to read the password from stdin (terminal or pipe)
@@ -220,7 +220,7 @@ public class CommandLineLauncher implements Launchable {
 					// on the server (we do not even know which user the command line tool will be running as).
 
 					//if (credentialManagerDirPath != null){
-						CredentialManager.initialiseSSL(credentialManagerDirPath, credentialManagerPassword); // this can now handle situations when credentialManagerDirPath is null
+						CredentialManager.load_and_inialiseSSL(credentialManagerDir, credentialManagerPassword); // this can now handle situations when credentialManagerDirPath is null					
 					//}
 					//else{
 						// Initialize from the default location in <TAVERNA_HOME>/security somewhere 
@@ -232,7 +232,22 @@ public class CommandLineLauncher implements Launchable {
 					//}
 				}
 				else{
-					logger.warn("No master password provided for Credential Manager.");
+					logger.info("No master password provided for Credential Manager through command line options. Trying the default one.");
+					// Try the default password (as we are passing null for the password this will set off the master password provider SPIs)
+					try{
+						CredentialManager.load_and_inialiseSSL(credentialManagerDir, credentialManagerPassword);
+					}
+					catch (CMException cmex){
+						// We now have to ignore this error as we cannot distinguish between the cases
+						// where the user does not want security as they are running a non-secure workflow 
+						// (so they passed no command line parameters), or they want the default security directory
+						// and password (so again they are not passing the command line parameters). In the first case
+						// it does not matter that the Credential Manager failed to start as it will not be needed anyway. 
+						// In the second case, this is a genuine user error - they wanted the default parameters but they failed.
+						// So, just log.
+						logger.warn("Credential Manager failed to initialise with the default directory location and password. If you are running a non-secure workflow, you can safely ignore this warning. "
+								+ "Otherwise, your workflow is likely to fail.", cmex);
+					}
 				}
 
 				URL workflowURL = readWorkflowURL(options.getWorkflow());
@@ -428,12 +443,14 @@ public class CommandLineLauncher implements Launchable {
 	 * @return Password for Credential Manager.
 	 * @throws CMException
 	 */
-	private String getCredentialManagerPasswordFromFile(String cmDir) throws CMException{
+	private String getCredentialManagerPasswordFromFile(File cmDir) throws CMException{
 
 		if (cmDir == null){
 			return null;
 		}
 		File passwordFile = new File(cmDir, "password.txt");
+		if (!passwordFile.exists()) 
+			return null;
 		String password = null;
 		BufferedReader buffReader = null;
 		try {
