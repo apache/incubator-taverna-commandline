@@ -20,7 +20,7 @@
  ******************************************************************************/
 package net.sf.taverna.t2.commandline.data;
 
-import java.io.BufferedOutputStream;
+//import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -69,8 +69,8 @@ public class SaveResultsHandler {
 	private static Logger logger = Logger
 			.getLogger(CommandLineResultListener.class);
 	private final File outputDocumentFile;
-	private final File janus;
-	private final File opm;
+	//private final File janus;
+	//private final File opm;
 	private ProvenanceExporter provExport;	
 
 	public SaveResultsHandler(Map<String, Integer> portsAndDepth,
@@ -79,8 +79,8 @@ public class SaveResultsHandler {
 		this.portsAndDepth = portsAndDepth;
 		this.rootDirectory = rootDirectory;
 		this.outputDocumentFile = outputDocumentFile;
-		this.janus = janus;
-		this.opm = opm;
+		//this.janus = janus;
+		//this.opm = opm;
 
 		depthSeen = new HashMap<String, Integer>();
 		for (String portName : portsAndDepth.keySet()) {
@@ -270,28 +270,28 @@ public class SaveResultsHandler {
 	}
 	}
 
-	public void saveOpm(String workflowRunId) {
-		if (opm.getParentFile() != null) {
-			opm.getParentFile().mkdirs();
-		}
-		BufferedOutputStream outStream;
-		try {
-			outStream = new BufferedOutputStream(new FileOutputStream(opm));
-		} catch (FileNotFoundException e1) {
-			logger.error("Can't find directory for writing OPM to " + opm, e1);
-			return;
-		}
-		try {
-			getProvenanceExporter().exportAsOPMRDF(workflowRunId, outStream);
-		} catch (Exception e) {
-			logger.error("Can't write OPM to " + opm, e);
-		} finally {
-			try {
-				outStream.close();
-			} catch (IOException e) {
-			}
-		}
-	}
+//	public void saveOpm(String workflowRunId) {
+//		if (opm.getParentFile() != null) {
+//			opm.getParentFile().mkdirs();
+//		}
+//		BufferedOutputStream outStream;
+//		try {
+//			outStream = new BufferedOutputStream(new FileOutputStream(opm));
+//		} catch (FileNotFoundException e1) {
+//			logger.error("Can't find directory for writing OPM to " + opm, e1);
+//			return;
+//		}
+//		try {
+//			getProvenanceExporter().exportAsOPMRDF(workflowRunId, outStream);
+//		} catch (Exception e) {
+//			logger.error("Can't write OPM to " + opm, e);
+//		} finally {
+//			try {
+//				outStream.close();
+//			} catch (IOException e) {
+//			}
+//		}
+//	}
 
 	protected synchronized ProvenanceExporter getProvenanceExporter() {
 		if (provExport == null) {
@@ -303,28 +303,28 @@ public class SaveResultsHandler {
 		return provExport;
 	}
 
-	public void saveJanus(String workflowRunId) {
-		if (janus.getParentFile() != null) {
-			janus.getParentFile().mkdirs();
-		}
-		BufferedOutputStream outStream;
-		try {
-			outStream = new BufferedOutputStream(new FileOutputStream(janus));
-		} catch (FileNotFoundException e1) {
-			logger.error("Can't find directory for writing Janus to " + janus, e1);
-			return;
-		}
-		try {
-			getProvenanceExporter().exportAsJanusRDF(workflowRunId, outStream);
-		} catch (Exception e) {
-			logger.error("Can't write Janus to " + janus, e);
-		} finally {
-			try {
-				outStream.close();
-			} catch (IOException e) {
-			}
-		}
-	}
+//	public void saveJanus(String workflowRunId) {
+//		if (janus.getParentFile() != null) {
+//			janus.getParentFile().mkdirs();
+//		}
+//		BufferedOutputStream outStream;
+//		try {
+//			outStream = new BufferedOutputStream(new FileOutputStream(janus));
+//		} catch (FileNotFoundException e1) {
+//			logger.error("Can't find directory for writing Janus to " + janus, e1);
+//			return;
+//		}
+//		try {
+//			getProvenanceExporter().exportAsJanusRDF(workflowRunId, outStream);
+//		} catch (Exception e) {
+//			logger.error("Can't write Janus to " + janus, e);
+//		} finally {
+//			try {
+//				outStream.close();
+//			} catch (IOException e) {
+//			}
+//		}
+//	}
 	
 	
 }

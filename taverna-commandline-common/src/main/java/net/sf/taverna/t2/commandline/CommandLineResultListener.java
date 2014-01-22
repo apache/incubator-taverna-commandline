@@ -20,14 +20,21 @@
  ******************************************************************************/
 package net.sf.taverna.t2.commandline;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.sf.taverna.t2.commandline.data.SaveResultsHandler;
 import net.sf.taverna.t2.facade.ResultListener;
+import net.sf.taverna.t2.facade.WorkflowInstanceFacade;
 import net.sf.taverna.t2.invocation.WorkflowDataToken;
+import net.sf.taverna.t2.reference.T2Reference;
 
 import org.apache.log4j.Logger;
+import org.purl.wf4ever.provtaverna.export.Saver;
 
 /**
  * A ResultListener that is using for collecting and storing results when running
@@ -42,24 +49,36 @@ public class CommandLineResultListener implements ResultListener {
 	private Map<String, WorkflowDataToken> outputMap = new HashMap<String, WorkflowDataToken>();	
 	private Map<String,WorkflowDataToken> finalTokens = new HashMap<String, WorkflowDataToken>();	
 	private final SaveResultsHandler saveResultsHandler;
-	private final int numberOfOutputs;
+	//private final int numberOfOutputs;
 	private final boolean saveIndividualResults;
 	private final boolean saveOutputDocument;
 
-	private boolean saveOpm;
+	//private boolean saveOpm;
 
-	private boolean saveJanus;
+	//private boolean saveJanus;
+	
+	private boolean exportProvBundle;
+	private File provBundleFile;
 
-	private final String workflowRunId;
+	private WorkflowInstanceFacade facade;
+	
+	//private final String workflowRunId;
 
-	public CommandLineResultListener(int numberOfOutputs,SaveResultsHandler saveResultsHandler,boolean saveIndividualResults,boolean saveOutputDocument, boolean saveOpm, boolean saveJanus, String workflowRunId) {		
-		this.numberOfOutputs = numberOfOutputs;
+	public CommandLineResultListener(int numberOfOutputs,
+			SaveResultsHandler saveResultsHandler,
+			boolean saveIndividualResults, boolean saveOutputDocument,
+			boolean saveOpm, boolean saveJanus, boolean exportProvBundle, File provBundleFile, 
+			WorkflowInstanceFacade facade) {
+		//this.numberOfOutputs = numberOfOutputs;
 		this.saveResultsHandler = saveResultsHandler;
 		this.saveIndividualResults = saveIndividualResults;
 		this.saveOutputDocument = saveOutputDocument;	
-		this.saveOpm = saveOpm;
-		this.saveJanus = saveJanus;
-		this.workflowRunId = workflowRunId;
+		//this.saveOpm = saveOpm;
+		//this.saveJanus = saveJanus;
+		this.exportProvBundle = exportProvBundle;
+		this.provBundleFile = provBundleFile;
+		this.facade = facade;
+		//this.workflowRunId = facade.getWorkflowRunId();
 	}
 
 	public Map<String, WorkflowDataToken> getOutputMap() {
@@ -87,12 +106,41 @@ public class CommandLineResultListener implements ResultListener {
 	}
 
 	public void saveProvenance() {
-		if (saveOpm) {
-			saveResultsHandler.saveOpm(workflowRunId);
+		// if (saveOpm) {
+		// saveResultsHandler.saveOpm(workflowRunId);
+		// }
+		// if (saveJanus) {
+		// saveResultsHandler.saveJanus(workflowRunId);
+		// }
+		if (exportProvBundle)
+			if (provBundleFile != null) {
+				saveProvenanceBundle();
+			} else {
+				System.err
+						.println("Provenance bundle export file has not been specified.");
+				System.exit(-1);
+			}
+	}
+
+	public void saveProvenanceBundle() {
+		Map<String, T2Reference> chosenReferences = new HashMap<String, T2Reference>();
+		for (Entry<String, WorkflowDataToken> entry : getOutputMap()
+				.entrySet()) {
+			chosenReferences.put(entry.getKey(), entry.getValue()
+					.getData());
 		}
-		if (saveJanus) {
-			saveResultsHandler.saveJanus(workflowRunId);
-		}			
+		Saver saver = new Saver(facade.getContext()
+				.getReferenceService(), facade.getContext(),
+				facade.getWorkflowRunId(), chosenReferences);
+		//saver.setFileToId(fileToId);
+		Path bundle = provBundleFile.toPath();
+		try {
+			saver.saveData(bundle);
+		} catch (IOException e1) {
+			System.err.println("Can't store output to "
+					+ provBundleFile + ": " + e1);
+			System.exit(-1);
+		}
 	}
 
 }

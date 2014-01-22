@@ -94,6 +94,8 @@ public class CommandLineLauncher implements Launchable {
 
 	private static Logger logger = Logger.getLogger(CommandLineLauncher.class);
 	
+	private String PROV_BUNDLE_EXTENSION = ".bundle.zip";
+	
 	/**
 	 * Main method, purely for development and debugging purposes. Full
 	 * execution of workflows will not work through this method.
@@ -391,7 +393,7 @@ public class CommandLineLauncher implements Launchable {
 			result = new File(options.getOutputDirectory());
 			if (result.exists()) {
 				error("The specified output directory '"
-						+ options.getOutputDirectory() + "' already exists");
+						+ options.getOutputDirectory() + "' already exists.");
 			}
 		} else if (options.getOutputDocument() == null) {
 			result = new File(dataflowName + "_output");
@@ -406,6 +408,22 @@ public class CommandLineLauncher implements Launchable {
 					+ result.getAbsolutePath());
 		}
 		return result;
+	}
+	
+	private File determineProvBundleFile(CommandLineOptions options, String dataflowName){
+		File provBundleFile = null;
+		if (options.getProvBundle() == null) {
+			provBundleFile = new File(dataflowName + PROV_BUNDLE_EXTENSION);
+		} else {
+			provBundleFile = new File(options.getProvBundle());
+		}		
+		if (provBundleFile.exists()){
+			error("The specified provenance bundle file '"
+				+ provBundleFile.getAbsolutePath() + "' already exists.");
+		}
+		System.out.println("Provenance bundle will be saved to: "
+					+ provBundleFile.getAbsolutePath());
+		return provBundleFile;
 	}
 
 	protected void error(String msg) {
@@ -533,47 +551,53 @@ public class CommandLineLauncher implements Launchable {
 			Dataflow dataflow, CommandLineOptions options) {
 		File outputDir = null;
 		File baclavaDoc = null;
-		File janus = null;
-		File janusDir = null;
-		File opm = null;
+//		File janus = null;
+//		File janusDir = null;
+//		File opm = null;
+		File provBundleFile = null;
 		
 		if (options.saveResultsToDirectory()) {
 			outputDir = determineOutputDir(options, dataflow.getLocalName());
-			janusDir = outputDir;
+			//janusDir = outputDir;
 		}
 		if (options.getOutputDocument() != null) {
 			baclavaDoc = new File(options.getOutputDocument());
 		}
-		if (options.isJanus()) {
-			if (options.getJanus() == null) {
-				if (janusDir == null) {
-					janusDir = determineOutputDir(options, dataflow.getLocalName());
-				}
-				janus = new File(janusDir, "provenance-janus.rdf");
-			} else {
-				janus = new File(options.getJanus());
-			}
-		}
-		if (options.isOPM()) {
-			if (options.getOPM() == null) {
-				if (janusDir == null) {
-					janusDir = determineOutputDir(options, dataflow.getLocalName());
-				}
-				opm = new File(janusDir, "provenance-opm.rdf");
-			} else {
-				opm = new File(options.getOPM());
-			}
+//		if (options.isJanus()) {
+//			if (options.getJanus() == null) {
+//				if (janusDir == null) {
+//					janusDir = determineOutputDir(options, dataflow.getLocalName());
+//				}
+//				janus = new File(janusDir, "provenance-janus.rdf");
+//			} else {
+//				janus = new File(options.getJanus());
+//			}
+//		}
+//		if (options.isOPM()) {
+//			if (options.getOPM() == null) {
+//				if (janusDir == null) {
+//					janusDir = determineOutputDir(options, dataflow.getLocalName());
+//				}
+//				opm = new File(janusDir, "provenance-opm.rdf");
+//			} else {
+//				opm = new File(options.getOPM());
+//			}
+//		}
+		if (options.isProvBundle()) {
+			provBundleFile = determineProvBundleFile(options, dataflow.getLocalName());		
 		}
 		
 		Map<String, Integer> outputPortNamesAndDepth = new HashMap<String, Integer>();
 		for (DataflowOutputPort port : dataflow.getOutputPorts()) {
 			outputPortNamesAndDepth.put(port.getName(), port.getDepth());
 		}
+		
 		SaveResultsHandler resultsHandler = new SaveResultsHandler(
-				outputPortNamesAndDepth, outputDir, baclavaDoc, janus, opm);
+				outputPortNamesAndDepth, outputDir, baclavaDoc, null, null);
+		
 		CommandLineResultListener listener = new CommandLineResultListener(
 				outputPortNamesAndDepth.size(), resultsHandler,
-				outputDir != null, baclavaDoc != null, opm != null, janus != null, facade.getWorkflowRunId());
+				outputDir != null, baclavaDoc != null, false, false, provBundleFile !=null , provBundleFile, facade);
 		facade.addResultListener(listener);
 		return listener;
 

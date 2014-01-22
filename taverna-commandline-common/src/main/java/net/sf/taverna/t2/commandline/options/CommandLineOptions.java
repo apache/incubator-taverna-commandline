@@ -53,8 +53,9 @@ public class CommandLineOptions {
 	private Options options;
 	private CommandLine commandLine;
 	
-	private static final String JANUS = "janus";
-	private static final String OPM = "opm";
+	//private static final String JANUS = "janus";
+	//private static final String OPM = "opm";
+	private static final String PROV_BUNDLE = "provbundle";
 	public static final String CREDENTIAL_MANAGER_DIR_OPTION = "cmdir";
 	public static final String CREDENTIAL_MANAGER_PASSWORD_OPTION = "cmpassword";
 
@@ -69,7 +70,7 @@ public class CommandLineOptions {
 	}
 	
 	public boolean isProvenanceEnabled() {
-		return hasOption("provenance") || hasOption(OPM) || hasOption(JANUS);
+		return hasOption("provenance") || hasOption(PROV_BUNDLE);//hasOption(OPM) || hasOption(JANUS);
 	}
 	
 	protected void checkForInvalid() throws InvalidOptionException {
@@ -357,19 +358,27 @@ public class CommandLineOptions {
 				"Generate provenance information and store it in the database.");
 		
 		
-		Option opm = OptionBuilder
-				.withArgName("file")
-				.hasOptionalArg()
-				.withDescription(
-						"Save Open Provenance Model (OPM) RDF/XML trace of execution to FILE or 'provenance-opm.rdf'.")
-				.create(OPM);
+//		Option opm = OptionBuilder
+//				.withArgName("file")
+//				.hasOptionalArg()
+//				.withDescription(
+//						"Save Open Provenance Model (OPM) RDF/XML trace of execution to FILE or 'provenance-opm.rdf'.")
+//				.create(OPM);
 
-		Option janus = OptionBuilder
-				.withArgName("file")
-				.hasOptionalArg()
-				.withDescription(
-						"Save Janus RDF/XML trace of execution to FILE or 'provenance-janus.rdf'.")
-				.create(JANUS);		
+//		Option janus = OptionBuilder
+//				.withArgName("file")
+//				.hasOptionalArg()
+//				.withDescription(
+//						"Save Janus RDF/XML trace of execution to FILE or 'provenance-janus.rdf'.")
+//				.create(JANUS);		
+		
+		Option provExport = OptionBuilder
+		.withArgName("file")
+		.hasOptionalArg()
+		.withDescription(
+				"Save provenance/trace of workflow execution to <file> specified or to "
+				+ "WORKFLOW_NAME.bundle.zip in the current directory named after the workflow.")
+		.create(PROV_BUNDLE);
 		
 		Option credentialManagerDirectory = OptionBuilder.withArgName("directory path").
 		hasArg().withDescription(
@@ -392,8 +401,9 @@ public class CommandLineOptions {
 		options.addOption(port);
 		options.addOption(startDB);
 		options.addOption(provenance);
-		options.addOption(opm);
-		options.addOption(janus);
+		//options.addOption(opm);
+		//options.addOption(janus);
+		options.addOption(provExport);
 		options.addOption(logFileOption);
 		options.addOption(credentialManagerDirectory);
 		options.addOption(credentialManagerPassword);
@@ -428,28 +438,36 @@ public class CommandLineOptions {
 	}
 
 	/**
-	 * Save the results to a directory if -output has been explicitly defined,
-	 * and/or if -outputdoc hasn't been defined
+	 * Save the results to a directory if -outputdir has been explicitly defined,
+	 * or if neither -outputdoc nor -provbundle have been defined
 	 * 
 	 * @return boolean
 	 */
 	public boolean saveResultsToDirectory() {
 		return (options.hasOption("outputdir") || !options
-				.hasOption("outputdoc"));
+				.hasOption("outputdoc") || !options.hasOption(PROV_BUNDLE));
 	}
 
-	public String getJanus() {
-		return getOptionValue(JANUS);
-	}
-	public String getOPM() {
-		return getOptionValue(OPM);
+//	public String getJanus() {
+//		return getOptionValue(JANUS);
+//	}
+//	public String getOPM() {
+//		return getOptionValue(OPM);
+//	}
+//	
+//	public boolean isOPM() {
+//		return hasOption(OPM);
+//	}
+//	public boolean isJanus() {
+//		return hasOption(JANUS);
+//	}
+	
+	public String getProvBundle() {
+		return getOptionValue(PROV_BUNDLE);
 	}
 	
-	public boolean isOPM() {
-		return hasOption(OPM);
-	}
-	public boolean isJanus() {
-		return hasOption(JANUS);
+	public boolean isProvBundle() {
+		return hasOption(PROV_BUNDLE);
 	}
 
 }
