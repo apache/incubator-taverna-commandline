@@ -89,8 +89,6 @@ it will try the default password.
 
 -provbundle option lets you specify an absolute path to a file where workflow run 
 provenance is going to be exported as a Research Object (RO) bundle. RO bundle is 
-a zip file containing workflow file, inputs, outputs, intermediate values, etc. If 
-file path is not specified, the bundle will be saved as <WORKFLOW_NAME>.bundle.zip 
-file in the current directory. This option is normally used in conjunction with 
-option -provenance and one of the provenance database options: -embedded, 
--clientserver or -startdb.
+a zip file containing workflow file, inputs, outputs, intermediate values, etc. 
+This option is normally used in conjunction with option -provenance and one of the 
+provenance database options: -embedded, -clientserver or -startdb.

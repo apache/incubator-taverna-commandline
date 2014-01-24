@@ -373,11 +373,9 @@ public class CommandLineOptions {
 //				.create(JANUS);		
 		
 		Option provExport = OptionBuilder
+		.hasArg()
 		.withArgName("file")
-		.hasOptionalArg()
-		.withDescription(
-				"Save provenance/trace of workflow execution to <file> specified or to "
-				+ "WORKFLOW_NAME.bundle.zip in the current directory named after the workflow.")
+		.withDescription("Save provenance/trace of workflow execution as Research Object zip bundle to <file> specified.")
 		.create(PROV_BUNDLE);
 		
 		Option credentialManagerDirectory = OptionBuilder.withArgName("directory path").
@@ -439,13 +437,13 @@ public class CommandLineOptions {
 
 	/**
 	 * Save the results to a directory if -outputdir has been explicitly defined,
-	 * or if neither -outputdoc nor -provbundle have been defined
+	 * or if -outputdoc has not been defined
 	 * 
 	 * @return boolean
 	 */
 	public boolean saveResultsToDirectory() {
 		return (options.hasOption("outputdir") || !options
-				.hasOption("outputdoc") || !options.hasOption(PROV_BUNDLE));
+				.hasOption("outputdoc"));
 	}
 
 //	public String getJanus() {

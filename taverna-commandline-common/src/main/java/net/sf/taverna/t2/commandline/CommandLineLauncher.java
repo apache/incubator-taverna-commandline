@@ -93,9 +93,7 @@ import org.springframework.context.ApplicationContext;
 public class CommandLineLauncher implements Launchable {
 
 	private static Logger logger = Logger.getLogger(CommandLineLauncher.class);
-	
-	private String PROV_BUNDLE_EXTENSION = ".bundle.zip";
-	
+		
 	/**
 	 * Main method, purely for development and debugging purposes. Full
 	 * execution of workflows will not work through this method.
@@ -410,19 +408,10 @@ public class CommandLineLauncher implements Launchable {
 		return result;
 	}
 	
-	private File determineProvBundleFile(CommandLineOptions options, String dataflowName){
-		File provBundleFile = null;
-		if (options.getProvBundle() == null) {
-			provBundleFile = new File(dataflowName + PROV_BUNDLE_EXTENSION);
-		} else {
-			provBundleFile = new File(options.getProvBundle());
-		}		
-		if (provBundleFile.exists()){
-			error("The specified provenance bundle file '"
-				+ provBundleFile.getAbsolutePath() + "' already exists.");
-		}
-		System.out.println("Provenance bundle will be saved to: "
-					+ provBundleFile.getAbsolutePath());
+	private File determineProvBundleFile(CommandLineOptions options){
+		File provBundleFile = new File(options.getProvBundle());
+		System.out.println("Provenance bundle zip will be saved to: "
+				+ provBundleFile.getAbsolutePath());
 		return provBundleFile;
 	}
 
@@ -584,7 +573,7 @@ public class CommandLineLauncher implements Launchable {
 //			}
 //		}
 		if (options.isProvBundle()) {
-			provBundleFile = determineProvBundleFile(options, dataflow.getLocalName());		
+			provBundleFile = determineProvBundleFile(options);	
 		}
 		
 		Map<String, Integer> outputPortNamesAndDepth = new HashMap<String, Integer>();
