@@ -1,11 +1,11 @@
 ===============================
-Taverna command line tool 2.4.0
+Taverna command line tool 2.5.0
 ===============================
 http://www.taverna.org.uk/
 http://www.mygrid.org.uk/
 
-Released by myGrid, 2011-07-14
-(c) Copyright 2005-2011 University of Manchester, UK
+Released by myGrid
+(c) Copyright 2005-2014 University of Manchester, UK
 
 
 Licence
@@ -15,8 +15,15 @@ See the file LICENCE.txt or http://www.gnu.org/licenses/lgpl-2.1.html for
 details.
 
 If the source code was not included in this download, you can download it from
-http://www.taverna.org.uk/download/workbench/2-3/#download-source or 
+http://www.taverna.org.uk/download/workbench/2-5/#download-source or 
 http://www.taverna.org.uk/download/source-code/
+
+If you installed a OS-specific distribution of Taverna it may come 
+bundled with a distribution of OpenJDK. OpenJDK is distributed under the
+GNU Public License (GPL) 2.0 w/Classpath exception. See jre/LICENSE.txt or 
+http://hg.openjdk.java.net/jdk7u/jdk7u/raw-file/da55264ff2fb/LICENSE
+for details. 
+
 
 Taverna uses various third-party libraries that are included under compatible
 open source licences such as the Apache Licence.
@@ -33,7 +40,7 @@ and http://www.mygrid.org.uk/dev/wiki/display/taverna23/Command+Line+Tool
 will explain how to use the command line tool.
 
 See http://www.mygrid.org.uk/dev/wiki/display/taverna/User+Manual for the
-Taverna 2.4 user manual.
+Taverna 2.5 user manual.
 
 See the file "known-issues.txt" for known issues with this release, and the file
 "release-notes.txt" for improvements since the previous version of Taverna.
@@ -99,7 +106,7 @@ usage: executeworkflow [options] [workflow]
 
 For example:
 
-$ taverna-commandline-2.4.0/executeworkflow.sh Retrieve_sequence_in_EMBL_format.t2flow
+$ taverna-commandline-2.5.0/executeworkflow.sh Retrieve_sequence_in_EMBL_format.t2flow
 Outputs will be saved to the directory:
 /home/stain/Desktop/Retrieve_sequence_in_EMBL_format_output
 
@@ -122,8 +129,8 @@ http://www.myexperiment.org/workflows/1004/download/retrieve_sequence_in_embl_fo
    
 Examples
 ========
-Example Taverna 2.4 workflows can be found in the myExperiment starter pack at
-http://www.myexperiment.org/packs/254
+Example Taverna 2.5 workflows can be found in the myExperiment starter pack at
+TODO: Update http://www.myexperiment.org/packs/254
 
 You can share and find other workflows at http://www.myexperiment.org/
 
@@ -162,31 +169,11 @@ Requirements
 
 Java
 -----
-Taverna requires the Java Runtime Environment (JRE) version 6 or later from
-Oracle.  No other versions of Java are officially tested with Taverna. 
+Taverna requires the Java Runtime Environment (JRE) version 7.  
 
-Windows users might need to download Java from http://java.com/ 
-
-Linux users have different options to install Java depending on their Linux
-distribution. Some distributions, such as Ubuntu, might come with alternative
-open source implementations of Java, like Gnu GCJ and OpenJDK. We've identified
-some issues with these implementations, and recommend using the official Java
-implementation from Sun/Oracle. 
-
-To download Oracle Java 6 for Ubuntu, start a Terminal, and type the following:
-  sudo apt-get install sun-java6-jre
-
-and follow the instructions. You might also need to change the default Java
-implementation by running:
-  sudo update-alternatives --config java
-
-To check your version of Java on the command line, try:
-
-  $ java -version
-  java version "1.6.0_22"
-  Java(TM) SE Runtime Environment (build 1.6.0_22-b04)
-  Java HotSpot(TM) 64-Bit Server VM (build 17.1-b03, mixed mode)
-
+Platform-specific builds of the command-line tool should include a build of
+OpenJDK, if you are running the platform-independent distribution, you 
+may need to download and install Java, see http://java.com/ 
 
 Read http://www.taverna.org.uk/download/workbench/system-requirements/
 for more requirement details.
@@ -194,6 +181,10 @@ for more requirement details.
 
 Secure web services
 -------------------
+
+If you do not use the bundled OpenJDK (which has security enabled by default),
+you may need to modify your Java installation to enable security.
+
 If you need to invoke secure services or access secured data from your
 workflows (e.g. if you need to provide username and password to gain access to
 your service/data or your service's URL starts with HTTPS), then you need to
