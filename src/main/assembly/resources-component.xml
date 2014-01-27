@@ -48,21 +48,18 @@
 			<outputDirectory>/plugins</outputDirectory>
 			<filtered>true</filtered>
 			<fileMode>0644</fileMode>
-			<directoryMode>0755</directoryMode>
 		</file>
 		<file>
 			<source>src/main/resources/conf/raven-launcher.properties</source>
 			<outputDirectory>/conf</outputDirectory>
 			<filtered>true</filtered>
-			<fileMode>0644</fileMode>
-			<directoryMode>0755</directoryMode>
+			<fileMode>0644</fileMode>			
 		</file>
 		<file>
 			<source>src/main/resources/conf/current-profile.xml</source>
 			<outputDirectory>/conf</outputDirectory>
 			<filtered>true</filtered>
-			<fileMode>0644</fileMode>
-			<directoryMode>0755</directoryMode>
+			<fileMode>0644</fileMode>			
 		</file>
 	</files>
 </component>
