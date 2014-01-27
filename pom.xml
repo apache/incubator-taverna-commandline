@@ -58,12 +58,6 @@
 			<version>${t2.taverna.workbench.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>net.sf.taverna.t2.taverna-workbench.plugins</groupId>
-			<artifactId>provenanceconnectors-plugin</artifactId>
-			<version>${t2.taverna.workbench.version}</version>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
