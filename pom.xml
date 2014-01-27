@@ -135,1285 +135,1313 @@
 									<outputDirectory>${project.build.directory}/repository/xom/xom/1.0b3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xom</groupId>
-									<artifactId>xom</artifactId>
-									<version>1.0b3</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/xom/xom/1.0b3</outputDirectory>
+								    <groupId>xom</groupId>
+								    <artifactId>xom</artifactId>
+								    <version>1.0b3</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/xom/xom/1.0b3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-collections</groupId>
-									<artifactId>commons-collections</artifactId>
-									<version>2.0</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-collections/commons-collections/2.0</outputDirectory>
+								    <groupId>commons-collections</groupId>
+								    <artifactId>commons-collections</artifactId>
+								    <version>2.0</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-collections/commons-collections/2.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-collections</groupId>
-									<artifactId>commons-collections</artifactId>
-									<version>2.0</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-collections/commons-collections/2.0</outputDirectory>
+								    <groupId>commons-collections</groupId>
+								    <artifactId>commons-collections</artifactId>
+								    <version>2.0</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-collections/commons-collections/2.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-collections</groupId>
-									<artifactId>commons-collections</artifactId>
-									<version>3.2.1</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-collections/commons-collections/3.2.1</outputDirectory>
+								    <groupId>commons-collections</groupId>
+								    <artifactId>commons-collections</artifactId>
+								    <version>2.1.1</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-collections/commons-collections/2.1.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-collections</groupId>
-									<artifactId>commons-collections</artifactId>
-									<version>3.2.1</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-collections/commons-collections/3.2.1</outputDirectory>
+								    <groupId>commons-collections</groupId>
+								    <artifactId>commons-collections</artifactId>
+								    <version>2.1.1</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-collections/commons-collections/2.1.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>com.sun.xml.bind</groupId>
-									<artifactId>jaxb-impl</artifactId>
-									<version>2.1.10</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/com/sun/xml/bind/jaxb-impl/2.1.10</outputDirectory>
+								    <groupId>com.sun.xml.bind</groupId>
+								    <artifactId>jaxb-impl</artifactId>
+								    <version>2.1.10</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/com/sun/xml/bind/jaxb-impl/2.1.10</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>com.sun.xml.bind</groupId>
-									<artifactId>jaxb-impl</artifactId>
-									<version>2.1.10</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/com/sun/xml/bind/jaxb-impl/2.1.10</outputDirectory>
+								    <groupId>com.sun.xml.bind</groupId>
+								    <artifactId>jaxb-impl</artifactId>
+								    <version>2.1.10</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/com/sun/xml/bind/jaxb-impl/2.1.10</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>com.ibm.icu</groupId>
-									<artifactId>icu4j</artifactId>
-									<version>2.6.1</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/com/ibm/icu/icu4j/2.6.1</outputDirectory>
+								    <groupId>com.ibm.icu</groupId>
+								    <artifactId>icu4j</artifactId>
+								    <version>2.6.1</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/com/ibm/icu/icu4j/2.6.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>com.ibm.icu</groupId>
-									<artifactId>icu4j</artifactId>
-									<version>2.6.1</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/com/ibm/icu/icu4j/2.6.1</outputDirectory>
+								    <groupId>com.ibm.icu</groupId>
+								    <artifactId>icu4j</artifactId>
+								    <version>2.6.1</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/com/ibm/icu/icu4j/2.6.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xml-apis</groupId>
-									<artifactId>xml-apis</artifactId>
-									<version>2.0.2</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/xml-apis/xml-apis/2.0.2</outputDirectory>
+								    <groupId>xml-apis</groupId>
+								    <artifactId>xml-apis</artifactId>
+								    <version>2.0.2</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/xml-apis/xml-apis/2.0.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xml-apis</groupId>
-									<artifactId>xml-apis</artifactId>
-									<version>2.0.2</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/xml-apis/xml-apis/2.0.2</outputDirectory>
+								    <groupId>xml-apis</groupId>
+								    <artifactId>xml-apis</artifactId>
+								    <version>2.0.2</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/xml-apis/xml-apis/2.0.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xml-apis</groupId>
-									<artifactId>xml-apis</artifactId>
-									<version>1.3.03</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/xml-apis/xml-apis/1.3.03</outputDirectory>
+								    <groupId>xml-apis</groupId>
+								    <artifactId>xml-apis</artifactId>
+								    <version>1.3.03</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/xml-apis/xml-apis/1.3.03</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xml-apis</groupId>
-									<artifactId>xml-apis</artifactId>
-									<version>1.3.03</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/xml-apis/xml-apis/1.3.03</outputDirectory>
+								    <groupId>xml-apis</groupId>
+								    <artifactId>xml-apis</artifactId>
+								    <version>1.3.03</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/xml-apis/xml-apis/1.3.03</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xml-apis</groupId>
-									<artifactId>xml-apis</artifactId>
-									<version>1.0.b2</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/xml-apis/xml-apis/1.0.b2</outputDirectory>
+								    <groupId>xml-apis</groupId>
+								    <artifactId>xml-apis</artifactId>
+								    <version>1.0.b2</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/xml-apis/xml-apis/1.0.b2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xml-apis</groupId>
-									<artifactId>xml-apis</artifactId>
-									<version>1.0.b2</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/xml-apis/xml-apis/1.0.b2</outputDirectory>
+								    <groupId>xml-apis</groupId>
+								    <artifactId>xml-apis</artifactId>
+								    <version>1.0.b2</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/xml-apis/xml-apis/1.0.b2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xml-apis</groupId>
-									<artifactId>xml-apis</artifactId>
-									<version>1.3.04</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/xml-apis/xml-apis/1.3.04</outputDirectory>
+								    <groupId>xml-apis</groupId>
+								    <artifactId>xml-apis</artifactId>
+								    <version>1.3.04</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/xml-apis/xml-apis/1.3.04</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xml-apis</groupId>
-									<artifactId>xml-apis</artifactId>
-									<version>1.3.04</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/xml-apis/xml-apis/1.3.04</outputDirectory>
+								    <groupId>xml-apis</groupId>
+								    <artifactId>xml-apis</artifactId>
+								    <version>1.3.04</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/xml-apis/xml-apis/1.3.04</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xml-apis</groupId>
-									<artifactId>xml-apis</artifactId>
-									<version>1.4.01</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/xml-apis/xml-apis/1.4.01</outputDirectory>
+								    <groupId>xml-apis</groupId>
+								    <artifactId>xml-apis</artifactId>
+								    <version>1.4.01</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/xml-apis/xml-apis/1.4.01</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xml-apis</groupId>
-									<artifactId>xml-apis</artifactId>
-									<version>1.4.01</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/xml-apis/xml-apis/1.4.01</outputDirectory>
+								    <groupId>xml-apis</groupId>
+								    <artifactId>xml-apis</artifactId>
+								    <version>1.4.01</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/xml-apis/xml-apis/1.4.01</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xerces</groupId>
-									<artifactId>xercesImpl</artifactId>
-									<version>2.8.1</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.8.1</outputDirectory>
+								    <groupId>xerces</groupId>
+								    <artifactId>xercesImpl</artifactId>
+								    <version>2.8.1</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.8.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xerces</groupId>
-									<artifactId>xercesImpl</artifactId>
-									<version>2.8.1</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.8.1</outputDirectory>
+								    <groupId>xerces</groupId>
+								    <artifactId>xercesImpl</artifactId>
+								    <version>2.8.1</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.8.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xerces</groupId>
-									<artifactId>xercesImpl</artifactId>
-									<version>2.7.1</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.7.1</outputDirectory>
+								    <groupId>xerces</groupId>
+								    <artifactId>xercesImpl</artifactId>
+								    <version>2.7.1</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.7.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xerces</groupId>
-									<artifactId>xercesImpl</artifactId>
-									<version>2.7.1</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.7.1</outputDirectory>
+								    <groupId>xerces</groupId>
+								    <artifactId>xercesImpl</artifactId>
+								    <version>2.7.1</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.7.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xerces</groupId>
-									<artifactId>xercesImpl</artifactId>
-									<version>2.6.2</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.6.2</outputDirectory>
+								    <groupId>xerces</groupId>
+								    <artifactId>xercesImpl</artifactId>
+								    <version>2.6.2</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.6.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xerces</groupId>
-									<artifactId>xercesImpl</artifactId>
-									<version>2.6.2</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.6.2</outputDirectory>
+								    <groupId>xerces</groupId>
+								    <artifactId>xercesImpl</artifactId>
+								    <version>2.6.2</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.6.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xerces</groupId>
-									<artifactId>xercesImpl</artifactId>
-									<version>2.11.0</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.11.0</outputDirectory>
+								    <groupId>xerces</groupId>
+								    <artifactId>xercesImpl</artifactId>
+								    <version>2.11.0</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.11.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xerces</groupId>
-									<artifactId>xercesImpl</artifactId>
-									<version>2.11.0</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.11.0</outputDirectory>
+								    <groupId>xerces</groupId>
+								    <artifactId>xercesImpl</artifactId>
+								    <version>2.11.0</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.11.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xerces</groupId>
-									<artifactId>xercesImpl</artifactId>
-									<version>2.10.0</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.10.0</outputDirectory>
+								    <groupId>xerces</groupId>
+								    <artifactId>xercesImpl</artifactId>
+								    <version>2.10.0</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.10.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xerces</groupId>
-									<artifactId>xercesImpl</artifactId>
-									<version>2.10.0</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.10.0</outputDirectory>
+								    <groupId>xerces</groupId>
+								    <artifactId>xercesImpl</artifactId>
+								    <version>2.10.0</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.10.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xerces</groupId>
-									<artifactId>xercesImpl</artifactId>
-									<version>2.2.1</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.2.1</outputDirectory>
+								    <groupId>xerces</groupId>
+								    <artifactId>xercesImpl</artifactId>
+								    <version>2.2.1</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.2.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xerces</groupId>
-									<artifactId>xercesImpl</artifactId>
-									<version>2.2.1</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.2.1</outputDirectory>
+								    <groupId>xerces</groupId>
+								    <artifactId>xercesImpl</artifactId>
+								    <version>2.2.1</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/xerces/xercesImpl/2.2.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xerces</groupId>
-									<artifactId>xmlParserAPIs</artifactId>
-									<version>2.6.2</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/xerces/xmlParserAPIs/2.6.2</outputDirectory>
+								    <groupId>xerces</groupId>
+								    <artifactId>xmlParserAPIs</artifactId>
+								    <version>2.6.2</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/xerces/xmlParserAPIs/2.6.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xerces</groupId>
-									<artifactId>xmlParserAPIs</artifactId>
-									<version>2.6.2</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/xerces/xmlParserAPIs/2.6.2</outputDirectory>
+								    <groupId>xerces</groupId>
+								    <artifactId>xmlParserAPIs</artifactId>
+								    <version>2.6.2</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/xerces/xmlParserAPIs/2.6.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xerces</groupId>
-									<artifactId>xmlParserAPIs</artifactId>
-									<version>2.6.1</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/xerces/xmlParserAPIs/2.6.1</outputDirectory>
+								    <groupId>xerces</groupId>
+								    <artifactId>xmlParserAPIs</artifactId>
+								    <version>2.6.1</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/xerces/xmlParserAPIs/2.6.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xerces</groupId>
-									<artifactId>xmlParserAPIs</artifactId>
-									<version>2.6.1</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/xerces/xmlParserAPIs/2.6.1</outputDirectory>
+								    <groupId>xerces</groupId>
+								    <artifactId>xmlParserAPIs</artifactId>
+								    <version>2.6.1</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/xerces/xmlParserAPIs/2.6.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-cli</groupId>
-									<artifactId>commons-cli</artifactId>
-									<version>1.0</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-cli/commons-cli/1.0</outputDirectory>
+								    <groupId>commons-cli</groupId>
+								    <artifactId>commons-cli</artifactId>
+								    <version>1.0</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-cli/commons-cli/1.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-cli</groupId>
-									<artifactId>commons-cli</artifactId>
-									<version>1.0</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-cli/commons-cli/1.0</outputDirectory>
+								    <groupId>commons-cli</groupId>
+								    <artifactId>commons-cli</artifactId>
+								    <version>1.0</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-cli/commons-cli/1.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>jmock</groupId>
-									<artifactId>jmock</artifactId>
-									<version>1.0.1</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/jmock/jmock/1.0.1</outputDirectory>
+								    <groupId>jmock</groupId>
+								    <artifactId>jmock</artifactId>
+								    <version>1.0.1</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/jmock/jmock/1.0.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>jmock</groupId>
-									<artifactId>jmock</artifactId>
-									<version>1.0.1</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/jmock/jmock/1.0.1</outputDirectory>
+								    <groupId>jmock</groupId>
+								    <artifactId>jmock</artifactId>
+								    <version>1.0.1</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/jmock/jmock/1.0.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>info.aduna.commons</groupId>
-									<artifactId>aduna-commons-lang</artifactId>
-									<version>2.3</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/info/aduna/commons/aduna-commons-lang/2.3</outputDirectory>
+								    <groupId>info.aduna.commons</groupId>
+								    <artifactId>aduna-commons-lang</artifactId>
+								    <version>2.3</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/info/aduna/commons/aduna-commons-lang/2.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>info.aduna.commons</groupId>
-									<artifactId>aduna-commons-lang</artifactId>
-									<version>2.3</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/info/aduna/commons/aduna-commons-lang/2.3</outputDirectory>
+								    <groupId>info.aduna.commons</groupId>
+								    <artifactId>aduna-commons-lang</artifactId>
+								    <version>2.3</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/info/aduna/commons/aduna-commons-lang/2.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-pool</groupId>
-									<artifactId>commons-pool</artifactId>
-									<version>1.3</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-pool/commons-pool/1.3</outputDirectory>
+								    <groupId>commons-pool</groupId>
+								    <artifactId>commons-pool</artifactId>
+								    <version>1.3</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-pool/commons-pool/1.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-pool</groupId>
-									<artifactId>commons-pool</artifactId>
-									<version>1.3</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-pool/commons-pool/1.3</outputDirectory>
+								    <groupId>commons-pool</groupId>
+								    <artifactId>commons-pool</artifactId>
+								    <version>1.3</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-pool/commons-pool/1.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>jaxen</groupId>
-									<artifactId>jaxen</artifactId>
-									<version>1.1-beta-9</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/jaxen/jaxen/1.1-beta-9</outputDirectory>
+								    <groupId>jaxen</groupId>
+								    <artifactId>jaxen</artifactId>
+								    <version>1.1-beta-9</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/jaxen/jaxen/1.1-beta-9</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>jaxen</groupId>
-									<artifactId>jaxen</artifactId>
-									<version>1.1-beta-9</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/jaxen/jaxen/1.1-beta-9</outputDirectory>
+								    <groupId>jaxen</groupId>
+								    <artifactId>jaxen</artifactId>
+								    <version>1.1-beta-9</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/jaxen/jaxen/1.1-beta-9</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-lang</groupId>
-									<artifactId>commons-lang</artifactId>
-									<version>2.6</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-lang/commons-lang/2.6</outputDirectory>
+								    <groupId>commons-lang</groupId>
+								    <artifactId>commons-lang</artifactId>
+								    <version>2.6</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-lang/commons-lang/2.6</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-lang</groupId>
-									<artifactId>commons-lang</artifactId>
-									<version>2.6</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-lang/commons-lang/2.6</outputDirectory>
+								    <groupId>commons-lang</groupId>
+								    <artifactId>commons-lang</artifactId>
+								    <version>2.6</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-lang/commons-lang/2.6</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-lang</groupId>
-									<artifactId>commons-lang</artifactId>
-									<version>2.2</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-lang/commons-lang/2.2</outputDirectory>
+								    <groupId>commons-lang</groupId>
+								    <artifactId>commons-lang</artifactId>
+								    <version>2.2</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-lang/commons-lang/2.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-lang</groupId>
-									<artifactId>commons-lang</artifactId>
-									<version>2.2</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-lang/commons-lang/2.2</outputDirectory>
+								    <groupId>commons-lang</groupId>
+								    <artifactId>commons-lang</artifactId>
+								    <version>2.2</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-lang/commons-lang/2.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-lang</groupId>
-									<artifactId>commons-lang</artifactId>
-									<version>2.4</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-lang/commons-lang/2.4</outputDirectory>
+								    <groupId>commons-lang</groupId>
+								    <artifactId>commons-lang</artifactId>
+								    <version>2.4</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-lang/commons-lang/2.4</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-lang</groupId>
-									<artifactId>commons-lang</artifactId>
-									<version>2.4</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-lang/commons-lang/2.4</outputDirectory>
+								    <groupId>commons-lang</groupId>
+								    <artifactId>commons-lang</artifactId>
+								    <version>2.4</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-lang/commons-lang/2.4</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-lang</groupId>
-									<artifactId>commons-lang</artifactId>
-									<version>1.0</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-lang/commons-lang/1.0</outputDirectory>
+								    <groupId>commons-lang</groupId>
+								    <artifactId>commons-lang</artifactId>
+								    <version>1.0</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-lang/commons-lang/1.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-lang</groupId>
-									<artifactId>commons-lang</artifactId>
-									<version>1.0</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-lang/commons-lang/1.0</outputDirectory>
+								    <groupId>commons-lang</groupId>
+								    <artifactId>commons-lang</artifactId>
+								    <version>1.0</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-lang/commons-lang/1.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>uk.org.mygrid.resources.mimeutil</groupId>
-									<artifactId>mime-util</artifactId>
-									<version>2.1.2-3</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/uk/org/mygrid/resources/mimeutil/mime-util/2.1.2-3</outputDirectory>
+								    <groupId>uk.org.mygrid.resources.mimeutil</groupId>
+								    <artifactId>mime-util</artifactId>
+								    <version>2.1.2-3</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/uk/org/mygrid/resources/mimeutil/mime-util/2.1.2-3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>uk.org.mygrid.resources.mimeutil</groupId>
-									<artifactId>mime-util</artifactId>
-									<version>2.1.2-3</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/uk/org/mygrid/resources/mimeutil/mime-util/2.1.2-3</outputDirectory>
+								    <groupId>uk.org.mygrid.resources.mimeutil</groupId>
+								    <artifactId>mime-util</artifactId>
+								    <version>2.1.2-3</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/uk/org/mygrid/resources/mimeutil/mime-util/2.1.2-3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>uk.org.mygrid.taverna.raven</groupId>
-									<artifactId>raven</artifactId>
-									<version>1.9</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/uk/org/mygrid/taverna/raven/raven/1.9</outputDirectory>
+								    <groupId>log4j</groupId>
+								    <artifactId>log4j</artifactId>
+								    <version>1.2.16</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/log4j/log4j/1.2.16</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>uk.org.mygrid.taverna.raven</groupId>
-									<artifactId>raven</artifactId>
-									<version>1.9</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/uk/org/mygrid/taverna/raven/raven/1.9</outputDirectory>
+								    <groupId>log4j</groupId>
+								    <artifactId>log4j</artifactId>
+								    <version>1.2.16</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/log4j/log4j/1.2.16</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>log4j</groupId>
-									<artifactId>log4j</artifactId>
-									<version>1.2.16</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/log4j/log4j/1.2.16</outputDirectory>
+								    <groupId>log4j</groupId>
+								    <artifactId>log4j</artifactId>
+								    <version>1.2.13</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/log4j/log4j/1.2.13</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>log4j</groupId>
-									<artifactId>log4j</artifactId>
-									<version>1.2.16</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/log4j/log4j/1.2.16</outputDirectory>
+								    <groupId>log4j</groupId>
+								    <artifactId>log4j</artifactId>
+								    <version>1.2.13</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/log4j/log4j/1.2.13</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>log4j</groupId>
-									<artifactId>log4j</artifactId>
-									<version>1.2.13</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/log4j/log4j/1.2.13</outputDirectory>
+								    <groupId>log4j</groupId>
+								    <artifactId>log4j</artifactId>
+								    <version>1.2.12</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/log4j/log4j/1.2.12</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>log4j</groupId>
-									<artifactId>log4j</artifactId>
-									<version>1.2.13</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/log4j/log4j/1.2.13</outputDirectory>
+								    <groupId>log4j</groupId>
+								    <artifactId>log4j</artifactId>
+								    <version>1.2.12</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/log4j/log4j/1.2.12</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>log4j</groupId>
-									<artifactId>log4j</artifactId>
-									<version>1.2.12</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/log4j/log4j/1.2.12</outputDirectory>
+								    <groupId>commons-codec</groupId>
+								    <artifactId>commons-codec</artifactId>
+								    <version>1.3</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-codec/commons-codec/1.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>log4j</groupId>
-									<artifactId>log4j</artifactId>
-									<version>1.2.12</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/log4j/log4j/1.2.12</outputDirectory>
+								    <groupId>commons-codec</groupId>
+								    <artifactId>commons-codec</artifactId>
+								    <version>1.3</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-codec/commons-codec/1.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-codec</groupId>
-									<artifactId>commons-codec</artifactId>
-									<version>1.3</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-codec/commons-codec/1.3</outputDirectory>
+								    <groupId>commons-codec</groupId>
+								    <artifactId>commons-codec</artifactId>
+								    <version>1.6</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-codec/commons-codec/1.6</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-codec</groupId>
-									<artifactId>commons-codec</artifactId>
-									<version>1.3</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-codec/commons-codec/1.3</outputDirectory>
+								    <groupId>commons-codec</groupId>
+								    <artifactId>commons-codec</artifactId>
+								    <version>1.6</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-codec/commons-codec/1.6</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-codec</groupId>
-									<artifactId>commons-codec</artifactId>
-									<version>1.6</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-codec/commons-codec/1.6</outputDirectory>
+								    <groupId>commons-codec</groupId>
+								    <artifactId>commons-codec</artifactId>
+								    <version>1.2</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-codec/commons-codec/1.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-codec</groupId>
-									<artifactId>commons-codec</artifactId>
-									<version>1.6</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-codec/commons-codec/1.6</outputDirectory>
+								    <groupId>commons-codec</groupId>
+								    <artifactId>commons-codec</artifactId>
+								    <version>1.2</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-codec/commons-codec/1.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-codec</groupId>
-									<artifactId>commons-codec</artifactId>
-									<version>1.2</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-codec/commons-codec/1.2</outputDirectory>
+								    <groupId>commons-codec</groupId>
+								    <artifactId>commons-codec</artifactId>
+								    <version>1.7</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-codec/commons-codec/1.7</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-codec</groupId>
-									<artifactId>commons-codec</artifactId>
-									<version>1.2</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-codec/commons-codec/1.2</outputDirectory>
+								    <groupId>commons-codec</groupId>
+								    <artifactId>commons-codec</artifactId>
+								    <version>1.7</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-codec/commons-codec/1.7</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-codec</groupId>
-									<artifactId>commons-codec</artifactId>
-									<version>1.7</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-codec/commons-codec/1.7</outputDirectory>
+								    <groupId>commons-beanutils</groupId>
+								    <artifactId>commons-beanutils</artifactId>
+								    <version>1.4</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-beanutils/commons-beanutils/1.4</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-codec</groupId>
-									<artifactId>commons-codec</artifactId>
-									<version>1.7</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-codec/commons-codec/1.7</outputDirectory>
+								    <groupId>commons-beanutils</groupId>
+								    <artifactId>commons-beanutils</artifactId>
+								    <version>1.4</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-beanutils/commons-beanutils/1.4</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-beanutils</groupId>
-									<artifactId>commons-beanutils</artifactId>
-									<version>1.4</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-beanutils/commons-beanutils/1.4</outputDirectory>
+								    <groupId>commons-beanutils</groupId>
+								    <artifactId>commons-beanutils</artifactId>
+								    <version>1.8.3</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-beanutils/commons-beanutils/1.8.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-beanutils</groupId>
-									<artifactId>commons-beanutils</artifactId>
-									<version>1.4</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-beanutils/commons-beanutils/1.4</outputDirectory>
+								    <groupId>commons-beanutils</groupId>
+								    <artifactId>commons-beanutils</artifactId>
+								    <version>1.8.3</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-beanutils/commons-beanutils/1.8.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-beanutils</groupId>
-									<artifactId>commons-beanutils</artifactId>
-									<version>1.8.3</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-beanutils/commons-beanutils/1.8.3</outputDirectory>
+								    <groupId>commons-httpclient</groupId>
+								    <artifactId>commons-httpclient</artifactId>
+								    <version>3.1-rc1</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-httpclient/commons-httpclient/3.1-rc1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-beanutils</groupId>
-									<artifactId>commons-beanutils</artifactId>
-									<version>1.8.3</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-beanutils/commons-beanutils/1.8.3</outputDirectory>
+								    <groupId>commons-httpclient</groupId>
+								    <artifactId>commons-httpclient</artifactId>
+								    <version>3.1-rc1</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-httpclient/commons-httpclient/3.1-rc1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-httpclient</groupId>
-									<artifactId>commons-httpclient</artifactId>
-									<version>3.1-rc1</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-httpclient/commons-httpclient/3.1-rc1</outputDirectory>
+								    <groupId>commons-logging</groupId>
+								    <artifactId>commons-logging</artifactId>
+								    <version>1.1</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-logging/commons-logging/1.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-httpclient</groupId>
-									<artifactId>commons-httpclient</artifactId>
-									<version>3.1-rc1</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-httpclient/commons-httpclient/3.1-rc1</outputDirectory>
+								    <groupId>commons-logging</groupId>
+								    <artifactId>commons-logging</artifactId>
+								    <version>1.1</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-logging/commons-logging/1.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-logging</groupId>
-									<artifactId>commons-logging</artifactId>
-									<version>1.1</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-logging/commons-logging/1.1</outputDirectory>
+								    <groupId>commons-logging</groupId>
+								    <artifactId>commons-logging</artifactId>
+								    <version>1.1.1</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-logging/commons-logging/1.1.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-logging</groupId>
-									<artifactId>commons-logging</artifactId>
-									<version>1.1</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-logging/commons-logging/1.1</outputDirectory>
+								    <groupId>commons-logging</groupId>
+								    <artifactId>commons-logging</artifactId>
+								    <version>1.1.1</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-logging/commons-logging/1.1.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-logging</groupId>
-									<artifactId>commons-logging</artifactId>
-									<version>1.1.2</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-logging/commons-logging/1.1.2</outputDirectory>
+								    <groupId>commons-logging</groupId>
+								    <artifactId>commons-logging</artifactId>
+								    <version>1.1.2</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-logging/commons-logging/1.1.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-logging</groupId>
-									<artifactId>commons-logging</artifactId>
-									<version>1.1.2</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-logging/commons-logging/1.1.2</outputDirectory>
+								    <groupId>commons-logging</groupId>
+								    <artifactId>commons-logging</artifactId>
+								    <version>1.1.2</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-logging/commons-logging/1.1.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-logging</groupId>
-									<artifactId>commons-logging</artifactId>
-									<version>1.0</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-logging/commons-logging/1.0</outputDirectory>
+								    <groupId>commons-logging</groupId>
+								    <artifactId>commons-logging</artifactId>
+								    <version>1.0</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-logging/commons-logging/1.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-logging</groupId>
-									<artifactId>commons-logging</artifactId>
-									<version>1.0</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-logging/commons-logging/1.0</outputDirectory>
+								    <groupId>commons-logging</groupId>
+								    <artifactId>commons-logging</artifactId>
+								    <version>1.0</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-logging/commons-logging/1.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-logging</groupId>
-									<artifactId>commons-logging</artifactId>
-									<version>1.0.4</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-logging/commons-logging/1.0.4</outputDirectory>
+								    <groupId>commons-logging</groupId>
+								    <artifactId>commons-logging</artifactId>
+								    <version>1.0.3</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-logging/commons-logging/1.0.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-logging</groupId>
-									<artifactId>commons-logging</artifactId>
-									<version>1.0.4</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-logging/commons-logging/1.0.4</outputDirectory>
+								    <groupId>commons-logging</groupId>
+								    <artifactId>commons-logging</artifactId>
+								    <version>1.0.3</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-logging/commons-logging/1.0.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-logging</groupId>
-									<artifactId>commons-logging</artifactId>
-									<version>1.0.3</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-logging/commons-logging/1.0.3</outputDirectory>
+								    <groupId>servletapi</groupId>
+								    <artifactId>servletapi</artifactId>
+								    <version>2.2</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/servletapi/servletapi/2.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-logging</groupId>
-									<artifactId>commons-logging</artifactId>
-									<version>1.0.3</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-logging/commons-logging/1.0.3</outputDirectory>
+								    <groupId>servletapi</groupId>
+								    <artifactId>servletapi</artifactId>
+								    <version>2.2</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/servletapi/servletapi/2.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>servletapi</groupId>
-									<artifactId>servletapi</artifactId>
-									<version>2.2</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/servletapi/servletapi/2.2</outputDirectory>
+								    <groupId>xalan</groupId>
+								    <artifactId>xalan</artifactId>
+								    <version>2.6.0</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/xalan/xalan/2.6.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>servletapi</groupId>
-									<artifactId>servletapi</artifactId>
-									<version>2.2</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/servletapi/servletapi/2.2</outputDirectory>
+								    <groupId>xalan</groupId>
+								    <artifactId>xalan</artifactId>
+								    <version>2.6.0</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/xalan/xalan/2.6.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xalan</groupId>
-									<artifactId>xalan</artifactId>
-									<version>2.6.0</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/xalan/xalan/2.6.0</outputDirectory>
+								    <groupId>xalan</groupId>
+								    <artifactId>xalan</artifactId>
+								    <version>2.7.0</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/xalan/xalan/2.7.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xalan</groupId>
-									<artifactId>xalan</artifactId>
-									<version>2.6.0</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/xalan/xalan/2.6.0</outputDirectory>
+								    <groupId>xalan</groupId>
+								    <artifactId>xalan</artifactId>
+								    <version>2.7.0</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/xalan/xalan/2.7.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xalan</groupId>
-									<artifactId>xalan</artifactId>
-									<version>2.7.0</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/xalan/xalan/2.7.0</outputDirectory>
+								    <groupId>avalon-framework</groupId>
+								    <artifactId>avalon-framework</artifactId>
+								    <version>4.1.3</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/avalon-framework/avalon-framework/4.1.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>xalan</groupId>
-									<artifactId>xalan</artifactId>
-									<version>2.7.0</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/xalan/xalan/2.7.0</outputDirectory>
+								    <groupId>avalon-framework</groupId>
+								    <artifactId>avalon-framework</artifactId>
+								    <version>4.1.3</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/avalon-framework/avalon-framework/4.1.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>avalon-framework</groupId>
-									<artifactId>avalon-framework</artifactId>
-									<version>4.1.3</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/avalon-framework/avalon-framework/4.1.3</outputDirectory>
+								    <groupId>junit</groupId>
+								    <artifactId>junit</artifactId>
+								    <version>3.7</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/junit/junit/3.7</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>avalon-framework</groupId>
-									<artifactId>avalon-framework</artifactId>
-									<version>4.1.3</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/avalon-framework/avalon-framework/4.1.3</outputDirectory>
+								    <groupId>junit</groupId>
+								    <artifactId>junit</artifactId>
+								    <version>3.7</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/junit/junit/3.7</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>junit</groupId>
-									<artifactId>junit</artifactId>
-									<version>3.7</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/junit/junit/3.7</outputDirectory>
+								    <groupId>junit</groupId>
+								    <artifactId>junit</artifactId>
+								    <version>3.8</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/junit/junit/3.8</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>junit</groupId>
-									<artifactId>junit</artifactId>
-									<version>3.7</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/junit/junit/3.7</outputDirectory>
+								    <groupId>junit</groupId>
+								    <artifactId>junit</artifactId>
+								    <version>3.8</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/junit/junit/3.8</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>junit</groupId>
-									<artifactId>junit</artifactId>
-									<version>3.8</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/junit/junit/3.8</outputDirectory>
+								    <groupId>junit</groupId>
+								    <artifactId>junit</artifactId>
+								    <version>3.8.2</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/junit/junit/3.8.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>junit</groupId>
-									<artifactId>junit</artifactId>
-									<version>3.8</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/junit/junit/3.8</outputDirectory>
+								    <groupId>junit</groupId>
+								    <artifactId>junit</artifactId>
+								    <version>3.8.2</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/junit/junit/3.8.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>junit</groupId>
-									<artifactId>junit</artifactId>
-									<version>3.8.2</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/junit/junit/3.8.2</outputDirectory>
+								    <groupId>junit</groupId>
+								    <artifactId>junit</artifactId>
+								    <version>4.8.1</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/junit/junit/4.8.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>junit</groupId>
-									<artifactId>junit</artifactId>
-									<version>3.8.2</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/junit/junit/3.8.2</outputDirectory>
+								    <groupId>junit</groupId>
+								    <artifactId>junit</artifactId>
+								    <version>4.8.1</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/junit/junit/4.8.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>junit</groupId>
-									<artifactId>junit</artifactId>
-									<version>4.8.1</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/junit/junit/4.8.1</outputDirectory>
+								    <groupId>junit</groupId>
+								    <artifactId>junit</artifactId>
+								    <version>4.3</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/junit/junit/4.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>junit</groupId>
-									<artifactId>junit</artifactId>
-									<version>4.8.1</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/junit/junit/4.8.1</outputDirectory>
+								    <groupId>junit</groupId>
+								    <artifactId>junit</artifactId>
+								    <version>4.3</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/junit/junit/4.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>junit</groupId>
-									<artifactId>junit</artifactId>
-									<version>4.3</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/junit/junit/4.3</outputDirectory>
+								    <groupId>junit</groupId>
+								    <artifactId>junit</artifactId>
+								    <version>3.8.1</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/junit/junit/3.8.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>junit</groupId>
-									<artifactId>junit</artifactId>
-									<version>4.3</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/junit/junit/4.3</outputDirectory>
+								    <groupId>junit</groupId>
+								    <artifactId>junit</artifactId>
+								    <version>3.8.1</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/junit/junit/3.8.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>junit</groupId>
-									<artifactId>junit</artifactId>
-									<version>3.8.1</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/junit/junit/3.8.1</outputDirectory>
+								    <groupId>commons-io</groupId>
+								    <artifactId>commons-io</artifactId>
+								    <version>1.4</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-io/commons-io/1.4</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>junit</groupId>
-									<artifactId>junit</artifactId>
-									<version>3.8.1</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/junit/junit/3.8.1</outputDirectory>
+								    <groupId>commons-io</groupId>
+								    <artifactId>commons-io</artifactId>
+								    <version>1.4</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-io/commons-io/1.4</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-io</groupId>
-									<artifactId>commons-io</artifactId>
-									<version>1.1</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-io/commons-io/1.1</outputDirectory>
+								    <groupId>commons-io</groupId>
+								    <artifactId>commons-io</artifactId>
+								    <version>2.4</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-io/commons-io/2.4</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-io</groupId>
-									<artifactId>commons-io</artifactId>
-									<version>1.1</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-io/commons-io/1.1</outputDirectory>
+								    <groupId>commons-io</groupId>
+								    <artifactId>commons-io</artifactId>
+								    <version>2.4</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-io/commons-io/2.4</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-io</groupId>
-									<artifactId>commons-io</artifactId>
-									<version>1.3.1</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-io/commons-io/1.3.1</outputDirectory>
+								    <groupId>commons-io</groupId>
+								    <artifactId>commons-io</artifactId>
+								    <version>1.2</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-io/commons-io/1.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-io</groupId>
-									<artifactId>commons-io</artifactId>
-									<version>1.3.1</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-io/commons-io/1.3.1</outputDirectory>
+								    <groupId>commons-io</groupId>
+								    <artifactId>commons-io</artifactId>
+								    <version>1.2</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-io/commons-io/1.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-io</groupId>
-									<artifactId>commons-io</artifactId>
-									<version>2.4</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-io/commons-io/2.4</outputDirectory>
+								    <groupId>logkit</groupId>
+								    <artifactId>logkit</artifactId>
+								    <version>1.0.1</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/logkit/logkit/1.0.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-io</groupId>
-									<artifactId>commons-io</artifactId>
-									<version>2.4</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-io/commons-io/2.4</outputDirectory>
+								    <groupId>logkit</groupId>
+								    <artifactId>logkit</artifactId>
+								    <version>1.0.1</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/logkit/logkit/1.0.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-io</groupId>
-									<artifactId>commons-io</artifactId>
-									<version>1.2</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-io/commons-io/1.2</outputDirectory>
+								    <groupId>jdom</groupId>
+								    <artifactId>jdom</artifactId>
+								    <version>b9</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/jdom/jdom/b9</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-io</groupId>
-									<artifactId>commons-io</artifactId>
-									<version>1.2</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-io/commons-io/1.2</outputDirectory>
+								    <groupId>jdom</groupId>
+								    <artifactId>jdom</artifactId>
+								    <version>b9</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/jdom/jdom/b9</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>logkit</groupId>
-									<artifactId>logkit</artifactId>
-									<version>1.0.1</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/logkit/logkit/1.0.1</outputDirectory>
+								    <groupId>commons-dbcp</groupId>
+								    <artifactId>commons-dbcp</artifactId>
+								    <version>1.2.2</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-dbcp/commons-dbcp/1.2.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>logkit</groupId>
-									<artifactId>logkit</artifactId>
-									<version>1.0.1</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/logkit/logkit/1.0.1</outputDirectory>
+								    <groupId>commons-dbcp</groupId>
+								    <artifactId>commons-dbcp</artifactId>
+								    <version>1.2.2</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/commons-dbcp/commons-dbcp/1.2.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>jdom</groupId>
-									<artifactId>jdom</artifactId>
-									<version>b9</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/jdom/jdom/b9</outputDirectory>
+								    <groupId>org.apache.httpcomponents</groupId>
+								    <artifactId>httpcomponents-core</artifactId>
+								    <version>4.2.2</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpcomponents-core/4.2.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>jdom</groupId>
-									<artifactId>jdom</artifactId>
-									<version>b9</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/jdom/jdom/b9</outputDirectory>
+								    <groupId>org.apache.httpcomponents</groupId>
+								    <artifactId>httpcomponents-core</artifactId>
+								    <version>4.2.4</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpcomponents-core/4.2.4</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-dbcp</groupId>
-									<artifactId>commons-dbcp</artifactId>
-									<version>1.2.2</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/commons-dbcp/commons-dbcp/1.2.2</outputDirectory>
+								    <groupId>org.apache.httpcomponents</groupId>
+								    <artifactId>httpcomponents-core</artifactId>
+								    <version>4.2.3</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpcomponents-core/4.2.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>commons-dbcp</groupId>
-									<artifactId>commons-dbcp</artifactId>
-									<version>1.2.2</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/commons-dbcp/commons-dbcp/1.2.2</outputDirectory>
+								    <groupId>org.apache.httpcomponents</groupId>
+								    <artifactId>httpcomponents-client</artifactId>
+								    <version>4.2.3</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpcomponents-client/4.2.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.httpcomponents</groupId>
-									<artifactId>httpcomponents-core</artifactId>
-									<version>4.2.4</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpcomponents-core/4.2.4</outputDirectory>
+								    <groupId>org.apache.httpcomponents</groupId>
+								    <artifactId>httpclient</artifactId>
+								    <version>4.2.3</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpclient/4.2.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.httpcomponents</groupId>
-									<artifactId>httpcomponents-core</artifactId>
-									<version>4.0.1</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpcomponents-core/4.0.1</outputDirectory>
+								    <groupId>org.apache.httpcomponents</groupId>
+								    <artifactId>httpclient</artifactId>
+								    <version>4.2.3</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpclient/4.2.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.httpcomponents</groupId>
-									<artifactId>httpcomponents-core</artifactId>
-									<version>4.2.3</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpcomponents-core/4.2.3</outputDirectory>
+								    <groupId>org.apache.httpcomponents</groupId>
+								    <artifactId>httpclient</artifactId>
+								    <version>4.2.5</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpclient/4.2.5</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.httpcomponents</groupId>
-									<artifactId>httpcomponents-client</artifactId>
-									<version>4.2.3</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpcomponents-client/4.2.3</outputDirectory>
+								    <groupId>org.apache.httpcomponents</groupId>
+								    <artifactId>httpclient</artifactId>
+								    <version>4.2.5</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpclient/4.2.5</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.httpcomponents</groupId>
-									<artifactId>httpclient</artifactId>
-									<version>4.2.3</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpclient/4.2.3</outputDirectory>
+								    <groupId>org.apache.httpcomponents</groupId>
+								    <artifactId>httpcore</artifactId>
+								    <version>4.2.2</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpcore/4.2.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.httpcomponents</groupId>
-									<artifactId>httpclient</artifactId>
-									<version>4.2.3</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpclient/4.2.3</outputDirectory>
+								    <groupId>org.apache.httpcomponents</groupId>
+								    <artifactId>httpcore</artifactId>
+								    <version>4.2.2</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpcore/4.2.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.httpcomponents</groupId>
-									<artifactId>httpclient</artifactId>
-									<version>4.2.5</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpclient/4.2.5</outputDirectory>
+								    <groupId>org.apache.httpcomponents</groupId>
+								    <artifactId>httpcore</artifactId>
+								    <version>4.2.4</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpcore/4.2.4</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.httpcomponents</groupId>
-									<artifactId>httpclient</artifactId>
-									<version>4.2.5</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpclient/4.2.5</outputDirectory>
+								    <groupId>org.apache.httpcomponents</groupId>
+								    <artifactId>httpcore</artifactId>
+								    <version>4.2.4</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpcore/4.2.4</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.httpcomponents</groupId>
-									<artifactId>httpcore</artifactId>
-									<version>4.2.4</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpcore/4.2.4</outputDirectory>
+								    <groupId>org.apache.httpcomponents</groupId>
+								    <artifactId>httpcore</artifactId>
+								    <version>4.2.3</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpcore/4.2.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.httpcomponents</groupId>
-									<artifactId>httpcore</artifactId>
-									<version>4.2.4</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpcore/4.2.4</outputDirectory>
+								    <groupId>org.apache.httpcomponents</groupId>
+								    <artifactId>httpcore</artifactId>
+								    <version>4.2.3</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpcore/4.2.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.httpcomponents</groupId>
-									<artifactId>httpcore</artifactId>
-									<version>4.0.1</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpcore/4.0.1</outputDirectory>
+								    <groupId>org.apache</groupId>
+								    <artifactId>apache</artifactId>
+								    <version>7</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/apache/7</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.httpcomponents</groupId>
-									<artifactId>httpcore</artifactId>
-									<version>4.0.1</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpcore/4.0.1</outputDirectory>
+								    <groupId>org.apache.jena</groupId>
+								    <artifactId>jena-core</artifactId>
+								    <version>2.11.0</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/jena/jena-core/2.11.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.httpcomponents</groupId>
-									<artifactId>httpcore</artifactId>
-									<version>4.2.3</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpcore/4.2.3</outputDirectory>
+								    <groupId>org.apache.jena</groupId>
+								    <artifactId>jena-core</artifactId>
+								    <version>2.11.0</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/jena/jena-core/2.11.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.httpcomponents</groupId>
-									<artifactId>httpcore</artifactId>
-									<version>4.2.3</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/httpcomponents/httpcore/4.2.3</outputDirectory>
+								    <groupId>org.apache.jena</groupId>
+								    <artifactId>jena-iri</artifactId>
+								    <version>1.0.0</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/jena/jena-iri/1.0.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache</groupId>
-									<artifactId>apache</artifactId>
-									<version>7</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/apache/7</outputDirectory>
+								    <groupId>org.apache.jena</groupId>
+								    <artifactId>jena-iri</artifactId>
+								    <version>1.0.0</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/jena/jena-iri/1.0.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.jena</groupId>
-									<artifactId>jena-core</artifactId>
-									<version>2.11.0</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/jena/jena-core/2.11.0</outputDirectory>
+								    <groupId>org.apache.xmlbeans</groupId>
+								    <artifactId>xmlbeans</artifactId>
+								    <version>2.3.0</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/xmlbeans/xmlbeans/2.3.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.jena</groupId>
-									<artifactId>jena-core</artifactId>
-									<version>2.11.0</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/jena/jena-core/2.11.0</outputDirectory>
+								    <groupId>org.apache.xmlbeans</groupId>
+								    <artifactId>xmlbeans</artifactId>
+								    <version>2.3.0</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/xmlbeans/xmlbeans/2.3.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.jena</groupId>
-									<artifactId>jena-iri</artifactId>
-									<version>0.9.4</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/jena/jena-iri/0.9.4</outputDirectory>
+								    <groupId>org.apache.commons</groupId>
+								    <artifactId>commons-parent</artifactId>
+								    <version>14</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/commons/commons-parent/14</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.jena</groupId>
-									<artifactId>jena-iri</artifactId>
-									<version>0.9.4</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/jena/jena-iri/0.9.4</outputDirectory>
+								    <groupId>org.apache.commons</groupId>
+								    <artifactId>commons-parent</artifactId>
+								    <version>28</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/commons/commons-parent/28</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.xmlbeans</groupId>
-									<artifactId>xmlbeans</artifactId>
-									<version>2.3.0</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/xmlbeans/xmlbeans/2.3.0</outputDirectory>
+								    <groupId>org.apache.commons</groupId>
+								    <artifactId>commons-parent</artifactId>
+								    <version>17</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/commons/commons-parent/17</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.xmlbeans</groupId>
-									<artifactId>xmlbeans</artifactId>
-									<version>2.3.0</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/xmlbeans/xmlbeans/2.3.0</outputDirectory>
+								    <groupId>org.apache.commons</groupId>
+								    <artifactId>commons-parent</artifactId>
+								    <version>22</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/commons/commons-parent/22</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.commons</groupId>
-									<artifactId>commons-parent</artifactId>
-									<version>14</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/commons/commons-parent/14</outputDirectory>
+								    <groupId>org.apache.commons</groupId>
+								    <artifactId>commons-parent</artifactId>
+								    <version>26</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/commons/commons-parent/26</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.commons</groupId>
-									<artifactId>commons-parent</artifactId>
-									<version>28</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/commons/commons-parent/28</outputDirectory>
+								    <groupId>org.apache.commons</groupId>
+								    <artifactId>commons-parent</artifactId>
+								    <version>5</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/commons/commons-parent/5</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.commons</groupId>
-									<artifactId>commons-parent</artifactId>
-									<version>17</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/commons/commons-parent/17</outputDirectory>
+								    <groupId>org.apache.commons</groupId>
+								    <artifactId>commons-parent</artifactId>
+								    <version>7</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/commons/commons-parent/7</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.commons</groupId>
-									<artifactId>commons-parent</artifactId>
-									<version>22</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/commons/commons-parent/22</outputDirectory>
+								    <groupId>org.apache.geronimo.specs</groupId>
+								    <artifactId>specs</artifactId>
+								    <version>1.2</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/geronimo/specs/specs/1.2</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.commons</groupId>
-									<artifactId>commons-parent</artifactId>
-									<version>26</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/commons/commons-parent/26</outputDirectory>
+								    <groupId>org.apache.geronimo.specs</groupId>
+								    <artifactId>geronimo-stax-api_1.0_spec</artifactId>
+								    <version>1.0</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/geronimo/specs/geronimo-stax-api_1.0_spec/1.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.commons</groupId>
-									<artifactId>commons-parent</artifactId>
-									<version>9</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/commons/commons-parent/9</outputDirectory>
+								    <groupId>org.apache.geronimo.specs</groupId>
+								    <artifactId>geronimo-stax-api_1.0_spec</artifactId>
+								    <version>1.0</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/apache/geronimo/specs/geronimo-stax-api_1.0_spec/1.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.geronimo.specs</groupId>
-									<artifactId>specs</artifactId>
-									<version>1.2</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/geronimo/specs/specs/1.2</outputDirectory>
+								    <groupId>org.codehaus.woodstox</groupId>
+								    <artifactId>wstx-asl</artifactId>
+								    <version>3.2.9</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/codehaus/woodstox/wstx-asl/3.2.9</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.geronimo.specs</groupId>
-									<artifactId>geronimo-stax-api_1.0_spec</artifactId>
-									<version>1.0</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/geronimo/specs/geronimo-stax-api_1.0_spec/1.0</outputDirectory>
+								    <groupId>org.codehaus.woodstox</groupId>
+								    <artifactId>wstx-asl</artifactId>
+								    <version>3.2.9</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/codehaus/woodstox/wstx-asl/3.2.9</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.apache.geronimo.specs</groupId>
-									<artifactId>geronimo-stax-api_1.0_spec</artifactId>
-									<version>1.0</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/apache/geronimo/specs/geronimo-stax-api_1.0_spec/1.0</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-jdk14</artifactId>
+								    <version>1.5.0</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-jdk14/1.5.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.codehaus.woodstox</groupId>
-									<artifactId>wstx-asl</artifactId>
-									<version>3.2.9</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/codehaus/woodstox/wstx-asl/3.2.9</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-jdk14</artifactId>
+								    <version>1.5.0</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-jdk14/1.5.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.codehaus.woodstox</groupId>
-									<artifactId>wstx-asl</artifactId>
-									<version>3.2.9</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/org/codehaus/woodstox/wstx-asl/3.2.9</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-parent</artifactId>
+								    <version>1.5.8</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-parent/1.5.8</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>slf4j-jdk14</artifactId>
-									<version>1.5.0</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-jdk14/1.5.0</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-parent</artifactId>
+								    <version>1.5.0</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-parent/1.5.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>slf4j-jdk14</artifactId>
-									<version>1.5.0</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-jdk14/1.5.0</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-parent</artifactId>
+								    <version>1.6.4</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-parent/1.6.4</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>slf4j-parent</artifactId>
-									<version>1.7.5</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-parent/1.7.5</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-parent</artifactId>
+								    <version>1.4.3</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-parent/1.4.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>slf4j-parent</artifactId>
-									<version>1.5.0</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-parent/1.5.0</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-parent</artifactId>
+								    <version>1.5.6</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-parent/1.5.6</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>slf4j-parent</artifactId>
-									<version>1.6.4</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-parent/1.6.4</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-simple</artifactId>
+								    <version>1.5.0</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-simple/1.5.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>slf4j-parent</artifactId>
-									<version>1.4.3</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-parent/1.4.3</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-simple</artifactId>
+								    <version>1.5.0</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-simple/1.5.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>slf4j-simple</artifactId>
-									<version>1.5.0</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-simple/1.5.0</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-log4j12</artifactId>
+								    <version>1.5.8</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-log4j12/1.5.8</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>slf4j-simple</artifactId>
-									<version>1.5.0</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-simple/1.5.0</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-log4j12</artifactId>
+								    <version>1.5.8</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-log4j12/1.5.8</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>slf4j-log4j12</artifactId>
-									<version>1.4.3</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-log4j12/1.4.3</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-log4j12</artifactId>
+								    <version>1.4.3</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-log4j12/1.4.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>slf4j-log4j12</artifactId>
-									<version>1.4.3</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-log4j12/1.4.3</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-log4j12</artifactId>
+								    <version>1.4.3</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-log4j12/1.4.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>slf4j-api</artifactId>
-									<version>1.7.5</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.7.5</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-log4j12</artifactId>
+								    <version>1.5.6</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-log4j12/1.5.6</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>slf4j-api</artifactId>
-									<version>1.7.5</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.7.5</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-log4j12</artifactId>
+								    <version>1.5.6</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-log4j12/1.5.6</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>slf4j-api</artifactId>
-									<version>1.5.0</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.5.0</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-api</artifactId>
+								    <version>1.5.8</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.5.8</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>slf4j-api</artifactId>
-									<version>1.5.0</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.5.0</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-api</artifactId>
+								    <version>1.5.8</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.5.8</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>slf4j-api</artifactId>
-									<version>1.6.4</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.6.4</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-api</artifactId>
+								    <version>1.5.0</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.5.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>slf4j-api</artifactId>
-									<version>1.6.4</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.6.4</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-api</artifactId>
+								    <version>1.5.0</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.5.0</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>slf4j-api</artifactId>
-									<version>1.4.3</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.4.3</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-api</artifactId>
+								    <version>1.6.4</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.6.4</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>slf4j-api</artifactId>
-									<version>1.4.3</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.4.3</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-api</artifactId>
+								    <version>1.6.4</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.6.4</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>jcl-over-slf4j</artifactId>
-									<version>1.6.4</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/slf4j/jcl-over-slf4j/1.6.4</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-api</artifactId>
+								    <version>1.4.3</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.4.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>jcl-over-slf4j</artifactId>
-									<version>1.6.4</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/org/slf4j/jcl-over-slf4j/1.6.4</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-api</artifactId>
+								    <version>1.4.3</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.4.3</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.ccil.cowan.tagsoup</groupId>
-									<artifactId>tagsoup</artifactId>
-									<version>0.9.7</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/org/ccil/cowan/tagsoup/tagsoup/0.9.7</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-api</artifactId>
+								    <version>1.5.6</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.5.6</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>org.ccil.cowan.tagsoup</groupId>
-									<artifactId>tagsoup</artifactId>
-									<version>0.9.7</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/org/ccil/cowan/tagsoup/tagsoup/0.9.7</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>slf4j-api</artifactId>
+								    <version>1.5.6</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.5.6</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>javax.activation</groupId>
-									<artifactId>activation</artifactId>
-									<version>1.1</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/javax/activation/activation/1.1</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>jcl-over-slf4j</artifactId>
+								    <version>1.6.4</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/jcl-over-slf4j/1.6.4</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>javax.activation</groupId>
-									<artifactId>activation</artifactId>
-									<version>1.1</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/javax/activation/activation/1.1</outputDirectory>
+								    <groupId>org.slf4j</groupId>
+								    <artifactId>jcl-over-slf4j</artifactId>
+								    <version>1.6.4</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/slf4j/jcl-over-slf4j/1.6.4</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>javax.mail</groupId>
-									<artifactId>mail</artifactId>
-									<version>1.4</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/javax/mail/mail/1.4</outputDirectory>
+								    <groupId>org.ccil.cowan.tagsoup</groupId>
+								    <artifactId>tagsoup</artifactId>
+								    <version>0.9.7</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/org/ccil/cowan/tagsoup/tagsoup/0.9.7</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>javax.mail</groupId>
-									<artifactId>mail</artifactId>
-									<version>1.4</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/javax/mail/mail/1.4</outputDirectory>
+								    <groupId>org.ccil.cowan.tagsoup</groupId>
+								    <artifactId>tagsoup</artifactId>
+								    <version>0.9.7</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/org/ccil/cowan/tagsoup/tagsoup/0.9.7</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>javax.servlet</groupId>
-									<artifactId>servlet-api</artifactId>
-									<version>2.3</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/javax/servlet/servlet-api/2.3</outputDirectory>
+								    <groupId>javax.activation</groupId>
+								    <artifactId>activation</artifactId>
+								    <version>1.1</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/javax/activation/activation/1.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>javax.servlet</groupId>
-									<artifactId>servlet-api</artifactId>
-									<version>2.3</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/javax/servlet/servlet-api/2.3</outputDirectory>
+								    <groupId>javax.activation</groupId>
+								    <artifactId>activation</artifactId>
+								    <version>1.1</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/javax/activation/activation/1.1</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>javax.servlet</groupId>
-									<artifactId>servlet-api</artifactId>
-									<version>2.4</version>
-									<type>jar</type>
-									<outputDirectory>${project.build.directory}/repository/javax/servlet/servlet-api/2.4</outputDirectory>
+								    <groupId>javax.mail</groupId>
+								    <artifactId>mail</artifactId>
+								    <version>1.4</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/javax/mail/mail/1.4</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>javax.servlet</groupId>
-									<artifactId>servlet-api</artifactId>
-									<version>2.4</version>
-									<type>pom</type>
-									<outputDirectory>${project.build.directory}/repository/javax/servlet/servlet-api/2.4</outputDirectory>
+								    <groupId>javax.mail</groupId>
+								    <artifactId>mail</artifactId>
+								    <version>1.4</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/javax/mail/mail/1.4</outputDirectory>
+								</artifactItem>
+								<artifactItem>
+								    <groupId>javax.servlet</groupId>
+								    <artifactId>servlet-api</artifactId>
+								    <version>2.3</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/javax/servlet/servlet-api/2.3</outputDirectory>
+								</artifactItem>
+								<artifactItem>
+								    <groupId>javax.servlet</groupId>
+								    <artifactId>servlet-api</artifactId>
+								    <version>2.3</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/javax/servlet/servlet-api/2.3</outputDirectory>
+								</artifactItem>
+								<artifactItem>
+								    <groupId>javax.servlet</groupId>
+								    <artifactId>servlet-api</artifactId>
+								    <version>2.4</version>
+								    <type>jar</type>
+								    <outputDirectory>${project.build.directory}/repository/javax/servlet/servlet-api/2.4</outputDirectory>
+								</artifactItem>
+								<artifactItem>
+								    <groupId>javax.servlet</groupId>
+								    <artifactId>servlet-api</artifactId>
+								    <version>2.4</version>
+								    <type>pom</type>
+								    <outputDirectory>${project.build.directory}/repository/javax/servlet/servlet-api/2.4</outputDirectory>
 								</artifactItem>
 							</artifactItems>
 						</configuration>
