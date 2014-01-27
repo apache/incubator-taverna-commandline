@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component
-	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
-	
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
 	<dependencySets>
 		<dependencySet>
+			<includes>
+				<include>net.sf.taverna.t2.taverna-workbench:workbench-distro</include>
+			</includes>
 			<unpack>true</unpack>
 			<unpackOptions>
-				<includes>				
+				<includes>
 					<include>conf/log4j.properties</include>
-					<include>executeworkflow.*</include>
 					<include>ISSUES.txt</include>
 					<include>CHANGELOG.txt</include>
 					<include>LICENCE.txt</include>
 					<include>CITATION.txt</include>
-				</includes>			
+					<include>executeworkflow.sh</include>
+					<include>executeworkflow.bat</include>
+				</includes>
 			</unpackOptions>
-		</dependencySet>
+			<fileMode>0755</fileMode>
+		</dependencySet>		
 	</dependencySets>
 	<fileSets>
 		<fileSet>
@@ -28,27 +32,37 @@
 				<exclude>conf/raven-launcher.properties</exclude>
 				<exclude>conf/current-profile.xml</exclude>
 			</excludes>
+			<fileMode>0644</fileMode>
+			<directoryMode>0755</directoryMode>
 		</fileSet>
 		<fileSet>
 			<directory>${project.build.directory}/repository</directory>
 			<outputDirectory>/repository</outputDirectory>
+			<fileMode>0644</fileMode>
+			<directoryMode>0755</directoryMode>
 		</fileSet>
 	</fileSets>
 	<files>
 		<file>
 			<source>src/main/resources/plugins/plugins.xml</source>
 			<outputDirectory>/plugins</outputDirectory>
-			<filtered>true</filtered>			
+			<filtered>true</filtered>
+			<fileMode>0644</fileMode>
+			<directoryMode>0755</directoryMode>
 		</file>
 		<file>
 			<source>src/main/resources/conf/raven-launcher.properties</source>
 			<outputDirectory>/conf</outputDirectory>
 			<filtered>true</filtered>
+			<fileMode>0644</fileMode>
+			<directoryMode>0755</directoryMode>
 		</file>
 		<file>
 			<source>src/main/resources/conf/current-profile.xml</source>
 			<outputDirectory>/conf</outputDirectory>
 			<filtered>true</filtered>
+			<fileMode>0644</fileMode>
+			<directoryMode>0755</directoryMode>
 		</file>
 	</files>
 </component>
