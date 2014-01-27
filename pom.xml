@@ -11,7 +11,7 @@
 	<version>2.5-SNAPSHOT</version>
 	<name>Taverna command line utility</name>
 	<properties>
-          <t2.taverna-commandline.version>1.5-SNAPSHOT</t2.taverna-commandline.version>
+         <t2.taverna-commandline.version>1.5-SNAPSHOT</t2.taverna-commandline.version>
          <t2.taverna.workbench.version>2.5-SNAPSHOT</t2.taverna.workbench.version>
 	</properties>
 

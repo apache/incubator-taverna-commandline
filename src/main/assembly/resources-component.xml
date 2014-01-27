@@ -11,10 +11,11 @@
 				<includes>				
 					<include>conf/log4j.properties</include>
 					<include>executeworkflow.*</include>
-					<include>known-issues.txt</include>
-					<include>release-notes.txt</include>
+					<include>ISSUES.txt</include>
+					<include>CHANGELOG.txt</include>
 					<include>LICENCE.txt</include>
-				</includes>
+					<include>CITATION.txt</include>
+				</includes>			
 			</unpackOptions>
 		</dependencySet>
 	</dependencySets>

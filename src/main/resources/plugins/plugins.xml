@@ -10,19 +10,13 @@
         <description>Taverna 2 services (WSDL, SoapLab, etc)</description>
         <enabled>true</enabled>
         <repositories>
+            ${m2Repository}
             <repository>http://www.mygrid.org.uk/maven/repository/</repository>
             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
-                        <repository>http://uk.maven.org/maven2/</repository>
+            <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
             <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
-            <repository>http://repo.aduna-software.org/maven2/releases/</repository>
-            <repository>http://ws.zones.apache.org/repository2/</repository>
             <repository>http://www.eviware.com/repository/maven2/</repository>
-            <repository>http://repo1.maven.org/maven2/</repository>
-
-            <repository>http://openprovenance.org/java/maven-releases/</repository>
-            <repository>http://people.apache.org/repo/m2-snapshot-repository/</repository>
-            <repository>http://repository.apache.org/snapshots/</repository>
         </repositories>
         <profile>
 <!--  			<dependency>
@@ -114,11 +108,10 @@
             ${m2Repository}
             <repository>http://www.mygrid.org.uk/maven/repository/</repository>
             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
-             <repository>http://uk.maven.org/maven2/</repository>
+            <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
             <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
             <repository>http://repo.aduna-software.org/maven2/releases/</repository>           
-            <repository>http://ws.zones.apache.org/repository2/</repository>
             <repository>http://www.eviware.com/repository/maven2/</repository>
             <repository>http://www.mygrid.org.uk/maven/biomoby/moby-dev.inab.org/m2/</repository>
         </repositories>
@@ -150,7 +143,6 @@
             <repository>http://download.java.net/maven/2/</repository>
             <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
             <repository>http://repo.aduna-software.org/maven2/releases/</repository>
-            <repository>http://ws.zones.apache.org/repository2/</repository>
             <repository>http://www.eviware.com/repository/maven2/</repository>
             <repository>http://www.mygrid.org.uk/maven/biomoby/moby-dev.inab.org/m2/</repository>
         </repositories>
@@ -184,11 +176,10 @@
             ${m2Repository}
             <repository>http://www.mygrid.org.uk/maven/repository/</repository>
             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
-             <repository>http://uk.maven.org/maven2/</repository>
+            <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
             <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
             <repository>http://repo.aduna-software.org/maven2/releases/</repository>
-            <repository>http://ws.zones.apache.org/repository2/</repository>
             <repository>http://www.eviware.com/repository/maven2/</repository>
             <repository>http://www.mygrid.org.uk/maven/biomoby/moby-dev.inab.org/m2/</repository>
         </repositories>
@@ -213,15 +204,16 @@
         <description>Taverna 2 provenance connectors</description>
         <enabled>true</enabled>
         <repositories>
-           <repository>http://www.mygrid.org.uk/maven/repository/</repository>
+            ${m2Repository}
+            <repository>http://www.mygrid.org.uk/maven/repository/</repository>
             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
             <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
             <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
             <repository>http://repo.aduna-software.org/maven2/releases/</repository>
-            <repository>http://ws.zones.apache.org/repository2/</repository>
+           
             <repository>http://www.eviware.com/repository/maven2/</repository>
-  	<repository>http://openprovenance.org/java/maven-releases/</repository>
+		  	<repository>http://openprovenance.org/java/maven-releases/</repository>
 			<repository>http://openjena.org/repo/</repository>
         </repositories>
         <profile>
@@ -245,13 +237,13 @@
         <description>Taverna 2 Tool service</description>
         <enabled>true</enabled>
         <repositories>
+	    	${m2Repository}
             <repository>http://www.mygrid.org.uk/maven/repository/</repository>
-             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
+            <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
             <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
             <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
             <repository>http://repo.aduna-software.org/maven2/releases/</repository>
-            <repository>http://ws.zones.apache.org/repository2/</repository>
             <repository>http://www.eviware.com/repository/maven2/</repository>
         </repositories>
         <profile>
@@ -280,15 +272,15 @@
         <description>Allows execution of Taverna workflows from the command line</description>
         <enabled>true</enabled>
         <repositories>            
-           <repository>http://www.mygrid.org.uk/maven/repository/</repository>
+	    	${m2Repository}
+            <repository>http://www.mygrid.org.uk/maven/repository/</repository>
             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
             <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
             <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
             <repository>http://repo.aduna-software.org/maven2/releases/</repository>
-            <repository>http://ws.zones.apache.org/repository2/</repository>
             <repository>http://www.eviware.com/repository/maven2/</repository>
-  	<repository>http://openprovenance.org/java/maven-releases/</repository>
+ 		 	<repository>http://openprovenance.org/java/maven-releases/</repository>
 			<repository>http://openjena.org/repo/</repository>
         </repositories>
         <profile>
