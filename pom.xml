@@ -28,24 +28,50 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
+		<!-- The activities -->
 		<dependency>
 			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>external-tool-activity</artifactId>
+			<artifactId>common-activities</artifactId>
 			<version>${t2.activities.version}</version>
 			<scope>test</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>usecase-activity</artifactId>
+			<artifactId>bioinformatics-activities</artifactId>
 			<version>${t2.activities.version}</version>
 			<scope>test</scope>
 		</dependency>
+	
 		<dependency>
 			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>all-activities</artifactId>
+			<artifactId>apiconsumer-activity</artifactId>
 			<version>${t2.activities.version}</version>
 			<scope>test</scope>
 		</dependency>
+				
+		<dependency>
+			<groupId>net.sf.taverna.t2.component</groupId>
+			<artifactId>component-activity</artifactId>
+			<version>${t2.activities.version}</version>
+			<scope>test</scope>
+		</dependency>
+	
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>interaction-activity</artifactId>
+			<version>${t2.activities.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>sardine-activity</artifactId>
+			<version>${t2.activities.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
 		<dependency>
 			<groupId>net.sf.taverna.t2.taverna-commandline</groupId>
 			<artifactId>taverna-commandline-common</artifactId>
@@ -58,6 +84,7 @@
 			<version>${t2.taverna.workbench.version}</version>
 			<scope>test</scope>
 		</dependency>
+		
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
