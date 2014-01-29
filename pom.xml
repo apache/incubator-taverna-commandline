@@ -155,6 +155,64 @@
 							<overWriteSnapshots>true</overWriteSnapshots>
 							<artifactItems>
 <!-- generated with workbench-distro/src/main/python/generateArtifactItems.py -->
+
+                                <artifactItem>
+                                    <groupId>axis</groupId>
+                                    <artifactId>axis-jaxrpc</artifactId>
+                                    <version>1.4</version>
+                                    <type>pom</type>
+                                    <outputDirectory>${project.build.directory}/repository/axis/axis-jaxrpc/1.4</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>axis</groupId>
+                                    <artifactId>axis-jaxrpc</artifactId>
+                                    <version>1.4</version>
+                                    <type>jar</type>
+                                    <outputDirectory>${project.build.directory}/repository/axis/axis-jaxrpc/1.4</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>axis</groupId>
+                                    <artifactId>axis-ant</artifactId>
+                                    <version>1.4</version>
+                                    <type>pom</type>
+                                    <outputDirectory>${project.build.directory}/repository/axis/axis-ant/1.4</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>axis</groupId>
+                                    <artifactId>axis-ant</artifactId>
+                                    <version>1.4</version>
+                                    <type>jar</type>
+                                    <outputDirectory>${project.build.directory}/repository/axis/axis-ant/1.4</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>axis</groupId>
+                                    <artifactId>axis-saaj</artifactId>
+                                    <version>1.4</version>
+                                    <type>jar</type>
+                                    <outputDirectory>${project.build.directory}/repository/axis/axis-saaj/1.4</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>axis</groupId>
+                                    <artifactId>axis-saaj</artifactId>
+                                    <version>1.4</version>
+                                    <type>pom</type>
+                                    <outputDirectory>${project.build.directory}/repository/axis/axis-saaj/1.4</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>activation</groupId>
+                                    <artifactId>activation</artifactId>
+                                    <version>1.0.2</version>
+                                    <type>pom</type>
+                                    <outputDirectory>${project.build.directory}/repository/activation/activation/1.0.2</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>activation</groupId>
+                                    <artifactId>activation</artifactId>
+                                    <version>1.0.2</version>
+                                    <type>jar</type>
+                                    <outputDirectory>${project.build.directory}/repository/activation/activation/1.0.2</outputDirectory>
+                                </artifactItem>
+
 				<artifactItem>
 				    <groupId>commons-configuration</groupId>
 				    <artifactId>commons-configuration</artifactId>
