@@ -409,9 +409,9 @@ public class CommandLineLauncher implements Launchable {
 	}
 	
 	private File determineProvBundleFile(CommandLineOptions options){
-		File provBundleFile = new File(options.getProvBundle());
+		File provBundleFile = new File(options.getProvBundle()).getAbsoluteFile();
 		System.out.println("Provenance bundle zip will be saved to: "
-				+ provBundleFile.getAbsolutePath());
+				+ provBundleFile);
 		return provBundleFile;
 	}
 
