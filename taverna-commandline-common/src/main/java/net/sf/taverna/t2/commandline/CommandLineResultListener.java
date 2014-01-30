@@ -133,7 +133,7 @@ public class CommandLineResultListener implements ResultListener {
 				.getReferenceService(), facade.getContext(),
 				facade.getWorkflowRunId(), chosenReferences);
 		//saver.setFileToId(fileToId);
-		Path bundle = provBundleFile.toPath();
+		Path bundle = provBundleFile.toPath().toAbsolutePath();
 		try {
 			saver.saveData(bundle);
 		} catch (IOException e1) {
