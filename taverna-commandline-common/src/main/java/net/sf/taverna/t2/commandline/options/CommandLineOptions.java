@@ -443,7 +443,7 @@ public class CommandLineOptions {
 	 */
 	public boolean saveResultsToDirectory() {
 		return (options.hasOption("outputdir") || !options
-				.hasOption("outputdoc"));
+				.hasOption("outputdoc") || !options.hasOption(PROV_BUNDLE));
 	}
 
 //	public String getJanus() {
