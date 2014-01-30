@@ -393,7 +393,7 @@ public class CommandLineLauncher implements Launchable {
 				error("The specified output directory '"
 						+ options.getOutputDirectory() + "' already exists.");
 			}
-		} else if (options.getOutputDocument() == null) {
+		} else if (options.getOutputDocument() == null && options.getProvBundle() == null) {
 			result = new File(dataflowName + "_output");
 			int x = 1;
 			while (result.exists()) {
