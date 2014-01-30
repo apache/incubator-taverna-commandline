@@ -97,6 +97,8 @@
 	</dependencyManagement>
 
 	<build>
+       	
+
 		<finalName>taverna-commandline-${project.version}</finalName>
 		<plugins>
 			<plugin>
@@ -144,16 +146,54 @@
 				<executions>
 					<execution>
 						<id>dependencycopy</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>copy</goal>
-						</goals>
-						<configuration>
-							<copyPom>true</copyPom>
-							<useRepositoryLayout>true</useRepositoryLayout>
-							<overWriteReleases>false</overWriteReleases>
-							<overWriteSnapshots>true</overWriteSnapshots>
-							<artifactItems>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+		</plugins>
+		<pluginManagement>
+           <plugins>
+               <plugin>
+						<artifactId>maven-dependency-plugin</artifactId>
+							<configuration>
+									<copyPom>true</copyPom>
+									<useRepositoryLayout>true</useRepositoryLayout>
+									<overWriteReleases>false</overWriteReleases>
+									<overWriteSnapshots>true</overWriteSnapshots>
+									<artifactItems>
+										<!-- 
+					Produced by first doing a nightly build (-Pnightly) but with this plugin
+					commented out. When unzipping taverna-XXXX-bin.zip the repository/ folder
+					will be missing these artifacts below (mainly due to Raven not merging version
+					differences). To find out which ones, start run.sh once, and then 
+					in .taverna-123123123/repository/ run:
+
+					stain@ralph ~/AppData/Roaming/taverna-2.1-beta-5-SNAPSHOT-20091117/repository
+					$ find -type f > $HOME/files
+					
+					stain@ralph ~/AppData/Roaming/taverna-2.1-beta-5-SNAPSHOT-20091117/repository
+					$ cd
+		
+					stain@ralph ~
+					$ python generateArtifactItems.py > artifactItems.txt
+							
+					The generateArtifactItems.py script can be found in src/main/python
+										
+										
+					If you then do a new nightly build with the maven-dependency-plugin section enabled, and
+					delete your $HOME/.taverna-123123123/repository/ - then after running Taverna the 
+					$HOME/.taverna-123123123/repository/ should be empty.
+					
+					If on unzipping you get warnings about overwriting files already existing you might also
+					need to redo this procedure, as this means that an artifactItem is adding a file already
+					added by the repositories-component of the assembly plugin. 
+					
+					 -->
+					 
 <!-- generated with workbench-distro/src/main/python/generateArtifactItems.py -->
 
                                 <artifactItem>
@@ -1914,13 +1954,143 @@
                                     <type>pom</type>
                                     <outputDirectory>${project.build.directory}/repository/javax/servlet/servlet-api/2.4</outputDirectory>
                                 </artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
+					 
+						</artifactItems>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
+	<profiles>
+		<profile>
+			<id>dist</id>
+			<build>
+				<plugins>
+					<plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <version>2.2</version>
+                        <executions>
+                            <execution>
+                                <id>dist-assembly</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                                <configuration>
+                                    <descriptors>
+                                        <descriptor>src/main/assembly/dist-assembly.xml
+                                        </descriptor>
+                                    </descriptors>
+                                    <attach>false</attach>
+                                    <finalName>taverna-commandline</finalName>
+                                </configuration>                                
+                            </execution>
+                        </executions>
+                    </plugin>
+                                        <!--  Download openJDK JREs on demand -->
+                   <plugin>
+                        <groupId>com.googlecode.maven-download-plugin</groupId>
+                        <artifactId>maven-download-plugin</artifactId>
+                        <version>1.1.0</version>
+                        <executions>
+                            <execution>
+                                <id>openjdk-linux-amd64</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>wget</goal>
+                                </goals>
+                                <configuration>
+                                    <url>http://build.mygrid.org.uk/openjdk/1.7.0-u40-unofficial/openjdk-1.7.0-u40-unofficial-linux-amd64-image.tar.gz</url>
+                                    <outputDirectory>${user.home}/.install4j5/jres</outputDirectory>
+                                    <md5>26049183816155c627a4a8cfdab70bf7</md5>
+                                </configuration>
+                            </execution>
+                           <!-- 
+                            <execution>
+                                <id>openjdk-linux-i586</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>wget</goal>
+                                </goals>
+                                <configuration>
+                                    <url>http://build.mygrid.org.uk/openjdk/1.7.0-u40-unofficial/openjdk-1.7.0-u40-unofficial-linux-i586-image.tar.gz</url>
+                                    <outputDirectory>${user.home}/.install4j5/jres</outputDirectory>
+                                    <md5>d936c298ebc62fe3c0171203e7b26887</md5>
+                                </configuration>
+                            </execution>                            
+                             -->
+                            <execution>
+                                <id>openjdk-macosx-x86_64</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>wget</goal>
+                                </goals>
+                                <configuration>
+                                    <url>http://build.mygrid.org.uk/openjdk/1.7.0-u40-unofficial/openjdk-1.7.0-u40-unofficial-macosx-x86_64-bundle.tar.gz</url>
+                                    <outputDirectory>${user.home}/.install4j5/jres</outputDirectory>
+                                    <md5>abf69f7d2a45bfa4979f5ad7f6978373</md5>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>openjdk-windows-amd64</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>wget</goal>
+                                </goals>
+                                <configuration>
+                                    <url>http://build.mygrid.org.uk/openjdk/1.7.0-u40-unofficial/openjdk-1.7.0-u40-unofficial-windows-amd64-image.tar.gz</url>
+                                    <outputDirectory>${user.home}/.install4j5/jres</outputDirectory>
+                                    <md5>3ce46e962e503f73737c053fc13fd37e</md5>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>openjdk-windows-i586</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>wget</goal>
+                                </goals>
+                                <configuration>
+                                    <url>http://build.mygrid.org.uk/openjdk/1.7.0-u40-unofficial/openjdk-1.7.0-u40-unofficial-windows-i586-image.tar.gz</url>
+                                    <outputDirectory>${user.home}/.install4j5/jres</outputDirectory>
+                                    <md5>6f4e36cc73a41c94396cd0f1e1ac263b</md5>
+                                </configuration>
+                            </execution>
+                         </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.sonatype.install4j</groupId>
+                        <artifactId>install4j-maven-plugin</artifactId>
+                        <version>1.0.6</version>
+                        <executions>
+                            <execution>
+                                <id>compile-installers</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>compile</goal>
+                                </goals>
+                                <configuration>
+                                    <failIfMissing>true</failIfMissing>
+                                	<attach>true</attach>
+                                    
+                                    <projectFile>${project.basedir}/src/main/install4j/taverna-commandline.install4j</projectFile>
+<!--
+                                    <skipOnMissingExecutable>true</skipOnMissingExecutable>
+-->								
+					<variables>
+						<srcDir>${project.build.directory}/taverna-commandline-dist</srcDir>
+					</variables>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    
+                    
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<repositories>
 		<repository>
