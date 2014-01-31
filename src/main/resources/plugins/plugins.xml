@@ -16,8 +16,7 @@
             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
              <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
-            <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
-            <repository>http://www.eviware.com/repository/maven2/</repository>
+            <repository>http://www.soapui.org/repository/maven2/</repository>
             <repository>http://www.mygrid.org.uk/maven/biomoby/moby-dev.inab.org/m2/</repository>
         </repositories>
 		<profile>
@@ -48,8 +47,7 @@
             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
              <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
-            <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
-            <repository>http://www.eviware.com/repository/maven2/</repository>
+            <repository>http://www.soapui.org/repository/maven2/</repository>
             <repository>http://www.mygrid.org.uk/maven/biomoby/moby-dev.inab.org/m2/</repository>
         </repositories>
 		<profile>
@@ -80,8 +78,7 @@
             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
              <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
-            <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
-            <repository>http://www.eviware.com/repository/maven2/</repository>
+            <repository>http://www.soapui.org/repository/maven2/</repository>
             <repository>http://www.mygrid.org.uk/maven/biomoby/moby-dev.inab.org/m2/</repository>
         </repositories>
         <profile>
@@ -112,8 +109,7 @@
             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
              <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
-            <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
-            <repository>http://www.eviware.com/repository/maven2/</repository>
+            <repository>http://www.soapui.org/repository/maven2/</repository>
             <repository>http://www.mygrid.org.uk/maven/biomoby/moby-dev.inab.org/m2/</repository>
         </repositories>
         <profile>
@@ -143,8 +139,7 @@
             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
              <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
-            <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
-            <repository>http://www.eviware.com/repository/maven2/</repository>
+            <repository>http://www.soapui.org/repository/maven2/</repository>
             <repository>http://www.mygrid.org.uk/maven/biomoby/moby-dev.inab.org/m2/</repository>
         </repositories>
         <profile>
@@ -180,8 +175,7 @@
             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
              <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
-            <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
-            <repository>http://www.eviware.com/repository/maven2/</repository>
+            <repository>http://www.soapui.org/repository/maven2/</repository>
             <repository>http://www.mygrid.org.uk/maven/biomoby/moby-dev.inab.org/m2/</repository>
         </repositories>
         <profile>
@@ -211,10 +205,8 @@
             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
             <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
-            <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
-            <repository>http://www.eviware.com/repository/maven2/</repository>
+            <repository>http://www.soapui.org/repository/maven2/</repository>
 			<repository>http://openprovenance.org/java/maven-releases/</repository>
-			<repository>http://openjena.org/repo/</repository>			
 			<repository>http://repo.aduna-software.org/maven2/releases/</repository>
         </repositories>
         <profile>
@@ -244,11 +236,9 @@
             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
             <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
-            <repository>http://ibiblio.lsu.edu/main/pub/packages/maven2/</repository>
+            <repository>http://www.soapui.org/repository/maven2/</repository>
             <repository>http://repo.aduna-software.org/maven2/releases/</repository>
-            <repository>http://www.eviware.com/repository/maven2/</repository>
  		 	<repository>http://openprovenance.org/java/maven-releases/</repository>
-			<repository>http://openjena.org/repo/</repository>
         </repositories>
         <profile>
             <dependency>
