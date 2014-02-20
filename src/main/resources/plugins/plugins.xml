@@ -221,37 +221,6 @@
         </compatibility>
     </plugin>
     
-        <plugin>
-        <provider>taverna.sf.net</provider>
-        <identifier>net.sf.taverna.t2.taverna-workbench.provenanceconnectors-plugin</identifier>
-		<version>${project.version}-${buildNumber}</version>
-        <name>Provenance</name>
-        <description>Taverna 2 provenance support</description>
-        <enabled>true</enabled>
-        <repositories>
-            ${m2Repository}
-           <repository>http://www.mygrid.org.uk/maven/repository/</repository>
-            <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
-            <repository>http://uk.maven.org/maven2/</repository>
-            <repository>http://download.java.net/maven/2/</repository>
-            <repository>http://www.soapui.org/repository/maven2/</repository>
-			<repository>http://openprovenance.org/java/maven-releases/</repository>
-			<repository>http://repo.aduna-software.org/maven2/releases/</repository>
-        </repositories>
-        <profile>
-            <dependency>
-                <groupId>net.sf.taverna.t2.taverna-workbench.plugins</groupId>
-                <artifactId>provenanceconnectors-plugin</artifactId>
-               <version>${project.version}</version>
-            </dependency>
-        </profile>
-        <compatibility>
-            <application>
-                <version>${project.version}</version>
-            </application>
-        </compatibility>
-    </plugin>
-    
     <plugin>
         <provider>taverna.sf.net</provider>
         <identifier>net.sf.taverna.t2.commandline</identifier>
