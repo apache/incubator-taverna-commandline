@@ -76,7 +76,7 @@
 		<dependency>
 			<groupId>org.purl.wf4ever.provtaverna</groupId>
 			<artifactId>prov-taverna-export</artifactId>
-			<version>${t2.provenance-bundle.version}</version>
+			<version>${t2.tavernaprov.version}</version>
 		</dependency>
 
 		<dependency>
