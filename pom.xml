@@ -9,13 +9,13 @@
 	</parent>
 	<groupId>net.sf.taverna.t2</groupId>
 	<version>2.5-SNAPSHOT</version>
-	<name>Taverna command line utility [${edition}]</name>
 	<properties>
-		<edition>core</edition>
+		<edition>bioinformatics</edition>
 		<t2.taverna-commandline.version>1.5-SNAPSHOT</t2.taverna-commandline.version>
 		<t2.taverna.workbench.version>2.5-SNAPSHOT</t2.taverna.workbench.version>
 	</properties>
 	<artifactId>taverna-commandline-${edition}</artifactId>
+	<name>Taverna command line utility [${edition}]</name>
 
 	<dependencies>
 		<dependency>
@@ -38,7 +38,6 @@
 			<scope>test</scope>
 		</dependency>
 		
-		<!--
 		<dependency>
 			<groupId>net.sf.taverna.t2.activities</groupId>
 			<artifactId>bioinformatics-activities</artifactId>
@@ -59,7 +58,6 @@
 			<version>${t2.activities.version}</version>
 			<scope>test</scope>
 		</dependency>
-		-->
 				
 		<dependency>
 			<groupId>net.sf.taverna.t2.component</groupId>

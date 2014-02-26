@@ -33,7 +33,6 @@
         </compatibility>
     </plugin>
     
-    <!--
     <plugin>
         <provider>taverna.sf.net</provider>
         <identifier>net.sf.taverna.t2.activities.bioinformatics-no-ui</identifier>
@@ -123,7 +122,6 @@
             </application>
         </compatibility>
     </plugin>
-    -->
     
     <plugin>
         <provider>taverna.sf.net</provider>
