@@ -1591,6 +1591,7 @@
 -->								
 					<variables>
 						<srcDir>${project.build.directory}/dist</srcDir>
+						<edition>${edition}</edition>
 					</variables>
                                 </configuration>
                             </execution>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <install4j version="5.1.8" transformSequenceNumber="4">
   <directoryPresets config="../../../target/taverna-workbench-dist/taverna.sh" />
-  <application name="Taverna Commandline" distributionSourceDir="" applicationId="6321-5227-3164-0432" mediaDir="../../../target/media" mediaFilePattern="${compiler:sys.shortName}-${compiler:sys.version}-${compiler:sys.platform}" compression="6" lzmaCompression="true" pack200Compression="false" excludeSignedFromPacking="true" commonExternalFiles="false" createMd5Sums="true" shrinkRuntime="false" shortName="taverna-commandline" publisher="myGrid" publisherWeb="http://www.taverna.org.uk/" version="2.5-SNAPSHOT" allPathsRelative="true" backupOnSave="false" autoSave="true" convertDotsToUnderscores="false" macSignature="????" installerName="" javaMinVersion="1.7" javaMaxVersion="" allowBetaVM="false" jdkMode="runtimeJre" jdkName="">
+  <application name="Taverna Commandline ${compiler:edition}" distributionSourceDir="" applicationId="6321-5227-3164-0432" mediaDir="../../../target/media" mediaFilePattern="${compiler:sys.shortName}-${compiler:sys.version}-${compiler:sys.platform}" compression="6" lzmaCompression="false" pack200Compression="false" excludeSignedFromPacking="true" commonExternalFiles="false" createMd5Sums="true" shrinkRuntime="false" shortName="taverna-commandline-${compiler:edition}" publisher="myGrid" publisherWeb="http://www.taverna.org.uk/" version="2.5-SNAPSHOT" allPathsRelative="true" backupOnSave="false" autoSave="true" convertDotsToUnderscores="false" macSignature="????" installerName="" javaMinVersion="1.7" javaMaxVersion="" allowBetaVM="false" jdkMode="runtimeJre" jdkName="">
     <languages skipLanguageSelection="false" languageSelectionInPrincipalLanguage="false">
       <principalLanguage id="en" customLocalizationFile="" />
       <additionalLanguages />
@@ -14,7 +14,8 @@
     <variables>
       <variable name="maxMemory" value="1g" description="" category="" />
       <variable name="maxPermGenSpace" value="400m" description="" category="" />
-      <variable name="srcDir" value="../../../target/taverna-workbench-dist" description="Source directory for the distribution, as output by Maven in workbench-distro, e.g. &#xA;../../../target/taverna-workbench-dist" category="" />
+      <variable name="srcDir" value="../../../target/dist" description="Source directory for the distribution, as output by Maven in workbench-distro, e.g. &#xA;../../../target/taverna-workbench-dist" category="" />
+      <variable name="edition" value="snapshot" description="" category="" />
     </variables>
     <mergedProjects />
     <codeSigning macEnabled="false" macPkcs12File="" windowsEnabled="false" windowsKeySource="pkcs12" windowsPvkFile="" windowsSpcFile="" windowsPkcs12File="" />
@@ -40,13 +41,10 @@
       <mountPoint id="105" root="102" location="" mode="755" />
     </mountPoints>
     <entries>
-      <dirEntry mountPoint="22" file="${compiler:srcDir}" overwriteMode="4" shared="false" fileMode="644" uninstallMode="0" overrideFileMode="false" overrideOverwriteMode="false" overrideUninstallMode="false" entryMode="direct" subDirectory="taverna-workbench-dist" excludeSuffixes="" dirMode="755" overrideDirMode="false">
+      <dirEntry mountPoint="22" file="${compiler:srcDir}" overwriteMode="4" shared="false" fileMode="644" uninstallMode="0" overrideFileMode="false" overrideOverwriteMode="false" overrideUninstallMode="false" entryMode="direct" subDirectory="taverna-workbench-dist" excludeSuffixes="*.sha,*.md5" dirMode="755" overrideDirMode="false">
         <exclude>
-          <entry location="taverna.sh" fileType="regular" />
           <entry location="executeworkflow.bat" fileType="regular" />
-          <entry location="taverna.bat" fileType="regular" />
           <entry location="executeworkflow.sh" fileType="regular" />
-          <entry location="bin" fileType="regular" />
         </exclude>
       </dirEntry>
       <fileEntry mountPoint="95" file="${compiler:srcDir}/executeworkflow.bat" overwriteMode="4" shared="false" fileMode="644" uninstallMode="0" overrideFileMode="false" overrideOverwriteMode="false" overrideUninstallMode="false" />
@@ -93,8 +91,11 @@
 ##
 
 # Taverna distribution info
--Dinstall4j.build=${compiler:sys.date}T${compiler:sys.time}
--Dinstall4j.platform=${compiler:sys.platform}
+-Dtaverna.build=${compiler:sys.date}T${compiler:sys.time}
+-Dtaverna.platform=${compiler:sys.platform}
+-Dtaverna.shortName=${compiler:sys.shortName}
+-Dtaverna.version=${compiler:sys.version}
+-Dtaverna.edition=${compiler:edition}
 
 ## Uncomment and change the value of the following line to 
 ## enable web-driven interaction with an external site
