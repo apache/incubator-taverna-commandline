@@ -211,7 +211,7 @@
         <profile>
         <dependency>
             <groupId>net.sf.taverna.t2.activities</groupId>
-            <artifactId>sardine-activity</artifactId>
+            <artifactId>webdav-activity</artifactId>
             <version>${t2.activities.version}</version>
         </dependency>
         </profile>
