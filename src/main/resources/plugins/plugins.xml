@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugins:plugins xmlns:plugins="http://taverna.sf.net/2008/xml/plugins"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://taverna.sf.net/2008/xml/plugins http://taverna.sourceforge.net/2008/xml/plugins/plugins-2008-10-16.xsd ">    
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://taverna.sf.net/2008/xml/plugins http://taverna.sourceforge.net/2008/xml/plugins/plugins-2008-10-16.xsd ">    
 
     <plugin>
         <provider>taverna.sf.net</provider>
         <identifier>net.sf.taverna.t2.activities.common-no-ui</identifier>
-		<version>${project.version}-${buildNumber}</version>
+        <version>${project.version}-${buildNumber}</version>
         <name>Common services</name>
         <description>Taverna 2 common services</description>
         <enabled>true</enabled>
@@ -19,14 +19,13 @@
             <repository>http://www.soapui.org/repository/maven2/</repository>
             <repository>http://www.mygrid.org.uk/maven/biomoby/moby-dev.inab.org/m2/</repository>
         </repositories>
-		<profile>
-			<dependency>
-				<groupId>net.sf.taverna.t2.activities</groupId>
-				<artifactId>common-activities</artifactId>
-				<version>${t2.activities.version}</version>
-			</dependency>
-	
-		</profile>
+        <profile>
+            <dependency>
+                <groupId>net.sf.taverna.t2.activities</groupId>
+                <artifactId>common-activities</artifactId>
+                <version>${t2.activities.version}</version>
+            </dependency>
+        </profile>
         <compatibility>
             <application>
                 <version>${project.version}</version>
@@ -34,10 +33,10 @@
         </compatibility>
     </plugin>
     
-        <plugin>
+    <plugin>
         <provider>taverna.sf.net</provider>
         <identifier>net.sf.taverna.t2.activities.bioinformatics-no-ui</identifier>
-		<version>${project.version}-${buildNumber}</version>
+        <version>${project.version}-${buildNumber}</version>
         <name>Bioinformatics services</name>
         <description>Taverna 2 bioinformatics services</description>
         <enabled>true</enabled>
@@ -45,19 +44,18 @@
             ${m2Repository}
             <repository>http://www.mygrid.org.uk/maven/repository/</repository>
             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
-             <repository>http://uk.maven.org/maven2/</repository>
+            <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
             <repository>http://www.soapui.org/repository/maven2/</repository>
             <repository>http://www.mygrid.org.uk/maven/biomoby/moby-dev.inab.org/m2/</repository>
         </repositories>
-		<profile>
-			<dependency>
-				<groupId>net.sf.taverna.t2.activities</groupId>
-				<artifactId>bioinformatics-activities</artifactId>
-				<version>${t2.activities.version}</version>
-			</dependency>
-	
-		</profile>
+        <profile>
+            <dependency>
+                <groupId>net.sf.taverna.t2.activities</groupId>
+                <artifactId>bioinformatics-activities</artifactId>
+                <version>${t2.activities.version}</version>
+            </dependency>
+        </profile>
         <compatibility>
             <application>
                 <version>${project.version}</version>
@@ -65,10 +63,10 @@
         </compatibility>
     </plugin>
 
-           <plugin>
+    <plugin>
         <provider>taverna.sf.net</provider>
         <identifier>net.sf.taverna.t2.apiconsumer-activity-no-ui</identifier>
-		<version>${project.version}-${buildNumber}</version>
+        <version>${project.version}-${buildNumber}</version>
         <name>API Consumer Service</name>
         <description>API Consumer service</description>
         <enabled>true</enabled>
@@ -76,17 +74,17 @@
             ${m2Repository}
             <repository>http://www.mygrid.org.uk/maven/repository/</repository>
             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
-             <repository>http://uk.maven.org/maven2/</repository>
+            <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
             <repository>http://www.soapui.org/repository/maven2/</repository>
             <repository>http://www.mygrid.org.uk/maven/biomoby/moby-dev.inab.org/m2/</repository>
         </repositories>
         <profile>
- 		<dependency>
-			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>apiconsumer-activity</artifactId>
-			<version>${t2.activities.version}</version>
-		</dependency>
+         <dependency>
+            <groupId>net.sf.taverna.t2.activities</groupId>
+            <artifactId>apiconsumer-activity</artifactId>
+            <version>${t2.activities.version}</version>
+        </dependency>
         </profile>
         <compatibility>
             <application>
@@ -99,7 +97,7 @@
        <plugin>
         <provider>taverna.sf.net</provider>
         <identifier>net.sf.taverna.t2.biomoby-activity-no-ui</identifier>
-		<version>${project.version}-${buildNumber}</version>
+        <version>${project.version}-${buildNumber}</version>
         <name>BioMoby Service</name>
         <description>BioMoby service</description>
         <enabled>true</enabled>
@@ -107,16 +105,16 @@
             ${m2Repository}
             <repository>http://www.mygrid.org.uk/maven/repository/</repository>
             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
-             <repository>http://uk.maven.org/maven2/</repository>
+            <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
             <repository>http://www.soapui.org/repository/maven2/</repository>
         </repositories>
         <profile>
- 		<dependency>
-			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>biomoby-activity</artifactId>
-			<version>${t2.activities.version}</version>
-		</dependency>
+         <dependency>
+            <groupId>net.sf.taverna.t2.activities</groupId>
+            <artifactId>biomoby-activity</artifactId>
+            <version>${t2.activities.version}</version>
+        </dependency>
         </profile>
         <compatibility>
             <application>
@@ -128,7 +126,7 @@
     <plugin>
         <provider>taverna.sf.net</provider>
         <identifier>net.sf.taverna.t2.component-activity-no-ui</identifier>
-		<version>${project.version}-${buildNumber}</version>
+        <version>${project.version}-${buildNumber}</version>
         <name>Component Service</name>
         <description>Component service developed by BioVeL, SCAPE and wf4ever</description>
         <enabled>true</enabled>
@@ -136,17 +134,17 @@
             ${m2Repository}
             <repository>http://www.mygrid.org.uk/maven/repository/</repository>
             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
-             <repository>http://uk.maven.org/maven2/</repository>
+            <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
             <repository>http://www.soapui.org/repository/maven2/</repository>
             <repository>http://www.mygrid.org.uk/maven/biomoby/moby-dev.inab.org/m2/</repository>
         </repositories>
         <profile>
- 		<dependency>
-			<groupId>net.sf.taverna.t2.component</groupId>
-			<artifactId>component-activity</artifactId>
-			<version>${t2.activities.version}</version>
-		</dependency>
+         <dependency>
+            <groupId>net.sf.taverna.t2.component</groupId>
+            <artifactId>component-activity</artifactId>
+            <version>${t2.activities.version}</version>
+        </dependency>
         </profile>
         <compatibility>
             <application>
@@ -155,10 +153,10 @@
         </compatibility>
     </plugin>
     
-        <plugin>
+    <plugin>
         <provider>taverna.sf.net</provider>
         <identifier>net.sf.taverna.t2.interaction-activity-no-ui</identifier>
-		<version>${project.version}-${buildNumber}</version>
+        <version>${project.version}-${buildNumber}</version>
         <name>Interaction Service</name>
         <description>Interacton service developed by BioVeL</description>
         <enabled>true</enabled>
@@ -166,17 +164,17 @@
             ${m2Repository}
             <repository>http://www.mygrid.org.uk/maven/repository/</repository>
             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
-             <repository>http://uk.maven.org/maven2/</repository>
+            <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
             <repository>http://www.soapui.org/repository/maven2/</repository>
             <repository>http://www.mygrid.org.uk/maven/biomoby/moby-dev.inab.org/m2/</repository>
         </repositories>
         <profile>
-		<dependency>
-			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>interaction-activity</artifactId>
-			<version>${t2.activities.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>net.sf.taverna.t2.activities</groupId>
+            <artifactId>interaction-activity</artifactId>
+            <version>${t2.activities.version}</version>
+        </dependency>
            <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>servlet-api</artifactId>
@@ -194,7 +192,7 @@
         <plugin>
         <provider>taverna.sf.net</provider>
         <identifier>net.sf.taverna.t2.webdav-activity-no-ui</identifier>
-		<version>${project.version}-${buildNumber}</version>
+        <version>${project.version}-${buildNumber}</version>
         <name>WebDAV Service</name>
         <description>WebDAV service developed by BioVeL</description>
         <enabled>true</enabled>
@@ -202,17 +200,17 @@
             ${m2Repository}
             <repository>http://www.mygrid.org.uk/maven/repository/</repository>
             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
-             <repository>http://uk.maven.org/maven2/</repository>
+            <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
             <repository>http://www.soapui.org/repository/maven2/</repository>
             <repository>http://www.mygrid.org.uk/maven/biomoby/moby-dev.inab.org/m2/</repository>
         </repositories>
         <profile>
-		<dependency>
-			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>sardine-activity</artifactId>
-			<version>${t2.activities.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>net.sf.taverna.t2.activities</groupId>
+            <artifactId>sardine-activity</artifactId>
+            <version>${t2.activities.version}</version>
+        </dependency>
         </profile>
         <compatibility>
             <application>
@@ -224,19 +222,19 @@
     <plugin>
         <provider>taverna.sf.net</provider>
         <identifier>net.sf.taverna.t2.commandline</identifier>
-		<version>${t2.taverna.workbench.version}</version>
+        <version>${t2.taverna.workbench.version}</version>
         <name>Taverna Command Line</name>
         <description>Allows execution of Taverna workflows from the command line</description>
         <enabled>true</enabled>
         <repositories>            
-	    	${m2Repository}
+            ${m2Repository}
             <repository>http://www.mygrid.org.uk/maven/repository/</repository>
             <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
             <repository>http://uk.maven.org/maven2/</repository>
             <repository>http://download.java.net/maven/2/</repository>
             <repository>http://www.soapui.org/repository/maven2/</repository>
             <repository>http://repo.aduna-software.org/maven2/releases/</repository>
- 		 	<repository>http://openprovenance.org/java/maven-releases/</repository>
+            <repository>http://openprovenance.org/java/maven-releases/</repository>
         </repositories>
         <profile>
             <dependency>
