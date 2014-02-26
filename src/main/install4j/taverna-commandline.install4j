@@ -454,7 +454,7 @@
       <excludedComponents />
       <includedDownloadableComponents />
     </windows>
-    <macosFolderArchive name="Mac OS X Folder Archive" id="221" customizedId="" mediaFileName="" installDir="${compiler:sys.shortName}-${compiler:sys.version}" overridePrincipalLanguage="false" jreBitType="all" runPostProcessor="false" postProcessor="" failOnPostProcessorError="false" useLegacyMediaFileIds="false" legacyMediaFileIds="" includedJRE="openjdk-1.7.0-u40-unofficial-macosx-x86_64-bundle.tar.gz" manualJREEntry="true" appleJre="false">
+    <macosFolderArchive name="Mac OS X Folder Archive" id="221" customizedId="osx" mediaFileName="" installDir="${compiler:sys.shortName}-${compiler:sys.version}" overridePrincipalLanguage="false" jreBitType="all" runPostProcessor="false" postProcessor="" failOnPostProcessorError="false" useLegacyMediaFileIds="false" legacyMediaFileIds="" includedJRE="openjdk-1.7.0-u40-unofficial-macosx-x86_64-bundle.tar.gz" manualJREEntry="true" appleJre="false">
       <excludedLaunchers />
       <excludedBeans />
       <overriddenPrincipalLanguage id="en" customLocalizationFile="" />
