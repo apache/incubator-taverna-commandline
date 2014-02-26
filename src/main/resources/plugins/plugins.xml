@@ -177,12 +177,14 @@
             <artifactId>interaction-activity</artifactId>
             <version>${t2.activities.version}</version>
         </dependency>
+	<!--
            <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>servlet-api</artifactId>
                 <version>2.4</version>
                 <system>true</system>
             </dependency>
+	    -->
         </profile>
         <compatibility>
             <application>
