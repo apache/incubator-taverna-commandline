@@ -33,6 +33,7 @@
         </compatibility>
     </plugin>
     
+    <!--
     <plugin>
         <provider>taverna.sf.net</provider>
         <identifier>net.sf.taverna.t2.activities.bioinformatics-no-ui</identifier>
@@ -122,6 +123,7 @@
             </application>
         </compatibility>
     </plugin>
+    -->
     
     <plugin>
         <provider>taverna.sf.net</provider>
@@ -189,7 +191,8 @@
         </compatibility>
     </plugin>
     
-        <plugin>
+    <!--
+    <plugin>
         <provider>taverna.sf.net</provider>
         <identifier>net.sf.taverna.t2.webdav-activity-no-ui</identifier>
         <version>${project.version}-${buildNumber}</version>
@@ -218,6 +221,7 @@
             </application>
         </compatibility>
     </plugin>
+	-->
     
     <plugin>
         <provider>taverna.sf.net</provider>
