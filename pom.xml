@@ -10,7 +10,7 @@
 	<groupId>net.sf.taverna.t2</groupId>
 	<version>2.5-SNAPSHOT</version>
 	<properties>
-		<edition>bioinformatics</edition>
+		<edition>enterprise</edition>
 		<t2.taverna-commandline.version>1.5-SNAPSHOT</t2.taverna-commandline.version>
 		<t2.taverna.workbench.version>2.5-SNAPSHOT</t2.taverna.workbench.version>
 	</properties>
@@ -72,7 +72,6 @@
 			<version>${t2.activities.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<!--
 
 		<dependency>
 			<groupId>net.sf.taverna.t2.activities</groupId>
@@ -80,7 +79,6 @@
 			<version>${t2.activities.version}</version>
 			<scope>test</scope>
 		</dependency>
-		-->
 		
 		<dependency>
 			<groupId>net.sf.taverna.t2.taverna-commandline</groupId>
