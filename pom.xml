@@ -1640,5 +1640,6 @@
 		<url>https://github.com/taverna/taverna-commandline-product</url>
 		<connection>scm:git:https://github.com/taverna/taverna-commandline-product.git</connection>
 		<developerConnection>scm:git:git@github.com:taverna/taverna-commandline-product.git</developerConnection>
+		<tag>${edition}</tag>
 	</scm>
 </project>
