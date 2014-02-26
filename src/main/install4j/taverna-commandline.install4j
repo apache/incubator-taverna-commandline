@@ -41,7 +41,7 @@
       <mountPoint id="105" root="102" location="" mode="755" />
     </mountPoints>
     <entries>
-      <dirEntry mountPoint="22" file="${compiler:srcDir}" overwriteMode="4" shared="false" fileMode="644" uninstallMode="0" overrideFileMode="false" overrideOverwriteMode="false" overrideUninstallMode="false" entryMode="direct" subDirectory="taverna-workbench-dist" excludeSuffixes="*.sha,*.md5" dirMode="755" overrideDirMode="false">
+      <dirEntry mountPoint="22" file="${compiler:srcDir}" overwriteMode="4" shared="false" fileMode="644" uninstallMode="0" overrideFileMode="false" overrideOverwriteMode="false" overrideUninstallMode="false" entryMode="direct" subDirectory="taverna-workbench-dist" excludeSuffixes="*.sha1,*.md5" dirMode="755" overrideDirMode="false">
         <exclude>
           <entry location="executeworkflow.bat" fileType="regular" />
           <entry location="executeworkflow.sh" fileType="regular" />
