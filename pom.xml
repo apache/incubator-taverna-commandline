@@ -108,23 +108,6 @@
 		<finalName>${project.artifactId}-${project.version}</finalName>
 		<plugins>
 			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.4</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<descriptors>
-						<descriptor>src/main/assembly/release-assembly.xml</descriptor>
-					</descriptors>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
 				<!--<version>1.0-beta-2</version> -->
@@ -152,7 +135,7 @@
 				<executions>
 					<execution>
 						<id>dependencycopy</id>
-                        <phase>prepare-package</phase>
+                        <phase>generate-resources</phase>
                         <goals>
                             <goal>copy</goal>
                         </goals>
@@ -1464,13 +1447,40 @@
 	</build>
 	<profiles>
 		<profile>
+			<id>zip</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-assembly-plugin</artifactId>
+						<version>2.4</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>single</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<descriptors>
+								<descriptor>src/main/assembly/release-assembly.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
 			<id>dist</id>
 			<build>
 				<plugins>
 					<plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-assembly-plugin</artifactId>
-                        <version>2.2</version>
+                        <version>2.4</version>
                         <executions>
                             <execution>
                                 <id>dist-assembly</id>
@@ -1480,11 +1490,11 @@
                                 </goals>
                                 <configuration>
                                     <descriptors>
-                                        <descriptor>src/main/assembly/dist-assembly.xml
-                                        </descriptor>
+                                        <descriptor>src/main/assembly/dist-assembly.xml</descriptor>
                                     </descriptors>
                                     <attach>false</attach>
-				    <finalName>${project.artifactId}</finalName>
+				    <finalName>dist</finalName>
+				    <appendAssemblyId>false</appendAssemblyId>
                                 </configuration>                                
                             </execution>
                         </executions>
@@ -1580,7 +1590,7 @@
                                     <skipOnMissingExecutable>true</skipOnMissingExecutable>
 -->								
 					<variables>
-						<srcDir>${project.build.directory}/${project.artifactId}-dist</srcDir>
+						<srcDir>${project.build.directory}/dist</srcDir>
 					</variables>
                                 </configuration>
                             </execution>
