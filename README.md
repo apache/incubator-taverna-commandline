@@ -31,7 +31,7 @@ download the official distribution for your operating system from the
 [Taverna download pages](http://www.taverna.org.uk/download/).
 
 For usage of this product, see the 
-[Command Line Tool documentation](http://dev.mygrid.org.uk/wiki/display/taverna/Command+Line+Tool)
+[Command Line Tool documentation](http://dev.mygrid.org.uk/wiki/display/taverna/Command+Line+Tool).
 
 
 
@@ -92,13 +92,13 @@ The below will assume you want to build the `core` edition.
 The packaging will take several minutes. The first time, this might take up to an
 hour as several libraries are downloaded from Maven repositories.
 
-  [INFO] ------------------------------------------------------------------------
-  [INFO] BUILD SUCCESS
-  [INFO] ------------------------------------------------------------------------
-  [INFO] Total time: 5:39.145s
-  [INFO] Finished at: Thu Feb 27 01:06:08 GMT 2014
-  [INFO] Final Memory: 47M/1200M
-  [INFO] ------------------------------------------------------------------------
+    [INFO] ------------------------------------------------------------------------
+    [INFO] BUILD SUCCESS
+    [INFO] ------------------------------------------------------------------------
+    [INFO] Total time: 5:39.145s
+    [INFO] Finished at: Thu Feb 27 01:06:08 GMT 2014
+    [INFO] Final Memory: 47M/1200M
+    [INFO] ------------------------------------------------------------------------
 
 
 After a successful build, the file 
@@ -116,17 +116,17 @@ an installation of
 
 First configure Maven to find your Install4j installation.
 
-  stain@biggie:~$ cat .m2/settings.xml 
-  <settings>
-  	<profiles>
-  	    <profile>
-  		<id>dist</id>
-    		<properties>
-    		    <install4j.home>/opt/install4j5</install4j.home>
-		    </properties>
-	        </profile>
-	    </profiles>
-    </settings>
+    stain@biggie:~$ cat .m2/settings.xml 
+    <settings>
+      	<profiles>
+      	    <profile>
+      		<id>dist</id>
+        		<properties>
+        		    <install4j.home>/opt/install4j5</install4j.home>
+    		    </properties>
+  	        </profile>
+  	    </profiles>
+      </settings>
 
 Start `install4j` to install your license key or run a 30-day trial, then quit the user interface.
 
@@ -139,17 +139,17 @@ for embedding in OS-specifc installers. OpenJDK is licensed as GPL 2.1 with Clas
 
 The `media/media` folder will contain installers for different operating systems.
 
-  stain@biggie:~/src/net.sf.taverna.t2.taverna-commandline$ ls target/media/
-  md5sums
-  output.txt
-  taverna-commandline-core-2.5-SNAPSHOT-linux_amd64.deb
-  taverna-commandline-core-2.5-SNAPSHOT-linux_x86_64.rpm
-  taverna-commandline-core-2.5-SNAPSHOT-macos.tgz
-  taverna-commandline-core-2.5-SNAPSHOT-unix.tar.gz
-  taverna-commandline-core-2.5-SNAPSHOT-windows-x64.exe
-  taverna-commandline-core-2.5-SNAPSHOT-windows-x86.exe
-  taverna-commandline-core-2.5-SNAPSHOT.zip
-  updates.xml
+    stain@biggie:~/src/net.sf.taverna.t2.taverna-commandline$ ls target/media/
+    md5sums
+    output.txt
+    taverna-commandline-core-2.5-SNAPSHOT-linux_amd64.deb
+    taverna-commandline-core-2.5-SNAPSHOT-linux_x86_64.rpm
+    taverna-commandline-core-2.5-SNAPSHOT-macos.tgz
+    taverna-commandline-core-2.5-SNAPSHOT-unix.tar.gz
+    taverna-commandline-core-2.5-SNAPSHOT-windows-x64.exe
+    taverna-commandline-core-2.5-SNAPSHOT-windows-x86.exe
+    taverna-commandline-core-2.5-SNAPSHOT.zip
+    updates.xml
 
 
 Support
