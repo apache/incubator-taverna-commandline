@@ -14,8 +14,6 @@
 		<t2.taverna-commandline.version>1.5-SNAPSHOT</t2.taverna-commandline.version>
 		<t2.taverna.workbench.version>2.5-SNAPSHOT</t2.taverna.workbench.version>
 	</properties>
-	<artifactId>taverna-commandline-${edition}</artifactId>
-	<name>Taverna command line utility [${edition}]</name>
 
 	<dependencies>
 		<dependency>
