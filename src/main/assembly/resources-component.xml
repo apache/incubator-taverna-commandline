@@ -10,17 +10,14 @@
 			</includes>
 			<unpack>true</unpack>
 			<unpackOptions>
-				<includes>
-					<include>lib/</include>
-					<include>conf/log4j.properties</include>
-					<include>ISSUES.txt</include>
-					<include>CHANGELOG.txt</include>
-					<include>LICENCE.txt</include>
-					<include>CITATION.txt</include>
-					<include>executeworkflow.sh</include>
-					<include>executeworkflow.bat</include>
-				</includes>
+				<excludes>
+					<exclude>bin/</exclude>
+					<exclude>META-INF/</exclude>
+				</excludes>
 			</unpackOptions>
+			<!-- 0755 for all, due to
+			     https://jira.codehaus.org/browse/MASSEMBLY-583 
+			     we can't have a second dependencySet to / -->
 			<fileMode>0755</fileMode>
 			<directoryMode>0755</directoryMode>
 		</dependencySet>		
