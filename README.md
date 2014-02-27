@@ -58,6 +58,8 @@ To check which edition you are building, verify these bits of `pom.xml`:
 	<properties>
 		<edition>core</edition>
 
+For more information, see http://dev.mygrid.org.uk/wiki/display/developer/Taverna+products
+
 Creating a new edition
 ----------------------
 
