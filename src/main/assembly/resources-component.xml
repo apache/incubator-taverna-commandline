@@ -14,7 +14,7 @@
 					<include>conf/log4j.properties</include>
 					<include>ISSUES.txt</include>
 					<include>CHANGELOG.txt</include>
-					<include>LICENCE.txt</include>
+					<!--<include>LICENCE.txt</include> -->
 					<include>CITATION.txt</include>
 					<include>executeworkflow.sh</include>
 					<include>executeworkflow.bat</include>
