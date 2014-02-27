@@ -9,10 +9,14 @@
 	</parent>
 	<version>2.5-SNAPSHOT</version>
 	<groupId>net.sf.taverna.t2.taverna-commandline</groupId>
+
+	<!-- ##### For each branch, change ${edition} below -->
 	<artifactId>taverna-commandline-${edition}</artifactId>
 	<name>Taverna command line utility [${edition}]</name>
 	<properties>
 		<edition>core</edition>
+		<!-- ######## -->
+
 		<t2.taverna-commandline.version>1.5-SNAPSHOT</t2.taverna-commandline.version>
 		<t2.taverna.workbench.version>2.5-SNAPSHOT</t2.taverna.workbench.version>
 		<raven.app.name>taverna-cmd-${edition}-${project.version}-${buildNumber}</raven.app.name>
