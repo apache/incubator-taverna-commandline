@@ -9,6 +9,7 @@
 	</parent>
 	<groupId>net.sf.taverna.t2</groupId>
 	<version>2.5-SNAPSHOT</version>
+	<artifactId>taverna-commandline-${edition}</artifactId>
 	<name>Taverna command line utility [${edition}]</name>
 	<properties>
 		<edition>astronomy</edition>
@@ -16,7 +17,6 @@
 		<t2.taverna.workbench.version>2.5-SNAPSHOT</t2.taverna.workbench.version>
 		<astrotaverna.version>1.11.tav25-SNAPSHOT</astrotaverna.version>
 	</properties>
-	<artifactId>taverna-commandline-${edition}</artifactId>
 
 	<dependencies>
 		<dependency>

@@ -51,6 +51,86 @@ Branches:
   *  `astronomy` - core + [AstroTaverna](http://wf4ever.github.io/astrotaverna/)
   *  `enterprise` - core with all possible plugins
 
+To check which edition you are building, verify these bits of `pom.xml`:
+
+        <artifactId>taverna-commandline-${edition}</artifactId>
+	<name>Taverna command line utility [${edition}]</name>
+	<properties>
+		<edition>core</edition>
+
+For more information, see http://dev.mygrid.org.uk/wiki/display/developer/Taverna+products
+
+Creating a new edition
+----------------------
+
+To create a new edition, make a new branch based on `core` and modify the above line(s).
+You would then typically also modify `src/main/resources/plugins/plugins.txt`
+and add the `<dependency>` sections from the new plugin(s) to the `pom.xml` so that
+the new plugin is added to the generated `repository/` folder. 
+
+Note: You MUST use `<scope>test</scope>` in `pom.xml` for the added
+`<dependency>` blocks to avoid adding them to the `lib/` folder, which would
+bypass the plugin-system and potentially cause conflicts with other parts of
+Taverna.
+
+To verify the build, run `executeworkflow.sh`. A new user home directory
+for your edition should be created, e.g.
+`~/.taverna-commandline-astronomy-2.5-snapshot/` for the `astronomy` edition.
+
+Often when adding plugins, Maven will not download all the same versions
+required at runtime by Taverna's plugin system Raven. The first execution 
+of `executeworkflow.sh` will download these to the `repository` folder
+of the edition-specific user home directory. 
+
+To avoid this download phase for other users and permanently add these
+"missing" pieces, try:
+
+	stain@biggie:~$ cd .taverna-commandline-astronomy-2.5-snapshot/repository/
+	stain@biggie:~/.taverna-commandline-astronomy-2.5-snapshot/repository$ find . -type f > ~/files
+	stain@biggie:~/.taverna-commandline-astronomy-2.5-snapshot/repository$ cat ~/files
+	./org/slf4j/slf4j-parent/1.6.1/slf4j-parent-1.6.1.pom
+	./org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar
+	./org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.pom
+
+There is a Python script that will read `files` from the current directory and show the
+XML that needs to be added to `pom.xml`:
+
+	stain@biggie:~$ python src/taverna-commandline-product/src/main/python/generateArtifactItems.py 
+                                <artifactItem>
+                                    <groupId>org.slf4j</groupId>
+                                    <artifactId>slf4j-parent</artifactId>
+                                    <version>1.6.1</version>
+                                    <type>pom</type>
+                                    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-parent/1.6.1</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.slf4j</groupId>
+                                    <artifactId>slf4j-api</artifactId>
+                                    <version>1.6.1</version>
+                                    <type>jar</type>
+                                    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.6.1</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.slf4j</groupId>
+                                    <artifactId>slf4j-api</artifactId>
+                                    <version>1.6.1</version>
+                                    <type>pom</type>
+                                    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.6.1</outputDirectory>
+                                </artifactItem>
+
+Now copy and paste to add those `artifactItem` blocks within the
+beginng (or end) of the `<artifactIems>` block in `pom.xml`. 
+
+To verify, now the repository folder should be empty:
+
+	mvn clean install
+	rm -rf ~/.taverna-commandline-astronomy-2.5-snapshot
+	cd target
+	unzip *.zip
+	cd *SNAPSHOT
+	sh executeworkflow.sh
+	find ~/.taverna-commandline-astronomy-2.5-snapshot/repository
+
 
 Licence
 =======
