@@ -224,7 +224,52 @@
         </compatibility>
     </plugin>
 	-->
+
+	<plugin>
+		<provider>org.purl.wf4ever</provider>
+		<identifier>org.purl.wf4ever.astrotaverna.commandline</identifier>
+		<version>${astrotaverna.version}</version>
+		<name>Astro Taverna activities</name>
+		<description/>
+		<enabled>true</enabled>
+		<repositories>
+			<repository>http://www.mygrid.org.uk/maven/repository</repository>
+			<repository>http://wf4ever.github.com/astrotaverna</repository>
+			<repository>http://www.mygrid.org.uk/maven/snapshot-repository</repository>
+			<repository>http://uk.maven.org/maven2</repository>
+			<!--
+			<repository>http://repo.maven.apache.org/maven2</repository>
+			<repository>http://download.java.net/maven/2</repository>
+			<repository>http://nexus.codehaus.org/snapshots</repository>
+			<repository>https://jaxb-visitor.googlecode.com/svn/maven-repository</repository>
+			<repository>https://oss.sonatype.org/content/repositories/snapshots</repository>
+			-->
+		</repositories>
+		<profile>
+			<dependency>
+				<groupId>org.purl.wf4ever.astrotaverna</groupId>
+				<artifactId>stilts-activity</artifactId>
+				<version>${astrotaverna.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.purl.wf4ever.astrotaverna</groupId>
+				<artifactId>PDL-activity</artifactId>
+				<version>${astrotaverna.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.purl.wf4ever.astrotaverna</groupId>
+				<artifactId>Image-activity</artifactId>
+				<version>${astrotaverna.version}</version>
+			</dependency>
+		</profile>
+		<compatibility>
+			<application>
+				<version>${project.version}</version>
+			</application>
+		</compatibility>
+	</plugin>
     
+
     <plugin>
         <provider>taverna.sf.net</provider>
         <identifier>net.sf.taverna.t2.commandline</identifier>

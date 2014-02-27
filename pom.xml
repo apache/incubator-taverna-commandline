@@ -11,9 +11,10 @@
 	<version>2.5-SNAPSHOT</version>
 	<name>Taverna command line utility [${edition}]</name>
 	<properties>
-		<edition>core</edition>
+		<edition>astronomy</edition>
 		<t2.taverna-commandline.version>1.5-SNAPSHOT</t2.taverna-commandline.version>
 		<t2.taverna.workbench.version>2.5-SNAPSHOT</t2.taverna.workbench.version>
+		<astrotaverna.version>1.11.tav25-SNAPSHOT</astrotaverna.version>
 	</properties>
 	<artifactId>taverna-commandline-${edition}</artifactId>
 
@@ -83,6 +84,27 @@
 			<scope>test</scope>
 		</dependency>
 		-->
+
+
+		<!-- astrotaverna activities -->
+		<dependency>
+			<groupId>org.purl.wf4ever.astrotaverna</groupId>
+			<artifactId>stilts-activity</artifactId>
+			<version>${astrotaverna.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.purl.wf4ever.astrotaverna</groupId>
+			<artifactId>PDL-activity</artifactId>
+			<version>${astrotaverna.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.purl.wf4ever.astrotaverna</groupId>
+			<artifactId>Image-activity</artifactId>
+			<version>${astrotaverna.version}</version>
+			<scope>test</scope>
+		</dependency>
 		
 		<dependency>
 			<groupId>net.sf.taverna.t2.taverna-commandline</groupId>
@@ -184,6 +206,29 @@
 					 -->
 					 
 <!-- generated with workbench-distro/src/main/python/generateArtifactItems.py -->
+
+
+                                <artifactItem>
+                                    <groupId>org.slf4j</groupId>
+                                    <artifactId>slf4j-parent</artifactId>
+                                    <version>1.6.1</version>
+                                    <type>pom</type>
+                                    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-parent/1.6.1</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.slf4j</groupId>
+                                    <artifactId>slf4j-api</artifactId>
+                                    <version>1.6.1</version>
+                                    <type>jar</type>
+                                    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.6.1</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.slf4j</groupId>
+                                    <artifactId>slf4j-api</artifactId>
+                                    <version>1.6.1</version>
+                                    <type>pom</type>
+                                    <outputDirectory>${project.build.directory}/repository/org/slf4j/slf4j-api/1.6.1</outputDirectory>
+                                </artifactItem>
 
                                 <artifactItem>
                                     <groupId>xom</groupId>
@@ -1633,6 +1678,13 @@
 			<id>aduna-opensource.releases</id>
 			<name>Aduna Open Source - Maven releases</name>
 			<url>http://repo.aduna-software.org/maven2/releases</url>
+		</repository>
+		<repository>
+			<releases />
+			<snapshots />
+			<id>astrotaverna</id>
+			<name>AstroTaverna repository</name>
+			<url>http://wf4ever.github.com/astrotaverna/</url>
 		</repository>
 
 	</repositories>
