@@ -135,7 +135,7 @@ To verify, now the repository folder should be empty:
 Licence
 =======
 Taverna is licenced under the GNU Lesser General Public Licence. (LGPL) 2.1.
-See the file LICENCE.txt or http://www.gnu.org/licenses/lgpl-2.1.html for
+See the file LICENSE.txt or http://www.gnu.org/licenses/lgpl-2.1.html for
 details.
 
 If the source code was not included in this download, you can download it from
