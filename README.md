@@ -54,9 +54,14 @@ Branches:
 
 Licence
 =======
-Taverna is licenced under the GNU Lesser General Public Licence. (LGPL) 2.1.
-See the file LICENCE.txt or http://www.gnu.org/licenses/lgpl-2.1.html for
-details.
+This AstroTaverna edition is licensed under the GPL General Public License (GPL) 3.0.
+See the file LICENSE.txt or https://www.gnu.org/licenses/gpl-3.0.html for
+details. 
+
+(The reason the AstroTaverna edition is GPL 3, while Taverna in general is
+licensed under the more permissive LGPL 2.1, is that AstroTaverna
+bundles [Aladin](http://aladin.u-strasbg.fr/) which is licensed under
+GPL 3).
 
 If the source code was not included in this download, you can download it from
 http://www.taverna.org.uk/download/workbench/2-5/#download-source or
