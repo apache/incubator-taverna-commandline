@@ -236,6 +236,8 @@ The `media/media` folder will contain installers for different operating systems
     taverna-commandline-core-2.5-SNAPSHOT.zip
     updates.xml
 
+For more information on Taverna installers, 
+see http://dev.mygrid.org.uk/wiki/display/developer/Taverna+installers
 
 Support
 =======

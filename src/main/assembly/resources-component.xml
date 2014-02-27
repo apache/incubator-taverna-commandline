@@ -6,11 +6,12 @@
 	<dependencySets>
 		<dependencySet>
 			<includes>
-				<include>net.sf.taverna.t2.taverna-workbench:workbench-distro</include>
+				<include>net.sf.taverna.t2.taverna-workbench:taverna-product-common</include>
 			</includes>
 			<unpack>true</unpack>
 			<unpackOptions>
 				<includes>
+					<include>lib/</include>
 					<include>conf/log4j.properties</include>
 					<include>ISSUES.txt</include>
 					<include>CHANGELOG.txt</include>
@@ -21,6 +22,7 @@
 				</includes>
 			</unpackOptions>
 			<fileMode>0755</fileMode>
+			<directoryMode>0755</directoryMode>
 		</dependencySet>		
 	</dependencySets>
 	<fileSets>

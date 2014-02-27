@@ -21,7 +21,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>net.sf.taverna.t2.taverna-workbench</groupId>
-			<artifactId>workbench-distro</artifactId>
+			<artifactId>taverna-product-common</artifactId>
 			<version>${t2.taverna.workbench.version}</version>
 			<exclusions>
 				<exclusion>
