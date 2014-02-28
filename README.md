@@ -45,7 +45,7 @@ modify configurations such as the default service sets.
 Branches:
 
   *  `core` - for any domain - general activities (WSDL, REST, Beanshell, Component, Interaction, etc) - also basis for the other branches (can be considered the 'master' or 'trunk' branch)
-  *  `bioinformatics` - formerly maintenance, adds BioMart, BioMoby, Soaplab, WebDAV, corresponding default services and [BioCatalogue](https://www.biocatalogue.org/)
+  *  `bioinformatics` - formerly maintenance, adds BioMart, BioMoby, Soaplab, corresponding default services and [BioCatalogue](https://www.biocatalogue.org/)
   *  `digitalpreservation` - core + WebDAV
   *  `biodiversity` - core + WebDAV + [BioDiversityCatalogue](https://www.biodiversitycatalogue.org/)
   *  `astronomy` - core + [AstroTaverna](http://wf4ever.github.io/astrotaverna/)
