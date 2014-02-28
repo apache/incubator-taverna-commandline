@@ -468,7 +468,7 @@
         <customAttributes />
       </autoUpdate>
     </macosFolderArchive>
-    <linuxDeb name="Linux Deb Archive x64" id="83" customizedId="linux_amd64" mediaFileName="${compiler:sys.shortName}-${compiler:sys.version}-${compiler:sys.platform}_amd64" installDir="/opt/${compiler:sys.shortName}" overridePrincipalLanguage="false" jreBitType="all" runPostProcessor="false" postProcessor="" failOnPostProcessorError="false" useLegacyMediaFileIds="false" legacyMediaFileIds="" includedJRE="./openjdk-1.7.0-u40-unofficial-linux-amd64-image" manualJREEntry="true" bzip="true" description="${compiler:sys.fullName}" dependencies="" maintainerEmail="support@mygrid.org.uk" architectureSet="true" architecture="amd64">
+    <linuxDeb name="Linux Deb Archive x64" id="83" customizedId="linux_amd64" mediaFileName="${compiler:sys.shortName}-${compiler:sys.version}-${compiler:sys.platform}_amd64" installDir="/opt/${compiler:sys.shortName}" overridePrincipalLanguage="false" jreBitType="all" runPostProcessor="false" postProcessor="" failOnPostProcessorError="false" useLegacyMediaFileIds="false" legacyMediaFileIds="" includedJRE="./openjdk-1.7.0-u40-unofficial-linux-amd64-image" manualJREEntry="true" bzip="false" description="${compiler:sys.fullName}" dependencies="" maintainerEmail="support@mygrid.org.uk" architectureSet="true" architecture="amd64">
       <excludedLaunchers />
       <excludedBeans />
       <overriddenPrincipalLanguage id="en" customLocalizationFile="" />
