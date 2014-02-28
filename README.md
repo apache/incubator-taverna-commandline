@@ -45,7 +45,7 @@ modify configurations such as the default service sets.
 Branches:
 
   *  `core` - for any domain - general activities (WSDL, REST, Beanshell, Component, Interaction, etc) - also basis for the other branches (can be considered the 'master' or 'trunk' branch)
-  *  `bioinformatics` - formerly maintenance, adds BioMart, BioMoby, Soaplab, WebDAV, corresponding default services and [BioCatalogue](https://www.biocatalogue.org/)
+  *  `bioinformatics` - formerly maintenance, adds BioMart, BioMoby, Soaplab, corresponding default services and [BioCatalogue](https://www.biocatalogue.org/)
   *  `digitalpreservation` - core + WebDAV
   *  `biodiversity` - core + WebDAV + [BioDiversityCatalogue](https://www.biodiversitycatalogue.org/)
   *  `astronomy` - core + [AstroTaverna](http://wf4ever.github.io/astrotaverna/)
@@ -60,8 +60,7 @@ To check which edition you are building, verify these bits of `pom.xml`:
 
 For more information, see http://dev.mygrid.org.uk/wiki/display/developer/Taverna+products
 
-Creating a new edition
-----------------------
+### Creating a new edition
 
 To create a new edition, make a new branch based on `core` and modify the above line(s).
 You would then typically also modify `src/main/resources/plugins/plugins.txt`
@@ -154,7 +153,7 @@ open source licences such as the Apache Licence.
   
   
 Building
---------
+========
 First, make sure you have checked out the edition you want to build. 
 
 Build requirements:
