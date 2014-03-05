@@ -8,7 +8,6 @@
 		<version>2.5-SNAPSHOT</version>
 	</parent>
 	<version>2.5-SNAPSHOT</version>
-	<properties>
 	<groupId>net.sf.taverna.t2.taverna-commandline</groupId>
 
 	<!-- ##### For each branch, change ${edition} below -->
