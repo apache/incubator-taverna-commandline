@@ -115,7 +115,7 @@
       <iconImageFiles />
     </launcher>
   </launchers>
-  <installerGui installerType="1" addOnAppId="" suggestPreviousLocations="true" autoUpdateDescriptorUrl="http://updates.taverna.org.uk/workbench/${compiler:sys.version}/updates.xml" useAutoUpdateBaseUrl="true" autoUpdateBaseUrl="http://updates.taverna.org.uk/workbench/installers/">
+  <installerGui installerType="1" addOnAppId="" suggestPreviousLocations="true" autoUpdateDescriptorUrl="http://updates.taverna.org.uk/commandline/${compiler:edition}/${compiler:sys.version}/updates.xml" useAutoUpdateBaseUrl="true" autoUpdateBaseUrl="http://updates.taverna.org.uk/commandline/${compiler:edition}/installers/">
     <customCode />
     <autoUpdate useMinUpdatableVersion="false" minUpdatableVersion="" useMaxUpdatableVersion="false" maxUpdatableVersion="">
       <commentFiles />
