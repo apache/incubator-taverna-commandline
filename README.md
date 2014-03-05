@@ -122,7 +122,7 @@ beginng (or end) of the `<artifactIems>` block in `pom.xml`.
 
 To verify, now the repository folder should be empty:
 
-	mvn clean install
+	mvn clean package
 	rm -rf ~/.taverna-commandline-astronomy-2.5-snapshot
 	cd target
 	unzip *.zip
@@ -166,7 +166,7 @@ The below will assume you want to build the `core` edition.
 
     git fetch --all          # fetch all branches/editions
     git checkout core        # replace 'core' with your edition
-    mvn clean install
+    mvn clean package
     
 The packaging will take several minutes. The first time, this might take up to an
 hour as several libraries are downloaded from Maven repositories.
@@ -211,7 +211,21 @@ Start `install4j` to install your license key or run a 30-day trial, then quit t
 
 To generate the installers, run:
 
-    mvn clean install -Pdist
+    mvn clean package -Pdist
+
+This process can take anything from 2 minutes to 30 minutes depending on your
+hardware. You can speed up the process by adding
+[install4j-maven-plugin](http://sonatype.github.io/install4j-support/install4j-maven-plugin/compile-mojo.html)
+parameters, for instance generating only the Windows 64-bit installer with
+`-Dinstall4j.buildIds=winx64`. The buildIds are:
+
+  * winx64 (Windows .exe 64-bit)
+  * wini386 (Windows .exe 32-bit)
+  * osx (Mac OS X)
+  * linux_amd64 (Debian .deb x64)
+  * linux_x86_64 (Redhat .rpm x64) 
+  * standalone (Windows .zip)
+  * unix.tar (Unix .tar.gz)
 
 Note that on first execution, this will also download [OpenJDK binaries](http://build.mygrid.org.uk/openjdk/) 
 for embedding in OS-specifc installers. OpenJDK is licensed as GPL 2.1 with Classpath exception.

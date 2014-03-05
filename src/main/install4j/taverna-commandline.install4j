@@ -64,7 +64,7 @@
           <versionLine x="20" y="40" text="version ${compiler:sys.version}" font="Arial" fontSize="8" fontColor="0,0,0" fontWeight="500" />
         </text>
       </splashScreen>
-      <java mainClass="net.sf.taverna.raven.launcher.Launcher" vmParameters="-Draven.launcher.app.main=net.sf.taverna.t2.commandline.CommandLineLauncher" arguments="" allowVMPassthroughParameters="true" preferredVM="client" bundleRuntime="true">
+      <java mainClass="net.sf.taverna.raven.launcher.Launcher" vmParameters="-Draven.launcher.app.main=net.sf.taverna.t2.commandline.CommandLineLauncher &quot;-Djava.util.logging.config.file=${launcher:sys.launcherDirectory}/lib/logging.properties&quot;" arguments="" allowVMPassthroughParameters="true" preferredVM="client" bundleRuntime="true">
         <classPath>
           <directory location="conf" failOnError="false" />
           <directory location="lib" failOnError="true" />
