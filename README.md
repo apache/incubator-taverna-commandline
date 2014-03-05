@@ -122,7 +122,7 @@ beginng (or end) of the `<artifactIems>` block in `pom.xml`.
 
 To verify, now the repository folder should be empty:
 
-	mvn clean install
+	mvn clean package
 	rm -rf ~/.taverna-commandline-astronomy-2.5-snapshot
 	cd target
 	unzip *.zip
@@ -166,7 +166,7 @@ The below will assume you want to build the `core` edition.
 
     git fetch --all          # fetch all branches/editions
     git checkout core        # replace 'core' with your edition
-    mvn clean install
+    mvn clean package
     
 The packaging will take several minutes. The first time, this might take up to an
 hour as several libraries are downloaded from Maven repositories.
@@ -211,7 +211,7 @@ Start `install4j` to install your license key or run a 30-day trial, then quit t
 
 To generate the installers, run:
 
-    mvn clean install -Pdist
+    mvn clean package -Pdist
 
 This process can take anything from 2 minutes to 30 minutes depending on your
 hardware. You can speed up the process by adding
