@@ -20,6 +20,7 @@
 		<t2.taverna.workbench.version>2.5.0</t2.taverna.workbench.version>
 		<raven.app.name>taverna-cmd-${edition}-${project.version}-${buildNumber}</raven.app.name>
 		<astrotaverna.version>1.11.tav25-SNAPSHOT</astrotaverna.version>
+		<helio.version>0.2.1</helio.version>
 	</properties>
 
 	<dependencies>
@@ -117,6 +118,14 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- helio -->
+                <dependency>
+                        <groupId>org.helio.taverna</groupId>
+                        <artifactId>helio-activity</artifactId>
+                        <version>${helio.version}</version>
+                        <scope>test</scope>
+                </dependency>
+
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -1727,6 +1736,18 @@
 			<name>AstroTaverna repository</name>
 			<url>http://wf4ever.github.com/astrotaverna/</url>
 		</repository>
+                <repository>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                    <id>helio</id>
+                    <name>Helio Taverna repository</name>
+                    <url>http://msslkz.mssl.ucl.ac.uk/helio_taverna/helio_repository/</url>
+                </repository>
+
 
 	</repositories>
 	<scm>

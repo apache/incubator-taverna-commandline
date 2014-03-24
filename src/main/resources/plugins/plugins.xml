@@ -269,6 +269,37 @@
 		</compatibility>
 	</plugin>
     
+        <plugin>
+                <provider>helio.eu</provider>
+                <identifier>uk.org.mygrid.taverna.plugins.helio-taverna-suite.commandline</identifier>
+                <version>0.2.1</version>
+
+                <!-- Does not match the workbench version, this -->
+                <!-- is the plugin version -->
+                <name>Helio Taverna activity</name>
+                <description>Helio Taverna activity</description>
+                <enabled>true</enabled>
+                <repositories>
+                        <!-- myGrid repositories and mirrors  -->
+                        <repository>http://msslkz.mssl.ucl.ac.uk/helio_taverna/helio_repository/</repository>
+                        <repository>http://www.astrogrid.org/maven2/</repository>
+                        <repository>http://ag03.ast.cam.ac.uk/nexus/content/groups/public/</repository>
+                        <repository>http://www.astrogrid.org/maven/</repository>
+                        <repository>http://www.mygrid.org.uk/maven/repository/</repository>
+                        <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
+                </repositories>
+
+                <profile>
+                        <artifact groupId="org.helio.taverna" artifactId="helio-activity" version="${helio.version}" />
+                </profile>
+
+                <compatibility>
+                        <application>
+                                <version>${project.version}</version>
+                        </application>
+                </compatibility>
+        </plugin>
+
 
     <plugin>
         <provider>taverna.sf.net</provider>
