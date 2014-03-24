@@ -272,7 +272,7 @@
         <plugin>
                 <provider>helio.eu</provider>
                 <identifier>uk.org.mygrid.taverna.plugins.helio-taverna-suite.commandline</identifier>
-                <version>0.2.1</version>
+		<version>${helio.version}</version>
 
                 <!-- Does not match the workbench version, this -->
                 <!-- is the plugin version -->
