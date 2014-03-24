@@ -5,9 +5,8 @@
 	<parent>
 		<groupId>net.sf.taverna</groupId>
 		<artifactId>taverna-parent</artifactId>
-		<version>2.5-SNAPSHOT</version>
+		<version>2.5.0</version>
 	</parent>
-	<version>2.5-SNAPSHOT</version>
 	<groupId>net.sf.taverna.t2.taverna-commandline</groupId>
 
 	<!-- ##### For each branch, change ${edition} below -->
@@ -17,8 +16,8 @@
 		<edition>bioinformatics</edition>
 		<!-- ######## -->
 
-		<t2.taverna-commandline.version>1.5-SNAPSHOT</t2.taverna-commandline.version>
-		<t2.taverna.workbench.version>2.5-SNAPSHOT</t2.taverna.workbench.version>
+		<t2.taverna-commandline.version>1.5</t2.taverna-commandline.version>
+		<t2.taverna.workbench.version>2.5.0</t2.taverna.workbench.version>
 		<raven.app.name>taverna-cmd-${edition}-${project.version}-${buildNumber}</raven.app.name>
 	</properties>
 
@@ -1967,6 +1966,15 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+                <repository>
+                        <id>mygrid-staging-repository</id>
+                        <name>myGrid Staging Repository</name>
+                        <url>http://www.mygrid.org.uk/maven/staging-repository</url>
+                        <releases />
+                        <snapshots>
+                                <enabled>false</enabled>
+                        </snapshots>
+                </repository>
 		<repository>
 			<id>mygrid-snapshot-repository</id>
 			<name>myGrid Snapshot Repository</name>
