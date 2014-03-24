@@ -19,7 +19,7 @@
 		<t2.taverna-commandline.version>1.5</t2.taverna-commandline.version>
 		<t2.taverna.workbench.version>2.5.0</t2.taverna.workbench.version>
 		<raven.app.name>taverna-cmd-${edition}-${project.version}-${buildNumber}</raven.app.name>
-		<astrotaverna.version>1.11.tav25-SNAPSHOT</astrotaverna.version>
+		<astrotaverna.version>1.20</astrotaverna.version>
 		<helio.version>0.2.1</helio.version>
 	</properties>
 
