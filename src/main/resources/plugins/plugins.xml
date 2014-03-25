@@ -286,7 +286,6 @@
                         <repository>http://ag03.ast.cam.ac.uk/nexus/content/groups/public/</repository>
                         <repository>http://www.astrogrid.org/maven/</repository>
                         <repository>http://www.mygrid.org.uk/maven/repository/</repository>
-                        <repository>http://www.mygrid.org.uk/maven/snapshot-repository/</repository>
                 </repositories>
 
                 <profile>
@@ -299,6 +298,8 @@
                         </application>
                 </compatibility>
         </plugin>
+
+
 
 
     <plugin>
@@ -331,4 +332,35 @@
             </application>
         </compatibility>
     </plugin>
+
+        <plugin>
+          <provider>vamdc.org</provider>
+         <identifier>uk.org.mygrid.taverna.plugins.vamdc-taverna-suite</identifier>
+          <version>${vamdc.version}</version>
+         
+          <!-- Does not match the workbench version, this -->
+          <!-- is the plugin version -->
+          <name>VamDC Taverna Plugin</name>
+          <description>VAMDC Taverna Plugin</description>
+          <enabled>true</enabled>
+          <repositories>
+            <!-- myGrid repositories and mirrors  -->
+             <repository>http://vamdc.mssl.ucl.ac.uk/vamdc_repository/</repository>
+             <repository>http://www.astrogrid.org/maven2/</repository>
+            <repository>http://ag03.ast.cam.ac.uk/nexus/content/groups/public/</repository>
+             <repository>http://www.astrogrid.org/maven/</repository>
+            <repository>http://bioinf.ncl.ac.uk/mirror/maven/repository/</repository>
+          </repositories>
+        
+          <profile>
+            <artifact groupId="org.vamdc.taverna" artifactId="vamdc-activity" version="${vamdc.version}" />
+          </profile>
+        
+          <compatibility>
+            <application>
+              <version>2.5.0</version>
+            </application>
+          </compatibility>
+        </plugin> 
+
 </plugins:plugins>

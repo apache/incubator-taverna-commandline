@@ -21,6 +21,7 @@
 		<raven.app.name>taverna-cmd-${edition}-${project.version}-${buildNumber}</raven.app.name>
 		<astrotaverna.version>1.20</astrotaverna.version>
 		<helio.version>0.2.1</helio.version>
+		<vamdc.version>1.0</vamdc.version>
 	</properties>
 
 	<dependencies>
@@ -123,6 +124,14 @@
                         <groupId>org.helio.taverna</groupId>
                         <artifactId>helio-activity</artifactId>
                         <version>${helio.version}</version>
+                        <scope>test</scope>
+                </dependency>
+
+		<!-- vamdc -->
+                <dependency>
+                        <groupId>org.vamdc.taverna</groupId>
+                        <artifactId>vamdc-activity</artifactId>
+                        <version>${vamdc.version}</version>
                         <scope>test</scope>
                 </dependency>
 
@@ -1731,22 +1740,36 @@
 		</repository>
 		<repository>
 			<releases />
-			<snapshots />
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
 			<id>astrotaverna</id>
 			<name>AstroTaverna repository</name>
 			<url>http://wf4ever.github.com/astrotaverna/</url>
 		</repository>
                 <repository>
+                    <id>helio</id>
+                    <name>Helio Taverna repository</name>
+                    <url>http://msslkz.mssl.ucl.ac.uk/helio_taverna/helio_repository/</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
                     <snapshots>
-                        <enabled>true</enabled>
+                        <enabled>false</enabled>
                     </snapshots>
-                    <id>helio</id>
-                    <name>Helio Taverna repository</name>
-                    <url>http://msslkz.mssl.ucl.ac.uk/helio_taverna/helio_repository/</url>
                 </repository>
+                <repository>
+                    <id>vamdc</id>
+                    <name>VAMDC Taverna repository</name>
+                    <url>http://vamdc.mssl.ucl.ac.uk/vamdc_repository/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                            <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+
 
 
 	</repositories>
