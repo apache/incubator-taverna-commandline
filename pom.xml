@@ -229,6 +229,27 @@
 					 
 <!-- generated with workbench-distro/src/main/python/generateArtifactItems.py -->
 
+                                <artifactItem>
+                                    <groupId>org.astrogrid</groupId>
+                                    <artifactId>astrogrid-utils</artifactId>
+                                    <version>2007.2ut</version>
+                                    <type>pom</type>
+                                    <outputDirectory>${project.build.directory}/repository/org/astrogrid/astrogrid-utils/2007.2ut</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.astrogrid</groupId>
+                                    <artifactId>astrogrid-config</artifactId>
+                                    <version>2007.2cfg</version>
+                                    <type>jar</type>
+                                    <outputDirectory>${project.build.directory}/repository/org/astrogrid/astrogrid-config/2007.2cfg</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.astrogrid</groupId>
+                                    <artifactId>astrogrid-xml</artifactId>
+                                    <version>2007.2xml</version>
+                                    <type>jar</type>
+                                    <outputDirectory>${project.build.directory}/repository/org/astrogrid/astrogrid-xml/2007.2xml</outputDirectory>
+                                </artifactItem>
 
                                 <artifactItem>
                                     <groupId>commons-collections</groupId>
