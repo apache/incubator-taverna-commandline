@@ -11,7 +11,7 @@
 
 	<!-- ##### For each branch, change ${edition} below -->
 	<artifactId>taverna-commandline-${edition}</artifactId>
-	<name>Taverna command line utility [${edition}]</name>
+	<name>Taverna Command Line Tool Enterprise</name>
 	<properties>
 		<edition>enterprise</edition>
 		<!-- ######## -->
@@ -2211,6 +2211,7 @@
 					<variables>
 						<srcDir>${project.build.directory}/dist</srcDir>
 						<edition>${edition}</edition>
+						<product-name>${project.name} ${project.version}</product-name>
 					</variables>
                                 </configuration>
                             </execution>
