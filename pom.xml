@@ -2101,32 +2101,19 @@
 			<snapshots />
 		</repository>
 		<repository>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<id>aduna-opensource.releases</id>
-			<name>Aduna Open Source - Maven releases</name>
-			<url>http://repo.aduna-software.org/maven2/releases</url>
-		</repository>
-		<repository>
+			<id>astrotaverna</id>
+			<name>AstroTaverna repository</name>
+			<url>http://wf4ever.github.com/astrotaverna/</url>
 			<releases />
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
-			<id>astrotaverna</id>
-			<name>AstroTaverna repository</name>
-			<url>http://wf4ever.github.com/astrotaverna/</url>
 		</repository>
                 <repository>
                     <id>helio</id>
                     <name>Helio Taverna repository</name>
                     <url>http://msslkz.mssl.ucl.ac.uk/helio_taverna/helio_repository/</url>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
+		    <releases />
                     <snapshots>
                         <enabled>false</enabled>
                     </snapshots>
@@ -2135,15 +2122,40 @@
                     <id>vamdc</id>
                     <name>VAMDC Taverna repository</name>
                     <url>http://vamdc.mssl.ucl.ac.uk/vamdc_repository/</url>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
+		    <releases />
                     <snapshots>
                             <enabled>false</enabled>
                     </snapshots>
                 </repository>
-
-
+                <repository>
+                    <id>aduna-opensource.releases</id>
+                    <name>Aduna Open Source - Maven releases</name>
+<!--
+                    <url>http://repo.aduna-software.org/maven2/releases</url>
+-->
+                        <url>http://build.mygrid.org.uk/maven/aduna</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    </snapshots>
+                    <id>aduna-software</id>
+                    <name>Aduna Open Source - Maven releases</name>
+<!--
+                    <url>http://repo.aduna-software.org/maven2/releases</url>
+-->
+                        <url>http://build.mygrid.org.uk/maven/aduna</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
 
 	</repositories>
 	<scm>
