@@ -2142,7 +2142,6 @@
                     </snapshots>
                 </repository>
                 <repository>
-                    </snapshots>
                     <id>aduna-software</id>
                     <name>Aduna Open Source - Maven releases</name>
 <!--
