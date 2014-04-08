@@ -438,9 +438,9 @@ public class CommandLineLauncher implements Launchable {
 			url = new URL(workflowOption);
 			return url;
 		}  catch (MalformedURLException e) {
+		        
 			throw new OpenDataflowException(
-					"The was an error processing the URL to the workflow: "
-							+ e.getMessage(), e);
+							"Unable to read a workflow from " + workflowOption, e);
 		}
 	}
 	
