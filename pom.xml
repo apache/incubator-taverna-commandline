@@ -342,6 +342,7 @@
                                     <type>pom</type>
                                     <outputDirectory>${project.build.directory}/repository/com/sun/xml/bind/jaxb-impl/2.1.8</outputDirectory>
                                 </artifactItem>
+                                <!--
                                 <artifactItem>
                                     <groupId>com.sun.jdmk</groupId>
                                     <artifactId>jmxtools</artifactId>
@@ -370,6 +371,7 @@
                                     <type>jar</type>
                                     <outputDirectory>${project.build.directory}/repository/com/sun/jmx/jmxri/1.2.1</outputDirectory>
                                 </artifactItem>
+                                -->
                                 <artifactItem>
                                     <groupId>xerces</groupId>
                                     <artifactId>xerces</artifactId>
