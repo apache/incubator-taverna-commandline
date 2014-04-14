@@ -134,7 +134,7 @@ To verify, now the repository folder should be empty:
 Licence
 =======
 This AstroTaverna edition is licensed under the GPL General Public License (GPL) 3.0.
-See the file LICENSE.txt or https://www.gnu.org/licenses/gpl-3.0.html for
+See the file [LICENCE.txt](LICENCE.txt) or https://www.gnu.org/licenses/gpl-3.0.html for
 details. 
 
 (The reason the AstroTaverna edition is GPL 3, while Taverna in general is
