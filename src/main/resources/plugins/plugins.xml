@@ -23,7 +23,7 @@
             <dependency>
                 <groupId>net.sf.taverna.t2.activities</groupId>
                 <artifactId>common-activities</artifactId>
-                <version>${t2.activities.version}</version>
+                <version>1.5.1-SNAPSHOT</version>
             </dependency>
         </profile>
         <compatibility>
