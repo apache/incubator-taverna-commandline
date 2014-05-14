@@ -14,9 +14,10 @@
 
 	<name>Taverna Commandline</name>
 	<scm>
-		<connection>scm:svn:http://taverna.googlecode.com/svn/taverna/engine/net.sf.taverna.t2.infrastructure/trunk/</connection>
-		<developerConnection>scm:svn:https://taverna.googlecode.com/svn/taverna/engine/net.sf.taverna.t2.infrastructure/trunk/</developerConnection>
-		<url>http://code.google.com/p/taverna/source/browse/#svn/taverna/engine/net.sf.taverna.t2.infrastructure/trunk</url>
+                <connection>scm:git:https://github.com/taverna/taverna-commandline.git</connection>
+                <developerConnection>scm:git:ssh://git@github.com:taverna/taverna-commandline.git</developerConnection>
+                <url>https://github.com/taverna/taverna-commandline</url>
+                <tag>HEAD</tag>
 	</scm>
 
 	<modules>
