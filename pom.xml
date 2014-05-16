@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>net.sf.taverna</groupId>
 		<artifactId>taverna-parent</artifactId>
-		<version>2.5.0</version>
+		<version>2.6-SNAPSHOT</version>
 	</parent>
 	<version>2.5.1-SNAPSHOT</version>
 	<groupId>net.sf.taverna.t2.taverna-commandline</groupId>
@@ -17,8 +17,6 @@
 		<edition>enterprise</edition>
 		<!-- ######## -->
 
-		<t2.taverna-commandline.version>1.5</t2.taverna-commandline.version>
-		<t2.taverna.workbench.version>2.5.0</t2.taverna.workbench.version>
 		<raven.app.name>taverna-cmd-${edition}-${project.version}-${buildNumber}</raven.app.name>
 	</properties>
 
@@ -2254,32 +2252,32 @@
 			<snapshots />
 		</repository>
                 <repository>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
                     <id>aduna-opensource.releases</id>
                     <name>Aduna Open Source - Maven releases</name>
 <!--
                     <url>http://repo.aduna-software.org/maven2/releases</url>
 -->
-                        <url>http://build.mygrid.org.uk/maven/aduna</url>
-                </repository>
-                <repository>
+                    <url>http://build.mygrid.org.uk/maven/aduna</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
                     <snapshots>
                         <enabled>false</enabled>
                     </snapshots>
+                </repository>
+                <repository>
                     <id>aduna-software</id>
                     <name>Aduna Open Source - Maven releases</name>
 <!--
                     <url>http://repo.aduna-software.org/maven2/releases</url>
 -->
                         <url>http://build.mygrid.org.uk/maven/aduna</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
                 </repository>
 
 	</repositories>
