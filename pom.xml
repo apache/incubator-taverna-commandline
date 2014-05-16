@@ -16,8 +16,6 @@
 		<edition>core</edition>
 		<!-- ######## -->
 
-		<t2.taverna-commandline.version>1.5</t2.taverna-commandline.version>
-		<t2.taverna.workbench.version>2.5.0</t2.taverna.workbench.version>
 		<raven.app.name>taverna-cmd-${edition}-${project.version}-${buildNumber}</raven.app.name>
 	</properties>
 
