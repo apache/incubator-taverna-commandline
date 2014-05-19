@@ -14,7 +14,7 @@
     <variables>
       <variable name="maxMemory" value="1g" description="" category="" />
       <variable name="maxPermGenSpace" value="400m" description="" category="" />
-      <variable name="srcDir" value="../../../target/dist" description="Source directory for the distribution, as output by Maven in workbench-distro, e.g. &#xA;../../../target/taverna-workbench-dist" category="" />
+      <variable name="srcDir" value="../../../target/dist" description="Source directory for the distribution, as output by Maven, e.g. &#xA;../../../target/taverna-commandline-dist" category="" />
       <variable name="edition" value="snapshot" description="" category="" />
     </variables>
     <mergedProjects />
@@ -40,11 +40,8 @@
       <mountPoint id="105" root="102" location="" mode="755" />
     </mountPoints>
     <entries>
-      <dirEntry mountPoint="22" file="${compiler:srcDir}" overwriteMode="4" shared="false" fileMode="644" uninstallMode="0" overrideFileMode="false" overrideOverwriteMode="false" overrideUninstallMode="false" entryMode="direct" subDirectory="taverna-workbench-dist" excludeSuffixes="*.sha1,*.md5" dirMode="755" overrideDirMode="false">
-        <exclude>
-          <entry location="executeworkflow.bat" fileType="regular" />
-          <entry location="executeworkflow.sh" fileType="regular" />
-        </exclude>
+      <dirEntry mountPoint="22" file="${compiler:srcDir}" overwriteMode="4" shared="false" fileMode="644" uninstallMode="0" overrideFileMode="false" overrideOverwriteMode="false" overrideUninstallMode="false" entryMode="direct" subDirectory="" excludeSuffixes="*.sha1,*.md5" dirMode="755" overrideDirMode="false">
+        <exclude />
       </dirEntry>
       <fileEntry mountPoint="95" file="${compiler:srcDir}/executeworkflow.bat" overwriteMode="4" shared="false" fileMode="644" uninstallMode="0" overrideFileMode="false" overrideOverwriteMode="false" overrideUninstallMode="false" />
       <fileEntry mountPoint="99" file="${compiler:srcDir}/executeworkflow.sh" overwriteMode="4" shared="false" fileMode="755" uninstallMode="0" overrideFileMode="true" overrideOverwriteMode="false" overrideUninstallMode="false" />
@@ -495,13 +492,12 @@
         <content />
       </postUninstallScript>
     </linuxDeb>
-    <linuxRPM name="Linux RPM x64" id="84" customizedId="linux_x86_64" mediaFileName="${compiler:sys.shortName}-${compiler:sys.version}-${compiler:sys.platform}_x86_64" installDir="/opt/taverna-workbench" overridePrincipalLanguage="false" jreBitType="all" runPostProcessor="false" postProcessor="" failOnPostProcessorError="false" useLegacyMediaFileIds="false" legacyMediaFileIds="" includedJRE="./openjdk-1.7.0-u40-unofficial-linux-amd64-image" manualJREEntry="true" os="linux" arch="i386">
+    <linuxRPM name="Linux RPM x64" id="84" customizedId="linux_x86_64" mediaFileName="${compiler:sys.shortName}-${compiler:sys.version}-${compiler:sys.platform}_x86_64" installDir="/opt/${compiler:sys.shortName}" overridePrincipalLanguage="false" jreBitType="all" runPostProcessor="false" postProcessor="" failOnPostProcessorError="false" useLegacyMediaFileIds="false" legacyMediaFileIds="" includedJRE="./openjdk-1.7.0-u40-unofficial-linux-amd64-image" manualJREEntry="true" os="linux" arch="i386">
       <excludedLaunchers />
       <excludedBeans />
       <overriddenPrincipalLanguage id="en" customLocalizationFile="" />
       <exclude>
         <entry location=".i4j_fileset_93" fileType="regular" />
-        <entry location=".i4j_external_98/bin/linux-x86" fileType="regular" />
         <entry location=".i4j_fileset_101" fileType="regular" />
       </exclude>
       <variables>
@@ -514,10 +510,10 @@
       <preInstallScript mode="1" file="">
         <content />
       </preInstallScript>
-      <postInstallScript mode="3" file="">
-        <content>ln -sf /opt/taverna-workbench/taverna.desktop /usr/share/applications/taverna-workbench.desktop</content>
+      <postInstallScript mode="1" file="">
+        <content />
       </postInstallScript>
-      <preUninstallScript mode="3" file="">
+      <preUninstallScript mode="1" file="">
         <content>rm -f /usr/share/applications/taverna-workbench.desktop</content>
       </preUninstallScript>
       <postUninstallScript mode="1" file="">
