@@ -11,7 +11,7 @@
 	<version>2.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>Taverna Commandline</name>
+	<name>Taverna 2 Commandline</name>
 	<scm>
 		<connection>scm:svn:http://taverna.googlecode.com/svn/taverna/engine/net.sf.taverna.t2.infrastructure/trunk/</connection>
 		<developerConnection>scm:svn:https://taverna.googlecode.com/svn/taverna/engine/net.sf.taverna.t2.infrastructure/trunk/</developerConnection>
