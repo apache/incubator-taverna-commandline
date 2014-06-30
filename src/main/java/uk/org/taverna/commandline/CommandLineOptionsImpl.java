@@ -154,15 +154,6 @@ public class CommandLineOptionsImpl implements CommandLineOptions {
 	}
 
 	/**
-	 *
-	 * @return the path to the input document
-	 */
-	@Override
-	public String getInputDocument() {
-		return getOptionValue("inputdoc");
-	}
-
-	/**
 	 * Returns an array that alternates between a portname and path to a file
 	 * containing the input values. Therefore the array will always contain an
 	 * even number of elements
@@ -212,15 +203,6 @@ public class CommandLineOptionsImpl implements CommandLineOptions {
 	@Override
 	public String getOutputDirectory() {
 		return getOptionValue("outputdir");
-	}
-
-	/**
-	 *
-	 * @return the path to the output document
-	 */
-	@Override
-	public String getOutputDocument() {
-		return getOptionValue("outputdoc");
 	}
 
 	@Override
