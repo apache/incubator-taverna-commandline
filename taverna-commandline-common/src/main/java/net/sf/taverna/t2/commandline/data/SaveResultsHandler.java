@@ -41,22 +41,9 @@ import uk.org.taverna.databundle.DataBundles;
 public class SaveResultsHandler {
 
 	private final File outputDirectory;
-	private final File baclavaFile;
 
-	public SaveResultsHandler(File rootOutputDir, File outputBaclavaDocumentFile) {
+	public SaveResultsHandler(File rootOutputDir) {
 		this.outputDirectory = rootOutputDir;
-		this.baclavaFile = outputBaclavaDocumentFile;
-	}
-
-	public void saveOutputBaclavaDocument(Map<String, Path> allResults) throws IOException {
-		if (baclavaFile != null) {
-			if (baclavaFile.getParentFile() != null) {
-				baclavaFile.getParentFile().mkdirs();
-			}
-			BaclavaDocumentHandler handler = new BaclavaDocumentHandler();
-			handler.setChosenReferences(allResults);
-			handler.saveData(baclavaFile);
-		}
 	}
 
 	/**

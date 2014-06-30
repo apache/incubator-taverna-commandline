@@ -22,7 +22,6 @@ package net.sf.taverna.t2.commandline.data;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -36,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sf.taverna.t2.baclava.DataThing;
 import net.sf.taverna.t2.commandline.exceptions.InputMismatchException;
 import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
 import net.sf.taverna.t2.commandline.exceptions.ReadInputException;
@@ -67,42 +65,40 @@ public class InputsHandler {
 	public void checkProvidedInputs(Map<String, InputWorkflowPort> portMap,
 			CommandLineOptions options) throws InputMismatchException {
 		// we dont check for the document
-		if (options.getInputDocument() == null) {
-			Set<String> providedInputNames = new HashSet<String>();
-			for (int i = 0; i < options.getInputFiles().length; i += 2) {
-				// If it already contains a value for the input port, e.g
-				// two inputs are provided for the same port
-				if (providedInputNames.contains(options.getInputFiles()[i])) {
-					throw new InputMismatchException(
-							"Two input values were provided for the same input port "
-									+ options.getInputFiles()[i] + ".", null, null);
-				}
-				providedInputNames.add(options.getInputFiles()[i]);
-			}
+                Set<String> providedInputNames = new HashSet<String>();
+                for (int i = 0; i < options.getInputFiles().length; i += 2) {
+                        // If it already contains a value for the input port, e.g
+                        // two inputs are provided for the same port
+                        if (providedInputNames.contains(options.getInputFiles()[i])) {
+                                throw new InputMismatchException(
+                                        "Two input values were provided for the same input port "
+                                        + options.getInputFiles()[i] + ".", null, null);
+                        }
+                        providedInputNames.add(options.getInputFiles()[i]);
+                }
 
-			for (int i = 0; i < options.getInputValues().length; i += 2) {
-				// If it already contains a value for the input port, e.g
-				// two inputs are provided for the same port
-				if (providedInputNames.contains(options.getInputValues()[i])) {
-					throw new InputMismatchException(
-							"Two input values were provided for the same input port "
-									+ options.getInputValues()[i] + ".", null, null);
-				}
-				providedInputNames.add(options.getInputValues()[i]);
-			}
+                for (int i = 0; i < options.getInputValues().length; i += 2) {
+                        // If it already contains a value for the input port, e.g
+                        // two inputs are provided for the same port
+                        if (providedInputNames.contains(options.getInputValues()[i])) {
+                                throw new InputMismatchException(
+                                        "Two input values were provided for the same input port "
+                                        + options.getInputValues()[i] + ".", null, null);
+                        }
+                        providedInputNames.add(options.getInputValues()[i]);
+                }
 
-			if (portMap.size() * 2 != (options.getInputFiles().length + options.getInputValues().length)) {
-				throw new InputMismatchException(
-						"The number of inputs provided does not match the number of input ports.",
+                if (portMap.size() * 2 != (options.getInputFiles().length + options.getInputValues().length)) {
+                        throw new InputMismatchException(
+                                    "The number of inputs provided does not match the number of input ports.",
 						portMap.keySet(), providedInputNames);
-			}
+                }
 
-			for (String portName : portMap.keySet()) {
-				if (!providedInputNames.contains(portName)) {
-					throw new InputMismatchException(
-							"The provided inputs does not contain an input for the port '"
-									+ portName + "'", portMap.keySet(), providedInputNames);
-				}
+                for (String portName : portMap.keySet()) {
+                        if (!providedInputNames.contains(portName)) {
+                                throw new InputMismatchException(
+                                        "The provided inputs does not contain an input for the port '"
+                                        + portName + "'", portMap.keySet(), providedInputNames);
 			}
 		}
 	}
@@ -132,44 +128,7 @@ public class InputsHandler {
 
 		}
 
-		if (options.getInputDocument() != null) {
-			registerInputsFromBaclava(options, inputs, url);
-		}
-
 		return inputDataBundle;
-	}
-
-	private void registerInputsFromBaclava(CommandLineOptions options, Path inputs, URL url)
-			throws ReadInputException, InvalidOptionException {
-		String inputDocPath = options.getInputDocument();
-
-		URL inputDocURL;
-		try {
-			inputDocURL = new URL(url, inputDocPath);
-		} catch (MalformedURLException e1) {
-			throw new ReadInputException("The a error reading the input document from : "
-					+ inputDocPath + ", " + e1.getMessage(), e1);
-		}
-		Map<String, DataThing> things;
-		try {
-			things = new BaclavaDocumentHandler().readData(inputDocURL.openStream());
-		} catch (IOException e) {
-			throw new ReadInputException("There was an error reading the input document file: "
-					+ e.getMessage(), e);
-		} catch (JDOMException e) {
-			throw new ReadInputException("There was a error processing the input document XML: "
-					+ e.getMessage(), e);
-		}
-		for (String inputName : things.keySet()) {
-			DataThing thing = things.get(inputName);
-			Object object = thing.getDataObject();
-			try {
-				Path portPath = DataBundles.getPort(inputs, inputName);
-				setValue(portPath, object);
-			} catch (IOException e) {
-				throw new InvalidOptionException("Error creating value for input " + inputName);
-			}
-		}
 	}
 
 	private void registerInputsFromValues(Map<String, InputWorkflowPort> portMap,

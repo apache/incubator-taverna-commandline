@@ -271,19 +271,15 @@ public class CommandLineTool {
 				NamedSet<OutputWorkflowPort> workflowOutputPorts = workflow.getOutputPorts();
 				if (!workflowOutputPorts.isEmpty()) {
 					File outputDir = null;
-					File outputBaclavaDoc = null;
 
 					if (commandLineOptions.saveResultsToDirectory()) {
 						outputDir = determineOutputDir(commandLineOptions, workflowBundle.getName());
 						outputDir.mkdirs();
 					}
-					if (commandLineOptions.getOutputDocument() != null) {
-						outputBaclavaDoc = new File(commandLineOptions.getOutputDocument());
-					}
 
 					Path outputs = DataBundles.getOutputs(runService.getDataBundle(runId));
 
-					SaveResultsHandler saveResultsHandler = new SaveResultsHandler(outputDir, outputBaclavaDoc);
+					SaveResultsHandler saveResultsHandler = new SaveResultsHandler(outputDir);
 
 					if (outputDir != null) {
 						for (OutputWorkflowPort outputWorkflowPort : workflowOutputPorts) {
@@ -293,10 +289,6 @@ public class CommandLineTool {
 								saveResultsHandler.saveResultsForPort(workflowOutputPortName, output);
 							}
 						}
-					}
-
-					if (outputBaclavaDoc != null) {
-						saveResultsHandler.saveOutputBaclavaDocument(DataBundles.getPorts(outputs));
 					}
 				}
 
@@ -382,20 +374,12 @@ public class CommandLineTool {
 
 	private File determineOutputDir(CommandLineOptions options, String dataflowName) {
 		File result = null;
-		if (options.getOutputDirectory() != null) {
-			result = new File(options.getOutputDirectory());
-			if (result.exists()) {
-				error("The specified output directory '"
-						+ options.getOutputDirectory() + "' already exists.\n");
-			}
-		} else if (options.getOutputDocument() == null) {
-			result = new File(dataflowName + "_output");
-			int x = 1;
-			while (result.exists()) {
-				result = new File(dataflowName + "_output_" + x);
-				x++;
-			}
-		}
+                result = new File(dataflowName + "_output");
+                int x = 1;
+                while (result.exists()) {
+                        result = new File(dataflowName + "_output_" + x);
+                        x++;
+                }
 		if (result != null) {
 			System.out.println("Outputs will be saved to the directory: "
 					+ result.getAbsolutePath());

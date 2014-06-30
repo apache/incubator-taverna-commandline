@@ -54,11 +54,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>net.sf.taverna.t2</groupId>
-			<artifactId>results</artifactId>
-			<version>${t2.results.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>net.sf.taverna.t2.core</groupId>
 			<artifactId>provenanceconnector</artifactId>
 			<version>${t2.core.provenanceconnector.version}</version>

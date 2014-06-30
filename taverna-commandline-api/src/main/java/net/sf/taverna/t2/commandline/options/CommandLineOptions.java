@@ -56,12 +56,6 @@ public interface CommandLineOptions {
 	public String getDatabaseProperties();
 
 	/**
-	 *
-	 * @return the path to the input document
-	 */
-	public String getInputDocument();
-
-	/**
 	 * Returns an array that alternates between a portname and path to a file
 	 * containing the input values. Therefore the array will always contain an
 	 * even number of elements
@@ -80,12 +74,6 @@ public interface CommandLineOptions {
 	 * @return the directory to write the results to
 	 */
 	public String getOutputDirectory();
-
-	/**
-	 *
-	 * @return the path to the output document
-	 */
-	public String getOutputDocument();
 
 	public boolean getStartDatabase();
 
