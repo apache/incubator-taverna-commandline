@@ -13,7 +13,7 @@
 		<dependency>
 			<groupId>net.sf.taverna.t2.taverna-commandline</groupId>
 			<artifactId>taverna-commandline-api</artifactId>
-			<version>2.0.1-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 
 		<dependency>
