@@ -162,20 +162,21 @@
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.core</artifactId>
-			<version>4.3.1</version>
+			<version>${osgi.core.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.compendium</artifactId>
-			<version>4.3.1</version>
+			<version>${osgi.core.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
+                <!-- Invalid manifest header Import-Package: "com.sun.jdmk.comm;resolution:="optional"" : Cannot import a package more than once "com.sun.jdmk.comm"-->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
+			<version>${log4j.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -183,7 +184,7 @@
 		<dependency>
 			<groupId>net.sourceforge.cglib</groupId>
 			<artifactId>com.springsource.net.sf.cglib</artifactId>
-			<version>2.1.3</version>
+			<version>${cglib.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.osgi</groupId>
@@ -203,31 +204,35 @@
 		</dependency>
 
 		<!-- Java Extension Implementations -->
-		<dependency>
+		<!-- Appears unrequired dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>com.springsource.javax.xml.bind</artifactId>
 			<version>2.2.0</version>
-		</dependency>
+		</dependency-->
 		<dependency>
 			<groupId>javax.activation</groupId>
 			<artifactId>com.springsource.javax.activation</artifactId>
-			<version>1.1.1</version>
+			<version>${activation.version}</version>
 		</dependency>
-		<dependency> <!-- required by bsh -->
-			<groupId>javax.servlet</groupId>
+                <!-- The bundle "com.springsource.bsh_2.0.0.b4 " could not be resolved. Reason: Missing Constraint: Import-Package: javax.servlet; version="[2.5.0,3.0.0)" -->
+		<dependency> 
+ 			<groupId>javax.servlet</groupId>
 			<artifactId>com.springsource.javax.servlet</artifactId>
 			<version>2.5.0</version>
 		</dependency>
+                <!-- The bundle "com.springsource.org.apache.axis_1.4.0 " could not be resolved. Reason: Missing Constraint: Import-Package: javax.jms; version="[1.1.0,2.0.0)" -->
 		<dependency>
 			<groupId>javax.jms</groupId>
 			<artifactId>com.springsource.javax.jms</artifactId>
 			<version>1.1.0</version>
 		</dependency>
+                <!-- The bundle "com.springsource.javax.xml.rpc_1.1.0 " could not be resolved. Reason: Missing Constraint: Import-Package: javax.xml.soap; version="[1.3.0,2.0.0)" -->
 		<dependency>
 			<groupId>javax.xml.soap</groupId>
 			<artifactId>com.springsource.javax.xml.soap</artifactId>
 			<version>1.3.0</version>
 		</dependency>
+                <!-- The bundle "com.springsource.com.thoughtworks.xstream_1.4.1" could not be resolved. Reason: Missing Constraint: Import-Package: javax.xml.stream; version="[1.0.1,2.0.0)" -->
 		<dependency>
 			<groupId>javax.xml.stream</groupId>
 			<artifactId>com.springsource.javax.xml.stream</artifactId>
@@ -248,23 +253,24 @@
 		<dependency>
 			<groupId>uk.org.taverna.osgi.services</groupId>
 			<artifactId>xml-parser-service</artifactId>
-			<version>0.1.1</version>
+			<version>${osgi.services.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>uk.org.taverna.osgi.services</groupId>
 			<artifactId>xml-transformer-service</artifactId>
-			<version>0.1.1</version>
+			<version>${osgi.services.version}</version>
 		</dependency>
+                <!-- The bundle "uk.org.taverna.commons.taverna-plugin-impl_0.1.0.SNAPSHOT" could not be resolved. Reason: Missing Constraint: Import-Package: org.osgi.service.event; version="[1.3.0,2.0.0)" -->
 		<dependency>
 			<groupId>org.apache.felix</groupId>
 			<artifactId>org.apache.felix.eventadmin</artifactId>
 			<version>1.3.2</version>
 		</dependency>
-		<dependency>
+		<!-- Appears unrequired dependency>
 			<groupId>org.apache.felix</groupId>
 			<artifactId>org.apache.felix.configadmin</artifactId>
 			<version>1.6.0</version>
-		</dependency>
+		</dependency-->
 
 		<!-- Taverna Activities -->
 		<dependency>
@@ -339,7 +345,7 @@
 		<dependency>
 			<groupId>uk.org.taverna.commandline</groupId>
 			<artifactId>taverna-command-line</artifactId>
-			<version>0.1.2-SNAPSHOT</version>
+			<version>${taverna-command-line.version}</version>
 		</dependency>
 
 		<!-- Taverna Platform -->
@@ -430,16 +436,16 @@
 			<version>${taverna.databundle.version}</version>
 		</dependency>
 		<!-- HTTP client needed by Data Bundle -->
-		<dependency>
+		<!-- Appears unrequired dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient-osgi</artifactId>
 			<version>4.2.5</version>
-		</dependency>
-		<dependency>
+		</dependency-->
+		<!-- Appears unrequired dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpcore-osgi</artifactId>
 			<version>4.2.5</version>
-		</dependency>
+		</dependency-->
 		<!-- Jena bundle needed by jsonld-java-jena -->
 		<!-- See https://github.com/stain/jena/tree/jena-bundle/jena-bundle -->
 		<dependency>
@@ -448,16 +454,17 @@
 			<version>2.11.0-SNAPSHOT</version>
 		</dependency>
 		<!-- slf4j implementation -->
+                <!-- The bundle "org.purl.wf4ever.robundle_0.3.1 " could not be resolved. Reason: Missing Constraint: Import-Package: org.slf4j; version="[1.7.0,2.0.0)"-->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.5</version>
 		</dependency>
-		<dependency>
+		<!-- Appears unrequired  dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.5</version>
-		</dependency>
+		</dependency-->
 
 		<!-- Taverna Security -->
 		<dependency>
@@ -499,6 +506,7 @@
 			<artifactId>provenance-mysql</artifactId>
 			<version>${t2.core.provenance.mysql.version}</version>
 		</dependency>
+                <!-- The bundle "org.purl.wf4ever.robundle_0.3.1 " could not be resolved. Reason: Missing Constraint: Import-Package: com.fasterxml.jackson.annotation; version="[2.3.0,3.0.0)"-->
 		<dependency>
                         <groupId>com.fasterxml.jackson.core</groupId>
                         <artifactId>jackson-core</artifactId>  
