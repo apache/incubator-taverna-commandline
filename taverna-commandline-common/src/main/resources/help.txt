@@ -10,8 +10,8 @@ port and individual list items are named after the list element index (with 1
 being the first index). The the output is the result of an error, the filename
 is appended with '.error'.
 
-You can provide your own output directory with the -outputdir option. There
-will be an error if the directory already exists.
+You can provide your own output directory with the -outputdir option. If
+specified this way, there will be an error if the directory already exists.
 
 You can also record your results to a Baclava document using -outputdoc
 option. The document will be overwritten if it already exists.
@@ -23,15 +23,18 @@ for the input, and either a file containing the input data, or the input value
 itself respectively.
 
 If one of more of your workflow inputs is a list, you can create a list
-input by using the -inputdelimiter option, which may be used with either
--inputfile or -inputvalue. This option takes two parameters - an input name
-and the delimiter by which to split the input into a list.
+input by using the -inputdelimiter or -inputdelimfile options, which may be
+used with either -inputfile or -inputvalue. The -inputdelimiter option takes
+two parameters - an input name and the delimiter by which to split the input
+into a list. The -inputdelimfile option takes two parameters - an input name
+and the name of a file to use the first character from.
 
 The delimiter may be a simple character, such as a comma or a new-line
 character, or a regular expression. The input string, or file, will then be
 converted into a list being split by the delimiter specified. Make sure to 
 put the delimiter character in quotes as it may be interpreted by the shell 
-as a special character, e.g. ;.
+as a special character, e.g. ;. (Some characters may require that you use the
+-inputdelimfile option in order for them to be passed in.)
 
 If a list of greater depth (i.e. a list or lists or deeper) is required then
 you will need to use the -inputdoc option.  However, if you provide an input
@@ -60,35 +63,37 @@ option, allowing you to take full control over the database used. This takes a
 second argument, the filename of the properties file, for which the following
 example contains the default settings used:
 
-in_memory = true
-provenance = false
-connector = derby
-port = 1527
-dialect = org.hibernate.dialect.DerbyDialect
-start_derby = false
-driver = org.apache.derby.jdbc.EmbeddedDriver
-jdbcuri = jdbc:derby:t2-database;create=true;upgrade=true
+    in_memory = true
+    provenance = false
+    connector = derby
+    port = 1527
+    dialect = org.hibernate.dialect.DerbyDialect
+    start_derby = false
+    driver = org.apache.derby.jdbc.EmbeddedDriver
+    jdbcuri = jdbc:derby:t2-database;create=true;upgrade=true
 
 Note that when using -dbproperties together with other options, the other
 options take precedence.
 
 -cmdir option lets you specify an absolute path to a directory where 
-Credential Manager's files (keystore and truststore - containing user's 
-credentials and trusted certificates for accessing secure services) are stored.
-If not specified and the workflow requires access to these files, Taverna will 
-try to find them in the default location in <TAVERNA_HOME>/security somewhere 
-inside user's home directory (depending on the platform).
+Credential Manager's files (keystore and truststore, which respectively
+contain the user's credentials and trusted certificates for accessing secure
+services) are stored. If not specified and the workflow requires access to
+these files, Taverna will try to find them in the default location in
+<TAVERNA_HOME>/security somewhere inside user's home directory (depending on
+the platform).
 
--cmpassword option can be used to tell Taverna to expect the password for the 
-Credential Manager on standard input. If the password is not piped in, Taverna 
+-cmpassword option can be used to tell Taverna to expect the password for the
+Credential Manager on standard input. If the password is not piped in, Taverna
 will prompt you for it in the terminal and block until it is entered. Do not 
-enter your password in the command line! If -cmpassword option is not specified 
-and -cmdir option is used, Taverna will try to find the password in a special 
-file password.txt in the directory specified with -cmdir option. Failing that, 
-it will try the default password.
+enter your password in the command line! If -cmpassword option is not
+specified and -cmdir option is used, Taverna will try to find the password in
+a special file password.txt in the directory specified with -cmdir option.
+Failing that, it will try the default password.
 
--provbundle option lets you specify an absolute path to a file where workflow run 
-provenance is going to be exported as a Research Object (RO) bundle. RO bundle is 
-a zip file containing workflow file, inputs, outputs, intermediate values, etc. 
-This option is normally used in conjunction with option -provenance and one of the 
-provenance database options: -embedded, -clientserver or -startdb.
+-provbundle option lets you specify an absolute path to a file where workflow
+run provenance is going to be exported as a Research Object (RO) bundle. RO
+bundle is a zip file containing workflow file, inputs, outputs, intermediate
+values, etc. This option is normally used in conjunction with option
+-provenance and one of the provenance database options: -embedded,
+-clientserver or -startdb.
