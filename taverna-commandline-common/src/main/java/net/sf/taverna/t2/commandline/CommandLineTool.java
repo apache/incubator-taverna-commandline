@@ -28,7 +28,6 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -43,7 +42,6 @@ import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
 import net.sf.taverna.t2.commandline.exceptions.OpenDataflowException;
 import net.sf.taverna.t2.commandline.exceptions.ReadInputException;
 import net.sf.taverna.t2.commandline.options.CommandLineOptions;
-import net.sf.taverna.t2.provenance.ProvenanceConnectorFactory;
 import net.sf.taverna.t2.security.credentialmanager.CMException;
 import net.sf.taverna.t2.security.credentialmanager.CredentialManager;
 
@@ -89,57 +87,39 @@ import uk.org.taverna.scufl2.validation.structural.StructuralValidator;
  * @author Alex Nenadic
  */
 public class CommandLineTool {
-
+	private static boolean BOOTSTRAP_LOGGING = false;
 	private static Logger logger = Logger.getLogger(CommandLineTool.class);
 
 	private RunService runService;
-
 	private CredentialManager credentialManager;
-
 	private CommandLineOptions commandLineOptions;
-
 	private WorkflowBundle workflowBundle;
-
 	private WorkflowBundleIO workflowBundleIO;
-
 	private DatabaseConfiguration databaseConfiguration;
-
 	private DatabaseManager databaseManager;
-
-	private List<ProvenanceConnectorFactory> provenanceConnectorFactories;
 
 	public void run() {
 		try {
-//			initialiseLogging();
+			if (BOOTSTRAP_LOGGING)
+				initialiseLogging();
 			int result = setupAndExecute();
 			System.exit(result);
-		} catch (InvalidOptionException e) { // thrown by CommandLineOptions
-			error(e.getMessage());
-		} catch (IOException e) {
-			error(e.getMessage());
-		} catch (ReadInputException e) {
-			error(e.getMessage());
-		} catch (InvalidRunIdException e) {
-			error(e.getMessage());
-		} catch (RunStateException e) {
-			error(e.getMessage());
-		} catch (InvalidExecutionIdException e) {
+		} catch (InvalidOptionException | IOException | ReadInputException
+				| InvalidRunIdException | RunStateException
+				| InvalidExecutionIdException | OpenDataflowException
+				| RunProfileException e) {
 			error(e.getMessage());
 		} catch (CMException e) {
 			error("There was an error initializing Taverna's SSLSocketFactory from Credential Manager. "
 					+ e.getMessage());
-		} catch (OpenDataflowException e) {
-			error(e.getMessage());
 		} catch (ReaderException e) {
 			error("There was an error reading the workflow: " + e.getMessage());
 		} catch (ValidationException e) {
 			error("There was an error validating the workflow: " + e.getMessage());
 		} catch (InvalidWorkflowException e) {
 			error("There was an error validating the workflow: " + e.getMessage());
-		} catch (RunProfileException e) {
-			error(e.getMessage());
 		} catch (DatabaseConfigurationException e) {
-			error("There was an error configuring thre database: " + e.getMessage());
+			error("There was an error configuring the database: " + e.getMessage());
 		}
 		System.exit(1);
 	}
@@ -190,18 +170,22 @@ public class CommandLineTool {
 			 setupDatabase(commandLineOptions);
 
 			if (commandLineOptions.getWorkflow() != null) {
-
-				// Initialise Credential Manager and SSL stuff quite early as parsing and
-				// validating the workflow may require it
+				/*
+				 * Initialise Credential Manager and SSL stuff quite early as
+				 * parsing and validating the workflow may require it
+				 */
 				String credentialManagerDirPath = commandLineOptions.getCredentialManagerDir();
 
-				// If credentialManagerDirPath is null - Credential Manager will
-				// be initialized from the default location in <TAVERNA_HOME>/security
-				// somewhere inside user's home directory. This should not be used when
-				// running command line tool on a server and the Credential Manager dir path
-				// should always be passed in as we do not want to store the security files in
-				// user's home directory on the server (we do not even know which user the command
-				// line tool will be running as).
+				/*
+				 * If credentialManagerDirPath is null, the Credential Manager
+				 * will be initialized from the default location in
+				 * <TAVERNA_HOME>/security somewhere inside user's home
+				 * directory. This should not be used when running command line
+				 * tool on a server and the Credential Manager dir path should
+				 * always be passed in as we do not want to store the security
+				 * files in user's home directory on the server (we do not even
+				 * know which user the command line tool will be running as).
+				 */
 				if (credentialManagerDirPath != null) {
 					credentialManager.setConfigurationDirectoryPath(new File(
 							credentialManagerDirPath));
@@ -226,8 +210,11 @@ public class CommandLineTool {
 
 				ExecutionEnvironment executionEnvironment = null;
 
-				// Find the right execution environment, e.g. local execution with the correct
-				// reference service based on command line options
+				/*
+				 * Find the right execution environment, e.g. local execution
+				 * with the correct reference service based on command line
+				 * options
+				 */
 				while (executionEnvironments.iterator().hasNext()) {
 					// TODO Choose the right one
 					// take the fist one for now
@@ -279,9 +266,9 @@ public class CommandLineTool {
 
 					Path outputs = DataBundles.getOutputs(runService.getDataBundle(runId));
 
-					SaveResultsHandler saveResultsHandler = new SaveResultsHandler(outputDir);
-
 					if (outputDir != null) {
+						SaveResultsHandler saveResultsHandler = new SaveResultsHandler(outputDir);
+
 						for (OutputWorkflowPort outputWorkflowPort : workflowOutputPorts) {
 							String workflowOutputPortName = outputWorkflowPort.getName();
 							Path output = DataBundles.getPort(outputs, workflowOutputPortName);
@@ -328,7 +315,6 @@ public class CommandLineTool {
 	}
 
 	protected void validateWorkflowBundle(WorkflowBundle workflowBundle) throws ValidationException {
-
 		CorrectnessValidator cv = new CorrectnessValidator();
 		ReportCorrectnessValidationListener rcvl = new ReportCorrectnessValidationListener();
 		cv.checkCorrectness(workflowBundle, true, rcvl);
@@ -349,41 +335,34 @@ public class CommandLineTool {
 		DatabaseConfigurationHandler dbHandler = new DatabaseConfigurationHandler(
 				options, databaseConfiguration, databaseManager);
 		dbHandler.configureDatabase();
-		if (!options.isInMemory()) {
-			try {
+		try {
+			if (!options.isInMemory())
 				dbHandler.testDatabaseConnection();
-			} catch (NamingException e) {
+		} catch (NamingException e) {
+			throw new DatabaseConfigurationException(
+					"There was an error trying to setup the database datasource: "
+							+ e.getMessage(), e);
+		} catch (SQLException e) {
+			if (options.isClientServer())
 				throw new DatabaseConfigurationException(
-						"There was an error trying to setup the database datasource: "
-								+ e.getMessage(), e);
-			} catch (SQLException e) {
-				if (options.isClientServer()) {
-					throw new DatabaseConfigurationException(
-							"There was an error whilst making a test database connection. If running with -clientserver you should check that a server is running (check -startdb or -dbproperties)",
-							e);
-				}
-				if (options.isEmbedded()) {
-					throw new DatabaseConfigurationException(
-							"There was an error whilst making a test database connection. If running with -embedded you should make sure that another process isn't using the database, or a server running through -startdb",
-							e);
-				}
-			}
+						"There was an error whilst making a test database connection. If running with -clientserver you should check that a server is running (check -startdb or -dbproperties)",
+						e);
+			if (options.isEmbedded())
+				throw new DatabaseConfigurationException(
+						"There was an error whilst making a test database connection. If running with -embedded you should make sure that another process isn't using the database, or a server running through -startdb",
+						e);
 		}
-
 	}
 
 	private File determineOutputDir(CommandLineOptions options, String dataflowName) {
-		File result = null;
-                result = new File(dataflowName + "_output");
-                int x = 1;
-                while (result.exists()) {
-                        result = new File(dataflowName + "_output_" + x);
-                        x++;
-                }
-		if (result != null) {
-			System.out.println("Outputs will be saved to the directory: "
-					+ result.getAbsolutePath());
+		File result = new File(dataflowName + "_output");
+		int x = 1;
+		while (result.exists()) {
+			result = new File(dataflowName + "_output_" + x);
+			x++;
 		}
+		System.out.println("Outputs will be saved to the directory: "
+				+ result.getAbsolutePath());
 		return result;
 	}
 
@@ -392,10 +371,8 @@ public class CommandLineTool {
 	}
 
 	private URL readWorkflowURL(String workflowOption) throws OpenDataflowException {
-		URL url;
 		try {
-			url = new URL("file:");
-			return new URL(url, workflowOption);
+			return new URL(new URL("file:"), workflowOption);
 		} catch (MalformedURLException e) {
 			throw new OpenDataflowException("The was an error processing the URL to the workflow: "
 					+ e.getMessage(), e);
@@ -425,15 +402,6 @@ public class CommandLineTool {
 	 */
 	public void setDatabaseConfiguration(DatabaseConfiguration databaseConfiguration) {
 		this.databaseConfiguration = databaseConfiguration;
-	}
-
-	/**
-	 * Sets the provenanceConnectorFactories.
-	 *
-	 * @param provenanceConnectorFactories the new value of provenanceConnectorFactories
-	 */
-	public void setProvenanceConnectorFactories(List<ProvenanceConnectorFactory> provenanceConnectorFactories) {
-		this.provenanceConnectorFactories = provenanceConnectorFactories;
 	}
 
 	/**

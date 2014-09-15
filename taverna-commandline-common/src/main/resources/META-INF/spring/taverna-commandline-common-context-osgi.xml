@@ -19,6 +19,4 @@
 	<reference id="t2flowWorkflowBundleReader" interface="uk.org.taverna.scufl2.api.io.WorkflowBundleReader" filter="(mediaType=application/vnd.taverna.t2flow+xml)"/>
 	<reference id="rdfXMLWorkflowBundleReader" interface="uk.org.taverna.scufl2.api.io.WorkflowBundleReader" filter="(org.springframework.osgi.bean.name=rdfXMLReader)"/>
 
-	<list id="provenanceConnectorFactories" interface="net.sf.taverna.t2.provenance.ProvenanceConnectorFactory" cardinality="0..N"/>
-
 </beans:beans>
