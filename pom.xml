@@ -496,7 +496,7 @@
 		</dependency>
 
 		<!-- Taverna Provenance -->
-		<dependency>
+		<!--dependency>
 			<groupId>net.sf.taverna.t2.core</groupId>
 			<artifactId>provenance-derby</artifactId>
 			<version>${t2.core.provenance.derby.version}</version>
@@ -505,7 +505,7 @@
 			<groupId>net.sf.taverna.t2.core</groupId>
 			<artifactId>provenance-mysql</artifactId>
 			<version>${t2.core.provenance.mysql.version}</version>
-		</dependency>
+		</dependency-->
                 <!-- The bundle "org.purl.wf4ever.robundle_0.3.1 " could not be resolved. Reason: Missing Constraint: Import-Package: com.fasterxml.jackson.annotation; version="[2.3.0,3.0.0)"-->
 		<dependency>
                         <groupId>com.fasterxml.jackson.core</groupId>
