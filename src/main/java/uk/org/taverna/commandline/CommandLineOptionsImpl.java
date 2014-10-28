@@ -49,6 +49,8 @@ import org.apache.log4j.Logger;
  */
 public class CommandLineOptionsImpl implements CommandLineOptions {
 
+	private static final String OUTPUTDIR = "outputdir";
+	private static final String BUNDLE = "bundle";
 	private static final Logger logger = Logger.getLogger(CommandLineOptionsImpl.class);
 	private Options options;
 	private CommandLine commandLine;
@@ -202,7 +204,7 @@ public class CommandLineOptionsImpl implements CommandLineOptions {
 	 */
 	@Override
 	public String getOutputDirectory() {
-		return getOptionValue("outputdir");
+		return getOptionValue(OUTPUTDIR);
 	}
 
 	@Override
@@ -297,11 +299,11 @@ public class CommandLineOptionsImpl implements CommandLineOptions {
 				.withDescription(
 						"Save outputs as files in directory, default "
 								+ "is to make a new directory workflowName_output.")
-				.create("outputdir");
+				.create(OUTPUTDIR);
 
-		Option outputdocOption = OptionBuilder.withArgName("document").hasArg()
-				.withDescription("Save outputs to a new Baclava document.")
-				.create("outputdoc");
+		Option bundleOption = OptionBuilder.withArgName(BUNDLE).hasArg()
+				.withDescription("Save outputs to a new Workflow Run Bundle (zip).")
+				.create(BUNDLE);
 
 		Option logFileOption = OptionBuilder
 				.withArgName("filename")
@@ -371,7 +373,7 @@ public class CommandLineOptionsImpl implements CommandLineOptions {
 		options.addOption(inputDelimiterOption);
 		options.addOption(inputdocOption);
 		options.addOption(outputOption);
-		options.addOption(outputdocOption);
+		options.addOption(bundleOption);
 		options.addOption(inMemOption);
 		options.addOption(embedded);
 		options.addOption(clientserver);
@@ -424,8 +426,20 @@ public class CommandLineOptionsImpl implements CommandLineOptions {
 	 */
 	@Override
 	public boolean saveResultsToDirectory() {
-		return (options.hasOption("outputdir") || !options
-				.hasOption("outputdoc"));
+		return (options.hasOption(OUTPUTDIR) || !hasSaveResultsToBundle());
+	}
+
+	@Override
+	public String saveResultsToBundle() {
+		if (! hasSaveResultsToBundle()) { 
+			return null;
+		}
+		return getOptionValue(BUNDLE);
+	}
+
+	@Override
+	public boolean hasSaveResultsToBundle() {
+		return hasOption(BUNDLE);
 	}
 
 }
