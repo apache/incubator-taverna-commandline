@@ -27,6 +27,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -106,7 +107,11 @@ public class InputsHandler {
 	public Bundle registerInputs(Map<String, InputWorkflowPort> portMap,
 			CommandLineOptions options, InvocationContext context) throws InvalidOptionException,
 			ReadInputException, IOException {
-		Bundle inputDataBundle = DataBundles.createBundle();
+		Bundle inputDataBundle;
+		inputDataBundle = DataBundles.createBundle();
+		inputDataBundle.setDeleteOnClose(false);
+		System.out.println("Bundle: " + inputDataBundle.getSource());
+		
 		Path inputs = DataBundles.getInputs(inputDataBundle);
 
 		URL url;

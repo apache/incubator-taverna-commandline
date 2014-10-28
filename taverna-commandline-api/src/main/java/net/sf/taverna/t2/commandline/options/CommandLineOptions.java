@@ -95,6 +95,8 @@ public interface CommandLineOptions {
 	public boolean hasLogFile();
 
 	public boolean hasOption(String option);
+	
+	public boolean hasSaveResultsToBundle() ;
 
 	public String inputDelimiter(String inputName);
 
@@ -111,5 +113,7 @@ public interface CommandLineOptions {
 	 * @return boolean
 	 */
 	public boolean saveResultsToDirectory();
+
+	public String saveResultsToBundle();
 
 }

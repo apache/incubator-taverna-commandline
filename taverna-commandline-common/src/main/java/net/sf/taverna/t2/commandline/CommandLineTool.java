@@ -26,6 +26,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -170,6 +171,15 @@ public class CommandLineTool {
 			 setupDatabase(commandLineOptions);
 
 			if (commandLineOptions.getWorkflow() != null) {
+				
+				/* Set context class loader to us, 
+				 * so that things such as JSON-LD caching of
+				 * robundle works.
+				 */
+				
+				Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
+				
+				
 				/*
 				 * Initialise Credential Manager and SSL stuff quite early as
 				 * parsing and validating the workflow may require it
@@ -251,7 +261,8 @@ public class CommandLineTool {
 					try {
 						Thread.sleep(500);
 					} catch (InterruptedException e) {
-						// Ignore
+						System.err.println("Interrupted while waiting for workflow to finish");
+						return 1;
 					}
 				}
 
@@ -277,6 +288,16 @@ public class CommandLineTool {
 							}
 						}
 					}
+				}
+				if (commandLineOptions.saveResultsToBundle() != null) {
+					Path bundlePath = Paths.get(commandLineOptions.saveResultsToBundle());
+					DataBundles.closeAndSaveBundle(runService.getDataBundle(runId), bundlePath);
+					System.out.println("Workflow Run Bundle saved to: " + bundlePath.toAbsolutePath());
+				} else {
+					System.out.println("Workflow Run Bundle: " + runService.getDataBundle(runId).getSource());
+					// For debugging we'll leave it in /tmp for now
+					runService.getDataBundle(runId).setDeleteOnClose(false);
+					DataBundles.closeBundle(runService.getDataBundle(runId));
 				}
 
 				if (report.getState().equals(State.FAILED)) {
