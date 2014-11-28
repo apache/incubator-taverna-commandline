@@ -11,6 +11,7 @@
 			</excludes>	
 			<fileMode>0644</fileMode>
 			<directoryMode>0755</directoryMode>		
+			<outputFileNameMapping>${artifact.artifactId}-${artifact.baseVersion}${dashClassifier?}.${artifact.exte‌​nsion}</outputFileNameMapping>
 		</dependencySet>
 	</dependencySets>
 </component>

@@ -14,10 +14,5 @@
 		<componentDescriptor>src/main/assembly/dependencies-component.xml</componentDescriptor>
 		<componentDescriptor>src/main/assembly/repositories-component.xml</componentDescriptor>
 	</componentDescriptors>
-	<dependencySets>
-		<dependencySet>
-			<outputFileNameMapping>${artifact.artifactId}-${artifact.baseVersion}${dashClassifier?}.${artifact.exte‌​nsion}</outputFileNameMapping>
-		</dependencySet>
-	</dependencySets>
 
 </assembly>
