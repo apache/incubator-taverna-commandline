@@ -20,11 +20,11 @@
  ******************************************************************************/
 package net.sf.taverna.t2.commandline.options;
 
+import static org.apache.commons.io.FileUtils.readFileToString;
+
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
 
 import net.sf.taverna.t2.commandline.exceptions.InvalidOptionException;
 
@@ -267,7 +267,7 @@ public class CommandLineOptions {
 				if (!values[i].equals(inputName))
 					continue;
 				File f = new File(values[i + 1]);
-				if (f.exists() && f.isFile() && f.canRead())
+				if (f.exists() && f.isFile() && f.canRead() && f.length() > 0)
 					return true;
 			}
 		}
@@ -297,21 +297,21 @@ public class CommandLineOptions {
 	}
 
 	public String inputDelimiter(String inputName) {
-		String result = null;
 		if (hasOption(INPUT_DELIMITER_FILE_OPTION)) {
 			String[] values = getOptionValues(INPUT_DELIMITER_FILE_OPTION);
 			for (int i = 0; i < values.length - 1; i += 2) {
 				if (!values[i].equals(inputName))
 					continue;
 				File f = new File(values[i + 1]);
-				if (f.exists() && f.isFile() && f.canRead())
-					try (Reader r = new FileReader(f)) {
-						int ch = r.read();
-						if (ch >= 0)
-							return "" + (char) ch;
-					} catch (IOException e) {
-						// Ignore! Not much we can do
+				try {
+					if (f.exists() && f.isFile() && f.canRead()) {
+						String result = readFileToString(f);
+						if (result != null && !result.isEmpty())
+							return result;
 					}
+				} catch (IOException e) {
+					// Ignore! Not much we can do
+				}
 			}
 		}
 		if (hasOption(INPUT_DELIMITER_LITERAL_OPTION)) {
@@ -320,7 +320,7 @@ public class CommandLineOptions {
 				if (values[i].equals(inputName))
 					return values[i + 1];
 		}
-		return result;
+		return null;
 	}
 
 	@SuppressWarnings("static-access")
