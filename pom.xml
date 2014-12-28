@@ -18,9 +18,10 @@
   </properties>
 	<modules>
     <module>taverna-commandline-api</module>
-    <module>taverna-commandline-impl</module>
     <module>taverna-commandline-common</module>
+    <module>taverna-commandline-launcher</module>
     <module>taverna-commandline-product</module>
+    <module>taverna-commandline-tests</module>
   </modules>
   <repositories>
     <repository>
