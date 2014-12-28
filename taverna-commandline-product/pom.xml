@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.sf.taverna</groupId>
+		<artifactId>taverna-parent</artifactId>
+		<version>3.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>uk.org.taverna.workbench</groupId>
+	<artifactId>taverna-command-line-product</artifactId>
+	<name>Taverna Command Line</name>
+	<packaging>taverna-application</packaging>
+	<profiles>
+		<profile>
+			<id>developer</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<assembly.descriptor>src/main/assembly/developer-assembly.xml</assembly.descriptor>
+				<profile.updateSite>http://dev.mygrid.org.uk/taverna/updates/taverna-command-line/</profile.updateSite>
+				<profile.pluginSite>http://dev.mygrid.org.uk/taverna/plugins/taverna-command-line/</profile.pluginSite>
+			</properties>
+		</profile>
+		<profile>
+			<id>nightly</id>
+			<properties>
+				<assembly.descriptor>src/main/assembly/nightly-assembly.xml</assembly.descriptor>
+				<profile.updateSite>http://dev.mygrid.org.uk/taverna/updates/taverna-command-line/</profile.updateSite>
+				<profile.pluginSite>http://dev.mygrid.org.uk/taverna/plugins/taverna-command-line/</profile.pluginSite>
+			</properties>
+		</profile>
+		<profile>
+			<id>release</id>
+			<properties>
+				<assembly.descriptor>src/main/assembly/release-assembly.xml</assembly.descriptor>
+				<profile.updateSite>http://www.mygrid.org.uk/taverna/updates/taverna-command-line/</profile.updateSite>
+				<profile.pluginSite>http://www.mygrid.org.uk/taverna/plugins/taverna-command-line/</profile.pluginSite>
+			</properties>
+		</profile>
+	</profiles>
+	<build>
+		<finalName>taverna-command-line-${project.version}</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<descriptors>
+						<descriptor>${assembly.descriptor}</descriptor>
+					</descriptors>
+					<archiverConfig>
+						<directoryMode>493</directoryMode> <!-- 493(dec) = 755(oct) -->
+						<defaultDirectoryMode>493</defaultDirectoryMode>
+					</archiverConfig>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.0-beta-3</version>
+				<executions>
+					<execution>
+						<id>buildnumber-validate</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<format>{0,date,yyyyMMdd}T{0,date,HHmm}</format>
+					<items>
+						<item>timestamp</item>
+					</items>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>net.sf.taverna.t2.maven.plugins</groupId>
+				<artifactId>taverna-maven-plugin</artifactId>
+				<version>0.3.1-SNAPSHOT</version>
+				<extensions>true</extensions>
+				<configuration>
+					<buildNumber>${buildNumber}</buildNumber>
+					<updateSite>${profile.updateSite}</updateSite>
+					<pluginSite>${profile.pluginSite}</pluginSite>
+					<frameworkConfigurations>
+						<frameworkConfiguration>
+							<name>org.osgi.framework.bootdelegation</name>
+							<value>sun.*,com.sun.*,java.*,javax.*,org.xml.*,org.w3c.*,apple.*,com.apple.*,org.omg.*,org.ietf.jgss.*,org.jcp.xml.dsig.internal.*</value>
+						</frameworkConfiguration>
+						<frameworkConfiguration>
+							<name>org.osgi.framework.system.packages.extra</name>
+							<value>com.sun.org.apache.xml.internal.utils,org.apache.log4j;version=1.2.16,net.sf.taverna.t2.commandline.options;version=2.0.1</value>
+						</frameworkConfiguration>
+						<frameworkConfiguration>
+							<name>org.osgi.framework.storage.clean</name>
+							<value>onFirstInit</value>
+						</frameworkConfiguration>
+					</frameworkConfigurations>
+				</configuration>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											net.sf.taverna.t2.maven.plugins
+										</groupId>
+										<artifactId>
+											taverna-maven-plugin
+										</artifactId>
+										<versionRange>
+											[0.3.1-SNAPSHOT,)
+										</versionRange>
+										<goals>
+											<goal>
+												profile-generate
+											</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<execute>
+											<runOnIncremental>false</runOnIncremental>
+										</execute>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<dependencies>
+
+		<!-- Explicit org.osgi.* with <scope>provided as these are also provided
+			by the felix osgi package. Avoids: Caused by: java.lang.SecurityException:
+			class "org.osgi.framework.hooks.bundle.CollisionHook"'s signer information
+			does not match signer information of other classes in the same package -->
+
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.core</artifactId>
+			<version>${osgi.core.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.compendium</artifactId>
+			<version>${osgi.core.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+                <!-- Invalid manifest header Import-Package: "com.sun.jdmk.comm;resolution:="optional"" : Cannot import a package more than once "com.sun.jdmk.comm"-->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Spring DM -->
+		<dependency>
+			<groupId>net.sourceforge.cglib</groupId>
+			<artifactId>com.springsource.net.sf.cglib</artifactId>
+			<version>${cglib.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.osgi</groupId>
+			<artifactId>spring-osgi-annotation</artifactId>
+			<version>${spring.dm.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.osgi</groupId>
+			<artifactId>spring-osgi-extender</artifactId>
+			<version>${spring.dm.version}</version>
+		</dependency>
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>org.springframework.context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- Java Extension Implementations -->
+		<!-- Appears unrequired dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>com.springsource.javax.xml.bind</artifactId>
+			<version>2.2.0</version>
+		</dependency-->
+		<dependency>
+			<groupId>javax.activation</groupId>
+			<artifactId>com.springsource.javax.activation</artifactId>
+			<version>${activation.version}</version>
+		</dependency>
+                <!-- The bundle "com.springsource.bsh_2.0.0.b4 " could not be resolved. Reason: Missing Constraint: Import-Package: javax.servlet; version="[2.5.0,3.0.0)" -->
+		<dependency> 
+ 			<groupId>javax.servlet</groupId>
+			<artifactId>com.springsource.javax.servlet</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+                <!-- The bundle "com.springsource.org.apache.axis_1.4.0 " could not be resolved. Reason: Missing Constraint: Import-Package: javax.jms; version="[1.1.0,2.0.0)" -->
+		<dependency>
+			<groupId>javax.jms</groupId>
+			<artifactId>com.springsource.javax.jms</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+                <!-- The bundle "com.springsource.javax.xml.rpc_1.1.0 " could not be resolved. Reason: Missing Constraint: Import-Package: javax.xml.soap; version="[1.3.0,2.0.0)" -->
+		<dependency>
+			<groupId>javax.xml.soap</groupId>
+			<artifactId>com.springsource.javax.xml.soap</artifactId>
+			<version>1.3.0</version>
+		</dependency>
+                <!-- The bundle "com.springsource.com.thoughtworks.xstream_1.4.1" could not be resolved. Reason: Missing Constraint: Import-Package: javax.xml.stream; version="[1.0.1,2.0.0)" -->
+		<dependency>
+			<groupId>javax.xml.stream</groupId>
+			<artifactId>com.springsource.javax.xml.stream</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>com.springsource.javax.mail</artifactId>
+			<version>${mail.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>${commons.codec.version}</version>
+		</dependency>
+  <dependency>
+    <groupId>commons-configuration</groupId>
+    <artifactId>commons-configuration</artifactId>
+    <version>1.10</version>
+  </dependency>
+  <dependency>
+      <groupId>com.sun.xml.bind</groupId>
+      <artifactId>jaxb-impl</artifactId>
+      <version>2.2.11</version>
+  </dependency>
+
+
+		<!-- OSGi Enterprise Services -->
+		<dependency>
+			<groupId>uk.org.taverna.osgi.services</groupId>
+			<artifactId>xml-parser-service</artifactId>
+			<version>${osgi.services.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.taverna.osgi.services</groupId>
+			<artifactId>xml-transformer-service</artifactId>
+			<version>${osgi.services.version}</version>
+		</dependency>
+                <!-- The bundle "uk.org.taverna.commons.taverna-plugin-impl_0.1.0.SNAPSHOT" could not be resolved. Reason: Missing Constraint: Import-Package: org.osgi.service.event; version="[1.3.0,2.0.0)" -->
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.eventadmin</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		<!-- Appears unrequired dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.configadmin</artifactId>
+			<version>1.6.0</version>
+		</dependency-->
+
+		<!-- Taverna Activities -->
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>apiconsumer-activity</artifactId>
+			<version>2.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>beanshell-activity</artifactId>
+			<version>2.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>biomart-activity</artifactId>
+			<version>2.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>dataflow-activity</artifactId>
+			<version>2.0.1-SNAPSHOT</version>
+		</dependency>
+		<!-- <dependency> <groupId>net.sf.taverna.t2.activities</groupId> <artifactId>external-tool-activity</artifactId>
+			<version>2.0.1-SNAPSHOT</version> </dependency> -->
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>localworker-activity</artifactId>
+			<version>2.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>rest-activity</artifactId>
+			<version>2.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>rshell-activity</artifactId>
+			<version>2.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>soaplab-activity</artifactId>
+			<version>2.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>spreadsheet-import-activity</artifactId>
+			<version>2.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>stringconstant-activity</artifactId>
+			<version>2.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>wsdl-activity</artifactId>
+			<version>2.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>xpath-activity</artifactId>
+			<version>2.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<!-- Taverna Commandline -->
+		<dependency>
+			<groupId>net.sf.taverna.t2.taverna-commandline</groupId>
+			<artifactId>taverna-commandline-common</artifactId>
+			<version>${t2.taverna-commandline.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.taverna.commandline</groupId>
+			<artifactId>taverna-command-line</artifactId>
+			<version>${taverna-command-line.version}</version>
+		</dependency>
+
+		<!-- Taverna Platform -->
+		<dependency>
+			<groupId>uk.org.taverna.platform</groupId>
+			<artifactId>taverna-capability-impl</artifactId>
+			<version>${platform.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.taverna.platform</groupId>
+			<artifactId>taverna-run-impl</artifactId>
+			<version>${platform.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.taverna.platform</groupId>
+			<artifactId>taverna-execution-impl</artifactId>
+			<version>${platform.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.taverna.platform</groupId>
+			<artifactId>taverna-execution-local</artifactId>
+			<version>${platform.version}</version>
+		</dependency>
+
+		<!-- Taverna Commons -->
+		<dependency>
+			<groupId>uk.org.taverna.configuration</groupId>
+			<artifactId>taverna-configuration-impl</artifactId>
+			<version>0.1.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.taverna.configuration</groupId>
+			<artifactId>taverna-app-configuration-impl</artifactId>
+			<version>0.1.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.taverna.configuration</groupId>
+			<artifactId>taverna-database-configuration-impl</artifactId>
+			<version>0.1.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.taverna.commons</groupId>
+			<artifactId>taverna-download-impl</artifactId>
+			<version>0.1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.taverna.commons</groupId>
+			<artifactId>taverna-plugin-impl</artifactId>
+			<version>0.1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.taverna.commons</groupId>
+			<artifactId>taverna-services-impl</artifactId>
+			<version>0.1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.taverna.commons</groupId>
+			<artifactId>taverna-update-impl</artifactId>
+			<version>0.1.0-SNAPSHOT</version>
+		</dependency>
+
+		<!-- Scufl2 -->
+		<dependency>
+			<groupId>uk.org.taverna.scufl2</groupId>
+			<artifactId>scufl2-rdfxml</artifactId>
+			<version>${scufl2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.taverna.scufl2</groupId>
+			<artifactId>scufl2-t2flow</artifactId>
+			<version>${scufl2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.taverna.scufl2</groupId>
+			<artifactId>scufl2-validation-structural</artifactId>
+			<version>${scufl2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.org.taverna.scufl2</groupId>
+			<artifactId>scufl2-validation-correctness</artifactId>
+			<version>${scufl2.version}</version>
+		</dependency>
+
+		<!-- Data bundle -->
+		<dependency>
+			<groupId>uk.org.taverna.databundle</groupId>
+			<artifactId>databundle</artifactId>
+			<version>${taverna.databundle.version}</version>
+		</dependency>
+		<!-- HTTP client needed by Data Bundle -->
+		<!-- Appears unrequired dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient-osgi</artifactId>
+			<version>4.2.5</version>
+		</dependency-->
+		<!-- Appears unrequired dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore-osgi</artifactId>
+			<version>4.2.5</version>
+		</dependency-->
+		<!-- Jena bundle needed by jsonld-java-jena -->
+		<!-- See https://github.com/stain/jena/tree/jena-bundle/jena-bundle -->
+		<dependency>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>jena-bundle</artifactId>
+			<version>2.12.2-SNAPSHOT</version>
+		</dependency>
+		<!-- slf4j implementation -->
+                <!-- The bundle "org.purl.wf4ever.robundle_0.3.1 " could not be resolved. Reason: Missing Constraint: Import-Package: org.slf4j; version="[1.7.0,2.0.0)"-->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+		<!-- Appears unrequired  dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.5</version>
+		</dependency-->
+
+		<!-- Taverna Security -->
+		<dependency>
+			<groupId>net.sf.taverna.t2.security</groupId>
+			<artifactId>credential-manager-impl</artifactId>
+			<version>${t2.security.version}</version>
+		</dependency>
+
+		<!-- Taverna Workflow Engine -->
+		<dependency>
+			<groupId>net.sf.taverna.t2.core</groupId>
+			<artifactId>workflowmodel-impl</artifactId>
+			<version>${t2.core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.core</groupId>
+			<artifactId>workflowmodel-core-extensions</artifactId>
+			<version>${t2.core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.core</groupId>
+			<artifactId>reference-impl</artifactId>
+			<version>${t2.core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.core</groupId>
+			<artifactId>reference-core-extensions</artifactId>
+			<version>${t2.core.version}</version>
+		</dependency>
+
+		<!-- Taverna Provenance -->
+		<!--dependency>
+			<groupId>net.sf.taverna.t2.core</groupId>
+			<artifactId>provenance-derby</artifactId>
+			<version>${t2.core.provenance.derby.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.core</groupId>
+			<artifactId>provenance-mysql</artifactId>
+			<version>${t2.core.provenance.mysql.version}</version>
+		</dependency-->
+                <!-- The bundle "org.purl.wf4ever.robundle_0.3.1 " could not be resolved. Reason: Missing Constraint: Import-Package: com.fasterxml.jackson.annotation; version="[2.3.0,3.0.0)"-->
+		<dependency>
+                        <groupId>com.fasterxml.jackson.core</groupId>
+                        <artifactId>jackson-core</artifactId>  
+                        <version>2.3.0</version>
+                </dependency>
+		<dependency>
+                        <groupId>com.fasterxml.jackson.core</groupId>
+                        <artifactId>jackson-annotations</artifactId>  
+                        <version>2.3.0</version>
+                </dependency>
+		<dependency>
+                        <groupId>com.fasterxml.jackson.core</groupId>
+                        <artifactId>jackson-databind</artifactId>  
+                        <version>2.3.0</version>
+                </dependency>
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<releases />
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>mygrid-repository</id>
+			<name>myGrid Repository</name>
+			<url>http://www.mygrid.org.uk/maven/repository</url>
+		</repository>
+		<repository>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots />
+			<id>mygrid-snapshot-repository</id>
+			<name>myGrid Snapshot Repository</name>
+			<url>http://www.mygrid.org.uk/maven/snapshot-repository</url>
+		</repository>
+		<repository>
+			<id>spring-maven-milestone</id>
+			<name>Springframework Maven Repository</name>
+			<url>http://maven.springframework.org/milestone</url>
+		</repository>
+		<repository>
+			<id>com.springsource.repository.bundles.milestone</id>
+			<name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Milestones</name>
+			<url>http://repository.springsource.com/maven/bundles/milestone</url>
+		</repository>
+		<repository>
+			<id>OPS4J</id>
+			<url>http://repository.ops4j.org/maven2</url>
+		</repository>
+	</repositories>
+
+	<scm>
+		<connection>scm:svn:http://taverna.googlecode.com/svn/taverna/products/net.sf.taverna.t2.taverna-commandline/trunk/</connection>
+		<developerConnection>scm:svn:https://taverna.googlecode.com/svn/taverna/products/net.sf.taverna.t2.taverna-commandline/trunk/</developerConnection>
+		<url>http://code.google.com/p/taverna/source/browse/#svn/taverna/products/net.sf.taverna.t2.taverna-commandline/trunk/</url>
+	</scm>
+</project>
