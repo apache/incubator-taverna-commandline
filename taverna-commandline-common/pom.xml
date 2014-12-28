@@ -2,13 +2,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>net.sf.taverna.t2.taverna-commandline</groupId>
+		<groupId>org.apache.taverna.commandline</groupId>
 		<artifactId>taverna-commandline</artifactId>
-		<version>2.0.1-SNAPSHOT</version>
+		<version>3.1.0-incubating-SNAPSHOT</version>
 	</parent>
 	<artifactId>taverna-commandline-common</artifactId>
 	<packaging>bundle</packaging>
-	<name>Taverna Commandline Common</name>
+	<name>Apache Taverna Commandline Common</name>
 	<dependencies>
 		<dependency>
 			<groupId>net.sf.taverna.t2.taverna-commandline</groupId>
@@ -53,7 +53,7 @@
 			<version>${taverna.databundle.version}</version>
 		</dependency>
 
-<!-- 
+<!--
 		<dependency>
 			<groupId>net.sf.taverna.t2.core</groupId>
 			<artifactId>provenanceconnector</artifactId>
@@ -84,26 +84,5 @@
 		</dependency>
 
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<releases />
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<id>mygrid-repository</id>
-			<name>myGrid Repository</name>
-			<url>http://www.mygrid.org.uk/maven/repository</url>
-		</repository>
-		<repository>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots />
-			<id>mygrid-snapshot-repository</id>
-			<name>myGrid Snapshot Repository</name>
-			<url>http://www.mygrid.org.uk/maven/snapshot-repository</url>
-		</repository>
-	</repositories>
 
 </project>

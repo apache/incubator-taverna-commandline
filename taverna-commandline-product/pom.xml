@@ -3,13 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>net.sf.taverna</groupId>
-		<artifactId>taverna-parent</artifactId>
-		<version>3.0.1-SNAPSHOT</version>
+		<groupId>org.apache.taverna.commandline</groupId>
+		<artifactId>taverna-commandline</artifactId>
+		<version>3.1.0-incubating-SNAPSHOT</version>
 	</parent>
-	<groupId>uk.org.taverna.workbench</groupId>
 	<artifactId>taverna-command-line-product</artifactId>
-	<name>Taverna Command Line</name>
+	<name>Apache Taverna Command Line Product</name>
 	<packaging>taverna-application</packaging>
 	<profiles>
 		<profile>
@@ -215,7 +214,7 @@
 			<version>${activation.version}</version>
 		</dependency>
                 <!-- The bundle "com.springsource.bsh_2.0.0.b4 " could not be resolved. Reason: Missing Constraint: Import-Package: javax.servlet; version="[2.5.0,3.0.0)" -->
-		<dependency> 
+		<dependency>
  			<groupId>javax.servlet</groupId>
 			<artifactId>com.springsource.javax.servlet</artifactId>
 			<version>2.5.0</version>
@@ -520,22 +519,23 @@
                 <!-- The bundle "org.purl.wf4ever.robundle_0.3.1 " could not be resolved. Reason: Missing Constraint: Import-Package: com.fasterxml.jackson.annotation; version="[2.3.0,3.0.0)"-->
 		<dependency>
                         <groupId>com.fasterxml.jackson.core</groupId>
-                        <artifactId>jackson-core</artifactId>  
+                        <artifactId>jackson-core</artifactId>
                         <version>2.3.0</version>
                 </dependency>
 		<dependency>
                         <groupId>com.fasterxml.jackson.core</groupId>
-                        <artifactId>jackson-annotations</artifactId>  
+                        <artifactId>jackson-annotations</artifactId>
                         <version>2.3.0</version>
                 </dependency>
 		<dependency>
                         <groupId>com.fasterxml.jackson.core</groupId>
-                        <artifactId>jackson-databind</artifactId>  
+                        <artifactId>jackson-databind</artifactId>
                         <version>2.3.0</version>
                 </dependency>
 	</dependencies>
 
 	<repositories>
+		<!--
 		<repository>
 			<releases />
 			<snapshots>
@@ -545,34 +545,13 @@
 			<name>myGrid Repository</name>
 			<url>http://www.mygrid.org.uk/maven/repository</url>
 		</repository>
-		<repository>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots />
-			<id>mygrid-snapshot-repository</id>
-			<name>myGrid Snapshot Repository</name>
-			<url>http://www.mygrid.org.uk/maven/snapshot-repository</url>
-		</repository>
-		<repository>
-			<id>spring-maven-milestone</id>
-			<name>Springframework Maven Repository</name>
-			<url>http://maven.springframework.org/milestone</url>
-		</repository>
-		<repository>
-			<id>com.springsource.repository.bundles.milestone</id>
-			<name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Milestones</name>
-			<url>http://repository.springsource.com/maven/bundles/milestone</url>
-		</repository>
+	-->
+	<!--
 		<repository>
 			<id>OPS4J</id>
 			<url>http://repository.ops4j.org/maven2</url>
 		</repository>
+	-->
 	</repositories>
 
-	<scm>
-		<connection>scm:svn:http://taverna.googlecode.com/svn/taverna/products/net.sf.taverna.t2.taverna-commandline/trunk/</connection>
-		<developerConnection>scm:svn:https://taverna.googlecode.com/svn/taverna/products/net.sf.taverna.t2.taverna-commandline/trunk/</developerConnection>
-		<url>http://code.google.com/p/taverna/source/browse/#svn/taverna/products/net.sf.taverna.t2.taverna-commandline/trunk/</url>
-	</scm>
 </project>
