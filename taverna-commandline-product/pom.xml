@@ -18,29 +18,30 @@
 			</activation>
 			<properties>
 				<assembly.descriptor>src/main/assembly/developer-assembly.xml</assembly.descriptor>
-				<profile.updateSite>http://dev.mygrid.org.uk/taverna/updates/taverna-command-line/</profile.updateSite>
-				<profile.pluginSite>http://dev.mygrid.org.uk/taverna/plugins/taverna-command-line/</profile.pluginSite>
+        <!-- See http://updates.taverna.org.uk/ -->
+				<profile.updateSite>https://taverna.incubator.apache.org/updates/commandline/</profile.updateSite>
+				<profile.pluginSite>https://taverna.incubator.apache.org/plugins/commandline/</profile.pluginSite>
 			</properties>
 		</profile>
 		<profile>
 			<id>nightly</id>
 			<properties>
 				<assembly.descriptor>src/main/assembly/nightly-assembly.xml</assembly.descriptor>
-				<profile.updateSite>http://dev.mygrid.org.uk/taverna/updates/taverna-command-line/</profile.updateSite>
-				<profile.pluginSite>http://dev.mygrid.org.uk/taverna/plugins/taverna-command-line/</profile.pluginSite>
+				<profile.updateSite>https://taverna.incubator.apache.org/updates/commandline/</profile.updateSite>
+				<profile.pluginSite>https://taverna.incubator.apache.org/plugins/commandline/</profile.pluginSite>
 			</properties>
 		</profile>
 		<profile>
 			<id>release</id>
 			<properties>
 				<assembly.descriptor>src/main/assembly/release-assembly.xml</assembly.descriptor>
-				<profile.updateSite>http://www.mygrid.org.uk/taverna/updates/taverna-command-line/</profile.updateSite>
-				<profile.pluginSite>http://www.mygrid.org.uk/taverna/plugins/taverna-command-line/</profile.pluginSite>
+				<profile.updateSite>https://taverna.incubator.apache.org/updates/commandline/</profile.updateSite>
+				<profile.pluginSite>https://taverna.incubator.apache.org/plugins/commandline/</profile.pluginSite>
 			</properties>
 		</profile>
 	</profiles>
 	<build>
-		<finalName>taverna-command-line-${project.version}</finalName>
+		<finalName>apache-taverna-commandline-${project.version}</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
@@ -84,9 +85,9 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>net.sf.taverna.t2.maven.plugins</groupId>
+				<groupId>org.apache.taverna.osgi</groupId>
 				<artifactId>taverna-maven-plugin</artifactId>
-				<version>0.3.1-SNAPSHOT</version>
+				<version>${taverna.osgi.version}</version>
 				<extensions>true</extensions>
 				<configuration>
 					<buildNumber>${buildNumber}</buildNumber>
@@ -122,19 +123,11 @@
 							<pluginExecutions>
 								<pluginExecution>
 									<pluginExecutionFilter>
-										<groupId>
-											net.sf.taverna.t2.maven.plugins
-										</groupId>
-										<artifactId>
-											taverna-maven-plugin
-										</artifactId>
-										<versionRange>
-											[0.3.1-SNAPSHOT,)
-										</versionRange>
+										<groupId>org.apache.taverna.osgi</groupId>
+										<artifactId>taverna-maven-plugin</artifactId>
+										<versionRange>[0.3.1-SNAPSHOT,)</versionRange>
 										<goals>
-											<goal>
-												profile-generate
-											</goal>
+											<goal>profile-generate</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>
@@ -261,14 +254,14 @@
 
 		<!-- OSGi Enterprise Services -->
 		<dependency>
-			<groupId>uk.org.taverna.osgi.services</groupId>
+			<groupId>org.apache.taverna.osgi</groupId>
 			<artifactId>xml-parser-service</artifactId>
-			<version>${osgi.services.version}</version>
+			<version>${taverna.osgi.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>uk.org.taverna.osgi.services</groupId>
+			<groupId>org.apache.taverna.osgi</groupId>
 			<artifactId>xml-transformer-service</artifactId>
-			<version>${osgi.services.version}</version>
+			<version>${taverna.osgi.version}</version>
 		</dependency>
                 <!-- The bundle "uk.org.taverna.commons.taverna-plugin-impl_0.1.0.SNAPSHOT" could not be resolved. Reason: Missing Constraint: Import-Package: org.osgi.service.event; version="[1.3.0,2.0.0)" -->
 		<dependency>
@@ -283,6 +276,17 @@
 		</dependency-->
 
 		<!-- Taverna Activities -->
+		<dependency>
+			<groupId>org.apache.taverna.engine</groupId>
+			<artifactId>taverna-dataflow-activity</artifactId>
+			<version>${taverna.engine.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.taverna.engine</groupId>
+			<artifactId>taverna-stringconstant-activity</artifactId>
+			<version>${taverna.engine.version}</version>
+		</dependency>
+		<!--
 		<dependency>
 			<groupId>net.sf.taverna.t2.activities</groupId>
 			<artifactId>apiconsumer-activity</artifactId>
@@ -300,11 +304,9 @@
 		</dependency>
 		<dependency>
 			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>dataflow-activity</artifactId>
+			<artifactId>external-tool-activity</artifactId>
 			<version>2.0.1-SNAPSHOT</version>
 		</dependency>
-		<!-- <dependency> <groupId>net.sf.taverna.t2.activities</groupId> <artifactId>external-tool-activity</artifactId>
-			<version>2.0.1-SNAPSHOT</version> </dependency> -->
 		<dependency>
 			<groupId>net.sf.taverna.t2.activities</groupId>
 			<artifactId>localworker-activity</artifactId>
@@ -332,11 +334,6 @@
 		</dependency>
 		<dependency>
 			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>stringconstant-activity</artifactId>
-			<version>2.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.taverna.t2.activities</groupId>
 			<artifactId>wsdl-activity</artifactId>
 			<version>2.0.1-SNAPSHOT</version>
 		</dependency>
@@ -345,105 +342,106 @@
 			<artifactId>xpath-activity</artifactId>
 			<version>2.0.1-SNAPSHOT</version>
 		</dependency>
+	-->
 
 		<!-- Taverna Commandline -->
 		<dependency>
-			<groupId>net.sf.taverna.t2.taverna-commandline</groupId>
+			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>taverna-commandline-common</artifactId>
-			<version>${t2.taverna-commandline.version}</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>uk.org.taverna.commandline</groupId>
-			<artifactId>taverna-command-line</artifactId>
-			<version>${taverna-command-line.version}</version>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>taverna-commandline-launcher</artifactId>
+			<version>${project.parent.version}</version>
 		</dependency>
 
 		<!-- Taverna Platform -->
 		<dependency>
-			<groupId>uk.org.taverna.platform</groupId>
+			<groupId>org.apache.taverna.engine</groupId>
 			<artifactId>taverna-capability-impl</artifactId>
-			<version>${platform.version}</version>
+			<version>${taverna.engine.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>uk.org.taverna.platform</groupId>
+			<groupId>org.apache.taverna.engine</groupId>
 			<artifactId>taverna-run-impl</artifactId>
-			<version>${platform.version}</version>
+			<version>${taverna.engine.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>uk.org.taverna.platform</groupId>
+			<groupId>org.apache.taverna.engine</groupId>
 			<artifactId>taverna-execution-impl</artifactId>
-			<version>${platform.version}</version>
+			<version>${taverna.engine.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>uk.org.taverna.platform</groupId>
+			<groupId>org.apache.taverna.engine</groupId>
 			<artifactId>taverna-execution-local</artifactId>
-			<version>${platform.version}</version>
+			<version>${taverna.engine.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.taverna.engine</groupId>
+			<artifactId>taverna-database-configuration-impl</artifactId>
+			<version>${taverna.engine.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.taverna.engine</groupId>
+			<artifactId>taverna-services-impl</artifactId>
+			<version>${taverna.engine.version}</version>
 		</dependency>
 
-		<!-- Taverna Commons -->
+		<!-- Taverna OSGi -->
 		<dependency>
-			<groupId>uk.org.taverna.configuration</groupId>
+			<groupId>org.apache.taverna.osgi</groupId>
 			<artifactId>taverna-configuration-impl</artifactId>
-			<version>0.1.1-SNAPSHOT</version>
+			<version>${taverna.osgi.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>uk.org.taverna.configuration</groupId>
+			<groupId>org.apache.taverna.osgi</groupId>
 			<artifactId>taverna-app-configuration-impl</artifactId>
-			<version>0.1.1-SNAPSHOT</version>
+			<version>${taverna.osgi.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>uk.org.taverna.configuration</groupId>
-			<artifactId>taverna-database-configuration-impl</artifactId>
-			<version>0.1.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>uk.org.taverna.commons</groupId>
+			<groupId>org.apache.taverna.osgi</groupId>
 			<artifactId>taverna-download-impl</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
+			<version>${taverna.osgi.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>uk.org.taverna.commons</groupId>
+			<groupId>org.apache.taverna.osgi</groupId>
 			<artifactId>taverna-plugin-impl</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
+			<version>${taverna.osgi.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>uk.org.taverna.commons</groupId>
-			<artifactId>taverna-services-impl</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>uk.org.taverna.commons</groupId>
+			<groupId>org.apache.taverna.osgi</groupId>
 			<artifactId>taverna-update-impl</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
+			<version>${taverna.osgi.version}</version>
 		</dependency>
 
 		<!-- Scufl2 -->
 		<dependency>
-			<groupId>uk.org.taverna.scufl2</groupId>
-			<artifactId>scufl2-rdfxml</artifactId>
-			<version>${scufl2.version}</version>
+			<groupId>org.apache.taverna.language</groupId>
+			<artifactId>taverna-scufl2-rdfxml</artifactId>
+			<version>${taverna.language.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>uk.org.taverna.scufl2</groupId>
-			<artifactId>scufl2-t2flow</artifactId>
-			<version>${scufl2.version}</version>
+			<groupId>org.apache.taverna.language</groupId>
+			<artifactId>taverna-scufl2-t2flow</artifactId>
+			<version>${taverna.language.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>uk.org.taverna.scufl2</groupId>
-			<artifactId>scufl2-validation-structural</artifactId>
-			<version>${scufl2.version}</version>
+			<groupId>org.apache.taverna.language</groupId>
+			<artifactId>taverna-scufl2-validation-structural</artifactId>
+			<version>${taverna.language.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>uk.org.taverna.scufl2</groupId>
-			<artifactId>scufl2-validation-correctness</artifactId>
-			<version>${scufl2.version}</version>
+			<groupId>org.apache.taverna.language</groupId>
+			<artifactId>taverna-scufl2-validation-correctness</artifactId>
+			<version>${taverna.language.version}</version>
 		</dependency>
 
 		<!-- Data bundle -->
 		<dependency>
-			<groupId>uk.org.taverna.databundle</groupId>
-			<artifactId>databundle</artifactId>
-			<version>${taverna.databundle.version}</version>
+			<groupId>org.apache.taverna.language</groupId>
+			<artifactId>taverna-databundle</artifactId>
+			<version>${taverna.language.version}</version>
 		</dependency>
 		<!-- HTTP client needed by Data Bundle -->
 		<!-- Appears unrequired dependency>
@@ -460,7 +458,7 @@
 		<!-- See https://github.com/stain/jena/tree/jena-bundle/jena-bundle -->
 		<dependency>
 			<groupId>org.apache.jena</groupId>
-			<artifactId>jena-bundle</artifactId>
+			<artifactId>jena-osgi</artifactId>
 			<version>2.12.2-SNAPSHOT</version>
 		</dependency>
 		<!-- slf4j implementation -->
@@ -478,60 +476,60 @@
 
 		<!-- Taverna Security -->
 		<dependency>
-			<groupId>net.sf.taverna.t2.security</groupId>
-			<artifactId>credential-manager-impl</artifactId>
-			<version>${t2.security.version}</version>
+			<groupId>org.apache.taverna.engine</groupId>
+			<artifactId>taverna-credential-manager-impl</artifactId>
+			<version>${taverna.engine.version}</version>
 		</dependency>
 
 		<!-- Taverna Workflow Engine -->
 		<dependency>
-			<groupId>net.sf.taverna.t2.core</groupId>
-			<artifactId>workflowmodel-impl</artifactId>
-			<version>${t2.core.version}</version>
+			<groupId>org.apache.taverna.engine</groupId>
+			<artifactId>taverna-workflowmodel-impl</artifactId>
+			<version>${taverna.engine.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.taverna.t2.core</groupId>
-			<artifactId>workflowmodel-core-extensions</artifactId>
-			<version>${t2.core.version}</version>
+			<groupId>org.apache.taverna.engine</groupId>
+			<artifactId>taverna-workflowmodel-core-extensions</artifactId>
+			<version>${taverna.engine.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.taverna.t2.core</groupId>
-			<artifactId>reference-impl</artifactId>
-			<version>${t2.core.version}</version>
+			<groupId>org.apache.taverna.engine</groupId>
+			<artifactId>taverna-reference-impl</artifactId>
+			<version>${taverna.engine.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.taverna.t2.core</groupId>
-			<artifactId>reference-core-extensions</artifactId>
-			<version>${t2.core.version}</version>
+			<groupId>org.apache.taverna.engine</groupId>
+			<artifactId>taverna-reference-types</artifactId>
+			<version>${taverna.engine.version}</version>
 		</dependency>
 
 		<!-- Taverna Provenance -->
 		<!--dependency>
-			<groupId>net.sf.taverna.t2.core</groupId>
+			<groupId>org.apache.taverna.engine</groupId>
 			<artifactId>provenance-derby</artifactId>
-			<version>${t2.core.provenance.derby.version}</version>
+			<version>${taverna.engine.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.taverna.t2.core</groupId>
+			<groupId>org.apache.taverna.engine</groupId>
 			<artifactId>provenance-mysql</artifactId>
-			<version>${t2.core.provenance.mysql.version}</version>
+			<version>${taverna.engine.version}</version>
 		</dependency-->
                 <!-- The bundle "org.purl.wf4ever.robundle_0.3.1 " could not be resolved. Reason: Missing Constraint: Import-Package: com.fasterxml.jackson.annotation; version="[2.3.0,3.0.0)"-->
 		<dependency>
-                        <groupId>com.fasterxml.jackson.core</groupId>
-                        <artifactId>jackson-core</artifactId>
-                        <version>2.3.0</version>
-                </dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.3.0</version>
+    </dependency>
 		<dependency>
-                        <groupId>com.fasterxml.jackson.core</groupId>
-                        <artifactId>jackson-annotations</artifactId>
-                        <version>2.3.0</version>
-                </dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.3.0</version>
+    </dependency>
 		<dependency>
-                        <groupId>com.fasterxml.jackson.core</groupId>
-                        <artifactId>jackson-databind</artifactId>
-                        <version>2.3.0</version>
-                </dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.3.0</version>
+    </dependency>
 	</dependencies>
 
 	<repositories>
