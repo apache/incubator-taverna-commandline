@@ -10,7 +10,7 @@
 	<artifactId>taverna-commandline</artifactId>
 	<version>3.1.0-incubating-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Apache Taverna Engine and Platform</name>
+	<name>Apache Taverna Command Line</name>
   <properties>
     <taverna.language.version>0.15.0-incubating-SNAPSHOT</taverna.language.version>
     <taverna.osgi.version>0.2.0-incubating-SNAPSHOT</taverna.osgi.version>
@@ -21,7 +21,9 @@
     <module>taverna-commandline-common</module>
     <module>taverna-commandline-launcher</module>
     <module>taverna-commandline-product</module>
+    <!--
     <module>taverna-commandline-tests</module>
+    -->
   </modules>
   <repositories>
     <repository>

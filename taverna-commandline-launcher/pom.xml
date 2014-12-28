@@ -7,7 +7,7 @@
 		<version>3.1.0-incubating-SNAPSHOT</version>
 	</parent>
 	<artifactId>taverna-commandline-launcher</artifactId>
-	<name>Apache Taverna Command Line Launcher</name>
+	<name>Apache Taverna Commandline Launcher</name>
 	<build>
 		<plugins>
 			<plugin>
@@ -29,19 +29,19 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>net.sf.taverna.t2.taverna-commandline</groupId>
+			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>taverna-commandline-api</artifactId>
-			<version>${t2.taverna-commandline.version}</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>uk.org.taverna.osgi</groupId>
+			<groupId>org.apache.taverna.osgi</groupId>
 			<artifactId>osgi-launcher</artifactId>
-			<version>${osgi.launcher.version}</version>
+			<version>${taverna.osgi.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>uk.org.taverna.configuration</groupId>
+			<groupId>org.apache.taverna.osgi</groupId>
 			<artifactId>taverna-app-configuration-impl</artifactId>
-			<version>${taverna.configuration.version}</version>
+			<version>${taverna.osgi.version}</version>
 		</dependency>
 
  		<dependency>
@@ -51,8 +51,8 @@
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
-                        <artifactId>commons-io</artifactId>
-                        <version>${commons.io.version}</version>
+      <artifactId>commons-io</artifactId>
+      <version>${commons.io.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.log4j</groupId>

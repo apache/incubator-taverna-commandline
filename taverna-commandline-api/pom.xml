@@ -8,5 +8,5 @@
 	</parent>
 	<packaging>bundle</packaging>
 	<artifactId>taverna-commandline-api</artifactId>
-	<name>Apache Taverna Command Line API</name>
+	<name>Apache Taverna Commandline API</name>
 </project>
