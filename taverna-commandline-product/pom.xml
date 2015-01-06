@@ -286,63 +286,39 @@
 			<artifactId>taverna-stringconstant-activity</artifactId>
 			<version>${taverna.engine.version}</version>
 		</dependency>
-		<!--
-		<dependency>
-			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>apiconsumer-activity</artifactId>
-			<version>2.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>beanshell-activity</artifactId>
-			<version>2.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>biomart-activity</artifactId>
-			<version>2.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>external-tool-activity</artifactId>
-			<version>2.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>localworker-activity</artifactId>
-			<version>2.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>rest-activity</artifactId>
-			<version>2.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>rshell-activity</artifactId>
-			<version>2.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>soaplab-activity</artifactId>
-			<version>2.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>spreadsheet-import-activity</artifactId>
-			<version>2.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>wsdl-activity</artifactId>
-			<version>2.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.taverna.t2.activities</groupId>
-			<artifactId>xpath-activity</artifactId>
-			<version>2.0.1-SNAPSHOT</version>
-		</dependency>
-	-->
+
+    <!-- Taverna Common Activities -->
+    <dependency>
+			<groupId>org.apache.taverna.commonactivities</groupId>
+      <artifactId>taverna-external-tool-activity</artifactId>
+			<version>${taverna.commonactivities.version}</version>
+    </dependency>
+    <dependency>
+			<groupId>org.apache.taverna.commonactivities</groupId>
+      <artifactId>taverna-interaction-activity</artifactId>
+			<version>${taverna.commonactivities.version}</version>
+    </dependency>
+    <dependency>
+			<groupId>org.apache.taverna.commonactivities</groupId>
+      <artifactId>taverna-rest-activity</artifactId>
+			<version>${taverna.commonactivities.version}</version>
+    </dependency>
+    <dependency>
+			<groupId>org.apache.taverna.commonactivities</groupId>
+      <artifactId>taverna-spreadsheet-import-activity</artifactId>
+			<version>${taverna.commonactivities.version}</version>
+    </dependency>
+    <dependency>
+			<groupId>org.apache.taverna.commonactivities</groupId>
+      <artifactId>taverna-wsdl-activity</artifactId>
+			<version>${taverna.commonactivities.version}</version>
+    </dependency>
+    <dependency>
+			<groupId>org.apache.taverna.commonactivities</groupId>
+      <artifactId>taverna-xpath-activity</artifactId>
+			<version>${taverna.commonactivities.version}</version>
+    </dependency>
+
 
 		<!-- Taverna Commandline -->
 		<dependency>
