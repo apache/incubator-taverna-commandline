@@ -49,9 +49,9 @@ import uk.org.taverna.osgi.OsgiLauncher;
  */
 public class TavernaCommandLine {
 
-	private static final String COMMANDLINE_BUNDLE_NAME = "net.sf.taverna.t2.taverna-commandline.common";
+	private static final String COMMANDLINE_BUNDLE_NAME = "org.apache.taverna.commandline.taverna-commandline-common";
 
-	private static File commandlineBundle;
+	private static File commandlineBundle = null;
 
 	private static ApplicationConfiguration applicationConfiguration = new ApplicationConfigurationImpl();
 
@@ -79,6 +79,10 @@ public class TavernaCommandLine {
 				context.registerService("net.sf.taverna.t2.commandline.options.CommandLineOptions",
 						commandLineOptions, null);
 				osgilauncher.startServices(true);
+        if (commandlineBundle == null) {
+          System.err.println("Can't locate command line bundle " + COMMANDLINE_BUNDLE_NAME);
+          System.exit(1);
+        }
 				osgilauncher.startBundle(osgilauncher.installBundle(commandlineBundle.toURI()));
 			}
 		} catch (ArgumentsParsingException e) {
