@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.apache.taverna.commandline</groupId>
 		<artifactId>taverna-commandline</artifactId>
-		<version>3.1.0-incubating-SNAPSHOT</version>
+		<version>3.1.0.incubating-SNAPSHOT</version>
 	</parent>
 	<artifactId>taverna-command-line-product</artifactId>
 	<name>Apache Taverna Commandline Product</name>
@@ -100,7 +100,7 @@
 						</frameworkConfiguration>
 						<frameworkConfiguration>
 							<name>org.osgi.framework.system.packages.extra</name>
-							<value>com.sun.org.apache.xml.internal.utils,com.sun.source.util,com.sun.source.tree,org.apache.log4j;version=1.2.16,net.sf.taverna.t2.commandline.options;version=2.0.1</value>
+              <value>com.sun.org.apache.xml.internal.utils,com.sun.source.util,com.sun.source.tree,org.apache.log4j;version=${log4j.version},net.sf.taverna.t2.commandline.options;version=${project.parent.version}</value>
 						</frameworkConfiguration>
 						<frameworkConfiguration>
 							<name>org.osgi.framework.storage.clean</name>
