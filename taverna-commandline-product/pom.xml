@@ -100,7 +100,7 @@
 						</frameworkConfiguration>
 						<frameworkConfiguration>
 							<name>org.osgi.framework.system.packages.extra</name>
-							<value>com.sun.org.apache.xml.internal.utils,org.apache.log4j;version=1.2.16,net.sf.taverna.t2.commandline.options;version=2.0.1</value>
+							<value>com.sun.org.apache.xml.internal.utils,com.sun.source.util,com.sun.source.tree,org.apache.log4j;version=1.2.16,net.sf.taverna.t2.commandline.options;version=2.0.1</value>
 						</frameworkConfiguration>
 						<frameworkConfiguration>
 							<name>org.osgi.framework.storage.clean</name>
@@ -293,11 +293,13 @@
       <artifactId>taverna-external-tool-activity</artifactId>
 			<version>${taverna.commonactivities.version}</version>
     </dependency>
+    <!-- VERY broken :(
     <dependency>
 			<groupId>org.apache.taverna.commonactivities</groupId>
       <artifactId>taverna-interaction-activity</artifactId>
 			<version>${taverna.commonactivities.version}</version>
     </dependency>
+    -->
     <dependency>
 			<groupId>org.apache.taverna.commonactivities</groupId>
       <artifactId>taverna-rest-activity</artifactId>
@@ -442,13 +444,15 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.5</version>
+      <version>${slf4j.version}</version>
 		</dependency>
-		<!-- Appears unrequired  dependency>
+
+    <!-- Appears unrequired: -->
+    <dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.5</version>
-		</dependency-->
+      <version>${slf4j.version}</version>
+		</dependency>
 
 		<!-- Taverna Security -->
 		<dependency>
@@ -506,6 +510,13 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.3.0</version>
     </dependency>
+
+    <dependency>
+      <groupId>nu.validator.htmlparser</groupId>
+      <artifactId>htmlparser</artifactId>
+      <version>1.4</version>
+    </dependency>
+
 	</dependencies>
 
 	<repositories>
