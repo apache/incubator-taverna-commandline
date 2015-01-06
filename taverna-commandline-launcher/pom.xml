@@ -64,6 +64,14 @@
 			<artifactId>org.eclipse.osgi</artifactId>
 			<version>${osgi.equinox.version}</version>
 		</dependency>
+    <!-- TODO: replace equinox with:
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.main</artifactId>
+      <version>4.4.1</version>
+    </dependency>
+    -->
+
 
 		<dependency>
 			<groupId>junit</groupId>
