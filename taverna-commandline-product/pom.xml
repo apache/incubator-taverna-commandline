@@ -290,6 +290,11 @@
     <!-- Taverna Common Activities -->
     <dependency>
 			<groupId>org.apache.taverna.commonactivities</groupId>
+      <artifactId>taverna-beanshell-activity</artifactId>
+			<version>${taverna.commonactivities.version}</version>
+    </dependency>
+    <dependency>
+			<groupId>org.apache.taverna.commonactivities</groupId>
       <artifactId>taverna-external-tool-activity</artifactId>
 			<version>${taverna.commonactivities.version}</version>
     </dependency>
