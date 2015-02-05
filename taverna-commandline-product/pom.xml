@@ -522,26 +522,8 @@
       <version>${htmlparser.version}</version>
     </dependency>
 
-	</dependencies>
 
-	<repositories>
-		<!--
-		<repository>
-			<releases />
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<id>mygrid-repository</id>
-			<name>myGrid Repository</name>
-			<url>http://www.mygrid.org.uk/maven/repository</url>
-		</repository>
-	-->
-	<!--
-		<repository>
-			<id>OPS4J</id>
-			<url>http://repository.ops4j.org/maven2</url>
-		</repository>
-	-->
-	</repositories>
+
+	</dependencies>
 
 </project>
