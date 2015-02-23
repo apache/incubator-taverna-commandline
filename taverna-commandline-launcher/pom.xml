@@ -1,0 +1,83 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.apache.taverna.commandline</groupId>
+		<artifactId>taverna-commandline</artifactId>
+		<version>3.1.0.incubating-SNAPSHOT</version>
+	</parent>
+	<artifactId>taverna-commandline-launcher</artifactId>
+	<name>Apache Taverna Commandline Launcher</name>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>uk.org.taverna.commandline.TavernaCommandLine</mainClass>
+							<classpathLayoutType>custom</classpathLayoutType>
+							<customClasspathLayout>../${artifact.groupId}/${artifact.artifactId}-${artifact.baseVersion}${dashClassifier?}.${artifact.extension}</customClasspathLayout>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>taverna-commandline-api</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.taverna.osgi</groupId>
+			<artifactId>osgi-launcher</artifactId>
+			<version>${taverna.osgi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.taverna.osgi</groupId>
+			<artifactId>taverna-app-configuration-impl</artifactId>
+			<version>${taverna.osgi.version}</version>
+		</dependency>
+
+ 		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>com.springsource.org.apache.commons.cli</artifactId>
+			<version>${commons.cli.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>${commons.io.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse</groupId>
+			<artifactId>org.eclipse.osgi</artifactId>
+			<version>${osgi.equinox.version}</version>
+		</dependency>
+    <!-- TODO: replace equinox with:
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.main</artifactId>
+      <version>4.4.1</version>
+    </dependency>
+    -->
+
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
