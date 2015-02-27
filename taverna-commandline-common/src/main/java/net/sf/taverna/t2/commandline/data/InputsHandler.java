@@ -27,7 +27,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -44,11 +43,9 @@ import net.sf.taverna.t2.invocation.InvocationContext;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-import org.jdom.JDOMException;
-import org.purl.wf4ever.robundle.Bundle;
-
-import uk.org.taverna.databundle.DataBundles;
-import uk.org.taverna.scufl2.api.port.InputWorkflowPort;
+import org.apache.taverna.databundle.DataBundles;
+import org.apache.taverna.robundle.Bundle;
+import org.apache.taverna.scufl2.api.port.InputWorkflowPort;
 
 /**
  * Handles the reading, or processing, or input values according to arguments provided to the

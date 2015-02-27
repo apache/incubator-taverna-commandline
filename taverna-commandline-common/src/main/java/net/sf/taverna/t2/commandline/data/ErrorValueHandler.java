@@ -26,8 +26,8 @@ import java.util.List;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import uk.org.taverna.databundle.DataBundles;
-import uk.org.taverna.databundle.ErrorDocument;
+import org.apache.taverna.databundle.DataBundles;
+import org.apache.taverna.databundle.ErrorDocument;
 
 /**
  * Handles ErrorValues and transforming them into String representations
