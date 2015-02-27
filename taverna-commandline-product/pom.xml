@@ -401,7 +401,7 @@
 		<!-- Scufl2 -->
 		<dependency>
 			<groupId>org.apache.taverna.language</groupId>
-			<artifactId>taverna-scufl2-rdfxml</artifactId>
+			<artifactId>taverna-scufl2-wfbundle</artifactId>
 			<version>${taverna.language.version}</version>
 		</dependency>
 		<dependency>
@@ -409,17 +409,6 @@
 			<artifactId>taverna-scufl2-t2flow</artifactId>
 			<version>${taverna.language.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.taverna.language</groupId>
-			<artifactId>taverna-scufl2-validation-structural</artifactId>
-			<version>${taverna.language.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.taverna.language</groupId>
-			<artifactId>taverna-scufl2-validation-correctness</artifactId>
-			<version>${taverna.language.version}</version>
-		</dependency>
-
 		<!-- Data bundle -->
 		<dependency>
 			<groupId>org.apache.taverna.language</groupId>
