@@ -29,7 +29,7 @@ import java.io.InputStreamReader;
 
 import net.sf.taverna.t2.commandline.exceptions.CommandLineMasterPasswordException;
 import net.sf.taverna.t2.commandline.options.CommandLineOptions;
-import net.sf.taverna.t2.security.credentialmanager.MasterPasswordProvider;
+import org.apache.taverna.security.credentialmanager.MasterPasswordProvider;
 
 import org.apache.log4j.Logger;
 
