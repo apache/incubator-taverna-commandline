@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.apache.taverna.commandline</groupId>
 		<artifactId>taverna-commandline</artifactId>
-		<version>3.1.0.incubating-SNAPSHOT</version>
+		<version>3.1.0-incubating-SNAPSHOT</version>
 	</parent>
 	<artifactId>taverna-command-line-product</artifactId>
 	<name>Apache Taverna Commandline Product</name>
@@ -100,7 +100,7 @@
 						</frameworkConfiguration>
 						<frameworkConfiguration>
 							<name>org.osgi.framework.system.packages.extra</name>
-              <value>com.sun.org.apache.xml.internal.utils,com.sun.source.util,com.sun.source.tree,org.apache.log4j;version=${log4j.version},net.sf.taverna.t2.commandline.options;version=${project.parent.version}</value>
+              <value>com.sun.org.apache.xml.internal.utils,com.sun.source.util,com.sun.source.tree,org.apache.log4j;version=${log4j.version},org.apache.taverna.commandline.options;version=${project.parent.version}</value>
 						</frameworkConfiguration>
 						<frameworkConfiguration>
 							<name>org.osgi.framework.storage.clean</name>
@@ -431,7 +431,7 @@
 		<dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>jena-osgi</artifactId>
-			<version>2.12.2-SNAPSHOT</version>
+			<version>2.13.0</version>
 		</dependency>
 		<!-- slf4j implementation -->
                 <!-- The bundle "org.purl.wf4ever.robundle_0.3.1 " could not be resolved. Reason: Missing Constraint: Import-Package: org.slf4j; version="[1.7.0,2.0.0)"-->

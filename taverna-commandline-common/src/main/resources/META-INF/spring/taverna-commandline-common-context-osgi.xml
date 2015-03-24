@@ -7,16 +7,16 @@
                                  http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
 
-    <service ref="commandLineMasterPasswordProvider" interface="net.sf.taverna.t2.security.credentialmanager.MasterPasswordProvider" />
+    <service ref="commandLineMasterPasswordProvider" interface="org.apache.taverna.security.credentialmanager.MasterPasswordProvider" />
 
- 	<reference id="commandLineOptions" interface="net.sf.taverna.t2.commandline.options.CommandLineOptions"/>
-    <reference id="runService" interface="uk.org.taverna.platform.run.api.RunService"/>
+ 	<reference id="commandLineOptions" interface="org.apache.taverna.commandline.options.CommandLineOptions"/>
+    <reference id="runService" interface="org.apache.taverna.platform.run.api.RunService"/>
 	<reference id="credentialManager" interface="org.apache.taverna.security.credentialmanager.CredentialManager" />
-	<reference id="databaseConfiguration" interface="uk.org.taverna.configuration.database.DatabaseConfiguration" />
-	<reference id="databaseManager" interface="uk.org.taverna.configuration.database.DatabaseManager" />
+	<reference id="databaseConfiguration" interface="org.apache.taverna.configuration.database.DatabaseConfiguration" />
+	<reference id="databaseManager" interface="org.apache.taverna.configuration.database.DatabaseManager" />
 
-	<reference id="workflowBundleIO" interface="uk.org.taverna.scufl2.api.io.WorkflowBundleIO" />
-	<reference id="t2flowWorkflowBundleReader" interface="uk.org.taverna.scufl2.api.io.WorkflowBundleReader" filter="(mediaType=application/vnd.taverna.t2flow+xml)"/>
-	<reference id="rdfXMLWorkflowBundleReader" interface="uk.org.taverna.scufl2.api.io.WorkflowBundleReader" filter="(org.springframework.osgi.bean.name=rdfXMLReader)"/>
+	<reference id="workflowBundleIO" interface="org.apache.taverna.scufl2.api.io.WorkflowBundleIO" />
+	<reference id="t2flowWorkflowBundleReader" interface="org.apache.taverna.scufl2.api.io.WorkflowBundleReader" filter="(mediaType=application/vnd.taverna.t2flow+xml)"/>
+	<reference id="rdfXMLWorkflowBundleReader" interface="org.apache.taverna.scufl2.api.io.WorkflowBundleReader" filter="(org.springframework.osgi.bean.name=rdfXMLReader)"/>
 
 </beans:beans>
