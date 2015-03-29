@@ -431,7 +431,7 @@
 		<dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>jena-osgi</artifactId>
-			<version>2.13.0</version>
+      <version>${jena.version}</version>
 		</dependency>
 		<!-- slf4j implementation -->
                 <!-- The bundle "org.purl.wf4ever.robundle_0.3.1 " could not be resolved. Reason: Missing Constraint: Import-Package: org.slf4j; version="[1.7.0,2.0.0)"-->
