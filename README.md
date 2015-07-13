@@ -49,12 +49,12 @@ for any questions, suggestions and discussions about
 Apache Taverna.
 
 Bugs and feature plannings are tracked in the Jira
-[Issue tracker](https://issues.apache.org/jira/browse/TAVERNA/component/12326809)
-under the `TAVERNA` component _Taverna OSGi._ Feel free
+[Issue tracker](https://issues.apache.org/jira/browse/TAVERNA/component/12326812)
+under the `TAVERNA` component _Taverna Commandline._ Feel free
 to add an issue!
 
 To suggest changes to this source code, feel free to raise a
-[GitHub pull request](https://github.com/apache/incubator-taverna-osgi/pulls).
+[GitHub pull request](https://github.com/apache/incubator-taverna-commandline/pulls).
 Any contributions received are assumed to be covered by the [Apache License
 2.0](https://www.apache.org/licenses/LICENSE-2.0). We might ask you
 to sign a [Contributor License Agreement](https://www.apache.org/licenses/#clas)
