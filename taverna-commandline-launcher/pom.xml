@@ -18,7 +18,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>uk.org.taverna.commandline.TavernaCommandLine</mainClass>
+							<mainClass>org.apache.taverna.commandline.TavernaCommandLine</mainClass>
 							<classpathLayoutType>custom</classpathLayoutType>
 							<customClasspathLayout>../${artifact.groupId}/${artifact.artifactId}-${artifact.baseVersion}${dashClassifier?}.${artifact.extension}</customClasspathLayout>
 						</manifest>
