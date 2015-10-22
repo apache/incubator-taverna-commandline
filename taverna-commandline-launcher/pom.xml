@@ -79,5 +79,11 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
+	 <dependency>
+	  <groupId>org.apache.taverna.osgi</groupId>
+	  <artifactId>taverna-app-configuration-api</artifactId>
+	  <version>${taverna.osgi.version}</version>
+	  <type>jar</type>
+	 </dependency>
 	</dependencies>
 </project>

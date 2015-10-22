@@ -29,17 +29,16 @@ import java.util.Map;
 import org.apache.taverna.commandline.exceptions.ArgumentsParsingException;
 import org.apache.taverna.commandline.exceptions.InvalidOptionException;
 import org.apache.taverna.commandline.options.CommandLineOptions;
+import org.apache.taverna.configuration.app.ApplicationConfiguration;
+import org.apache.taverna.configuration.app.impl.ApplicationConfigurationImpl;
+import org.apache.taverna.configuration.app.impl.Log4JConfiguration;
+import org.apache.taverna.osgilauncher.OsgiLauncher;
+import org.apache.taverna.profile.xml.jaxb.ApplicationProfile;
+import org.apache.taverna.profile.xml.jaxb.BundleInfo;
+import org.apache.taverna.profile.xml.jaxb.FrameworkConfiguration;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
-
-import uk.org.taverna.commons.profile.xml.jaxb.ApplicationProfile;
-import uk.org.taverna.commons.profile.xml.jaxb.BundleInfo;
-import uk.org.taverna.commons.profile.xml.jaxb.FrameworkConfiguration;
-import uk.org.taverna.configuration.app.ApplicationConfiguration;
-import uk.org.taverna.configuration.app.impl.ApplicationConfigurationImpl;
-import uk.org.taverna.configuration.app.impl.Log4JConfiguration;
-import uk.org.taverna.osgi.OsgiLauncher;
 
 /**
  * Main entry point for starting the Taverna Command Line Tool.
