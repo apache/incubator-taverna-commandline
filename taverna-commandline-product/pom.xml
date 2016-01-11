@@ -99,7 +99,7 @@
             </frameworkConfiguration>
             <frameworkConfiguration>
               <name>org.osgi.framework.system.packages.extra</name>
-              <value>com.sun.org.apache.xml.internal.utils,com.sun.source.util,com.sun.source.tree,org.apache.log4j;version=${log4j.version},org.apache.taverna.commandline.options;version=${project.parent.version}</value>
+              <value>com.sun.org.apache.xml.internal.utils,com.sun.source.util,com.sun.source.tree,org.apache.log4j;version=${log4j.version},org.apache.taverna.commandline.options</value>
             </frameworkConfiguration>
             <frameworkConfiguration>
               <name>org.osgi.framework.storage.clean</name>
