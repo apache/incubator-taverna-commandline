@@ -63,7 +63,6 @@ public class TavernaCommandLine {
 	 */
 	public static void main(final String[] args) {
 		try {
-                        System.out.println("Good morning");
 			CommandLineOptions commandLineOptions = new CommandLineOptionsImpl(args);
 			if (commandLineOptions.askedForHelp()) {
 				commandLineOptions.displayHelp();
