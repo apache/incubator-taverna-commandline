@@ -99,6 +99,7 @@ which will be downloaded from Maven repositories if they are not
 already present in the equivalent of your `~/.m2/repository` in the
 correct version.
 
+
 ## Skipping tests
 
 To skip the tests (these can be time-consuming), use:
@@ -128,7 +129,7 @@ first. The default SNAPSHOT update policy for `mvn` is _daily_ - you can modify
 this behaviour with `--update-snapshots` or `--no-snapshot-updates`
 
 There is a nightly build of [taverna-commandline-product](http://s.apache.org/taverna-nightly)
-which produces a downloadable
+using the `-Pnighty` profile, which produces a downloadable
 `taverna-command-line-product-3.1.0-incubating-SNAPSHOT-nightly.zip` - this
 
 This should in theory contain all the needed dependencies (see lib/) and an
@@ -141,16 +142,33 @@ as they do **not** constitute an official
 are provided only for development and testing purposes.
 
 
+## Release distribution
+
+To build a released version as a distributable ZIP file that
+includes third-party dependencies as JAR files,
+build with the `-Prelease` option, which would make
+`taverna-commandline-product/target/apache-taverna-commandline-3.1.0-incubating-release.zip`
+or equivalent.
+
+See the file `target/maven-shared-archive-resources/META-INF/DEPENDENCIES` for
+details of the licenses of the third-party dependencies. All dependencies should
+be [compatible with Apache License 2.0](http://www.apache.org/legal/resolved.html).
+
 # Running
 
-After [building](#building) - see the `taverna-commandline-product/target`
+After [building](#building), see the `taverna-commandline-product/target`
 directory. Inside you should find a folder like
 `apache-taverna-commandline-3.1.0-incubating-SNAPSHOT-dev/`
-or (if you built with `-Pnightly` or `-Prelease`) `apache-taverna-commandline-3.1.0-incubating-SNAPSHOT-release.zip`
-which contain an Apache Taverna Command Line distribution.
+which contain the Apache Taverna Command Line product.
+
+If you prefer a ZIP file, then build instead with
+the Maven options `-Pnightly` or (for released versions)
+`-Prelease`. You can then unzip at a location of
+your own choice.
+
 
 ```
-stain@biggie:~/src/taverna/incubator-taverna-commandline/taverna-commandline-product/target/taverna-command-line-3.1.0-incubating-SNAPSHOT$ ./executeworkflow.sh
+$ ./executeworkflow.sh
 usage: executeworkflow [options] [workflow]
 -bundle <bundle>                        Save outputs to a new Workflow
                                      Run Bundle (zip).
@@ -169,7 +187,7 @@ The folder `examples` contain a Hello World type example workflow in
 ```
 $ ./executeworkflow.sh examples/helloworld.wfbundle
 Bundle: /tmp/robundle475236702008690452/robundle.zip
-Outputs will be saved to the directory: /home/johndoe/Downloads/apache-taverna-commandline-3.1.0/Hello_World_output
+Outputs will be saved to the directory: /home/johndoe/apache-taverna-commandline-3.1.0/Hello_World_output
 Workflow completed.
 
 $ cat Hello_World_output/greeting ; echo
