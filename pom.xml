@@ -11,12 +11,25 @@
 	<version>3.1.0-incubating-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Apache Taverna Command Line</name>
-  <properties>
-    <taverna.language.version>0.15.1-incubating-SNAPSHOT</taverna.language.version>
-    <taverna.osgi.version>0.2.1-incubating-SNAPSHOT</taverna.osgi.version>
-    <taverna.engine.version>3.1.0-incubating-SNAPSHOT</taverna.engine.version>
-    <taverna.commonactivities.version>2.1.0-incubating-SNAPSHOT</taverna.commonactivities.version>
-  </properties>
+	  <properties>
+	    <taverna.language.version>0.15.1-incubating-SNAPSHOT</taverna.language.version>
+	    <taverna.osgi.version>0.2.1-incubating-SNAPSHOT</taverna.osgi.version>
+	    <taverna.engine.version>3.1.0-incubating-SNAPSHOT</taverna.engine.version>
+	    <taverna.commonactivities.version>2.1.0-incubating-SNAPSHOT</taverna.commonactivities.version>
+
+            <!-- 
+            Update below version number to match the <version> above.
+
+            This osgiversion is required for passing the parsed
+            org.apache.taverna.commandline.options.CommandLineOptions
+            from the taverna-commandline-launcher (running outside OSGi)
+            to taverna-commandline-common (running inside OSGi)
+            and therefore must be a falid x.y.z.0 OSGi version number
+            corersponding to the ${pom.version} - but without -SNAPSHOT
+            or -incubating
+            -->
+            <taverna.commandline.osgiversion>3.1.0.0</taverna.commandline.osgiversion>
+	  </properties>
 	<modules>
     <module>taverna-commandline-api</module>
     <module>taverna-commandline-common</module>
