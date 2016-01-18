@@ -63,9 +63,11 @@ public class TavernaCommandLine {
 	 */
 	public static void main(final String[] args) {
 		try {
+                        System.out.println("Good morning");
 			CommandLineOptions commandLineOptions = new CommandLineOptionsImpl(args);
 			if (commandLineOptions.askedForHelp()) {
 				commandLineOptions.displayHelp();
+				System.exit(0);
 			} else {
 				log4jConfiguration.setApplicationConfiguration(applicationConfiguration);
 				log4jConfiguration.prepareLog4J();
@@ -77,18 +79,26 @@ public class TavernaCommandLine {
 				context.registerService("org.apache.taverna.commandline.options.CommandLineOptions",
 						commandLineOptions, null);
 				osgilauncher.startServices(true);
-        if (commandlineBundle == null) {
-          System.err.println("Can't locate command line bundle " + COMMANDLINE_BUNDLE_NAME);
-          System.exit(1);
-        }
+				if (commandlineBundle == null) {
+					System.err.println("Can't locate command line bundle " + COMMANDLINE_BUNDLE_NAME);
+					System.exit(1);
+				}
 				osgilauncher.startBundle(osgilauncher.installBundle(commandlineBundle.toURI()));
 			}
 		} catch (ArgumentsParsingException e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
+                        System.exit(2);
 		} catch (InvalidOptionException e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
+                        System.exit(3);
 		} catch (BundleException e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
+                        e.printStackTrace();
+                        System.exit(4);
+                } catch (Throwable e) {
+			System.err.println(e.getMessage());
+                        e.printStackTrace();
+                        System.exit(5);
 		}
 	}
 
