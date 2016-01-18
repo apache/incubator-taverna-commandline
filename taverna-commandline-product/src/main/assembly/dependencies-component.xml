@@ -12,6 +12,11 @@
 			<filtered>true</filtered>
 		</fileSet>
 		<fileSet>
+			<directory>src/main/examples</directory>
+			<fileMode>0644</fileMode>
+			<outputDirectory>examples</outputDirectory>
+		</fileSet>
+		<fileSet>
 			<directory>${project.build.directory}/taverna-tmp</directory>
 			<fileMode>0755</fileMode>
 			<outputDirectory></outputDirectory>
