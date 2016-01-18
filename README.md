@@ -93,10 +93,15 @@ To build, use
 
 This will build each module and run their tests.
 
+Note that this repository relies on
+other [Apache Taverna modules](http://taverna.incubator.apache.org/code)
+which will be downloaded from Maven repositories if they are not
+already present in the equivalent of your `~/.m2/repository` in the
+correct version.
 
 ## Skipping tests
 
-To skip the tests (these can be timeconsuming), use:
+To skip the tests (these can be time-consuming), use:
 
     mvn clean install -DskipTests
 
@@ -107,3 +112,66 @@ Apache Taverna project, you may not want to run the
 that enforces Apache headers in every source file - to disable it, try:
 
     mvn clean install -Drat.skip=true
+
+
+## Nightly builds
+
+If you are building a non-released version of this repository,
+(e.g.  the `pom.xml` declares a `-SNAPSHOT` version), then Maven might
+download unreleased
+[snapshot builds](http://taverna.incubator.apache.org/download/code/#snapshot-builds)
+for internal `-SNAPSHOT` Taverna dependencies.
+
+If you want to avoid this, make sure you have built the corresponding
+[Apache Taverna modules](http://taverna.incubator.apache.org/code)
+first. The default SNAPSHOT update policy for `mvn` is _daily_ - you can modify
+this behaviour with `--update-snapshots` or `--no-snapshot-updates`
+
+There is a nightly build of [taverna-commandline-product](http://s.apache.org/taverna-nightly)
+which produces a downloadable
+`taverna-command-line-product-3.1.0-incubating-SNAPSHOT-nightly.zip` - this
+
+This should in theory contain all the needed dependencies (see lib/) and an
+`executeworkflow.sh` / `executeworkflow.bat` that can run Taverna 3 workflows.
+
+NOTE: These nightly builds should not be propagated beyond the
+[dev@taverna community](http://taverna.incubator.apache.org/community/lists#dev)
+as they do **not** constitute an official
+[Apache Release](http://www.apache.org/dev/release-distribution.html), and
+are provided only for development and testing purposes.
+
+
+# Running
+
+After [building](#building) - see the `taverna-commandline-product/target`
+directory. Inside you should find a folder like
+`apache-taverna-commandline-3.1.0-incubating-SNAPSHOT-dev/`
+or (if you built with `-Pnightly` or `-Prelease`) `apache-taverna-commandline-3.1.0-incubating-SNAPSHOT-release.zip`
+which contain an Apache Taverna Command Line distribution.
+
+```
+stain@biggie:~/src/taverna/incubator-taverna-commandline/taverna-commandline-product/target/taverna-command-line-3.1.0-incubating-SNAPSHOT$ ./executeworkflow.sh
+usage: executeworkflow [options] [workflow]
+-bundle <bundle>                        Save outputs to a new Workflow
+                                     Run Bundle (zip).
+-clientserver                           Connect as a client to a derby
+                                     server instance.
+-cmdir <directory path>                 Absolute path to a directory
+                                     where Credential Manager's files
+                                     (keystore and truststore) are
+                                     located.
+...
+```
+
+The folder `examples` contain a Hello World type example workflow in
+[SCUFL2 format](http://taverna.incubator.apache.org/documentation/scufl2/).
+
+```
+$ ./executeworkflow.sh examples/helloworld.wfbundle
+Bundle: /tmp/robundle475236702008690452/robundle.zip
+Outputs will be saved to the directory: /home/johndoe/Downloads/apache-taverna-commandline-3.1.0/Hello_World_output
+Workflow completed.
+
+$ cat Hello_World_output/greeting ; echo
+Hello, World!
+```
