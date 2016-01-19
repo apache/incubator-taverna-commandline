@@ -14,4 +14,4 @@ set ARGS=%ARGS% "-Dlog4j.configuration=file:///%TAVERNA_HOME%conf/log4j.properti
 set ARGS=%ARGS% "-Djava.util.logging.config.file=%TAVERNA_HOME%conf/logging.properties"
 set ARGS=%ARGS% "-Dtaverna.app.startup=%TAVERNA_HOME%."
 
-java %ARGS% -jar "%TAVERNA_HOME%lib\/lib/org.apache.taverna.commandline/taverna-commandline-launcher-3.1.0-incubating-SNAPSHOT.jar" %*
+java %ARGS% -jar "%TAVERNA_HOME%lib/org.apache.taverna.commandline/taverna-commandline-launcher-3.1.0-incubating-SNAPSHOT.jar" %*
