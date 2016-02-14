@@ -123,7 +123,7 @@ public class TavernaCommandLine {
 	private static List<URI> getBundleURIs() {
 		List<URI> bundleURIs = new ArrayList<URI>();
 		ApplicationProfile applicationProfile = applicationConfiguration.getApplicationProfile();
-		File libDir = new File(applicationConfiguration.getStartupDir(), "lib");
+		File libDir = new File(applicationConfiguration.getStartupDir().toFile(), "lib");
 		if (applicationProfile != null) {
 			for (BundleInfo bundle : applicationProfile.getBundle()) {
 				File bundleFile = new File(libDir, bundle.getFileName());
@@ -138,12 +138,12 @@ public class TavernaCommandLine {
 	}
 
 	private static File getAppDirectory() {
-		return new File(applicationConfiguration.getApplicationHomeDir().getAbsolutePath());
+		return new File(applicationConfiguration.getApplicationHomeDir().toFile().getAbsolutePath());
 	}
 
 	private static void setDerbyPaths() {
 		System.setProperty("derby.system.home", getAppDirectory().getAbsolutePath());
-		File logFile = new File(applicationConfiguration.getLogDir(), "derby.log");
+		File logFile = new File(applicationConfiguration.getLogDir().toFile(), "derby.log");
 		System.setProperty("derby.stream.error.file", logFile.getAbsolutePath());
 	}
 
