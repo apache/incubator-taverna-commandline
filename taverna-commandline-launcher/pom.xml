@@ -35,7 +35,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.taverna.osgi</groupId>
-			<artifactId>osgi-launcher</artifactId>
+			<artifactId>taverna-osgi-launcher</artifactId>
 			<version>${taverna.osgi.version}</version>
 		</dependency>
 		<dependency>
