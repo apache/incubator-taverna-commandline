@@ -196,7 +196,7 @@ public class CommandLineTool {
 				 * know which user the command line tool will be running as).
 				 */
 				if (credentialManagerDirPath != null) {
-					credentialManager.setConfigurationDirectoryPath(new File(
+					credentialManager.setConfigurationDirectoryPath(Paths.get(
 							credentialManagerDirPath));
 				}
 
