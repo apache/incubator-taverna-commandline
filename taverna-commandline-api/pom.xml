@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.apache.taverna.commandline</groupId>
-		<artifactId>taverna-commandline</artifactId>
+		<artifactId>apache-taverna-commandline</artifactId>
 		<version>3.1.0-incubating-SNAPSHOT</version>
 	</parent>
 	<packaging>bundle</packaging>

@@ -7,7 +7,7 @@
 		<version>1-incubating</version>
 	</parent>
 	<groupId>org.apache.taverna.commandline</groupId>
-	<artifactId>taverna-commandline</artifactId>
+	<artifactId>apache-taverna-commandline</artifactId>
 	<version>3.1.0-incubating-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Apache Taverna Command Line</name>
