@@ -25,9 +25,10 @@
     <artifactId>apache-taverna-commandline</artifactId>
     <version>3.1.0-incubating-SNAPSHOT</version>
   </parent>
-  <artifactId>taverna-command-line-product</artifactId>
+  <artifactId>taverna-commandline-product</artifactId>
   <name>Apache Taverna Commandline Product</name>
-  <packaging>taverna-application</packaging>
+  <!--<packaging>taverna-application</packaging> Disabled due to TAVERNA-924 -->
+  <packaging>jar</packaging>
   <profiles>
     <profile>
       <id>developer</id>
