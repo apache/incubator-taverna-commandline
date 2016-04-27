@@ -17,5 +17,5 @@ set ARGS=%ARGS% "-Dtaverna.app.startup=%TAVERNA_HOME%."
 set JAR="%TAVERNA_HOME%lib/org.apache.taverna.commandline/taverna-commandline-launcher-3.1.0-incubating.jar"
 REM find *.launcher jar
 for %%f in ("%TAVERNA_HOME%lib\org.apache.taverna.commandline\taverna-commandline-launcher*.jar") DO set JAR="%%f"
-
-java %ARGS% -jar "%TAVERNA_HOME%lib/org.apache.taverna.commandline/taverna-commandline-launcher-3.1.0-incubating-SNAPSHOT.jar" %*
+REM echo %JAR%
+java %ARGS% -jar %JAR% %*
