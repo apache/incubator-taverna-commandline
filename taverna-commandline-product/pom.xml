@@ -126,6 +126,16 @@
             </frameworkConfiguration>
           </frameworkConfigurations>
         </configuration>
+	<executions>
+	  <execution>
+            <!-- Explicit execution due to TAVERNA-924 workaround -->
+            <id>prepare-bundles</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>profile-generate</goal>
+            </goals>
+	  </execution>
+	</executions>
       </plugin>
     </plugins>
   </build>
