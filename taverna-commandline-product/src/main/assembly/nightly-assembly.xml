@@ -22,7 +22,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
 	<id>nightly</id>
-	<baseDirectory>taverna-command-line-${project.version}-${buildNumber}-nightly</baseDirectory>
+	<baseDirectory>taverna-command-line-${project.version}</baseDirectory>
 	<formats>
 		<!-- <format>dir</format> -->
 		<format>zip</format>
