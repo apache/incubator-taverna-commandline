@@ -29,7 +29,7 @@ the actual workflow execution.
 
 (c) 2007-2014 University of Manchester
 
-(c) 2014-2015 Apache Software Foundation
+(c) 2014-2016 Apache Software Foundation
 
 This product includes software developed at The
 [Apache Software Foundation](http://www.apache.org/).
@@ -52,10 +52,15 @@ Apache Taverna.
 Bugs and feature plannings are tracked in the Jira
 [Issue tracker](https://issues.apache.org/jira/browse/TAVERNA/component/12326812)
 under the `TAVERNA` component _Taverna Commandline._ Feel free
-to add an issue!
+to [add an issue](https://taverna.incubator.apache.org/community/issue-tracker)!
 
 To suggest changes to this source code, feel free to raise a
 [GitHub pull request](https://github.com/apache/incubator-taverna-commandline/pulls).
+
+Apache Taverna Command Line product relies on 
+[other Taverna component](https://taverna.incubator.apache.org/code/)
+which have their own source code repositories.
+
 Any contributions received are assumed to be covered by the [Apache License
 2.0](https://www.apache.org/licenses/LICENSE-2.0). We might ask you
 to sign a [Contributor License Agreement](https://www.apache.org/licenses/#clas)
@@ -80,7 +85,7 @@ fully endorsed by the ASF.
 
 ## Prerequisites
 
-* Java 1.7 or newer (tested with OpenJDK 1.8)
+* Java 1.8 or newer (tested with OpenJDK 1.8)
 * [Apache Maven](https://maven.apache.org/download.html) 3.2.5 or newer (older
   versions probably also work)
 
@@ -94,7 +99,7 @@ To build, use
 This will build each module and run their tests.
 
 Note that this repository relies on
-other [Apache Taverna modules](http://taverna.incubator.apache.org/code)
+other [Apache Taverna modules](https://taverna.incubator.apache.org/code)
 which will be downloaded from Maven repositories if they are not
 already present in the equivalent of your `~/.m2/repository` in the
 correct version.
@@ -120,7 +125,7 @@ that enforces Apache headers in every source file - to disable it, try:
 If you are building a non-released version of this repository,
 (e.g.  the `pom.xml` declares a `-SNAPSHOT` version), then Maven might
 download unreleased
-[snapshot builds](http://taverna.incubator.apache.org/download/code/#snapshot-builds)
+[snapshot builds](https://taverna.incubator.apache.org/code/#snapshot-builds)
 for internal `-SNAPSHOT` Taverna dependencies.
 
 If you want to avoid this, make sure you have built the corresponding
@@ -153,6 +158,7 @@ or equivalent.
 See the file `target/maven-shared-archive-resources/META-INF/DEPENDENCIES` for
 details of the licenses of the third-party dependencies. All dependencies should
 be [compatible with Apache License 2.0](http://www.apache.org/legal/resolved.html).
+
 
 # Running
 
