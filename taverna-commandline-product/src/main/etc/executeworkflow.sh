@@ -16,8 +16,8 @@ if test -x "$JAVA_HOME/bin/java"; then
     javabin="$JAVA_HOME/bin/java"
 fi
 
-# 1 GB memory, 400 MB for classes
-exec "$javabin" -Xmx1g -XX:MaxPermSize=400m \
+# 1 GB memory
+exec "$javabin" -Xmx1g \
   "-Dlog4j.configuration=file://$taverna_home/conf/log4j.properties " \
   "-Djava.util.logging.config.file=$taverna_home/conf/logging.properties " \
   "-Dtaverna.app.startup=$taverna_home" \
