@@ -44,7 +44,7 @@
             from the taverna-commandline-launcher (running outside OSGi)
             to taverna-commandline-common (running inside OSGi)
             and therefore must be a falid x.y.z.0 OSGi version number
-            corersponding to the ${pom.version} - but without -SNAPSHOT
+            corresponding to the ${pom.version} - but without -SNAPSHOT
             or -incubating
             -->
             <taverna.commandline.osgiversion>3.1.0.0</taverna.commandline.osgiversion>
