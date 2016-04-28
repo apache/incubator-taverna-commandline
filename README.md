@@ -145,15 +145,15 @@ you can modify this behaviour with
 `--update-snapshots` or `--no-snapshot-updates`
 
 
-## Release distribution
+## Binary distribution
 
-To build a released version as a distributable ZIP file that
+To build a binary distribution ZIP file that
 includes third-party dependencies as JAR files,
 build with the `-Prelease` option, which would make
 `taverna-commandline-product/target/apache-taverna-commandline-3.1.0-incubating-release.zip`
 or equivalent.
 
-See the file `target/maven-shared-archive-resources/META-INF/DEPENDENCIES` for
+After building, see the file `target/maven-shared-archive-resources/META-INF/DEPENDENCIES` for
 details of the licenses of the third-party dependencies. All dependencies should
 be [compatible with Apache License 2.0](http://www.apache.org/legal/resolved.html).
 
@@ -169,9 +169,10 @@ If you prefer a ZIP file, then build instead with
 the Maven option `-Prelease`. You can then unzip at a location of
 your own choice.
 
-If you are running on Windows you may need to move this folder to a location
-high in the disk hierarchy (e.g. `C:\Taverna`) to avoid problems with
-Windows path length restrictions.
+If you are running on Windows you may need to
+put Taverna Command Line in a folder high in the
+disk hierarchy (e.g. `C:\Taverna`), this helps
+avoid problems with Windows path length restrictions.
 
 
 Running `executeworkflow.sh` (or `executeworkflow.bat`) without arguments
