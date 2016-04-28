@@ -51,7 +51,7 @@
 		<dependency>
 			<groupId>org.apache.taverna.language</groupId>
 			<artifactId>taverna-scufl2-wfbundle</artifactId>
-			<version>0.15.0-incubating-SNAPSHOT</version>
+			<version>${taverna.language.version}</version>
 			<scope>test</scope>
 		 <type>jar</type>
 		</dependency>
@@ -90,7 +90,7 @@
 	 <dependency>
 	  <groupId>org.apache.taverna.language</groupId>
 	  <artifactId>taverna-scufl2-api</artifactId>
-	  <version>0.15.0-incubating-SNAPSHOT</version>
+	  <version>${taverna.language.version}</version>
 	  <scope>test</scope>
 	  <type>jar</type>
 	 </dependency>
