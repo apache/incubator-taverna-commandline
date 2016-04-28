@@ -35,8 +35,8 @@ This product includes software developed at The
 [Apache Software Foundation](http://www.apache.org/).
 
 Licensed under the
-[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0), see the file
-[LICENSE](LICENSE) for details.
+[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0),
+see the file [LICENSE](LICENSE) for details.
 
 The file [NOTICE](NOTICE) contain any additional attributions and
 details about embedded third-party libraries and source code.
@@ -46,18 +46,18 @@ details about embedded third-party libraries and source code.
 
 Please subscribe to and contact the
 [dev@taverna](http://taverna.incubator.apache.org/community/lists#dev mailing list)
-for any questions, suggestions and discussions about
+mailing list for any questions, suggestions and discussions about
 Apache Taverna.
 
 Bugs and feature plannings are tracked in the Jira
-[Issue tracker](https://issues.apache.org/jira/browse/TAVERNA/component/12326812)
+[issue tracker](https://issues.apache.org/jira/browse/TAVERNA/component/12326812)
 under the `TAVERNA` component _Taverna Commandline._ Feel free
 to [add an issue](https://taverna.incubator.apache.org/community/issue-tracker)!
 
 To suggest changes to this source code, feel free to raise a
 [GitHub pull request](https://github.com/apache/incubator-taverna-commandline/pulls).
 
-Apache Taverna Command Line product relies on 
+Apache Taverna Command Line product relies on
 [other Taverna component](https://taverna.incubator.apache.org/code/)
 which have their own source code repositories.
 
@@ -120,31 +120,29 @@ that enforces Apache headers in every source file - to disable it, try:
     mvn clean install -Drat.skip=true
 
 
-## Nightly builds
+## SNAPSHOT dependencies
 
 If you are building a non-released version of this repository,
 (e.g.  the `pom.xml` declares a `-SNAPSHOT` version), then Maven might
 download unreleased
 [snapshot builds](https://taverna.incubator.apache.org/code/#snapshot-builds)
-for internal `-SNAPSHOT` Taverna dependencies.
+for other `-SNAPSHOT` Taverna dependencies.
 
-If you want to avoid this, make sure you have built the corresponding
+
+If you are developing one of the
 [Apache Taverna modules](http://taverna.incubator.apache.org/code)
-first. The default SNAPSHOT update policy for `mvn` is _daily_ - you can modify
-this behaviour with `--update-snapshots` or `--no-snapshot-updates`
+and want to test it with the Command Line, make sure you build it
+locally first with `mvn clean install` to avoid downloading it from
+the snapshot repository.
 
-There is a nightly build of [taverna-commandline-product](http://s.apache.org/taverna-nightly)
-using the `-Pnighty` profile, which produces a downloadable
-`taverna-command-line-product-3.1.0-incubating-SNAPSHOT-nightly.zip` - this
+Then check that the the `<properties>` section of the `pom.xml`
+matches the `<version>` of the module you are developing.
+See also `taverna-commandline-product/pom.xml`
+to hard-code versions of other dependencies.
 
-This should in theory contain all the needed dependencies (see lib/) and an
-`executeworkflow.sh` / `executeworkflow.bat` that can run Taverna 3 workflows.
-
-NOTE: These nightly builds should not be propagated beyond the
-[dev@taverna community](http://taverna.incubator.apache.org/community/lists#dev)
-as they do **not** constitute an official
-[Apache Release](http://www.apache.org/dev/release-distribution.html), and
-are provided only for development and testing purposes.
+The default SNAPSHOT update policy for `mvn` is _daily_ -
+you can modify this behaviour with
+`--update-snapshots` or `--no-snapshot-updates`
 
 
 ## Release distribution
@@ -164,14 +162,20 @@ be [compatible with Apache License 2.0](http://www.apache.org/legal/resolved.htm
 
 After [building](#building), see the `taverna-commandline-product/target`
 directory. Inside you should find a folder like
-`apache-taverna-commandline-3.1.0-incubating-SNAPSHOT-dev/`
-which contain the Apache Taverna Command Line product.
+`apache-taverna-commandline-3.1.0-incubating/`
+which contain the built Apache Taverna Command Line product.
 
 If you prefer a ZIP file, then build instead with
-the Maven options `-Pnightly` or (for released versions)
-`-Prelease`. You can then unzip at a location of
+the Maven option `-Prelease`. You can then unzip at a location of
 your own choice.
 
+If you are running on Windows you may need to move this folder to a location
+high in the disk hierarchy (e.g. `C:\Taverna`) to avoid problems with
+Windows path length restrictions.
+
+
+Running `executeworkflow.sh` (or `executeworkflow.bat`) without arguments
+will show the help:
 
 ```
 $ ./executeworkflow.sh
