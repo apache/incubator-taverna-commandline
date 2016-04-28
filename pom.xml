@@ -60,6 +60,20 @@
     <module>taverna-commandline-tests</module>
     -->
   </modules>
+        <build>
+                <plugins>
+                      <plugin>
+                        <groupId>org.apache.rat</groupId>
+                        <artifactId>apache-rat-plugin</artifactId>
+                        <configuration>
+                                <excludes combine.children="append">
+                                        <exclude>**/src/test/resources/workflows/</exclude> <!-- workflow files and expected inputs/outputs -->
+                                </excludes>
+                        </configuration>
+                        </plugin>
+                </plugins>
+        </build>
+
   <scm>
     <connection>scm:git:https://git-wip-us.apache.org/repos/asf/incubator-taverna-commandline.git</connection>
     <developerConnection>scm:git:https://git-wip-us.apache.org/repos/asf/incubator-taverna-commandline.git</developerConnection>
