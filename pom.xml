@@ -68,6 +68,7 @@
                         <configuration>
                                 <excludes combine.children="append">
                                         <exclude>**/src/test/resources/workflows/</exclude> <!-- workflow files and expected inputs/outputs -->
+                                        <exclude>**/src/main/resources/help.txt</exclude> <!-- shown verbatim in -h -->
                                 </excludes>
                         </configuration>
                         </plugin>
