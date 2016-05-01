@@ -248,8 +248,15 @@ The following provides more details on the included cryptographic software:
   [BouncyCastle](https://www.bouncycastle.org/) bcprov encryption library,
   [Apache HttpComponents](https://hc.apache.org/) Core and Client,
   [Apache Derby](http://db.apache.org/derby/),
+  [Jetty](http://www.eclipse.org/jetty/),
+  [Apache WSS4J](https://ws.apache.org/wss4j/),
+  [Apache XML Security for Java](https://santuario.apache.org/javaindex.html),
+  [Open SAML Java](https://shibboleth.net/products/opensaml-java.html),
   [Apache Taverna Language](http://taverna.incubator.apache.org/download/language/),
   [Apache Taverna OSGi](http://taverna.incubator.apache.org/download/osgi/),
-  [Apache Taverna Engine](http://taverna.incubator.apache.org/download/engine/)
+  [Apache Taverna Engine](http://taverna.incubator.apache.org/download/engine/),
   and
   [Apache Taverna Common Activities](http://taverna.incubator.apache.org/download/common-activities/).
+
+
+
