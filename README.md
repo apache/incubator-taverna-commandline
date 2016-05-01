@@ -204,3 +204,52 @@ Workflow completed.
 $ cat Hello_World_output/greeting ; echo
 Hello, World!
 ```
+
+# Export restrictions
+
+This distribution includes cryptographic software.
+The country in which you currently reside may have restrictions
+on the import, possession, use, and/or re-export to another country,
+of encryption software. BEFORE using any encryption software,
+please check your country's laws, regulations and policies
+concerning the import, possession, or use, and re-export of
+encryption software, to see if this is permitted.
+See <http://www.wassenaar.org/> for more information.
+
+The U.S. Government Department of Commerce, Bureau of Industry and Security (BIS),
+has classified this software as Export Commodity Control Number (ECCN) 5D002.C.1,
+which includes information security software using or performing
+cryptographic functions with asymmetric algorithms.
+The form and manner of this Apache Software Foundation distribution makes
+it eligible for export under the License Exception
+ENC Technology Software Unrestricted (TSU) exception
+(see the BIS Export Administration Regulations, Section 740.13)
+for both object code and source code.
+
+The following provides more details on the included cryptographic software:
+
+* Apache Taverna Command Line depend on and interact with the
+  [Apache Taverna Engine](http://taverna.incubator.apache.org/download/engine/),
+  credential manager, which manages an encrypted keystore for username/passwords
+  and client/server SSL certificates.   
+  The [JCE Unlimited Strength Jurisdiction Policy](http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html)
+  must be installed separately to use keystore passwords with 7 or more characters.
+* Apache Taverna Command Line depend on and interact with
+  [Apache Derby](http://db.apache.org/derby/), and could be configured to do so
+  over an SSL encrypted connection.
+* Apache Taverna Command Line depend on
+  [Apache Taverna Language](http://taverna.incubator.apache.org/download/language/),
+  [Apache Taverna OSGi](http://taverna.incubator.apache.org/download/osgi/),
+  [Apache Taverna Engine](http://taverna.incubator.apache.org/download/engine/),
+  and may be configured to check for updates using
+  `https://` connections.
+* After building, the [taverna-commandline-product](taverna-commandline-product)
+  archive `lib` folder include
+  [BouncyCastle](https://www.bouncycastle.org/) bcprov encryption library,
+  [Apache HttpComponents](https://hc.apache.org/) Core and Client,
+  [Apache Derby](http://db.apache.org/derby/),
+  [Apache Taverna Language](http://taverna.incubator.apache.org/download/language/),
+  [Apache Taverna OSGi](http://taverna.incubator.apache.org/download/osgi/),
+  [Apache Taverna Engine](http://taverna.incubator.apache.org/download/engine/)
+  and
+  [Apache Taverna Common Activities](http://taverna.incubator.apache.org/download/common-activities/).
