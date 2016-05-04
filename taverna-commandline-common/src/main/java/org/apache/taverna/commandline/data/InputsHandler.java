@@ -38,7 +38,6 @@ import org.apache.taverna.commandline.exceptions.InputMismatchException;
 import org.apache.taverna.commandline.exceptions.InvalidOptionException;
 import org.apache.taverna.commandline.exceptions.ReadInputException;
 import org.apache.taverna.commandline.options.CommandLineOptions;
-import org.apache.taverna.invocation.InvocationContext;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
@@ -101,7 +100,7 @@ public class InputsHandler {
 	}
 
 	public Bundle registerInputs(Map<String, InputWorkflowPort> portMap,
-			CommandLineOptions options, InvocationContext context) throws InvalidOptionException,
+			CommandLineOptions options) throws InvalidOptionException,
 			ReadInputException, IOException {
 		Bundle inputDataBundle;
 		inputDataBundle = DataBundles.createBundle();

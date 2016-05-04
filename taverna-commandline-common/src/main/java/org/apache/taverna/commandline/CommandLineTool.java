@@ -244,7 +244,7 @@ public class CommandLineTool {
 				inputsHandler.checkProvidedInputs(portMap, commandLineOptions);
 				logger.debug("Checked inputs");
 
-				Bundle inputs = inputsHandler.registerInputs(portMap, commandLineOptions, null);
+				Bundle inputs = inputsHandler.registerInputs(portMap, commandLineOptions);
 				logger.debug("Registered inputs");
 
 				RunProfile runProfile = new RunProfile(executionEnvironment, workflowBundle, inputs);
