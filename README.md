@@ -20,7 +20,7 @@
 Launcher for running
 [Apache Taverna](http://taverna.incubator.apache.org/) workflows.
 
-Note that except for command line parsing, this module relies on other
+Note that, except for command line parsing, this module relies on other
 [Apache Taverna modules](http://taverna.incubator.apache.org/code) for
 the actual workflow execution.
 
@@ -38,7 +38,7 @@ Licensed under the
 [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0),
 see the file [LICENSE](LICENSE) for details.
 
-The file [NOTICE](NOTICE) contain any additional attributions and
+The file [NOTICE](NOTICE) contains any additional attributions and
 details about embedded third-party libraries and source code.
 
 
@@ -49,7 +49,7 @@ Please subscribe to and contact the
 mailing list for any questions, suggestions and discussions about
 Apache Taverna.
 
-Bugs and feature plannings are tracked in the Jira
+Bugs and planned features are tracked in the Jira
 [issue tracker](https://issues.apache.org/jira/browse/TAVERNA/component/12326812)
 under the `TAVERNA` component _Taverna Commandline._ Feel free
 to [add an issue](https://taverna.incubator.apache.org/community/issue-tracker)!
@@ -58,7 +58,7 @@ To suggest changes to this source code, feel free to raise a
 [GitHub pull request](https://github.com/apache/incubator-taverna-commandline/pulls).
 
 Apache Taverna Command Line product relies on
-[other Taverna component](https://taverna.incubator.apache.org/code/)
+[other Taverna components](https://taverna.incubator.apache.org/code/)
 which have their own source code repositories.
 
 Any contributions received are assumed to be covered by the [Apache License
@@ -74,7 +74,7 @@ sponsored by the [Apache Incubator PMC](http://incubator.apache.org/).
 
 [Incubation](http://incubator.apache.org/incubation/Process_Description.html)
 is required of all newly accepted projects until a further review
-indicates that the infrastructure, communications, and decision making process
+indicates that the infrastructure, communications, and decision-making process
 have stabilized in a manner consistent with other successful ASF projects.
 
 While incubation status is not necessarily a reflection of the completeness
@@ -165,9 +165,9 @@ directory. Inside you should find a folder like
 `apache-taverna-commandline-3.1.0-incubating/`
 which contain the built Apache Taverna Command Line product.
 
-If you prefer a ZIP file, then build instead with
-the Maven option `-Prelease`. You can then unzip at a location of
-your own choice.
+If you prefer a ZIP file, then instead build with
+the Maven `-Prelease` option. You can then unzip at a location of
+your choice.
 
 If you are running on Windows you may need to
 put Taverna Command Line in a folder high in the
@@ -228,11 +228,11 @@ for both object code and source code.
 
 The following provides more details on the included cryptographic software:
 
-* Apache Taverna Command Line depend on and interact with the
+* Apache Taverna Command Line depends on and interacts with the
   [Apache Taverna Engine](http://taverna.incubator.apache.org/download/engine/),
   credential manager.
 * After building, the [taverna-commandline-product](taverna-commandline-product)
-  archive `lib` folder include
+  archive `lib` folder includes
   [BouncyCastle](https://www.bouncycastle.org/) bcprov encryption library,
   [Apache HttpComponents](https://hc.apache.org/) Core and Client,
   [Apache Derby](http://db.apache.org/derby/),
