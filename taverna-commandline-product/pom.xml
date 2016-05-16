@@ -28,14 +28,6 @@
   <artifactId>taverna-commandline-product</artifactId>
   <name>Apache Taverna Commandline Product</name>
   <!--<packaging>taverna-application</packaging> Disabled due to TAVERNA-924 -->
-  <packaging>jar</packaging>
-  <properties>
-    <!-- Must be compatible with jsonld-java and other Taverna dependencies -->
-    <jackson.version>2.6.6</jackson.version>
-<!-- Must be compatible with jcl.over.slf4j -->
-    <slf4j.version>1.7.12</slf4j.version>
-	
-  </properties>
   <profiles>
     <profile>
       <id>developer</id>
