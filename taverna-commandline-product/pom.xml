@@ -454,6 +454,15 @@ Xerces OSGi bundle needed by jena-osgi
       <artifactId>org.apache.servicemix.bundles.xerces</artifactId>
       <version>${servicemix.xerces.version}</version>
     </dependency>
+<!-- Also needed by Jena -->
+    <dependency>
+      <groupId>com.github.andrewoma.dexx</groupId>
+      <artifactId>collection</artifactId>
+      <version>${dexx.collection.version}</version>
+    </dependency>
+
+
+
     <!-- slf4j implementation -->
                 <!-- The bundle "org.purl.wf4ever.robundle_0.3.1 " could not be resolved. Reason: Missing Constraint: Import-Package: org.slf4j; version="[1.7.0,2.0.0)"-->
     <dependency>
