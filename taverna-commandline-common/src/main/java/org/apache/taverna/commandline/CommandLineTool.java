@@ -292,12 +292,15 @@ public class CommandLineTool {
 					Path bundlePath = Paths.get(commandLineOptions.saveResultsToBundle());
 					DataBundles.closeAndSaveBundle(runService.getDataBundle(runId), bundlePath);
 					System.out.println("Workflow Run Bundle saved to: " + bundlePath.toAbsolutePath());
-				} else {
-					System.out.println("Workflow Run Bundle: " + runService.getDataBundle(runId).getSource());
-					// For debugging we'll leave it in /tmp for now
-					runService.getDataBundle(runId).setDeleteOnClose(false);
-					DataBundles.closeBundle(runService.getDataBundle(runId));
+				} else {										
+					// For debugging, set to false:
+					if (Boolean.getBoolean("debug.bundle")) {
+						System.out.println("Workflow Run Bundle: " + runService.getDataBundle(runId).getSource());
+					} else {
+						runService.getDataBundle(runId).setDeleteOnClose(true);						
+					}										
 				}
+				runService.close(runId);
 
 				if (report.getState().equals(State.FAILED)) {
 					System.out.println("Workflow failed - see report below.");
