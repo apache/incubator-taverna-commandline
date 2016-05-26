@@ -105,7 +105,9 @@ public class InputsHandler {
 		Bundle inputDataBundle;
 		inputDataBundle = DataBundles.createBundle();
 		inputDataBundle.setDeleteOnClose(false);
-		System.out.println("Bundle: " + inputDataBundle.getSource());
+		if (Boolean.getBoolean("debug.bundle")) {
+			System.out.println("Bundle: " + inputDataBundle.getSource());
+		}
 		
 		Path inputs = DataBundles.getInputs(inputDataBundle);
 
