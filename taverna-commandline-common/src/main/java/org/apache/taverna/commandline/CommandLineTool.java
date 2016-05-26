@@ -33,6 +33,12 @@ import java.util.Set;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
+import org.apache.log4j.PropertyConfigurator;
+import org.apache.log4j.RollingFileAppender;
 import org.apache.taverna.commandline.data.DatabaseConfigurationHandler;
 import org.apache.taverna.commandline.data.InputsHandler;
 import org.apache.taverna.commandline.data.SaveResultsHandler;
@@ -42,16 +48,19 @@ import org.apache.taverna.commandline.exceptions.InvalidOptionException;
 import org.apache.taverna.commandline.exceptions.OpenDataflowException;
 import org.apache.taverna.commandline.exceptions.ReadInputException;
 import org.apache.taverna.commandline.options.CommandLineOptions;
-import org.apache.taverna.security.credentialmanager.CMException;
-import org.apache.taverna.security.credentialmanager.CredentialManager;
-
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
-import org.apache.log4j.PropertyConfigurator;
-import org.apache.log4j.RollingFileAppender;
+import org.apache.taverna.configuration.database.DatabaseConfiguration;
+import org.apache.taverna.configuration.database.DatabaseManager;
 import org.apache.taverna.databundle.DataBundles;
+import org.apache.taverna.platform.execution.api.ExecutionEnvironment;
+import org.apache.taverna.platform.execution.api.InvalidExecutionIdException;
+import org.apache.taverna.platform.execution.api.InvalidWorkflowException;
+import org.apache.taverna.platform.report.State;
+import org.apache.taverna.platform.report.WorkflowReport;
+import org.apache.taverna.platform.run.api.InvalidRunIdException;
+import org.apache.taverna.platform.run.api.RunProfile;
+import org.apache.taverna.platform.run.api.RunProfileException;
+import org.apache.taverna.platform.run.api.RunService;
+import org.apache.taverna.platform.run.api.RunStateException;
 import org.apache.taverna.robundle.Bundle;
 import org.apache.taverna.scufl2.api.common.NamedSet;
 import org.apache.taverna.scufl2.api.container.WorkflowBundle;
@@ -65,19 +74,10 @@ import org.apache.taverna.scufl2.validation.correctness.CorrectnessValidator;
 import org.apache.taverna.scufl2.validation.correctness.ReportCorrectnessValidationListener;
 import org.apache.taverna.scufl2.validation.structural.ReportStructuralValidationListener;
 import org.apache.taverna.scufl2.validation.structural.StructuralValidator;
+import org.apache.taverna.security.credentialmanager.CMException;
+import org.apache.taverna.security.credentialmanager.CredentialManager;
 
-import org.apache.taverna.configuration.database.DatabaseConfiguration;
-import org.apache.taverna.configuration.database.DatabaseManager;
-import org.apache.taverna.platform.execution.api.ExecutionEnvironment;
-import org.apache.taverna.platform.execution.api.InvalidExecutionIdException;
-import org.apache.taverna.platform.execution.api.InvalidWorkflowException;
-import org.apache.taverna.platform.report.State;
-import org.apache.taverna.platform.report.WorkflowReport;
-import org.apache.taverna.platform.run.api.InvalidRunIdException;
-import org.apache.taverna.platform.run.api.RunProfile;
-import org.apache.taverna.platform.run.api.RunProfileException;
-import org.apache.taverna.platform.run.api.RunService;
-import org.apache.taverna.platform.run.api.RunStateException;
+import com.github.jsonldjava.utils.JsonUtils;
 
 /**
  * A utility class that wraps the process of executing a workflow, allowing workflows to be easily
@@ -87,6 +87,7 @@ import org.apache.taverna.platform.run.api.RunStateException;
  * @author Alex Nenadic
  */
 public class CommandLineTool {
+	private static final String BUNDLE_CONTEXT = "https://w3id.org/bundle/context";
 	private static boolean BOOTSTRAP_LOGGING = false;
 	private static Logger logger = Logger.getLogger(CommandLineTool.class);
 
@@ -160,24 +161,21 @@ public class CommandLineTool {
 			}
 		}
 	}
-
+	
 	public int setupAndExecute() throws InputMismatchException, InvalidOptionException,
 			CMException, OpenDataflowException, ReaderException, IOException, ValidationException,
 			ReadInputException, InvalidWorkflowException, RunProfileException,
 			InvalidRunIdException, RunStateException, InvalidExecutionIdException, DatabaseConfigurationException {
-
-		if (!commandLineOptions.askedForHelp()) {
+				
+		if (commandLineOptions.askedForHelp()) {
+			commandLineOptions.displayHelp();
+			return 0;
+		}
 			 setupDatabase(commandLineOptions);
-
+			 setupJarCache();
+			 
+			 
 			if (commandLineOptions.getWorkflow() != null) {
-				
-				/* Set context class loader to us, 
-				 * so that things such as JSON-LD caching of
-				 * robundle works.
-				 */
-				
-				Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
-				
 				
 				/*
 				 * Initialise Credential Manager and SSL stuff quite early as
@@ -309,9 +307,7 @@ public class CommandLineTool {
 					System.out.println("Workflow completed.");
 				}
 
-			}
-		} else {
-			commandLineOptions.displayHelp();
+			
 		}
 
 		// wait until user hits CTRL-C before exiting
@@ -327,6 +323,21 @@ public class CommandLineTool {
 		}
 
 		return 0;
+	}
+
+	private void setupJarCache() {
+		// TAVERNA-xx workaround - we'll have our own jarcache.json and
+		// our own bundle.jsonld
+		Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
+		
+		// Verify:
+		try {
+			JsonUtils.fromURL(new URL(BUNDLE_CONTEXT));
+		} catch (Exception e) {
+			System.err.println("Can't load " + BUNDLE_CONTEXT + "");
+			e.printStackTrace();
+			
+		}
 	}
 
 	private boolean workflowFinished(WorkflowReport report) {
