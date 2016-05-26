@@ -26,7 +26,7 @@
 		<version>3.1.0-incubating-SNAPSHOT</version>
 	</parent>
 	<artifactId>taverna-commandline-launcher</artifactId>
-	<name>Apache Taverna Commandline Launcher</name>
+	<name>Apache Taverna Command-line Tool Launcher</name>
 	<build>
 		<plugins>
 			<plugin>

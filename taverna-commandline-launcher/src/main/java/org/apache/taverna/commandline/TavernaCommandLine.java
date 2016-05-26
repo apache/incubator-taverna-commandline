@@ -41,7 +41,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 
 /**
- * Main entry point for starting the Taverna Command Line Tool.
+ * Main entry point for starting the Taverna Command-line Tool.
  *
  * @author David Withers
  */
@@ -56,10 +56,10 @@ public class TavernaCommandLine {
 	private static Log4JConfiguration log4jConfiguration = new Log4JConfiguration();
 
 	/**
-	 * Starts the Taverna Command Line Tool.
+	 * Starts the Taverna Command-line Tool.
 	 *
 	 * @param args
-	 *            Taverna Command Line arguments
+	 *            Taverna Command-line Tool arguments
 	 */
 	public static void main(final String[] args) {
 		try {

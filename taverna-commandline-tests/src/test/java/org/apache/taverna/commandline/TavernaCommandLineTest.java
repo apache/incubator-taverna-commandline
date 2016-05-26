@@ -56,7 +56,7 @@ import org.apache.taverna.scufl2.api.io.WorkflowBundleIO;
 import org.apache.taverna.scufl2.rdfxml.RDFXMLReader;
 
 /**
- * Regression tests for Taverna Command Line Tool.
+ * Regression tests for Taverna Command-line Tool.
  */
 @RunWith(WorkflowTestSuite.class)
 public class TavernaCommandLineTest {

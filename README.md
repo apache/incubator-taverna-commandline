@@ -15,7 +15,7 @@
    limitations under the License.
 -->
 
-# Apache Taverna Commandline
+# Apache Taverna Command-line Tool
 
 Launcher for running
 [Apache Taverna](http://taverna.incubator.apache.org/) workflows.
@@ -50,13 +50,13 @@ Apache Taverna.
 
 Bugs and planned features are tracked in the Jira
 [issue tracker](https://issues.apache.org/jira/browse/TAVERNA/component/12326812)
-under the `TAVERNA` component _Taverna Commandline._ Feel free
+under the `TAVERNA` component _Taverna Command-line Tool._ Feel free
 to [add an issue](https://taverna.incubator.apache.org/community/issue-tracker)!
 
 To suggest changes to this source code, feel free to raise a
 [GitHub pull request](https://github.com/apache/incubator-taverna-commandline/pulls).
 
-Apache Taverna Command Line product relies on
+Apache Taverna Command-line Tool product relies on
 [other Taverna components](https://taverna.incubator.apache.org/code/)
 which have their own source code repositories.
 
@@ -130,7 +130,8 @@ for other `-SNAPSHOT` Taverna dependencies.
 
 If you are developing one of the
 [Apache Taverna modules](http://taverna.incubator.apache.org/code)
-and want to test it with the Command Line, make sure you build it
+and want to test it with the 
+Taverna Command-line Tool, make sure you build it
 locally first with `mvn clean install` to avoid downloading it from
 the snapshot repository.
 
@@ -162,14 +163,14 @@ be [compatible with Apache License 2.0](http://www.apache.org/legal/resolved.htm
 After [building](#building), see the `taverna-commandline-product/target`
 directory. Inside you should find a folder like
 `apache-taverna-commandline-3.1.0-incubating/`
-which contain the built Apache Taverna Command Line product.
+which contain the built Apache Taverna Command-line Tool product.
 
 If you prefer a ZIP file, then instead build with
 the Maven `-Prelease` option. You can then unzip at a location of
 your choice.
 
 If you are running on Windows you may need to
-put Taverna Command Line in a folder high in the
+put Taverna Command-line Tool in a folder high in the
 disk hierarchy (e.g. `C:\Taverna`), this helps
 avoid problems with Windows path length restrictions.
 
@@ -226,7 +227,7 @@ for both object code and source code.
 
 The following provides more details on the included cryptographic software:
 
-* Apache Taverna Command Line depends on and interacts with the
+* Apache Taverna Command-line Tool depends on and interacts with the
   [Apache Taverna Engine](http://taverna.incubator.apache.org/download/engine/),
   credential manager.
 * After building, the [taverna-commandline-product](taverna-commandline-product)

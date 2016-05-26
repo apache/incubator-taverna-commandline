@@ -27,5 +27,5 @@
 	</parent>
 	<packaging>bundle</packaging>
 	<artifactId>taverna-commandline-api</artifactId>
-	<name>Apache Taverna Commandline API</name>
+	<name>Apache Taverna Command-line Tool API</name>
 </project>

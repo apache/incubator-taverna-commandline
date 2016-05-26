@@ -27,7 +27,7 @@
 	</parent>
 	<artifactId>taverna-commandline-common</artifactId>
 	<packaging>bundle</packaging>
-	<name>Apache Taverna Commandline Common</name>
+	<name>Apache Taverna Command-line Tool Common</name>
 	<dependencies>
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
