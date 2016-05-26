@@ -27,9 +27,8 @@ the actual workflow execution.
 
 ## License
 
-(c) 2007-2014 University of Manchester
-
-(c) 2014-2016 Apache Software Foundation
+* (c) 2007-2014 University of Manchester
+* (c) 2014-2016 Apache Software Foundation
 
 This product includes software developed at The
 [Apache Software Foundation](http://www.apache.org/).
@@ -197,7 +196,6 @@ The folder `examples` contain a Hello World type example workflow in
 
 ```
 $ ./executeworkflow.sh examples/helloworld.wfbundle
-Bundle: /tmp/robundle475236702008690452/robundle.zip
 Outputs will be saved to the directory: /home/johndoe/apache-taverna-commandline-3.1.0/Hello_World_output
 Workflow completed.
 
