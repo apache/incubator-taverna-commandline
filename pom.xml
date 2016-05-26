@@ -31,7 +31,7 @@
 	<packaging>pom</packaging>
 	<name>Apache Taverna Commandline</name>
 	  <properties>
-	    <taverna.language.version>0.15.1-incubating</taverna.language.version>
+	    <taverna.language.version>0.15.2-incubating-SNAPSHOT</taverna.language.version>
 	    <taverna.osgi.version>0.2.1-incubating</taverna.osgi.version>
 	    <taverna.engine.version>3.1.0-incubating-SNAPSHOT</taverna.engine.version>
 	    <taverna.commonactivities.version>2.1.0-incubating-SNAPSHOT</taverna.commonactivities.version>
@@ -44,7 +44,7 @@
             <servicemix.xerces.version>2.11.0_1</servicemix.xerces.version>
 	    <apache.httpclient.version>4.5.2</apache.httpclient.version>
 	    <apache.httpcore.version>4.4.4</apache.httpcore.version>
-            <jackson.version>2.6.6</jackson.version>
+            <jackson.version>2.7.0</jackson.version>
             <jsonldjava.version>0.8.2</jsonldjava.version>
             <commons.configuration.version>1.10</commons.configuration.version>
             <slf4j.version>1.7.20</slf4j.version>

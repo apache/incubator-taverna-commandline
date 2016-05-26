@@ -172,8 +172,6 @@ public class CommandLineTool {
 			return 0;
 		}
 			 setupDatabase(commandLineOptions);
-			 setupJarCache();
-			 
 			 
 			if (commandLineOptions.getWorkflow() != null) {
 				
@@ -323,21 +321,6 @@ public class CommandLineTool {
 		}
 
 		return 0;
-	}
-
-	private void setupJarCache() {
-		// TAVERNA-xx workaround - we'll have our own jarcache.json and
-		// our own bundle.jsonld
-		Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
-		
-		// Verify:
-		try {
-			JsonUtils.fromURL(new URL(BUNDLE_CONTEXT));
-		} catch (Exception e) {
-			System.err.println("Can't load " + BUNDLE_CONTEXT + "");
-			e.printStackTrace();
-			
-		}
 	}
 
 	private boolean workflowFinished(WorkflowReport report) {
