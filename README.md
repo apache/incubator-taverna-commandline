@@ -103,6 +103,14 @@ which will be downloaded from Maven repositories if they are not
 already present in the equivalent of your `~/.m2/repository` in the
 correct version.
 
+## Building on Windows
+
+If you are building on Windows, ensure you unpack this source code
+to a folder with a [short path name](http://stackoverflow.com/questions/1880321/why-does-the-260-character-path-length-limit-exist-in-windows)
+lenght, e.g. `C:\src` - as
+Windows has a [limitation on the total path length](https://msdn.microsoft.com/en-us/library/aa365247%28VS.85%29.aspx#maxpath)
+which might otherwise
+prevent this code from building successfully.
 
 ## Skipping tests
 
@@ -130,7 +138,7 @@ for other `-SNAPSHOT` Taverna dependencies.
 
 If you are developing one of the
 [Apache Taverna modules](http://taverna.incubator.apache.org/code)
-and want to test it with the 
+and want to test it with the
 Taverna Command-line Tool, make sure you build it
 locally first with `mvn clean install` to avoid downloading it from
 the snapshot repository.
