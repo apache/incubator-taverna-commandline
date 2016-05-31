@@ -17,12 +17,32 @@
 
 # Apache Taverna Command-line Tool
 
-Launcher for running
-[Apache Taverna](http://taverna.incubator.apache.org/) workflows.
+Apache Taverna Command-line Tool provides a shell command
+for executing
+[Apache Taverna](https://taverna.incubator.apache.org/) workflows,
+defined using either the [Taverna Language](https://taverna.incubator.apache.org/download/language/)
+API in the
+[SCUFL2](https://taverna.incubator.apache.org/documentation/scufl2/)
+`.wfbundle` format, or in the `.t2flow` format from
+[Taverna Workbench 2.5](https://taverna.incubator.apache.org/download/workbench/).
 
-Note that, except for command line parsing, this module relies on other
-[Apache Taverna modules](http://taverna.incubator.apache.org/code) for
-the actual workflow execution.
+Workflow inputs can be provided as parameters or files,
+while outputs can be saved either to a folder or a
+[Research Object bundle](https://w3id.org/bundle)
+including detailed provenance, which can be inspected
+using Taverna Language's
+[DataBundle](https://taverna.incubator.apache.org/javadoc/taverna-language/org/apache/taverna/databundle/DataBundles.html)
+support.
+
+In addition to the
+[Taverna Common Activities](https://taverna.incubator.apache.org/download/common-activities/),
+the Command-line supports plugins using
+[Taverna OSGi services](https://taverna.incubator.apache.org/download/osgi/).
+
+
+Note that, except for command line handling, this
+module relies on other
+[Apache Taverna components](https://taverna.incubator.apache.org/code) for the actual workflow execution.
 
 
 ## License
