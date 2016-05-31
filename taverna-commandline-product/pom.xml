@@ -68,6 +68,14 @@
         <profile.pluginSite>https://taverna.incubator.apache.org/plugins/commandline/</profile.pluginSite>
       </properties>
     </profile>
+    <profile>
+      <id>apache-release</id>
+      <properties>
+        <assembly.descriptor>src/main/assembly/release-assembly.xml</assembly.descriptor>
+        <profile.updateSite>https://taverna.incubator.apache.org/updates/commandline/</profile.updateSite>
+        <profile.pluginSite>https://taverna.incubator.apache.org/plugins/commandline/</profile.pluginSite>
+      </properties>
+    </profile>
   </profiles>
   <build>
     <finalName>apache-taverna-commandline-${project.version}</finalName>
