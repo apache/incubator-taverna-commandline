@@ -64,7 +64,23 @@ public interface CommandLineOptions {
 	 */
 	public String[] getInputFiles();
 
+	/**
+	 * Returns an array that alternates between a portname and an
+	 * input values. Therefore the array will always contain an
+	 * even number of elements.
+	 *
+	 * @return an array of portname and individual
+	 *         inputs.
+	 */	
 	public String[] getInputValues();
+	
+	/**
+	 * Return the path for a data bundle which should be used for 
+	 * input values. This option can't be used together with
+	 * {@link #getInputFiles()} or {@link #getInputValues()}
+	 * 
+	 */
+	public String getInputBundle();
 
 	public String getLogFile();
 
@@ -90,6 +106,8 @@ public interface CommandLineOptions {
 	public boolean hasInputFiles();
 
 	public boolean hasInputValues();
+	
+	public boolean hasInputBundle();
 
 	public boolean hasLogFile();
 
@@ -113,6 +131,6 @@ public interface CommandLineOptions {
 	 */
 	public boolean saveResultsToDirectory();
 
-	public String saveResultsToBundle();
+	public String getSaveResultsToBundle();
 
 }

@@ -48,6 +48,7 @@ import org.apache.log4j.Logger;
  */
 public class CommandLineOptionsImpl implements CommandLineOptions {
 
+	private static final String INPUT_BUNDLE = "inputbundle";
 	private static final String OUTPUTDIR = "outputdir";
 	private static final String BUNDLE = "bundle";
 	private static final Logger logger = Logger.getLogger(CommandLineOptionsImpl.class);
@@ -77,12 +78,12 @@ public class CommandLineOptionsImpl implements CommandLineOptions {
 			throw new InvalidOptionException(
 					"You should be running with a database to use provenance");
 		if ((hasOption("inputfile") || hasOption("inputvalue"))
-				&& hasOption("inputdoc"))
+				&& hasOption(INPUT_BUNDLE))
 			throw new InvalidOptionException(
-					"You can't provide both -input and -inputdoc arguments");
+					"You can't provide both -input and -inputbundle arguments");
 
-		if (hasOption("inputdelimiter") && hasOption("inputdoc"))
-			throw new InvalidOptionException("You cannot combine the -inputdelimiter and -inputdoc arguments");
+		if (hasOption("inputdelimiter") && hasOption(INPUT_BUNDLE))
+			throw new InvalidOptionException("You cannot combine the -inputdelimiter and -inputbundle arguments");
 
 		if (getArgs().length == 0
 				&& !(hasOption("help") || hasOption("startdb")))
@@ -298,7 +299,7 @@ public class CommandLineOptionsImpl implements CommandLineOptions {
 				.create(OUTPUTDIR);
 
 		Option bundleOption = OptionBuilder.withArgName(BUNDLE).hasArg()
-				.withDescription("Save outputs to a new Workflow Run Bundle (zip).")
+				.withDescription("Save outputs to a new Data Bundle (zip).")
 				.create(BUNDLE);
 
 		Option logFileOption = OptionBuilder
@@ -312,6 +313,10 @@ public class CommandLineOptionsImpl implements CommandLineOptions {
 				.withDescription("Load inputs from a Baclava document.").create(
 						"inputdoc");
 
+		Option inputBundleOption = OptionBuilder.withArgName("bundle").hasArg()
+				.withDescription("Load inputs from a Data Bundle zip file.").create(
+						INPUT_BUNDLE);
+		
 		Option inputFileOption = OptionBuilder
 				.withArgName("inputname filename").hasArgs(2)
 				.withValueSeparator(' ').withDescription(
@@ -366,10 +371,12 @@ public class CommandLineOptionsImpl implements CommandLineOptions {
 		options.addOption(helpOption);
 		options.addOption(inputFileOption);
 		options.addOption(inputValueOption);
+		options.addOption(inputBundleOption);
 		options.addOption(inputDelimiterOption);
 		options.addOption(outputOption);
 		options.addOption(bundleOption);		
 		options.addOption(inMemOption);
+		// TAVERNA-972: Unused database parameters disabled 
 //		options.addOption(embedded);
 //		options.addOption(clientserver);
 //		options.addOption(dbProperties);
@@ -425,7 +432,7 @@ public class CommandLineOptionsImpl implements CommandLineOptions {
 	}
 
 	@Override
-	public String saveResultsToBundle() {
+	public String getSaveResultsToBundle() {
 		if (! hasSaveResultsToBundle()) { 
 			return null;
 		}
@@ -435,6 +442,19 @@ public class CommandLineOptionsImpl implements CommandLineOptions {
 	@Override
 	public boolean hasSaveResultsToBundle() {
 		return hasOption(BUNDLE);
+	}
+
+	@Override
+	public String getInputBundle() {
+		if (! hasInputBundle()) { 
+			return null;
+		}
+		return getOptionValue(INPUT_BUNDLE);
+	}
+
+	@Override
+	public boolean hasInputBundle() {
+		return hasOption(INPUT_BUNDLE);
 	}
 
 }

@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
@@ -286,17 +287,17 @@ public class CommandLineTool {
 						}
 					}
 				}
-				if (commandLineOptions.saveResultsToBundle() != null) {
-					Path bundlePath = Paths.get(commandLineOptions.saveResultsToBundle());
-					DataBundles.closeAndSaveBundle(runService.getDataBundle(runId), bundlePath);
-					System.out.println("Workflow Run Bundle saved to: " + bundlePath.toAbsolutePath());
-				} else {										
-					// For debugging, set to false:
-					if (Boolean.getBoolean("debug.bundle")) {
-						System.out.println("Workflow Run Bundle: " + runService.getDataBundle(runId).getSource());
+				if (commandLineOptions.getSaveResultsToBundle() != null) {
+					Path bundlePath = Paths.get(commandLineOptions.getSaveResultsToBundle());
+					Bundle bundle = runService.getDataBundle(runId);
+					if (Files.isSameFile(bundlePath, bundle.getSource())) {
+						// This can happen with 
+						// -bundle same.zip -inputbundle same.zip
+						DataBundles.closeBundle(bundle);
 					} else {
-						runService.getDataBundle(runId).setDeleteOnClose(true);						
-					}										
+						DataBundles.closeAndSaveBundle(bundle, bundlePath);
+					}
+					System.out.println("Data Bundle saved to: " + bundlePath.toAbsolutePath());
 				}
 				runService.close(runId);
 

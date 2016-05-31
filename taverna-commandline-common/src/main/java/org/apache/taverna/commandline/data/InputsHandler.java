@@ -26,12 +26,14 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Set;
 
 import org.apache.taverna.commandline.exceptions.InputMismatchException;
@@ -102,10 +104,29 @@ public class InputsHandler {
 	public Bundle registerInputs(Map<String, InputWorkflowPort> portMap,
 			CommandLineOptions options) throws InvalidOptionException,
 			ReadInputException, IOException {
+		
 		Bundle inputDataBundle;
-		inputDataBundle = DataBundles.createBundle();
-		inputDataBundle.setDeleteOnClose(false);
+		if (! options.hasInputBundle()) {
+			// use a temporary data bundle for inputs			
+			inputDataBundle = DataBundles.createBundle();
+		} else { 
+			Path inputBundlePath = Paths.get(options.getInputBundle());
+			
+			
+			if (options.hasSaveResultsToBundle() && 
+				Files.isSameFile(inputBundlePath, Paths.get(options.getSaveResultsToBundle()))) {
+				// Note: It is valid to do -bundle same.zip -inputbundle same.zip, 
+				// in which case we should NOT open it as readOnly, as that
+				// might make a copy unnecessarily. In case of symlinks we'll use the
+				// path from -bundle to avoid double-opening later
+				inputDataBundle = DataBundles.openBundle(Paths.get(options.getSaveResultsToBundle()));				
+			} else {			
+				inputDataBundle = DataBundles.openBundleReadOnly(inputBundlePath);
+			}			
+		}
+
 		if (Boolean.getBoolean("debug.bundle")) {
+			inputDataBundle.setDeleteOnClose(false);
 			System.out.println("Bundle: " + inputDataBundle.getSource());
 		}
 		
