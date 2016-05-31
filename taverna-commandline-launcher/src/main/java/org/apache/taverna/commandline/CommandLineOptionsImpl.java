@@ -76,9 +76,6 @@ public class CommandLineOptionsImpl implements CommandLineOptions {
 				&& !(hasOption("embedded") || hasOption("clientserver") || hasOption("dbproperties")))
 			throw new InvalidOptionException(
 					"You should be running with a database to use provenance");
-		if (isProvenanceEnabled() && hasOption("inmemory"))
-			throw new InvalidOptionException(
-					"You should be running with a database to use provenance");
 		if ((hasOption("inputfile") || hasOption("inputvalue"))
 				&& hasOption("inputdoc"))
 			throw new InvalidOptionException(
@@ -370,16 +367,15 @@ public class CommandLineOptionsImpl implements CommandLineOptions {
 		options.addOption(inputFileOption);
 		options.addOption(inputValueOption);
 		options.addOption(inputDelimiterOption);
-		options.addOption(inputdocOption);
 		options.addOption(outputOption);
-		options.addOption(bundleOption);
+		options.addOption(bundleOption);		
 		options.addOption(inMemOption);
-		options.addOption(embedded);
-		options.addOption(clientserver);
-		options.addOption(dbProperties);
-		options.addOption(port);
-		options.addOption(startDB);
-		options.addOption(provenance);
+//		options.addOption(embedded);
+//		options.addOption(clientserver);
+//		options.addOption(dbProperties);
+//		options.addOption(port);
+//		options.addOption(startDB);
+//		options.addOption(provenance);
 		options.addOption(logFileOption);
 		options.addOption(credentialManagerDirectory);
 		options.addOption(credentialManagerPassword);
