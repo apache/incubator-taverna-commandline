@@ -22,7 +22,7 @@
 	<parent>
 		<groupId>org.apache.taverna.commandline</groupId>
 		<artifactId>apache-taverna-commandline</artifactId>
-		<version>3.1.0-incubating</version>
+		<version>3.1.0-incubating-SNAPSHOT</version>
 	</parent>
 	<artifactId>taverna-commandline-launcher</artifactId>
 	<name>Apache Taverna Command-line Tool Launcher</name>
