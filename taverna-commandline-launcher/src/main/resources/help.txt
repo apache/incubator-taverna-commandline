@@ -1,10 +1,8 @@
-By default, the workflow is executed using the -inmemory option, and the
-results are written out to a directory named after the workflow name.
+By default, the workflow results are written to a directory
+named after the workflow name. If this directory already exists, 
+then a new directory is created with an incremental number.
 
-If this directory already exists then a new directory is created, and
-appended with _<n>, where n is incremented to the next available index.
-
-Results are written out to files named after the output port for that result.
+Results are written to files named after the output port for that result.
 If a result is composed of lists, then a directory is created for the output
 port and individual list items are named after the list element index (with 1
 being the first index). The the output is the result of an error, the filename
@@ -13,12 +11,8 @@ is appended with '.error'.
 You can provide your own output directory with the -outputdir option. There
 will be an error if the directory already exists.
 
-You can also record your results to a Baclava document using -outputdoc
-option. The document will be overwritten if it already exists.
-
 Inputs can be provided in three ways. Both -inputfile and -inputvalue options
-can be used together; -inputdoc option must be used on its own. -inputfile and
--inputvalue options both take two additional arguments, the name of the port
+can be used together; both take two additional arguments, the name of the port
 for the input, and either a file containing the input data, or the input value
 itself respectively.
 
@@ -33,51 +27,12 @@ converted into a list being split by the delimiter specified. Make sure to
 put the delimiter character in quotes as it may be interpreted by the shell 
 as a special character, e.g. ;.
 
-If a list of greater depth (i.e. a list or lists or deeper) is required then
-you will need to use the -inputdoc option.  However, if you provide an input
-of lower depth to that required, then it will automatically be wrapped in one
-or more lists up to the required depth. Providing an input of greater depth
-than that required will result in an error.
-
-If a workflow has a high memory requirement, then it may be better to run it
-using a database to store data rather than storing it in memory, which is the
-default option. There are three options for using a database:
-
--embedded option, runs with an embedded database. This is slightly faster than
-the -clientserver option (below), but has the limitation that only one
-executeworkflow script may be executed simultaneously.
-
--clientserver option allows the workflow to be executed backed by the database
-running as a server. By default a database is not started for you, but may be
-started using -startdb option.
-
--startdb option starts a database. It may be used without providing a workflow
-to allow a database to be started separately, allowing multiple simultaneous
-executeworkflow script runs.
-
-More advanced database configurations can be specified using -dbproperties
-option, allowing you to take full control over the database used. This takes a
-second argument, the filename of the properties file, for which the following
-example contains the default settings:
-
-in_memory = true
-provenance = false
-connector = derby
-port = 1527
-dialect = org.hibernate.dialect.DerbyDialect
-start_derby = false
-driver = org.apache.derby.jdbc.EmbeddedDriver
-jdbcuri = jdbc:derby:t2-database;create=true;upgrade=true
-
-Note that when using -dbproperties together with other options, the other
-options take precedence.
-
 -cmdir option lets you specify an absolute path to a directory where 
 Credential Manager's files (keystore and truststore - containing user's 
 credentials and trusted certificates for accessing secure services) are stored.
 If not specified and the workflow requires access to these files, Taverna will 
 try to find them in the default location in <TAVERNA_HOME>/security somewhere 
-inside user's home directory (depending on the platform).
+inside user's home directory.
 
 -cmpassword option can be used to tell Taverna to expect the password for the 
 Credential Manager on standard input. If the password is not piped in, Taverna 
