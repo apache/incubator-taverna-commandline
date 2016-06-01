@@ -19,12 +19,13 @@
 
 package org.apache.taverna.commandline;
 
+import static org.apache.taverna.commandline.CommandLineUtils.safeIsSameFile;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
@@ -80,6 +81,7 @@ import org.apache.taverna.security.credentialmanager.CredentialManager;
 
 import com.github.jsonldjava.utils.JsonUtils;
 
+
 /**
  * A utility class that wraps the process of executing a workflow, allowing workflows to be easily
  * executed independently of the GUI.
@@ -110,21 +112,22 @@ public class CommandLineTool {
 				| InvalidRunIdException | RunStateException
 				| InvalidExecutionIdException | OpenDataflowException
 				| RunProfileException e) {
-			error(e.getMessage());
+			error(e);
 		} catch (CMException e) {
-			error("There was an error initializing Taverna's SSLSocketFactory from Credential Manager. "
-					+ e.getMessage());
+			error("There was an error initializing Taverna's SSLSocketFactory from Credential Manager", e
+					);
 		} catch (ReaderException e) {
-			error("There was an error reading the workflow: " + e.getMessage());
+			error("There was an error reading the workflow", e);
 		} catch (ValidationException e) {
-			error("There was an error validating the workflow: " + e.getMessage());
+			error("There was an error validating the workflow", e);
 		} catch (InvalidWorkflowException e) {
-			error("There was an error validating the workflow: " + e.getMessage());
+			error("There was an error validating the workflow", e);
 		} catch (DatabaseConfigurationException e) {
-			error("There was an error configuring the database: " + e.getMessage());
+			error("There was an error configuring the database", e);
 		}
 		System.exit(1);
 	}
+
 
 	private void initialiseLogging() {
 		LogManager.resetConfiguration();
@@ -247,7 +250,7 @@ public class CommandLineTool {
 				logger.debug("Registered inputs");
 
 				RunProfile runProfile = new RunProfile(executionEnvironment, workflowBundle, inputs);
-
+			
 				String runId = runService.createRun(runProfile);
 
 				runService.start(runId);
@@ -290,12 +293,11 @@ public class CommandLineTool {
 				if (commandLineOptions.getSaveResultsToBundle() != null) {
 					Path bundlePath = Paths.get(commandLineOptions.getSaveResultsToBundle());
 					Bundle bundle = runService.getDataBundle(runId);
-					if (Files.isSameFile(bundlePath, bundle.getSource())) {
+					if (! safeIsSameFile(bundlePath, bundle.getSource())) {
 						// This can happen with 
 						// -bundle same.zip -inputbundle same.zip
-						DataBundles.closeBundle(bundle);
-					} else {
-						DataBundles.closeAndSaveBundle(bundle, bundlePath);
+						// in which case we don't want to save to another file
+						runService.save(runId, bundlePath);
 					}
 					System.out.println("Data Bundle saved to: " + bundlePath.toAbsolutePath());
 				}
@@ -401,9 +403,20 @@ public class CommandLineTool {
 		return result;
 	}
 
-	protected void error(String msg) {
+	protected void error(String msg) {	
+		logger.error(msg);
 		System.err.println(msg);
 	}
+
+	protected void error(String message, Throwable e) {
+		logger.error(message, e);
+		System.err.println(message + ": " + e.getMessage());		
+	}
+	
+	protected void error(Throwable e) {
+		logger.error(e.getMessage(), e);
+		System.err.println(e.getMessage());	
+	}	
 
 	private URL readWorkflowURL(String workflowOption) throws OpenDataflowException {
 		try {

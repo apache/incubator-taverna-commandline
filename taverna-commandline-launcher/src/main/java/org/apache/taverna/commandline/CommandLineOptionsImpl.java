@@ -22,10 +22,6 @@ package org.apache.taverna.commandline;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.taverna.commandline.exceptions.ArgumentsParsingException;
-import org.apache.taverna.commandline.exceptions.InvalidOptionException;
-import org.apache.taverna.commandline.options.CommandLineOptions;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
@@ -36,6 +32,9 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.apache.taverna.commandline.exceptions.ArgumentsParsingException;
+import org.apache.taverna.commandline.exceptions.InvalidOptionException;
+import org.apache.taverna.commandline.options.CommandLineOptions;
 
 /**
  * Handles the processing of command line arguments for enacting a workflow.
@@ -422,13 +421,13 @@ public class CommandLineOptionsImpl implements CommandLineOptions {
 
 	/**
 	 * Save the results to a directory if -outputdir has been explicitly defined,
-	 * or if -outputdoc has not been defined.
+	 * or if -bundlec has not been defined.
 	 *
 	 * @return boolean
 	 */
 	@Override
 	public boolean saveResultsToDirectory() {
-		return (options.hasOption(OUTPUTDIR) || !hasSaveResultsToBundle());
+		return (hasOption(OUTPUTDIR) ||  ! hasSaveResultsToBundle());
 	}
 
 	@Override

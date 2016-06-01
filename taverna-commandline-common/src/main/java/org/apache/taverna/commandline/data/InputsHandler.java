@@ -19,6 +19,8 @@
 
 package org.apache.taverna.commandline.data;
 
+import static org.apache.taverna.commandline.CommandLineUtils.safeIsSameFile;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -33,16 +35,14 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.NavigableMap;
 import java.util.Set;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.apache.taverna.commandline.exceptions.InputMismatchException;
 import org.apache.taverna.commandline.exceptions.InvalidOptionException;
 import org.apache.taverna.commandline.exceptions.ReadInputException;
 import org.apache.taverna.commandline.options.CommandLineOptions;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
 import org.apache.taverna.databundle.DataBundles;
 import org.apache.taverna.robundle.Bundle;
 import org.apache.taverna.scufl2.api.port.InputWorkflowPort;
@@ -61,7 +61,20 @@ public class InputsHandler {
 	private static Logger logger = Logger.getLogger(InputsHandler.class);
 
 	public void checkProvidedInputs(Map<String, InputWorkflowPort> portMap,
-			CommandLineOptions options) throws InputMismatchException {
+			CommandLineOptions options) throws InputMismatchException, IOException {
+		if (options.hasInputBundle()) {
+			try (Bundle inputBundle = openInputBundle(options)) {
+				Path inputs = DataBundles.getInputs(inputBundle);
+				Set<String> expected = portMap.keySet();
+				Set<String> provided = DataBundles.getPorts(inputs).keySet();
+				if (! provided.containsAll(expected)) {
+					throw new InputMismatchException("Missing inputs", expected, provided);
+				}				
+			}
+			// inputFiles/values ignored if input bundle is provided
+			return;
+		}
+		
 		// we dont check for the document
                 Set<String> providedInputNames = new HashSet<String>();
                 for (int i = 0; i < options.getInputFiles().length; i += 2) {
@@ -105,26 +118,7 @@ public class InputsHandler {
 			CommandLineOptions options) throws InvalidOptionException,
 			ReadInputException, IOException {
 		
-		Bundle inputDataBundle;
-		if (! options.hasInputBundle()) {
-			// use a temporary data bundle for inputs			
-			inputDataBundle = DataBundles.createBundle();
-		} else { 
-			Path inputBundlePath = Paths.get(options.getInputBundle());
-			
-			
-			if (options.hasSaveResultsToBundle() && 
-				Files.isSameFile(inputBundlePath, Paths.get(options.getSaveResultsToBundle()))) {
-				// Note: It is valid to do -bundle same.zip -inputbundle same.zip, 
-				// in which case we should NOT open it as readOnly, as that
-				// might make a copy unnecessarily. In case of symlinks we'll use the
-				// path from -bundle to avoid double-opening later
-				inputDataBundle = DataBundles.openBundle(Paths.get(options.getSaveResultsToBundle()));				
-			} else {			
-				inputDataBundle = DataBundles.openBundleReadOnly(inputBundlePath);
-			}			
-		}
-
+		Bundle inputDataBundle = openInputBundle(options);
 		if (Boolean.getBoolean("debug.bundle")) {
 			inputDataBundle.setDeleteOnClose(false);
 			System.out.println("Bundle: " + inputDataBundle.getSource());
@@ -153,6 +147,27 @@ public class InputsHandler {
 
 		return inputDataBundle;
 	}
+
+	private Bundle openInputBundle(CommandLineOptions options) throws IOException {
+		if (! options.hasInputBundle()) {
+			return DataBundles.createBundle();
+		} 
+		Path inputBundlePath = Paths.get(options.getInputBundle());
+		if (! Files.isReadable(inputBundlePath)) {
+			throw new IOException("Can't read inputbundle: " + inputBundlePath);
+		}
+		if (options.hasSaveResultsToBundle() && 
+				safeIsSameFile(inputBundlePath, Paths.get(options.getSaveResultsToBundle()))) {
+			// Note: It is valid to do -bundle same.zip -inputbundle same.zip, 
+			// in which case we should NOT open it as readOnly, as that
+			// might make a copy unnecessarily. In case of symlinks we'll use the
+			// path from -bundle to avoid double-opening later
+			return DataBundles.openBundle(Paths.get(options.getSaveResultsToBundle()));				
+		} else {			
+			return DataBundles.openBundleReadOnly(inputBundlePath);
+		}
+	}
+
 
 	private void registerInputsFromValues(Map<String, InputWorkflowPort> portMap,
 			CommandLineOptions options, Path inputs) throws InvalidOptionException {
