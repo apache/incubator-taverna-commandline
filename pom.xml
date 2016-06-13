@@ -32,8 +32,8 @@
 	  <properties>
 	    <taverna.language.version>0.15.1-incubating</taverna.language.version>
 	    <taverna.osgi.version>0.2.1-incubating</taverna.osgi.version>
-	    <taverna.engine.version>3.1.0-incubating</taverna.engine.version>
-	    <taverna.commonactivities.version>2.1.0-incubating</taverna.commonactivities.version>
+	    <taverna.engine.version>3.1.0-incubating-SNAPSHOT</taverna.engine.version>
+	    <taverna.commonactivities.version>2.1.0-incubating-SNAPSHOT</taverna.commonactivities.version>
 	    
             <!-- Bring forward updated dependency properties 
                  from apache-taverna-parent 3-incubating-SNAPSHOT 
