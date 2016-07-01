@@ -40,7 +40,7 @@ the Command-line supports plugins using
 [Taverna OSGi services](https://taverna.incubator.apache.org/download/osgi/).
 
 
-Note that, except for command line handling, this
+Note that, except for command-line handling, this
 module relies on other
 [Apache Taverna components](https://taverna.incubator.apache.org/code) for the actual workflow execution.
 
@@ -111,10 +111,10 @@ fully endorsed by the ASF.
 
 This code relies on other
 [Apache Taverna modules](https://taverna.incubator.apache.org/download/code/),
-which Maven shuold automatically
-download from
+which Maven should download 
+automatically from
 [Apache's Maven repository](https://taverna.incubator.apache.org/download/maven/);
-however you might want to compile these yourself in the below order:
+however you might want to compile these yourself in the order below:
 
 * [taverna-language](https://taverna.incubator.apache.org/download/language/)
 * [taverna-osgi](https://taverna.incubator.apache.org/download/osgi/)
@@ -130,7 +130,7 @@ To build, use
 
     mvn clean install
 
-This will build each module and run their tests.
+This will build each module and run its tests.
 
 Note that this repository relies on
 other [Apache Taverna modules](https://taverna.incubator.apache.org/code)
@@ -215,7 +215,7 @@ your choice.
 If you are running on Windows you may need to
 put Taverna Command-line Tool in a folder high in the
 disk hierarchy (e.g. `C:\Taverna`), this helps
-avoid problems with Windows path length restrictions.
+avoid problems with Windows path-length restrictions.
 
 
 Running `executeworkflow.sh` (or `executeworkflow.bat`) without arguments
@@ -235,7 +235,7 @@ usage: executeworkflow [options] [workflow]
 ...
 ```
 
-The folder `examples` contain a Hello World type example workflow in
+The folder `examples` contains a Hello World type example workflow in
 [SCUFL2 format](http://taverna.incubator.apache.org/documentation/scufl2/).
 
 ```
