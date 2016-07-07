@@ -111,7 +111,7 @@ fully endorsed by the ASF.
 
 This code relies on other
 [Apache Taverna modules](https://taverna.incubator.apache.org/download/code/),
-which Maven should download 
+which Maven should download
 automatically from
 [Apache's Maven repository](https://taverna.incubator.apache.org/download/maven/);
 however you might want to compile these yourself in the order below:
@@ -206,7 +206,7 @@ be [compatible with Apache License 2.0](http://www.apache.org/legal/resolved.htm
 After [building](#building), see the `taverna-commandline-product/target`
 directory. Inside you should find a folder like
 `apache-taverna-commandline-3.1.0-incubating/`
-which contain the built Apache Taverna Command-line Tool product.
+which contains the built Apache Taverna Command-line Tool product.
 
 If you prefer a ZIP file, then instead build with
 the Maven `-Prelease` option. You can then unzip at a location of
@@ -244,6 +244,17 @@ Outputs will be saved to the directory: /home/johndoe/apache-taverna-commandline
 Workflow completed.
 
 $ cat Hello_World_output/greeting ; echo
+Hello, World!
+```
+
+On Windows:
+
+```
+C:\home\apache-taverna-commandline-3.1.0>executeworkflow.bat examples\helloworld.wfbundle
+Outputs will be saved to the directory: C:\home\apache-taverna-commandline-3.1.0\Hello_World_output
+Workflow completed.
+
+C:\home\apache-taverna-commandline-3.1.0>type Hello_World_output\greeting
 Hello, World!
 ```
 
