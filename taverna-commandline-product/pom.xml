@@ -27,6 +27,7 @@
   <artifactId>taverna-commandline-product</artifactId>
   <name>Apache Taverna Command-line Tool Product</name>
   <!--<packaging>taverna-application</packaging> Disabled due to TAVERNA-924 -->
+  <packaging>bundle</packaging>
   <profiles>
     <profile>
       <id>developer</id>
