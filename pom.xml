@@ -34,25 +34,6 @@
 	    <taverna.osgi.version>0.2.1-incubating</taverna.osgi.version>
 	    <taverna.engine.version>3.1.0-incubating</taverna.engine.version>
 	    <taverna.commonactivities.version>2.1.0-incubating</taverna.commonactivities.version>
-	    
-            <!-- Bring forward updated dependency properties 
-                 from apache-taverna-parent 3-incubating-SNAPSHOT 
-                 (FIXME: Remove these once taverna-parent 3 is released)
-            -->
-	    <jena.version>3.1.0</jena.version>
-            <servicemix.xerces.version>2.11.0_1</servicemix.xerces.version>
-	    <apache.httpclient.version>4.5.2</apache.httpclient.version>
-	    <apache.httpcore.version>4.4.4</apache.httpcore.version>
-            <jackson.version>2.6.6</jackson.version>
-            <jsonldjava.version>0.8.2</jsonldjava.version>
-            <commons.configuration.version>1.10</commons.configuration.version>
-            <slf4j.version>1.7.20</slf4j.version>
-            <dexx.collection.version>0.6</dexx.collection.version>
-
-
-
-
-
 
             <!-- 
             Update below version number to match the <version> above.
@@ -66,7 +47,7 @@
             or -incubating
             -->
             <taverna.commandline.osgiversion>3.1.1.0</taverna.commandline.osgiversion>
-            <commons.cli.version>1.3.1</commons.cli.version>
+	    <!--OSGi runtime: Felix  -->
 	    <osgi.felix.version>4.6.1</osgi.felix.version>
 	  </properties>
 	<modules>
