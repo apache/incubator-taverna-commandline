@@ -44,7 +44,7 @@ volunteer caretakers.
 
 ### Previous releases
 
-Releases 2015-2018 as part of the activities during Apache Software Foundation
+Releases 2015-2018 during incubation at Apache Software Foundation
 are available from the ASF Download Archive <http://archive.apache.org/dist/incubator/taverna/>
 
 Releases 2014 from the University of Manchester are on BitBucket <https://bitbucket.org/taverna/>
