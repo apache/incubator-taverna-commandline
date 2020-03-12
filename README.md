@@ -24,7 +24,7 @@
 
 From 2014 till 2020 this code base was maintained by the 
 [Apache Incubator](https://incubator.apache.org/) project _Apache Taverna (incubating)_
-(see [web archive](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/)
+(see [web archive](https://web.archive.org/web/*/https://taverna.incubator.apache.org/)
 and [podling status](https://incubator.apache.org/projects/taverna.html)).
 
 In 2020 the Taverna community 
@@ -55,7 +55,7 @@ Releases 2003-2009 are on SourceForge <https://sourceforge.net/projects/taverna/
 
 Binary JARs for Taverna are available from 
 Maven Central <https://repo.maven.apache.org/maven2/org/apache/taverna/>
-or the myGrid Maven repository <http://repository.mygrid.org.uk/>
+or the myGrid Maven repository <https://repository.mygrid.org.uk/>
 
 
 
@@ -63,30 +63,30 @@ or the myGrid Maven repository <http://repository.mygrid.org.uk/>
 
 Taverna Command-line Tool provides a shell command
 for executing
-[Taverna](https://taverna.incubator.apache.org/) workflows,
-defined using either the [Taverna Language](https://taverna.incubator.apache.org/download/language/)
+[Taverna](https://web.archive.org/web/*/https://taverna.incubator.apache.org/) workflows,
+defined using either the [Taverna Language](https://web.archive.org/web/*/https://taverna.incubator.apache.org/download/language/)
 API in the
-[SCUFL2](https://taverna.incubator.apache.org/documentation/scufl2/)
+[SCUFL2](https://web.archive.org/web/*/https://taverna.incubator.apache.org/documentation/scufl2/)
 `.wfbundle` format, or in the `.t2flow` format from
-[Taverna Workbench 2.5](https://taverna.incubator.apache.org/download/workbench/).
+[Taverna Workbench 2.5](https://web.archive.org/web/*/https://taverna.incubator.apache.org/download/workbench/).
 
 Workflow inputs can be provided as parameters or files,
 while outputs can be saved either to a folder or a
 [Research Object bundle](https://w3id.org/bundle)
 including detailed provenance, which can be inspected
 using Taverna Language's
-[DataBundle](https://taverna.incubator.apache.org/javadoc/taverna-language/org/apache/taverna/databundle/DataBundles.html)
+[DataBundle](https://web.archive.org/web/*/https://taverna.incubator.apache.org/javadoc/taverna-language/org/apache/taverna/databundle/DataBundles.html)
 support.
 
 In addition to the
-[Taverna Common Activities](https://taverna.incubator.apache.org/download/common-activities/),
+[Taverna Common Activities](https://web.archive.org/web/*/https://taverna.incubator.apache.org/download/common-activities/),
 the Command-line supports plugins using
-[Taverna OSGi services](https://taverna.incubator.apache.org/download/osgi/).
+[Taverna OSGi services](https://web.archive.org/web/*/https://taverna.incubator.apache.org/download/osgi/).
 
 
 Note that, except for command-line handling, this
 module relies on other
-[Taverna components](https://taverna.incubator.apache.org/code) for the actual workflow execution.
+[Taverna components](https://web.archive.org/web/*/https://taverna.incubator.apache.org/code) for the actual workflow execution.
 
 
 ## License
@@ -116,18 +116,18 @@ Taverna.
 Bugs and planned features are tracked in the Jira
 [issue tracker](https://issues.apache.org/jira/browse/TAVERNA/component/12326812)
 under the `TAVERNA` component _Taverna Command-line Tool._ Feel free
-to [add an issue](https://taverna.incubator.apache.org/community/issue-tracker)!
+to [add an issue](https://web.archive.org/web/*/https://taverna.incubator.apache.org/community/issue-tracker)!
 
 To suggest changes to this source code, feel free to raise a
 [GitHub pull request](https://github.com/apache/incubator-taverna-commandline/pulls).
 -->
 
 Taverna Command-line Tool product relies on
-[other Taverna components](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/code/)
+[other Taverna components](https://web.archive.org/web/*/https://taverna.incubator.apache.org/download/code/)
 which have their own source code repositories.
 
-Any contributions received are assumed to be covered by the [Apache License
-2.0](https://www.apache.org/licenses/LICENSE-2.0). 
+Any contributions received are assumed to be covered by the 
+[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0). 
 
 
 ## Prerequisites
@@ -138,16 +138,16 @@ Any contributions received are assumed to be covered by the [Apache License
 
 
 This code relies on other
-[Taverna modules](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/code/),
+[Taverna modules](https://web.archive.org/web/*/https://taverna.incubator.apache.org/download/code/),
 which Maven should download
 automatically from
-[Apache's Maven repository](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/maven/);
+[Apache's Maven repository](https://web.archive.org/web/*/https://taverna.incubator.apache.org/download/maven/);
 however you might want to compile these yourself in the order below:
 
-* [taverna-language](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/language/)
-* [taverna-osgi](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/osgi/)
-* [taverna-engine](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/engine/)
-* [taverna-common-activities](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/common-activities/)
+* [taverna-language](https://web.archive.org/web/*/https://taverna.incubator.apache.org/download/language/)
+* [taverna-osgi](https://web.archive.org/web/*/https://taverna.incubator.apache.org/download/osgi/)
+* [taverna-engine](https://web.archive.org/web/*/https://taverna.incubator.apache.org/download/engine/)
+* [taverna-common-activities](https://web.archive.org/web/*/https://taverna.incubator.apache.org/download/common-activities/)
 
 Please see the `<properties>` of this [pom.xml](pom.xml) to find the
 correct versions to build.
@@ -161,7 +161,7 @@ To build, use
 This will build each module and run its tests.
 
 Note that this repository relies on
-other [Taverna modules](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/code)
+other [Taverna modules](https://web.archive.org/web/*/https://taverna.incubator.apache.org/code)
 which will be downloaded from Maven repositories if they are not
 already present in the equivalent of your `~/.m2/repository` in the
 correct version.
@@ -195,12 +195,12 @@ that enforces Apache headers in every source file - to disable it, try:
 If you are building a non-released version of this repository,
 (e.g.  the `pom.xml` declares a `-SNAPSHOT` version), then Maven might
 download unreleased
-[snapshot builds](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/code/#snapshot-builds)
+[snapshot builds](https://web.archive.org/web/*/https://taverna.incubator.apache.org/download/code/#snapshot-builds)
 for other `-SNAPSHOT` Taverna dependencies.
 
 
 If you are developing one of the
-[Taverna modules](http://web.archive.org/web/20200312133332/http://taverna.incubator.apache.org/code)
+[Taverna modules](https://web.archive.org/web/*/http://taverna.incubator.apache.org/download/code)
 and want to test it with the
 Taverna Command-line Tool, make sure you build it
 locally first with `mvn clean install` to avoid downloading it from
@@ -310,7 +310,7 @@ for both object code and source code.
 The following provides more details on the included cryptographic software:
 
 * Taverna Command-line Tool depends on and interacts with the
-  [Taverna Engine](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/engine/),
+  [Taverna Engine](https://web.archive.org/web/*/https://taverna.incubator.apache.org/download/engine/),
   credential manager.
 * After building, the [taverna-commandline-product](taverna-commandline-product)
   archive `lib` folder includes
@@ -321,8 +321,8 @@ The following provides more details on the included cryptographic software:
   [Apache WSS4J](https://ws.apache.org/wss4j/),
   [Apache XML Security for Java](https://santuario.apache.org/javaindex.html),
   [Open SAML Java](https://shibboleth.net/products/opensaml-java.html),
-  [Taverna Language](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/language/),
-  [Taverna OSGi](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/osgi/),
-  [Taverna Engine](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/engine/),
+  [Taverna Language](https://web.archive.org/web/*/https://taverna.incubator.apache.org/download/language/),
+  [Taverna OSGi](https://web.archive.org/web/*/https://taverna.incubator.apache.org/download/osgi/),
+  [Taverna Engine](https://web.archive.org/web/*/https://taverna.incubator.apache.org/download/engine/),
   and
-  [Taverna Common Activities](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/common-activities/).
+  [Taverna Common Activities](https://web.archive.org/web/*/https://taverna.incubator.apache.org/download/common-activities/).
