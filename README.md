@@ -310,7 +310,7 @@ for both object code and source code.
 The following provides more details on the included cryptographic software:
 
 * Taverna Command-line Tool depends on and interacts with the
-  [Taverna Engine](http://taverna.incubator.apache.org/download/engine/),
+  [Taverna Engine](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/engine/),
   credential manager.
 * After building, the [taverna-commandline-product](taverna-commandline-product)
   archive `lib` folder includes
@@ -321,8 +321,8 @@ The following provides more details on the included cryptographic software:
   [Apache WSS4J](https://ws.apache.org/wss4j/),
   [Apache XML Security for Java](https://santuario.apache.org/javaindex.html),
   [Open SAML Java](https://shibboleth.net/products/opensaml-java.html),
-  [Taverna Language](http://taverna.incubator.apache.org/download/language/),
-  [Taverna OSGi](http://taverna.incubator.apache.org/download/osgi/),
-  [Taverna Engine](http://taverna.incubator.apache.org/download/engine/),
+  [Taverna Language](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/language/),
+  [Taverna OSGi](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/osgi/),
+  [Taverna Engine](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/engine/),
   and
-  [Taverna Common Activities](http://taverna.incubator.apache.org/download/common-activities/).
+  [Taverna Common Activities](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/common-activities/).
