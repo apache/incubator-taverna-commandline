@@ -47,7 +47,7 @@ volunteer caretakers.
 Releases 2015-2018 as part of the activities during Apache Software Foundation
 are available from the ASF Download Archive <http://archive.apache.org/dist/incubator/taverna/>
 
-Releases 2014 from the University of Manchester are on Bitucker <https://bitbucket.org/taverna/>
+Releases 2014 from the University of Manchester are on BitBucket <https://bitbucket.org/taverna/>
 
 Releases 2009-2013 from myGrid are on LaunchPad <https://launchpad.net/taverna/>
 
