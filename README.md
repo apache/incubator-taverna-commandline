@@ -123,7 +123,7 @@ To suggest changes to this source code, feel free to raise a
 -->
 
 Taverna Command-line Tool product relies on
-[other Taverna components](https://taverna.incubator.apache.org/code/)
+[other Taverna components](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/code/)
 which have their own source code repositories.
 
 Any contributions received are assumed to be covered by the [Apache License
@@ -138,16 +138,16 @@ Any contributions received are assumed to be covered by the [Apache License
 
 
 This code relies on other
-[Taverna modules](https://taverna.incubator.apache.org/download/code/),
+[Taverna modules](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/code/),
 which Maven should download
 automatically from
-[Apache's Maven repository](https://taverna.incubator.apache.org/download/maven/);
+[Apache's Maven repository](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/maven/);
 however you might want to compile these yourself in the order below:
 
-* [taverna-language](https://taverna.incubator.apache.org/download/language/)
-* [taverna-osgi](https://taverna.incubator.apache.org/download/osgi/)
-* [taverna-engine](https://taverna.incubator.apache.org/download/engine/)
-* [taverna-common-activities](https://taverna.incubator.apache.org/download/common-activities/)
+* [taverna-language](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/language/)
+* [taverna-osgi](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/osgi/)
+* [taverna-engine](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/engine/)
+* [taverna-common-activities](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/download/common-activities/)
 
 Please see the `<properties>` of this [pom.xml](pom.xml) to find the
 correct versions to build.
@@ -161,7 +161,7 @@ To build, use
 This will build each module and run its tests.
 
 Note that this repository relies on
-other [Taverna modules](https://taverna.incubator.apache.org/code)
+other [Taverna modules](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/code)
 which will be downloaded from Maven repositories if they are not
 already present in the equivalent of your `~/.m2/repository` in the
 correct version.
@@ -195,12 +195,12 @@ that enforces Apache headers in every source file - to disable it, try:
 If you are building a non-released version of this repository,
 (e.g.  the `pom.xml` declares a `-SNAPSHOT` version), then Maven might
 download unreleased
-[snapshot builds](https://taverna.incubator.apache.org/code/#snapshot-builds)
+[snapshot builds](http://web.archive.org/web/20200312133332/https://taverna.incubator.apache.org/code/#snapshot-builds)
 for other `-SNAPSHOT` Taverna dependencies.
 
 
 If you are developing one of the
-[Taverna modules](http://taverna.incubator.apache.org/code)
+[Taverna modules](http://web.archive.org/web/20200312133332/http://taverna.incubator.apache.org/code)
 and want to test it with the
 Taverna Command-line Tool, make sure you build it
 locally first with `mvn clean install` to avoid downloading it from
